@@ -5,12 +5,12 @@ stages:
 build:backend:
   stage: build
   script:
-    - ./gradlew build
+    - ./gradlew assemble
   image: gradle:jre15
   cache:
     paths:
       - backend/build/
-      - backend/.gradle/
+      - .gradle/
     policy: push
 
 unit-test:backend:
@@ -18,12 +18,12 @@ unit-test:backend:
   needs:
     - build:backend
   script:
-    - ./gradlew build
+    - ./gradlew test
   image: gradle:jre15
   cache:
     paths:
       - backend/build/
-      - backend/.gradle/
+      - .gradle/
     policy: pull
   artifacts:
     reports:
