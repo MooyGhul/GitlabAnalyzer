@@ -1,0 +1,30 @@
+stages:
+  - build
+  - unit-test
+
+build:backend:
+  stage: build
+  script:
+    - ./gradlew build
+  image: gradle:jre15
+  cache:
+    paths:
+      - backend/build/
+      - backend/.gradle/
+    policy: push
+
+unit-test:backend:
+  stage: unit-test
+  needs:
+    - build:backend
+  script:
+    - ./gradlew build
+  image: gradle:jre15
+  cache:
+    paths:
+      - backend/build/
+      - backend/.gradle/
+    policy: pull
+  artifacts:
+    reports:
+      junit: backend/build/test-results/test/**/TEST-*.xml
