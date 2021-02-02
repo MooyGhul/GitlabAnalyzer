@@ -41,6 +41,11 @@ public class Extractor {
         return new JSONArray(result);
     }
 
+    public JSONArray getIssues(String url) {
+        String result = restTemplate.getForObject(url, String.class);
+        return new JSONArray(result);
+    }
+
     public JSONArray getRepoMembers(String url) {
         String result = restTemplate.getForObject(url, String.class);
         return new JSONArray(result);
