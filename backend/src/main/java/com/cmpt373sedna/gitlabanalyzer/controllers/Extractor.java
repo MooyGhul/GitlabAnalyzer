@@ -37,23 +37,32 @@ public class Extractor {
     }
 
     public JSONArray getMergeRequests(String url) {
-        String result = restTemplate.getForObject(url, String.class);
+        String mrURL = url + "?private_token=" + personalToken;
+        String result = restTemplate.getForObject(mrURL, String.class);
         return new JSONArray(result);
     }
 
     public JSONArray getMergeRequestComments(String MRId) {
-        String MRCommentURL = uri + "/merge_requests/" + MRId + "/notes" + "?private_token=" + personalToken;
+        String MRCommentURL = uri + "/merge_requests/" + MRId + "/notes?private_token=" + personalToken;
         String result = restTemplate.getForObject(MRCommentURL, String.class);
         return new JSONArray(result);
     }
 
+    public JSONArray getBranches(String url) {
+        String branchURL = url + "?private_token=" + personalToken;
+        String result = restTemplate.getForObject(branchURL, String.class);
+        return new JSONArray(result);
+    }
+
     public JSONArray getIssues(String url) {
-        String result = restTemplate.getForObject(url, String.class);
+        String issuesURL = url + "?private_token=" + personalToken;
+        String result = restTemplate.getForObject(issuesURL, String.class);
         return new JSONArray(result);
     }
 
     public JSONArray getRepoMembers(String url) {
-        String result = restTemplate.getForObject(url, String.class);
+        String memberURL = url + "?private_token=" + personalToken;
+        String result = restTemplate.getForObject(memberURL, String.class);
         return new JSONArray(result);
     }
 }
