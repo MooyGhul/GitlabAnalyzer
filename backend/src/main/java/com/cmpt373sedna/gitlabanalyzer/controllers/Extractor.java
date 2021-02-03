@@ -1,0 +1,68 @@
+package com.cmpt373sedna.gitlabanalyzer.controllers;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.web.client.RestTemplate;
+
+
+public class Extractor {
+    final String personalToken = "XQUSyUSDiQUxsy6CoP8_";
+    final String projectId = "2"; // Our GitLabAnalyzer Repo
+    final String uri = "http://cmpt373-1211-14.cmpt.sfu.ca:8929/api/v4/projects/" + projectId;
+    private final RestTemplate restTemplate;
+
+    public Extractor() {
+        this.restTemplate = new RestTemplate();
+    }
+
+    public String[] getBasicRepoLinks() {
+        try {
+            // Will need to change uri for an input url parameter
+            String result = restTemplate.getForObject(uri +"?private_token=" + personalToken, String.class);
+            JSONObject jsonObject = new JSONObject(result);
+
+            Integer id = (Integer) jsonObject.get("id");
+            String name = (String)jsonObject.get("name");
+            JSONObject links = (JSONObject) jsonObject.get("_links");
+            String mergeRequestLink = (String) links.get("merge_requests");
+            String issuesLink = (String) links.get("issues");
+            String repoBranchesLink = (String)  links.get("repo_branches");
+            String membersLink = (String)  links.get("members");
+
+            return new String[]{id.toString(), name, mergeRequestLink, issuesLink, repoBranchesLink, membersLink};
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public JSONArray getMergeRequests(String url) {
+        String mrURL = url + "?private_token=" + personalToken;
+        String result = restTemplate.getForObject(mrURL, String.class);
+        return new JSONArray(result);
+    }
+
+    public JSONArray getMergeRequestComments(String MRId) {
+        String MRCommentURL = uri + "/merge_requests/" + MRId + "/notes?private_token=" + personalToken;
+        String result = restTemplate.getForObject(MRCommentURL, String.class);
+        return new JSONArray(result);
+    }
+
+    public JSONArray getBranches(String url) {
+        String branchURL = url + "?private_token=" + personalToken;
+        String result = restTemplate.getForObject(branchURL, String.class);
+        return new JSONArray(result);
+    }
+
+    public JSONArray getIssues(String url) {
+        String issuesURL = url + "?private_token=" + personalToken;
+        String result = restTemplate.getForObject(issuesURL, String.class);
+        return new JSONArray(result);
+    }
+
+    public JSONArray getRepoMembers(String url) {
+        String memberURL = url + "?private_token=" + personalToken;
+        String result = restTemplate.getForObject(memberURL, String.class);
+        return new JSONArray(result);
+    }
+}
