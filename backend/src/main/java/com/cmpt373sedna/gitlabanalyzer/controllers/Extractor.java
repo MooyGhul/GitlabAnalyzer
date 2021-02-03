@@ -5,9 +5,9 @@ import org.springframework.web.client.RestTemplate;
 
 
 public class Extractor {
-    final String personalToken = "9n3kvZyqv81nQVsxBGns";
-    final String projectId = "25513"; // Our GitLabAnalyzer Repo
-    final String uri = "https://csil-git1.cs.surrey.sfu.ca/api/v4/projects/" + projectId;
+    final String personalToken = "XQUSyUSDiQUxsy6CoP8_";
+    final String projectId = "2"; // Our GitLabAnalyzer Repo
+    final String uri = "http://cmpt373-1211-14.cmpt.sfu.ca:8929/api/v4/projects/" + projectId;
     private final RestTemplate restTemplate;
 
     public Extractor() {
