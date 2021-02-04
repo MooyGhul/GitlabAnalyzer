@@ -7,7 +7,7 @@ export const Student = {
     TotalScore: 7654,
 };
 
-export const Admin = {
+export const AdminUser = {
     username : 'admin',
     password : '1234',
 };
