@@ -1,11 +1,30 @@
-export default function ScoreBoard (props) {
+import React,{useState} from "react";
+import FileType from "../components/FileType";
+import { StudentJS } from '../mockDataDir/mockJS';
+import { StudentJava } from '../mockDataDir/mockJava';
+
+export default function ScoreBoard () {
+
+    const [language, setLanguage] = useState(['JS']);
+    
+
+    const handleFile = (newFile) => {setLanguage(newFile)};
+
     return (
         <div>
             <h1> ScoreBoard </h1>
-            <p>Total Commit : {props.totalCommit}</p>
-            <p>Total MR : {props.TotalMR}</p>
-            <p>Total JS Files : {props.TotalJSFiles}</p>
-            <p>Total Score : {props.TotalScore}</p>
+            <p>Total Commit : {}</p>
+            <p>Total MR : {}</p>
+            <p>Total {language} Files : {}</p>
+            <p>Total Score : {}</p>
+            <div>
+            
+            <button >Change file Type   
+            <FileType onChange={handleFile}/> 
+            </button>
+            <button >Configure weights</button> 
+            </div>
+            
         </div>
     );
 }
