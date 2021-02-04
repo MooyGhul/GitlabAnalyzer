@@ -4,6 +4,8 @@ import { AdminUser } from '../mockInfo';
 import App from '../App';
 import styles from '../style/Login.module.css';
 
+//Note: Use AdminUser's username and password from mockInfo to login
+
 function Login() {
     const [user, setUser] = useState({name:'', password:''});
 
