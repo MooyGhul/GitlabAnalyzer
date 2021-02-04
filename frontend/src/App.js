@@ -6,14 +6,12 @@ function App() {
 
   return (
     <div>
-
       <ScoreBoard
         totalCommit={Student.totalCommit}
         TotalMR={Student.TotalMR}
         TotalJSFiles={Student.TotalJSFiles}
         TotalScore={Student.TotalScore}
       />
-
     </div>
   );
 }
