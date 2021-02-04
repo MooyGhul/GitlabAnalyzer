@@ -11,7 +11,6 @@ function Login() {
         console.log({user});
 
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
-
             ReactDOM.render(
             <React.StrictMode>
                 <App />
@@ -23,14 +22,12 @@ function Login() {
 
     const loginHandler = event => {
         event.preventDefault();
-        console.log({user});
-
         login(user);
     }
 
     return(
         <div>
-            <h1> Login </h1>
+            <h2> Login </h2>
             <form className={styles.form} onSubmit={loginHandler}>
                 <label className={styles.label}>
                     Username
@@ -43,7 +40,6 @@ function Login() {
                     <button className={styles.button} type ='submit'>
                         Login
                     </button>
-
             </form>
         </div>
     )
