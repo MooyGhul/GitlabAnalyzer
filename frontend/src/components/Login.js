@@ -4,7 +4,7 @@ import { AdminUser } from '../mockInfo';
 import App from '../App';
 import styles from '../style/Login.module.css';
 
-function LoginPage() {
+function Login() {
     const [user, setUser] = useState({name:'', password:''});
 
     const login = user => {
@@ -14,7 +14,6 @@ function LoginPage() {
 
             ReactDOM.render(
             <React.StrictMode>
-                console.log('Entered');
                 <App />
               </React.StrictMode>,
               document.getElementById('root')
@@ -50,4 +49,4 @@ function LoginPage() {
     )
 }
 
-export default LoginPage;
+export default Login;
