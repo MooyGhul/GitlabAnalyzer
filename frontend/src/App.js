@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import ScoreBoard from './components/ScoreBoard';
-import LoginForm from './components/LoginForm';
+import LoginPage from './components/LoginPage';
 import { Student } from './mockInfo';
 
 function App() {
 
   return (
     <div>
-      <LoginForm />
+      <LoginPage />
 
       <ScoreBoard
         totalCommit={Student.totalCommit}

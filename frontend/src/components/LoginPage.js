@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { AdminUser } from '../mockInfo';
 import App from '../App';
+import styles from '../style/Login.module.css';
 
-function LoginForm() {
+function LoginPage() {
     const [user, setUser] = useState({name:'', password:''});
 
     const login = user => {
         console.log({user});
 
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
-            console.log('Logged in!');
 
             ReactDOM.render(
             <React.StrictMode>
@@ -32,23 +32,22 @@ function LoginForm() {
     return(
         <div>
             <h1> Login </h1>
-            <form onSubmit={loginHandler}>
-                <label>
-                    <p>Username</p>
+            <form className={styles.form} onSubmit={loginHandler}>
+                <label className={styles.label}>
+                    Username
                     <input type ='text' onChange={e=> setUser({...user, name: e.target.value})} />
                 </label>
-                <label>
-                    <p>Password</p>
+                <label className={styles.label}>
+                    Password
                     <input type ='password' onChange={e=> setUser({...user, password: e.target.value})} />
                 </label>
-                <div>
-                    <button type ='submit'>
+                    <button className={styles.button} type ='submit'>
                         Login
                     </button>
-                </div>
+
             </form>
         </div>
     )
 }
 
-export default LoginForm;
+export default LoginPage;
