@@ -6,3 +6,8 @@ export const Student = {
     TotalJSFiles : 342,
     TotalScore: 7654,
 };
+
+export const Admin = {
+    username : 'admin',
+    password : '1234',
+};
