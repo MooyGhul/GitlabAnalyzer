@@ -18,6 +18,8 @@ export default function Scores ({language}) {
       break;
     case "JS":
       api = StudentJS;
+      break;
+    default:
   }
 
   return (
