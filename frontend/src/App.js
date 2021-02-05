@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import ScoreBoard from './components/ScoreBoard';
 
 function App(props) {

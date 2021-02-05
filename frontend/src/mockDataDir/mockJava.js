@@ -3,6 +3,6 @@ export const StudentJava = {
     name : 'Harry Potter',
     totalCommit : 1,
     TotalMR : 2,
-    TotalJSFiles : 3,
+    TotalFiles : 3,
     TotalScore: 4,
 };
