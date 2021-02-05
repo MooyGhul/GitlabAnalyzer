@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import ScoreBoard from './components/ScoreBoard';
 import { Student } from './mockInfo';
+import Header from './components/Header';
 
 function App() {
-
+  
   return (
     <div>
-      <ScoreBoard
-        totalCommit={Student.totalCommit}
-        TotalMR={Student.TotalMR}
-        TotalJSFiles={Student.TotalJSFiles}
-        TotalScore={Student.TotalScore}
+      <Header
+        pageTitle="Overview"
       />
+
+      <ScoreBoard 
+        totalCommit={Student.totalCommit} 
+        TotalMR={Student.TotalMR} 
+        TotalJSFiles={Student.TotalJSFiles} 
+        TotalScore={Student.TotalScore} 
+      />
+
     </div>
   );
 }
