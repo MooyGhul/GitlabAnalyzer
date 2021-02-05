@@ -1,5 +1,4 @@
 package com.cmpt373sedna.gitlabanalyzer.model;
-
 import com.cmpt373sedna.gitlabanalyzer.controllers.Extractor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,19 +28,13 @@ public @lombok.Data class Repository {
         this.repoName = links[1];
 
         JSONArray jsonMergeRequests = e.getMergeRequests(links[2]);
-        jsonMergeRequests.forEach(mr -> {
-            this.mergeRequests.add((JSONObject) mr);
-        });
+        jsonMergeRequests.forEach(mr -> this.mergeRequests.add((JSONObject) mr));
 
         JSONArray jsonIssues = e.getIssues(links[3]);
-        jsonIssues.forEach(issue -> {
-            this.issues.add((JSONObject) issue);
-        });
+        jsonIssues.forEach(issue -> this.issues.add((JSONObject) issue));
 
         JSONArray jsonBranches = e.getBranches(links[4]);
-        jsonBranches.forEach(branch -> {
-            this.branches.add((JSONObject) branch);
-        });
+        jsonBranches.forEach(branch -> this.branches.add((JSONObject) branch));
 
         JSONArray jsonMembers = e.getRepoMembers(links[5]);
         jsonMembers.forEach(member -> {
