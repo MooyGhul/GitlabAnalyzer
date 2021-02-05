@@ -17,10 +17,10 @@ public @lombok.Data class Repository {
     private ArrayList<String> members;
 
     public Repository(String url) {
-        this.mergeRequests = new ArrayList<JSONObject>();
-        this.issues = new ArrayList<JSONObject>();
-        this.branches = new ArrayList<JSONObject>();
-        this.members = new ArrayList<String>();
+        this.mergeRequests = new ArrayList<>();
+        this.issues = new ArrayList<>();
+        this.branches = new ArrayList<>();
+        this.members = new ArrayList<>();
 
         Extractor e = new Extractor();
         // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
