@@ -37,31 +37,16 @@ public class Repository {
     private List<String> members;
 
     public Repository(String url) {
-        this.mergeRequests = new ArrayList<>();
-        this.issues = new ArrayList<>();
-        this.branches = new ArrayList<>();
-        this.members = new ArrayList<>();
-
         Extractor e = new Extractor();
         // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
         String[] links = e.getBasicRepoLinks();
+
         this.repoId = Integer.parseInt(links[0]);
         this.repoName = links[1];
-
-        JSONArray jsonMergeRequests = e.getMergeRequests(links[2]);
-        jsonMergeRequests.forEach(mr -> this.mergeRequests.add((JSONObject) mr));
-
-        JSONArray jsonIssues = e.getIssues(links[3]);
-        jsonIssues.forEach(issue -> this.issues.add((JSONObject) issue));
-
-        JSONArray jsonBranches = e.getBranches(links[4]);
-        jsonBranches.forEach(branch -> this.branches.add((JSONObject) branch));
-
-        JSONArray jsonMembers = e.getRepoMembers(links[5]);
-        jsonMembers.forEach(member -> {
-            JSONObject obj = (JSONObject) member;
-            this.members.add((String) obj.get("username"));
-        });
+        this.mergeRequests = e.getMergeRequests(links[2]);
+        this.issues = e.getIssues(links[3]);
+        this.branches = e.getBranches(links[4]);
+        this.members = e.getRepoMembers(links[5]);
 
     }
 
