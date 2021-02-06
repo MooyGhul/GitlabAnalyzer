@@ -41,38 +41,30 @@ public class Extractor {
 
     public List<JSONObject> getMergeRequests(String url) {
         String mrURL = url + "?private_token=" + personalToken;
-        String result = restTemplate.getForObject(mrURL, String.class);
-        JSONArray objs = new JSONArray(result);
-        List<JSONObject> mergeRequests = new ArrayList<>();
-        objs.forEach(mr -> mergeRequests.add((JSONObject) mr));
-        return mergeRequests;
+        return getJsonObjects(mrURL);
     }
 
     public List<JSONObject> getMergeRequestComments(String MRId) {
         String MRCommentURL = uri + "/merge_requests/" + MRId + "/notes?private_token=" + personalToken;
-        String result = restTemplate.getForObject(MRCommentURL, String.class);
-        JSONArray jsonMRComments =  new JSONArray(result);
-        List<JSONObject> mrComments = new ArrayList<>();
-        jsonMRComments.forEach(comment -> mrComments.add((JSONObject) comment));
-        return mrComments;
+        return getJsonObjects(MRCommentURL);
+    }
+
+    private List<JSONObject> getJsonObjects(String URL) {
+        String response = restTemplate.getForObject(URL, String.class);
+        JSONArray jsonResponse =  new JSONArray(response);
+        List<JSONObject> jsonList = new ArrayList<>();
+        jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
+        return jsonList;
     }
 
     public List<JSONObject> getBranches(String url) {
         String branchURL = url + "?private_token=" + personalToken;
-        String result = restTemplate.getForObject(branchURL, String.class);
-        JSONArray jsonBranches =  new JSONArray(result);
-        List<JSONObject> branches = new ArrayList<>();
-        jsonBranches.forEach(branch -> branches.add((JSONObject) branch));
-        return branches;
+        return getJsonObjects(branchURL);
     }
 
     public List<JSONObject> getIssues(String url) {
         String issuesURL = url + "?private_token=" + personalToken;
-        String result = restTemplate.getForObject(issuesURL, String.class);
-        JSONArray objs = new JSONArray(result);
-        List<JSONObject> issues = new ArrayList<>();
-        objs.forEach(issue -> issues.add((JSONObject) issue));
-        return issues;
+        return getJsonObjects(issuesURL);
     }
 
     public List<String> getRepoMembers(String url) {
