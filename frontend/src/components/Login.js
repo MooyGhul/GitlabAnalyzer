@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import { AdminUser } from '../mockInfo';
+import { AdminUser } from '../mockDataDir/mockAdminUser';
 import App from '../App';
 import styles from '../style/Login.module.css';
 
