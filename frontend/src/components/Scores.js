@@ -3,6 +3,8 @@ import { StudentJS } from '../mockDataDir/mockJS';
 import { StudentJava } from '../mockDataDir/mockJava';
 import { StudentPython } from '../mockDataDir/mockPython';
 import { StudentC } from '../mockDataDir/mockC';
+import { EmptyChoice } from '../mockDataDir/mockEmpty';
+
 
 export default function Scores ({language}) {
   let api = "";
@@ -19,13 +21,17 @@ export default function Scores ({language}) {
     case "JS":
       api = StudentJS;
       break;
+    case "Empty":
+      api = EmptyChoice;
+      language = "";
+      break;
     default:
   }
 
   return (
         <div>
             <h1> ScoreBoard </h1>
-            <p>Total Commit : {api.totalCommit}</p>
+            <p>Total Commit : {api.TotalCommit}</p>
             <p>Total MR : {api.TotalMR}</p>
             <p>Total {language} Files : {api.TotalFiles}</p>
             <p>Total Score : {api.TotalScore}</p>

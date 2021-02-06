@@ -5,11 +5,9 @@ import Scores from "../components/Scores";
 
 export default function ScoreBoard () {
 
-    const [language, setLanguage] = useState(['JS']);
+    const [language, setLanguage] = useState(['']);
 
     const handleFile = (newLanguage) => {setLanguage(newLanguage)};
-
-    
 
     return (
         <div>
