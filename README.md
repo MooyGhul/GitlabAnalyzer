@@ -6,6 +6,8 @@
 
 2. Open IntelliJ IDEA Ultimate (free for students)
 
+3. In terminal `cd backend/src/main/resources`, then `ln -s ../../../../frontend/build/ ./public` to let Spring pick up on frontend files when you build them
+
 3. Go to the Application class, and click on the play button.
 
 4. Application is now running at `localhost:8080`
