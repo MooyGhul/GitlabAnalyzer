@@ -39,6 +39,14 @@ public class Extractor {
         return null;
     }
 
+    private List<JSONObject> getJsonObjects(String URL) {
+        String response = restTemplate.getForObject(URL, String.class);
+        JSONArray jsonResponse =  new JSONArray(response);
+        List<JSONObject> jsonList = new ArrayList<>();
+        jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
+        return jsonList;
+    }
+
     public List<JSONObject> getMergeRequests(String url) {
         String mrURL = url + "?private_token=" + personalToken;
         return getJsonObjects(mrURL);
@@ -49,14 +57,6 @@ public class Extractor {
         return getJsonObjects(MRCommentURL);
     }
 
-    private List<JSONObject> getJsonObjects(String URL) {
-        String response = restTemplate.getForObject(URL, String.class);
-        JSONArray jsonResponse =  new JSONArray(response);
-        List<JSONObject> jsonList = new ArrayList<>();
-        jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
-        return jsonList;
-    }
-
     public List<JSONObject> getBranches(String url) {
         String branchURL = url + "?private_token=" + personalToken;
         return getJsonObjects(branchURL);
@@ -65,6 +65,16 @@ public class Extractor {
     public List<JSONObject> getIssues(String url) {
         String issuesURL = url + "?private_token=" + personalToken;
         return getJsonObjects(issuesURL);
+    }
+
+    public List<JSONObject> getCommits(String url) {
+        String commitURL = url + "/repository/commits?private_token=" + personalToken;
+        return getJsonObjects(commitURL);
+    }
+
+    public List<JSONObject> getIssueComments(String url) {
+        String commentUrl = url + "?private_token=" + personalToken;
+        return getJsonObjects(commentUrl);
     }
 
     public List<String> getRepoMembers(String url) {
