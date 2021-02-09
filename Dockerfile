@@ -1,8 +1,8 @@
 FROM openjdk
 
-ADD ./backend/build /backend
-ADD ./frontend/build /backend/resources/public
+ADD ./backend/build/libs/gitlabanalyzer.jar /app/gitlabanalyzer.jar
+ADD ./frontend/build /app/public
 
 EXPOSE 8080
 
-RUN java -jar ./backend/build
+ENTRYPOINT java -jar /app/gitlabanalyzer.jar
