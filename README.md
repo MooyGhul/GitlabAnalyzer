@@ -10,7 +10,7 @@ Run `build.sh` to automatically build backend & frontend, then start via Docker 
 
 2. Open IntelliJ IDEA Ultimate (free for students)
 
-3. In terminal `ln -s ../../../../frontend/build/ ./backend/src/main/resources/public` to let Spring pick up on frontend files when you build them
+3. If you haven't run `build.sh` before, run `ln -s ../../../../frontend/build ./backend/src/main/resources/public` to let Spring pick up on frontend files when you build them
 
 3. Go to the Application class, and click on the play button.
 
