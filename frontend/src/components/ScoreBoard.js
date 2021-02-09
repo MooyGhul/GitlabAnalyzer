@@ -1,11 +1,19 @@
-export default function ScoreBoard (props) {
+import React,{useState} from "react";
+import LanguageType from "../components/LanguageType";
+import Scores from "../components/Scores";
+
+
+export default function ScoreBoard () {
+
+    const [language, setLanguage] = useState(['']);
+
+    const handleFile = (newLanguage) => {setLanguage(newLanguage)};
+
     return (
         <div>
-            <h1> ScoreBoard </h1>
-            <p>Total Commit : {props.totalCommit}</p>
-            <p>Total MR : {props.TotalMR}</p>
-            <p>Total JS Files : {props.TotalJSFiles}</p>
-            <p>Total Score : {props.TotalScore}</p>
+            <Scores language={language}/>
+            <LanguageType onChange={handleFile}/> 
+            <button >Configure weights</button>             
         </div>
     );
 }
