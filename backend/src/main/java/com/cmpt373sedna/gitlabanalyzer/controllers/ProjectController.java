@@ -1,6 +1,10 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
+import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.List;
 
 public class ProjectController {
@@ -21,6 +25,9 @@ public class ProjectController {
 
     private List<String> members;
 
+    @Autowired
+    private ProjectEntityRepository projectRepository;
+
     public ProjectController(String url) {
         this.e = new Extractor();
         // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
@@ -34,6 +41,8 @@ public class ProjectController {
         this.commits = this.e.getCommits(url + this.repoId);
 
         this.weights = new int[]{1, 1, 1, 1};
+
+        projectRepository.save(new ProjectEntity(repoId, repoName, getNumCommits(), getNumMR(), getNumComments()));
     }
 
     public int getNumCommits() {
