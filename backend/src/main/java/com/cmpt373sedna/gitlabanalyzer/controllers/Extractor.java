@@ -3,6 +3,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Extractor {
     final String personalToken = "XQUSyUSDiQUxsy6CoP8_";
@@ -36,33 +39,53 @@ public class Extractor {
         return null;
     }
 
-    public JSONArray getMergeRequests(String url) {
+    private List<JSONObject> getJsonObjects(String URL) {
+        String response = restTemplate.getForObject(URL, String.class);
+        JSONArray jsonResponse =  new JSONArray(response);
+        List<JSONObject> jsonList = new ArrayList<>();
+        jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
+        return jsonList;
+    }
+
+    public List<JSONObject> getMergeRequests(String url) {
         String mrURL = url + "?private_token=" + personalToken;
-        String result = restTemplate.getForObject(mrURL, String.class);
-        return new JSONArray(result);
+        return getJsonObjects(mrURL);
     }
 
-    public JSONArray getMergeRequestComments(String MRId) {
+    public List<JSONObject> getMergeRequestComments(String MRId) {
         String MRCommentURL = uri + "/merge_requests/" + MRId + "/notes?private_token=" + personalToken;
-        String result = restTemplate.getForObject(MRCommentURL, String.class);
-        return new JSONArray(result);
+        return getJsonObjects(MRCommentURL);
     }
 
-    public JSONArray getBranches(String url) {
+    public List<JSONObject> getBranches(String url) {
         String branchURL = url + "?private_token=" + personalToken;
-        String result = restTemplate.getForObject(branchURL, String.class);
-        return new JSONArray(result);
+        return getJsonObjects(branchURL);
     }
 
-    public JSONArray getIssues(String url) {
+    public List<JSONObject> getIssues(String url) {
         String issuesURL = url + "?private_token=" + personalToken;
-        String result = restTemplate.getForObject(issuesURL, String.class);
-        return new JSONArray(result);
+        return getJsonObjects(issuesURL);
     }
 
-    public JSONArray getRepoMembers(String url) {
+    public List<JSONObject> getCommits(String url) {
+        String commitURL = url + "/repository/commits?private_token=" + personalToken;
+        return getJsonObjects(commitURL);
+    }
+
+    public List<JSONObject> getIssueComments(String url) {
+        String commentUrl = url + "?private_token=" + personalToken;
+        return getJsonObjects(commentUrl);
+    }
+
+    public List<String> getRepoMembers(String url) {
         String memberURL = url + "?private_token=" + personalToken;
         String result = restTemplate.getForObject(memberURL, String.class);
-        return new JSONArray(result);
+        JSONArray objs = new JSONArray(result);
+        List<String> members = new ArrayList<>();
+        objs.forEach(member -> {
+            JSONObject obj = (JSONObject) member;
+            members.add((String) obj.get("username"));
+        });
+        return members;
     }
 }
