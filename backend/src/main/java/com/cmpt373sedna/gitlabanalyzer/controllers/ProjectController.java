@@ -3,7 +3,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 import org.json.JSONObject;
 import java.util.List;
 
-public class RepositoryController {
+public class ProjectController {
 
     final private int repoId;
 
@@ -21,7 +21,7 @@ public class RepositoryController {
 
     private List<String> members;
 
-    public RepositoryController(String url) {
+    public ProjectController(String url) {
         this.e = new Extractor();
         // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
         String[] links = this.e.getBasicRepoLinks();
