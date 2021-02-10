@@ -2,6 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
+import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,9 +10,9 @@ import java.util.List;
 
 public class ProjectController {
 
-    final private int repoId;
+    final private int projectId;
 
-    final private String repoName;
+    final private @Getter String projectName;
 
     final private Extractor e;
 
@@ -33,16 +34,16 @@ public class ProjectController {
         // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
         String[] links = this.e.getBasicRepoLinks();
 
-        this.repoId = Integer.parseInt(links[0]);
-        this.repoName = links[1];
+        this.projectId = Integer.parseInt(links[0]);
+        this.projectName = links[1];
         this.mergeRequests = this.e.getMergeRequests(links[2]);
         this.issues = this.e.getIssues(links[3]);
         this.members = this.e.getRepoMembers(links[5]);
-        this.commits = this.e.getCommits(url + this.repoId);
+        this.commits = this.e.getCommits(url + this.projectId);
 
         this.weights = new int[]{1, 1, 1, 1};
 
-        projectRepository.save(new ProjectEntity(repoId, repoName, getNumCommits(), getNumMR(), getNumComments()));
+        projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
     }
 
     public int getNumCommits() {
