@@ -9,6 +9,10 @@ public class RepositoryController {
 
     final private String repoName;
 
+    final private String url;
+
+    private String projectToken; // Project Token for test server gitlabanalyzer: 1yB6tptaz_s214mAdksh
+
     final private Extractor e;
 
     private int[] weights;
@@ -21,17 +25,19 @@ public class RepositoryController {
 
     private List<String> members;
 
-    public RepositoryController(String url) {
-        this.e = new Extractor();
-        // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
-        String[] links = this.e.getBasicRepoLinks();
+    public RepositoryController(Extractor e, String url, String token) {
+        this.e = e;
+        this.projectToken = token;
+        // 0: id.toString(), 1: name, 2: rootLink, 3:mergeRequestLink, 4:issuesLink, 5:repoBranchesLink, 6:membersLink
+        String[] links = this.e.getBasicRepoLinks(url, token);
 
         this.repoId = Integer.parseInt(links[0]);
         this.repoName = links[1];
-        this.mergeRequests = this.e.getMergeRequests(links[2]);
-        this.issues = this.e.getIssues(links[3]);
-        this.members = this.e.getRepoMembers(links[5]);
-        this.commits = this.e.getCommits(url + this.repoId);
+        this.url = links[2];
+        this.mergeRequests = this.e.getMergeRequests(links[3], this.projectToken);
+        this.issues = this.e.getIssues(links[4], this.projectToken);
+        this.members = this.e.getRepoMembers(links[6], this.projectToken);
+        this.commits = this.e.getCommits(this.url, this.projectToken);
 
         this.weights = new int[]{1, 1, 1, 1};
     }
@@ -50,13 +56,14 @@ public class RepositoryController {
         for(JSONObject issue: this.issues) {
             JSONObject links = (JSONObject) issue.get("_links");
             String issueNotesLink = (String) links.get("notes");
-            List<JSONObject> issueComments = this.e.getIssueComments(issueNotesLink);
+            List<JSONObject> issueComments = this.e.getIssueComments(issueNotesLink, this.projectToken);
             sum += issueComments.size();
         }
 
         for(JSONObject mr: this.mergeRequests) {
             int mrId = (Integer) mr.get("iid");
-            List<JSONObject> mrComments = this.e.getMergeRequestComments(Integer.toString(mrId));
+            String url =  this.url + "/merge_requests/" + mrId;
+            List<JSONObject> mrComments = this.e.getMergeRequestComments(url, this.projectToken);
             sum += mrComments.size();
         }
 
