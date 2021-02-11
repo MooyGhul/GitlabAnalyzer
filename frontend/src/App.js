@@ -1,5 +1,7 @@
 import ScoreBoard from './components/ScoreBoard';
 import Header from './components/Header';
+import Chats from './components/Chats';
+
 
 function App(props) {
 
@@ -8,8 +10,10 @@ function App(props) {
       <Header
         pageTitle="Overview"
       />
+      <br/><br/><br/>
       <ScoreBoard />
-
+      <br/><br/><br/>
+      <Chats />
     </div>
   );
 }
