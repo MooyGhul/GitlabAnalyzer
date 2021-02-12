@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import App from '../App';
+import { Token } from '../mockDataDir/mockToken'
 
 function UrlToken() {
     const [urlToken, setUrlToken] = useState({url:'', token:''});
@@ -9,13 +10,14 @@ function UrlToken() {
         event.preventDefault();
         console.log({urlToken});
 
-        ReactDOM.render(
-            <React.StrictMode>
-                <App />
-            </React.StrictMode>,
-            document.getElementById('root')
-        );
-
+        if(urlToken.token === Token.token) {
+            ReactDOM.render(
+                <React.StrictMode>
+                    <App />
+                </React.StrictMode>,
+                document.getElementById('root')
+            );
+        }
     }
 
     return(
