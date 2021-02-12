@@ -19,6 +19,8 @@ function Login() {
               </React.StrictMode>,
               document.getElementById('root')
             );
+        } else {
+            setUser({name:'', password: ''});
         }
     }
 
@@ -33,11 +35,11 @@ function Login() {
             <form className={styles.form} onSubmit={loginHandler}>
                 <label className={styles.label}>
                     Username
-                    <input type ='text' onChange={e=> setUser({...user, name: e.target.value})} />
+                    <input type ='text' value={user.name} onChange={e=> setUser({...user, name: e.target.value})} />
                 </label>
                 <label className={styles.label}>
                     Password
-                    <input type ='password' onChange={e=> setUser({...user, password: e.target.value})} />
+                    <input type ='password' value={user.password} onChange={e=> setUser({...user, password: e.target.value})} />
                 </label>
                     <button className={styles.button} type ='submit'>
                         Login

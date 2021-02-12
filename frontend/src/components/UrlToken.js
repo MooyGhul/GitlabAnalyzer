@@ -34,11 +34,13 @@ function UrlToken() {
                 <h3>{errorMsg}</h3>
                 <label>
                     Enter GitLab Server URL
-                    <input type ='url' value={urlToken.url} onChange={e=> setUrlToken({...urlToken, url: e.target.value})} />
+                    <input type ='url' value={urlToken.url}
+                        onChange={e=> setUrlToken({...urlToken, url: e.target.value})} />
                 </label>
                 <label>
                     Enter Token
-                    <input type ='text' value={urlToken.token} onChange={e=> setUrlToken({...urlToken, token: e.target.value})} />
+                    <input type ='text' value={urlToken.token}
+                        onChange={e=> setUrlToken({...urlToken, token: e.target.value})} />
                 </label>
                 <button type ='submit'>
                     Next
