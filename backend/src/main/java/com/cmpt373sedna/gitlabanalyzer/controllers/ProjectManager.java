@@ -8,8 +8,12 @@ import java.util.List;
 public class ProjectManager {
     private @Getter List<ProjectController> allProjects;
     private @Getter List<ProjectController> selectedProjects;
+    final private Extractor e;
+    final private String projectToken;
 
-    public ProjectManager() {
+    public ProjectManager(String token) {
+        this.e = new Extractor();
+        this.projectToken = token;
         this.allProjects = new ArrayList<ProjectController>();
         this.selectedProjects = new ArrayList<ProjectController>();
     }
@@ -21,7 +25,7 @@ public class ProjectManager {
     }
 
     void addProject(String url) {
-        allProjects.add(new ProjectController(url));
+        allProjects.add(new ProjectController(this.e, url, this.projectToken));
     }
 
     void selectProjects(List<String> selectedProjects) {
