@@ -1,6 +1,5 @@
 import ScoreBoard from './components/ScoreBoard';
 import Header from './components/Header';
-import UrlToken from './components/UrlToken';
 
 function App(props) {
 
