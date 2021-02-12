@@ -5,8 +5,10 @@ import { Token } from '../mockDataDir/mockToken'
 
 // Note: Use token from mockToken
 
+const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
+
 function UrlToken() {
-    const [urlToken, setUrlToken] = useState({url:'https://csil-git1.cs.surrey.sfu.ca', token:''});
+    const [urlToken, setUrlToken] = useState({url: urlString, token:''});
     const [errorMsg, setErrorMsg] = useState('');
 
     const nextHandler = event => {
@@ -21,7 +23,7 @@ function UrlToken() {
                 document.getElementById('root')
             );
         } else {
-            setUrlToken({url:'https://csil-git1.cs.surrey.sfu.ca', token:''});
+            setUrlToken({url: urlString, token:''});
             setErrorMsg('Url or token is incorrect. Try Again.');
         }
     }
