@@ -5,7 +5,7 @@ import {Comments, MRDaily, CommitDaily} from "../mockDataDir/mockCodeContri";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const data1 = [
+let data1 = [
   {
     year: "2021-1-25",
     "MRDaily": 20,
@@ -96,10 +96,49 @@ export default function Charts () {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
-    console.log(startDate);
-    console.log(endDate);
-    
+    if(startDate){
+      console.log(startDate);
+      console.log(startDate.getDate());
+      console.log(startDate.getMonth()+1);
+      console.log(startDate.getFullYear());
+    }
 
+    if(endDate){
+      console.log(endDate);
+      console.log(endDate.getDate());
+      console.log(endDate.getMonth()+1);
+      console.log(endDate.getFullYear());
+    }
+
+    // console.log("2020-1-2".split("-"));
+
+    // console.log("2020"<="2021");
+
+    //let res = null;
+    if(endDate && startDate){
+    data1 = data1.filter(function(currData){
+      console.log(currData.year.split("-"));
+      const currYear =parseInt(currData.year.split("-")[0]);
+      const currMonth = parseInt(currData.year.split("-")[1]);
+      const currDate =  parseInt(currData.year.split("-")[2]);
+      return (
+        currYear>startDate.getFullYear() ||
+      (currYear===startDate.getFullYear() &&
+      (currMonth > startDate.getMonth()+1  ||
+      (currMonth===startDate.getMonth()+1  &&
+      currDate>=startDate.getDate())))
+      )&&
+      (
+        currYear<endDate.getFullYear() ||
+      (currYear===endDate.getFullYear() &&
+      (currMonth < endDate.getMonth()+1  ||
+      (currMonth===endDate.getMonth()+1  &&
+      currDate<=endDate.getDate())))
+      );
+      });
+      }
+
+    //console.log(res);
 
     return (
         <div>
@@ -110,14 +149,13 @@ export default function Charts () {
               selected={startDate} 
               onChange={date => setStartDate(date)} 
               dateFormat='MM/dd/yyyy'
-              minDate={new Date()}
               filterDate={date => date.getDay() !== 6 && date.getDay !== 0}
               isClearable
               showYearDropdown
               scrollableMonthYearDropdown
             />
           <br />
-           End date:
+          End date:
             <DatePicker 
               selected={endDate} 
               onChange={date => setEndDate(date)} 
