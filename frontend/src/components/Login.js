@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { AdminUser } from '../mockDataDir/mockAdminUser';
 import App from '../App';
 import styles from '../style/Login.module.css';
+import ProjectListPage from '../projectListPage';
+
 
 //Note: Use AdminUser's username and password from mockInfo to login
 
@@ -15,7 +17,7 @@ function Login() {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
             ReactDOM.render(
             <React.StrictMode>
-                <App />
+                <ProjectListPage />
               </React.StrictMode>,
               document.getElementById('root')
             );

@@ -1,0 +1,22 @@
+.projectList{
+    position: absolute;
+    top: 50%;
+    left: 50%;  
+    transform: translate(-50%, -50%);    
+    width: 50%;
+    max-width:50%; 
+    height: 66%;
+}
+
+.startAnalysisButton{
+    position: absolute;
+    bottom: 10%;
+    left: 65%;
+}
+
+.batchProcessButton{
+    position: absolute;
+    bottom: 5%;
+    left: 65%;
+}
+
