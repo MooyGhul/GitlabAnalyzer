@@ -1,7 +1,7 @@
 import ScoreBoard from './components/ScoreBoard';
 import Header from './components/Header';
-import Chats from './components/Chats';
-
+import Charts from './components/Charts';
+import './App.css';
 
 function App(props) {
 
@@ -13,7 +13,7 @@ function App(props) {
       <br/><br/><br/>
       <ScoreBoard />
       <br/><br/><br/>
-      <Chats />
+      <Charts />
     </div>
   );
 }
