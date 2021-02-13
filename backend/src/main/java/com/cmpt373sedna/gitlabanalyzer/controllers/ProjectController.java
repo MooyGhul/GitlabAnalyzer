@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 public class ProjectController {
@@ -48,8 +49,12 @@ public class ProjectController {
         this.commits = this.e.getCommits(this.url, this.projectToken);
 
         this.weights = new int[]{1, 1, 1, 1};
+    }
 
-
+    //projectRepository is not initialized until AFTER the constructor has been run
+    //so the Project has to be added to the repo after the constructor has been initialized
+    @PostConstruct
+    private void postConstructor() {
         this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
     }
 
