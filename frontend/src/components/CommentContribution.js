@@ -1,5 +1,6 @@
 import React,{useRef,useEffect, useState} from 'react';
-import { select, axisBottom, axisRight ,scaleLinear, scaleBand } from 'd3';
+import { select, axisBottom, axisLeft, axisRight ,scaleLinear, scaleBand, format } from 'd3';
+
 
 const useResizeObserver = (ref) => {
   const [dimensions, setDimensions] = useState(null);
@@ -25,6 +26,8 @@ export default function BarChart({ data }) {
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
 
+  const extend = [0,Math.max(...data)];
+
   useEffect(() => {
     const svg = select(svgRef.current);
 
@@ -32,11 +35,11 @@ export default function BarChart({ data }) {
 
     const xScale = scaleBand()
                     .domain(data.map((value,index) => index))
-                    .range([0,dimensions.width]) // To Change
+                    .range([0,dimensions.width*0.4]) // To Change
                     .padding(0.5);
 
     const yScale = scaleLinear()
-                    .domain([0,150])  // Todo
+                    .domain(extend)  // Todo
                     .range([dimensions.height,0]);  // To Change
 
     const colorScale = scaleLinear()
@@ -52,10 +55,12 @@ export default function BarChart({ data }) {
       .style("transform",`translateY(${dimensions.height}px)`) //to change
       .call(xAxis);
 
-    const yAxis = axisRight(yScale);
+    const yAxis = axisRight(yScale).ticks(9);
+    //.precisionFixed(1);
+    //.tickFormat(format("s"));
     svg
       .select(".y-axis")
-      .style("transform",`translateX(${dimensions.width}px)`)
+      .style("transform",`translateX(${dimensions.width*0.4}px)`)
       .call(yAxis);
 
     svg

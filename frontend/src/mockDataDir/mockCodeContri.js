@@ -14,7 +14,7 @@ export const CommitDaily = {
   
 };
 
-export const MRDaily = {
+export const Comments = {
   "2021-1-25" : 20,
   "2021-1-26" : 12,
   "2021-1-27" : 0,
@@ -29,7 +29,7 @@ export const MRDaily = {
   "2021-2-5" : 1
 };
 
-export const Comments = {
+export const MRDaily = {
   "2021-1-25" : 0,
   "2021-1-26" : 1,
   "2021-1-27" : 0,

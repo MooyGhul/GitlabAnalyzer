@@ -45,7 +45,7 @@ export default function StackedBarChart({ data,keys,colors }) {
 
     const xScale = scaleBand()
       .domain(data.map(d => d.year))
-      .range([0,width]) // To Change
+      .range([0,width*0.4]) // To Change
       .padding(0.5);
 
     const xAxis = axisBottom(xScale);
