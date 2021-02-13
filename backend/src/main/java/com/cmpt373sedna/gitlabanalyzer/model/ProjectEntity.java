@@ -5,14 +5,14 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-public class RepositoryEntity {
+public class ProjectEntity {
     private @Id int repoId;
     private String repoName;
     private int numCommits;
     private int numMR;
     private int numComments;
 
-    public RepositoryEntity(int repoId, String repoName, int numCommits, int numMR, int numComments) {
+    public ProjectEntity(int repoId, String repoName, int numCommits, int numMR, int numComments) {
         this.repoId = repoId;
         this.repoName = repoName;
         this.numCommits = numCommits;
@@ -21,7 +21,7 @@ public class RepositoryEntity {
 
     }
 
-    public RepositoryEntity() {
+    public ProjectEntity() {
         this.repoId = -1;
         this.repoName = "";
     }
