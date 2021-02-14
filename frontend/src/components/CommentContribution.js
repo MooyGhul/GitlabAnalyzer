@@ -21,12 +21,21 @@ const useResizeObserver = (ref) => {
 };
 
 
-export default function BarChart({ data }) {
+export default function BarChart({ data2 }) {
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
 
+  const data = data2.map(entry=>entry.comments);
   const extend = [0,Math.max(...data)];
+  //const extend = [0,Math.max(...data)];
+
+  console.log("data2 FLAG:")
+  data2.map(d => {
+    console.log(d.year);
+    return d.year;
+  })
+  
 
   useEffect(() => {
     const svg = select(svgRef.current);
@@ -34,65 +43,57 @@ export default function BarChart({ data }) {
     if(!dimensions) return;
 
     const xScale = scaleBand()
-                    .domain(data.map((value,index) => index))
+                    .domain(data2.map(d=>d.year))
                     .range([0,dimensions.width*0.4]) // To Change
                     .padding(0.5);
 
-    const yScale = scaleLinear()
-                    .domain(extend)  // Todo
-                    .range([dimensions.height,0]);  // To Change
-
-    const colorScale = scaleLinear()
-                    .domain([75,150])
-                    .range(["green","red"])
-                    .clamp(true);
-
     const xAxis = axisBottom(xScale)
-      .ticks(data.length);
+                    .ticks(data2.length);
+
+    // const colorScale = scaleLinear()
+    //                 .domain([75,150])
+    //                 .range(["#66c2a5","#66c2a5"])
+    //                 .clamp(true);
 
     svg
       .select(".x-axis")
       .style("transform",`translateY(${dimensions.height}px)`) //to change
       .call(xAxis);
 
-    const yAxis = axisRight(yScale).ticks(9);
+    const yScale = scaleLinear()
+      .domain(extend)  // Todo
+      .range([dimensions.height,0]);  // To Change
+
+    const yAxis = axisLeft(yScale).ticks(9);
     //.precisionFixed(1);
     //.tickFormat(format("s"));
+
     svg
       .select(".y-axis")
-      .style("transform",`translateX(${dimensions.width*0.4}px)`)
+      //.style("transform",`translateX(${dimensions.width*0.4}px)`)
       .call(yAxis);
 
     svg
       .selectAll(".bar")
-      .data(data)
+      .data(data2)
       .join("rect")
       .attr("class","bar")
       .style("transform", "scale(1,-1)")
-      .attr("x",(value,index) => xScale(index))
+      //.attr("x",(value,index) => xScale(index))
+      .attr("x",sequence => {
+        return xScale(sequence.year);
+      })
       .attr("y", -dimensions.height)
+      // .attr("y",sequence => {
+      //   return yScale(sequence.comments);
+      // })
       .attr("width",xScale.bandwidth())
       // add action
-      .on("mouseenter",(event,value) => {
-        const index = svg.selectAll(".bar").nodes().indexOf(event.target);
-        svg
-          .selectAll(".tooltip")
-          .data([value])
-          .join(enter => enter.append("text").attr("y",yScale(value)-4))
-          .attr("class","tooltip")
-          .text(value)
-          .attr("x",xScale(index)+xScale.bandwidth()/2)
-          
-          .attr("text-anchor","middle")
-          .transition()
-          .attr("y",yScale(value)-8)
-          .attr("opacity",1);
-      })
-      .on("mouseleave", () => svg.select(".tooltip").remove())
       .transition()
-      .attr("fill",colorScale)
-      .attr("height",value => dimensions.height - yScale(value));
-  },[data, dimensions]);
+      .attr("fill","#66c2a5")
+      //.attr("height",value => dimensions.height - yScale(value));
+      .attr("height",entry => dimensions.height - yScale(entry.comments));
+  },[data2, extend,dimensions]);
 
 
   return (

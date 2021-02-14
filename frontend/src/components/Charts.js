@@ -71,8 +71,8 @@ let data1 = [
 const allKeys = ["MRDaily", "CommitDaily"];
 
 const colors = {
-  "MRDaily": "green",
-  "CommitDaily": "orange"
+  "MRDaily": "#66c2a5",
+  "CommitDaily": "#a6d854"
 };
 
 var getKeys = function(obj){
@@ -85,30 +85,38 @@ var getKeys = function(obj){
 
 export default function Charts () {
 
-    const commentsData = Object.values(Comments);
-    const extend = [0,Math.max(...commentsData)];
+    //const commentsData = Object.values(Comments);
+    //const extend = [0,Math.max(...commentsData)];
     // console.log(commentsData);
 
 
     const [keys, setKeys] = useState(allKeys);
     //const [data, setData] = useState([25,30,45,60,20,45,75]);
-    const [data, setData] = useState(commentsData);
+    const [data2, setData] = useState(Comments);
+    
+    console.log("data2 ORIGINAL:");
+    data2.map(d => {
+      console.log(d.year);
+      return d.year;
+    })
+    
+    //const [data, setData] = useState(commentsData);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
-    if(startDate){
-      console.log(startDate);
-      console.log(startDate.getDate());
-      console.log(startDate.getMonth()+1);
-      console.log(startDate.getFullYear());
-    }
+    // if(startDate){
+    //   console.log(startDate);
+    //   console.log(startDate.getDate());
+    //   console.log(startDate.getMonth()+1);
+    //   console.log(startDate.getFullYear());
+    // }
 
-    if(endDate){
-      console.log(endDate);
-      console.log(endDate.getDate());
-      console.log(endDate.getMonth()+1);
-      console.log(endDate.getFullYear());
-    }
+    // if(endDate){
+    //   console.log(endDate);
+    //   console.log(endDate.getDate());
+    //   console.log(endDate.getMonth()+1);
+    //   console.log(endDate.getFullYear());
+    // }
 
     // console.log("2020-1-2".split("-"));
 
@@ -168,17 +176,14 @@ export default function Charts () {
             />
           <br/>
           <br/>
+          Comment Contribution
+          <br/>
+          <br/>
+          <BarChart data2={data2}/>
 
-          <BarChart data={data}/>
           <br/><br/><br/>
-          <button onClick={()=>setData(data.map(value=>value+5))}>
-              Incre 5
-          </button>
-          <button onClick={()=>setData(data.filter(value=>value<=35))}>
-              Filter
-          </button>
-
-          <br/><br/><br/><br/><br/>
+          Code Contribution
+          <br/><br/>
           
           <StackedBarChart data={data1} keys={keys} colors={colors} />
           
