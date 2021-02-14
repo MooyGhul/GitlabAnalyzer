@@ -28,7 +28,6 @@ public class CodeContributionController {
     private List<String> members;
 
     @Autowired
-    private CodeContributionHistory codeContribution;
     private CodeContributionRepository contributionRepository;
 
     public CodeContributionController(String url) {
