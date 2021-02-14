@@ -26,51 +26,37 @@ export default function BarChart({ data2 }) {
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
 
-  const data = data2.map(entry=>entry.comments);
-  const extend = [0,Math.max(...data)];
-  //const extend = [0,Math.max(...data)];
-
-  console.log("data2 FLAG:")
-  data2.map(d => {
-    console.log(d.year);
-    return d.year;
-  })
   
 
   useEffect(() => {
     const svg = select(svgRef.current);
 
+    const data = data2.map(entry=>entry.comments);
+
     if(!dimensions) return;
 
     const xScale = scaleBand()
                     .domain(data2.map(d=>d.year))
-                    .range([0,dimensions.width*0.4]) // To Change
+                    .range([0,dimensions.width*0.4]) 
                     .padding(0.5);
 
     const xAxis = axisBottom(xScale)
                     .ticks(data2.length);
 
-    // const colorScale = scaleLinear()
-    //                 .domain([75,150])
-    //                 .range(["#66c2a5","#66c2a5"])
-    //                 .clamp(true);
-
     svg
       .select(".x-axis")
-      .style("transform",`translateY(${dimensions.height}px)`) //to change
+      .style("transform",`translateY(${dimensions.height}px)`) 
       .call(xAxis);
 
     const yScale = scaleLinear()
-      .domain(extend)  // Todo
-      .range([dimensions.height,0]);  // To Change
+      .domain([0,Math.max(...data)])
+      .range([dimensions.height,0]);
 
     const yAxis = axisLeft(yScale).ticks(9);
-    //.precisionFixed(1);
-    //.tickFormat(format("s"));
+
 
     svg
       .select(".y-axis")
-      //.style("transform",`translateX(${dimensions.width*0.4}px)`)
       .call(yAxis);
 
     svg
@@ -79,21 +65,15 @@ export default function BarChart({ data2 }) {
       .join("rect")
       .attr("class","bar")
       .style("transform", "scale(1,-1)")
-      //.attr("x",(value,index) => xScale(index))
       .attr("x",sequence => {
         return xScale(sequence.year);
       })
       .attr("y", -dimensions.height)
-      // .attr("y",sequence => {
-      //   return yScale(sequence.comments);
-      // })
       .attr("width",xScale.bandwidth())
-      // add action
       .transition()
       .attr("fill","#66c2a5")
-      //.attr("height",value => dimensions.height - yScale(value));
       .attr("height",entry => dimensions.height - yScale(entry.comments));
-  },[data2, extend,dimensions]);
+  },[data2 ,dimensions]);
 
 
   return (
