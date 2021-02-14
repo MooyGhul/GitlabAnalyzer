@@ -12,8 +12,8 @@ Run `build.sh` to automatically build backend & frontend, then start via Docker 
 
 3. If you haven't run `build.sh` before, run `ln -s ../../../../frontend/build ./backend/src/main/resources/public` to let Spring pick up on frontend files when you build them
 
-3. Go to the Application class, and click on the play button.
+4. Run `npm run build` in the `frontend` folder.
 
-4. Application is now running at `localhost:8080`
+5. Go to the Application class, and click on the play button.
 
-To build frontend, go to `frontend` folder and run `npm run build`.
+6. Application is now running at `localhost:8080`
