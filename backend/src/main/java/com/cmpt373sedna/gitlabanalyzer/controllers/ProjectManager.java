@@ -8,29 +8,34 @@ import java.util.List;
 public class ProjectManager {
     private @Getter List<ProjectController> allProjects;
     private @Getter List<ProjectController> selectedProjects;
+    final private Extractor e;
+    final private String projectToken;
 
-    public ProjectManager() {
-        this.allProjects = new ArrayList<ProjectController>();
-        this.selectedProjects = new ArrayList<ProjectController>();
+    public ProjectManager(String token) {
+        this.e = new Extractor();
+        this.projectToken = token;
+        this.allProjects = new ArrayList<>();
+        this.selectedProjects = new ArrayList<>();
+
     }
 
-    void addProjects(List<String> urls) {
+    public void addProjects(List<String> urls) {
         for (String url: urls) {
             addProject(url);
         }
     }
 
-    void addProject(String url) {
-        allProjects.add(new ProjectController(url));
+    public void addProject(String url) {
+        allProjects.add(new ProjectController(this.e, url, this.projectToken));
     }
 
-    void selectProjects(List<String> selectedProjects) {
+    public void selectProjects(List<String> selectedProjects) {
         for (String projectName: selectedProjects) {
             selectProject(projectName);
         }
     }
 
-    void selectProject(String projectName) {
+    public void selectProject(String projectName) {
         for (ProjectController project: allProjects) {
             if (project.getProjectName().equals(projectName)) {
                 selectedProjects.add(project);
