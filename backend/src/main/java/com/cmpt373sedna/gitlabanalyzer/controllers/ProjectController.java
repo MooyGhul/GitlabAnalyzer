@@ -1,6 +1,8 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
+import com.cmpt373sedna.gitlabanalyzer.model.MergeRequest;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProjectController {
 
@@ -23,7 +26,7 @@ public class ProjectController {
 
     private int[] weights;
 
-    private List<JSONObject> mergeRequests;
+    private List<MergeRequest> mergeRequests;
 
     private List<JSONObject> issues;
 
@@ -34,6 +37,9 @@ public class ProjectController {
     @Autowired
     private ProjectEntityRepository projectRepository;
 
+    @Autowired
+    private MergeRequestRepository mergeRequestRepository;
+
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
         this.projectToken = projectToken;
@@ -43,7 +49,7 @@ public class ProjectController {
         this.projectId = Integer.parseInt(links[0]);
         this.projectName = links[1];
         this.url = links[2];
-        this.mergeRequests = this.e.getMergeRequests(links[3], this.projectToken);
+        this.mergeRequests = this.getAndParseMergeRequests(links[3]);
         this.issues = this.e.getIssues(links[4], this.projectToken);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
         this.commits = this.e.getCommits(this.url, this.projectToken);
@@ -51,11 +57,19 @@ public class ProjectController {
         this.weights = new int[]{1, 1, 1, 1};
     }
 
+    private List<MergeRequest> getAndParseMergeRequests(String url) {
+        List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
+
+        return mergeRequests.stream().map(MergeRequest::fromGitlabJSON).collect(Collectors.toList());
+    }
+
     //projectRepository is not initialized until AFTER the constructor has been run
     //so the Project has to be added to the repo after the constructor has been initialized
     @PostConstruct
     private void postConstructor() {
         this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
+
+        this.mergeRequestRepository.saveAll(mergeRequests);
     }
 
     public int getNumCommits() {
@@ -76,9 +90,8 @@ public class ProjectController {
             sum += issueComments.size();
         }
 
-        for(JSONObject mr: this.mergeRequests) {
-            int mrId = (Integer) mr.get("iid");
-            String url =  this.url + "/merge_requests/" + mrId;
+        for(MergeRequest mr: this.mergeRequests) {
+            String url =  this.url + "/merge_requests/" + mr.getIid();
             List<JSONObject> mrComments = this.e.getMergeRequestComments(url, this.projectToken);
             sum += mrComments.size();
         }
