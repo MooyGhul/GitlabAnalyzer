@@ -43,7 +43,7 @@ public class Extractor {
     }
 
     private String getApiUrl(String url) {
-        int rootUrlIndex = url.indexOf('/', 7);
+        int rootUrlIndex = url.indexOf('/', url.startsWith("https://") ? 8 : 7);
         String baseUrl = url.substring(0, rootUrlIndex+1);
         String query = url.substring(rootUrlIndex+1);
         query = URLEncoder.encode(query, StandardCharsets.UTF_8);
@@ -59,7 +59,7 @@ public class Extractor {
     }
 
     public List<JSONObject> getMergeRequests(String url, String projectToken) {
-        String mrURL = url + "?private_token=" + projectToken;
+        String mrURL = url + "?state=all&private_token=" + projectToken;
         return getJsonObjects(mrURL);
     }
 
