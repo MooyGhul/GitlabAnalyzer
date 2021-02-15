@@ -1,6 +1,8 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
+import com.cmpt373sedna.gitlabanalyzer.model.Commit;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.repository.CommitRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
@@ -34,6 +36,9 @@ public class ProjectController {
     @Autowired
     private ProjectEntityRepository projectRepository;
 
+    @Autowired
+    private CommitRepository commitRepository;
+
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
         this.projectToken = projectToken;
@@ -56,6 +61,12 @@ public class ProjectController {
     @PostConstruct
     private void postConstructor() {
         this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
+
+        for(JSONObject commit: this.commits) {
+            String title = (String) commit.get("title");
+            String author = (String) commit.get("author_name");
+            this.commitRepository.save(new Commit(title, author));
+        }
     }
 
     public int getNumCommits() {
