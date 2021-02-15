@@ -6,39 +6,39 @@ import { makeStyles } from '@material-ui/core/styles';
  
 const useStyles = makeStyles({
 
-  analyzeButton: {
-    position: "absolute",
-    top: "85%",
-    left: "65%"
-  },
-  batchButton: {
-    position: "absolute",
-    top: "85%",
-    left: "55%"
-  },
-});
+    analyzeButton: {
+      position: "absolute",
+      top: "85%",
+      left: "65%"
+    },
+    batchButton: {
+      position: "absolute",
+      top: "85%",
+      left: "55%"
+    },
+  });
 
-function ProjectListPage(props) { 
-  const classes = useStyles();
-  return (
-    <div>    
+  function ProjectListPage(props) { 
+    const classes = useStyles();
+    return (
+      <div>    
 
-      <Header
-        pageTitle="Project Lists"
-      />   
-        
-      <ProjectList/>     
-    
-      <Button variant="contained" color="primary" className={classes.analyzeButton}>
-        Start Analysis
-      </Button> 
+        <Header
+          pageTitle="Project List"
+        />   
+          
+        <ProjectList/>     
+      
+        <Button variant="contained" color="primary" className={classes.analyzeButton}>
+          Start Analysis
+        </Button> 
 
-      <Button variant="contained" color="secondary" className={classes.batchButton}>
-        Batch Process
-      </Button>    
+        <Button variant="contained" color="secondary" className={classes.batchButton}>
+          Batch Process
+        </Button>    
 
-    </div>
-  );
-}
+      </div>
+    );
+  }
   
   export default ProjectListPage;
