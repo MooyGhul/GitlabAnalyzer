@@ -2,28 +2,43 @@ import React from 'react';
 import Header from './components/Header';
 import Button from '@material-ui/core/Button'; 
 import ProjectList from './components/ProjectList';
-import styles from "./style/projectListPage.module.css"
+import { makeStyles } from '@material-ui/core/styles';
+ 
+const useStyles = makeStyles({
 
-function ProjectListPage(props) {
-    
-    return (
-      <div>
-        <Header
-          pageTitle="Project Lists"
-        />   
+  analyzeButton: {
+    position: "absolute",
+    top: "85%",
+    left: "65%"
+  },
+  batchButton: {
+    position: "absolute",
+    top: "85%",
+    left: "55%"
+  },
+});
+
+function ProjectListPage(props) { 
+  const classes = useStyles();
+  return (
+    <div>    
+
+      <Header
+        pageTitle="Project Lists"
+      />   
         
-        <ProjectList/>     
+      <ProjectList/>     
+    
+      <Button variant="contained" color="primary" className={classes.analyzeButton}>
+        Start Analysis
+      </Button> 
 
-        <Button variant="contained" color="primary" className={styles.startAnalysisButton}>
-          Start Analysis
-        </Button>
+      <Button variant="contained" color="secondary" className={classes.batchButton}>
+        Batch Process
+      </Button>    
 
-        <Button variant="contained" color="secondary" className={styles.batchProcessButton}>
-          Batch Process
-        </Button> 
-
-      </div>
-    );
-  }
+    </div>
+  );
+}
   
   export default ProjectListPage;

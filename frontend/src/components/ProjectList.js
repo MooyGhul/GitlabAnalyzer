@@ -1,5 +1,5 @@
 import React from 'react';   
-import styles from "../style/projectListPage.module.css"
+import styles from "../style/projectList.module.css"
 import { DataGrid } from '@material-ui/data-grid';
 
 
