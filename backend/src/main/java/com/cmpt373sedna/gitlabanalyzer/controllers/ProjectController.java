@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 public class ProjectController {
@@ -15,6 +16,10 @@ public class ProjectController {
     final private @Getter String projectName;
 
     final private Extractor e;
+
+    final private String url;
+
+    final private String projectToken;
 
     private int[] weights;
 
@@ -29,21 +34,28 @@ public class ProjectController {
     @Autowired
     private ProjectEntityRepository projectRepository;
 
-    public ProjectController(String url) {
-        this.e = new Extractor();
+    public ProjectController(Extractor e, String url, String projectToken) {
+        this.e = e;
+        this.projectToken = projectToken;
         // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
-        String[] links = this.e.getBasicRepoLinks();
+        String[] links = this.e.getBasicRepoLinks(url, projectToken);
 
         this.projectId = Integer.parseInt(links[0]);
         this.projectName = links[1];
-        this.mergeRequests = this.e.getMergeRequests(links[2]);
-        this.issues = this.e.getIssues(links[3]);
-        this.members = this.e.getRepoMembers(links[5]);
-        this.commits = this.e.getCommits(url + this.projectId);
+        this.url = links[2];
+        this.mergeRequests = this.e.getMergeRequests(links[3], this.projectToken);
+        this.issues = this.e.getIssues(links[4], this.projectToken);
+        this.members = this.e.getRepoMembers(links[6], this.projectToken);
+        this.commits = this.e.getCommits(this.url, this.projectToken);
 
         this.weights = new int[]{1, 1, 1, 1};
+    }
 
-        projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
+    //projectRepository is not initialized until AFTER the constructor has been run
+    //so the Project has to be added to the repo after the constructor has been initialized
+    @PostConstruct
+    private void postConstructor() {
+        this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
     }
 
     public int getNumCommits() {
@@ -60,13 +72,14 @@ public class ProjectController {
         for(JSONObject issue: this.issues) {
             JSONObject links = (JSONObject) issue.get("_links");
             String issueNotesLink = (String) links.get("notes");
-            List<JSONObject> issueComments = this.e.getIssueComments(issueNotesLink);
+            List<JSONObject> issueComments = this.e.getIssueComments(issueNotesLink, this.projectToken);
             sum += issueComments.size();
         }
 
         for(JSONObject mr: this.mergeRequests) {
             int mrId = (Integer) mr.get("iid");
-            List<JSONObject> mrComments = this.e.getMergeRequestComments(Integer.toString(mrId));
+            String url =  this.url + "/merge_requests/" + mrId;
+            List<JSONObject> mrComments = this.e.getMergeRequestComments(url, this.projectToken);
             sum += mrComments.size();
         }
 
