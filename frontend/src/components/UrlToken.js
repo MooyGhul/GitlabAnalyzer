@@ -4,7 +4,6 @@ import App from '../App';
 import { Token } from '../mockDataDir/mockToken'
 
 // Note: Use token from mockToken
-
 const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
 
 function UrlToken() {
