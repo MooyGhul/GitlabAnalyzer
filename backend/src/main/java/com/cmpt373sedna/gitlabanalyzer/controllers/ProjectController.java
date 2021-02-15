@@ -9,7 +9,12 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class ProjectController {
 
@@ -58,15 +63,21 @@ public class ProjectController {
     //projectRepository is not initialized until AFTER the constructor has been run
     //so the Project has to be added to the repo after the constructor has been initialized
     @PostConstruct
-    private void postConstructor() {
+    private void postConstructor() throws ParseException {
         this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
+
+        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         for(JSONObject issue: this.issues) {
             int issueId = (Integer) issue.get("id");
             String title = (String) issue.get("title");
             JSONObject assigneeObject = (JSONObject) issue.get("assignee");
             String assignee = (String) assigneeObject.get("name");
-
-            this.issueRepository.save(new Issue(issueId, title, assignee));
+            String closedDateString = (String) issue.get("closed_at");
+            Date closedDate = format.parse(closedDateString);
+            if(closedDate == null) {
+                continue;
+            }
+            this.issueRepository.save(new Issue(issueId, title, assignee, closedDate));
         }
     }
 
