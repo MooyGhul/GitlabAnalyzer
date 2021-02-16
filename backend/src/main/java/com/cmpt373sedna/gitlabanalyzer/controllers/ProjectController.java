@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class ProjectController {
 
@@ -32,7 +33,7 @@ public class ProjectController {
 
     private List<JSONObject> mergeRequests;
 
-    private List<JSONObject> issues;
+    private List<Issue> issues;
 
     private List<JSONObject> commits;
 
@@ -53,7 +54,7 @@ public class ProjectController {
         this.projectName = links[1];
         this.url = links[2];
         this.mergeRequests = this.e.getMergeRequests(links[3], this.projectToken);
-        this.issues = this.e.getIssues(links[4], this.projectToken);
+        this.issues = this.getAndParseIssues(links[4]);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
         this.commits = this.e.getCommits(this.url, this.projectToken);
 
@@ -63,22 +64,15 @@ public class ProjectController {
     //projectRepository is not initialized until AFTER the constructor has been run
     //so the Project has to be added to the repo after the constructor has been initialized
     @PostConstruct
-    private void postConstructor() throws ParseException {
+    private void postConstructor() {
         this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
 
-        DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        for(JSONObject issue: this.issues) {
-            int issueId = (Integer) issue.get("id");
-            String title = (String) issue.get("title");
-            JSONObject assigneeObject = (JSONObject) issue.get("assignee");
-            String assignee = (String) assigneeObject.get("name");
-            String closedDateString = (String) issue.get("closed_at");
-            Date closedDate = format.parse(closedDateString);
-            if(closedDate == null) {
-                continue;
-            }
-            this.issueRepository.save(new Issue(issueId, title, assignee, closedDate));
-        }
+        this.issueRepository.saveAll(issues);
+    }
+
+    private List<Issue> getAndParseIssues(String url) {
+        List<JSONObject> issues = this.e.getIssues(url, this.projectToken);
+        return issues.stream().map(Issue::fromGitlabJSON).collect(Collectors.toList());
     }
 
     public int getNumCommits() {
@@ -92,10 +86,9 @@ public class ProjectController {
     public int getNumComments() {
         int sum = 0;
 
-        for(JSONObject issue: this.issues) {
-            JSONObject links = (JSONObject) issue.get("_links");
-            String issueNotesLink = (String) links.get("notes");
-            List<JSONObject> issueComments = this.e.getIssueComments(issueNotesLink, this.projectToken);
+        for(Issue issue: this.issues) {
+            String url = this.url + "/issues" + issue.getIssueId() + "/notes";
+            List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
             sum += issueComments.size();
         }
 
