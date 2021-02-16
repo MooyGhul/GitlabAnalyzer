@@ -21,7 +21,7 @@ const useResizeObserver = (ref) => {
 };
 
 
-export default function BarChart({ data2 }) {
+export default function BarChart({ commentsDataProp }) {
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
@@ -31,17 +31,17 @@ export default function BarChart({ data2 }) {
   useEffect(() => {
     const svg = select(svgRef.current);
 
-    const data = data2.map(entry=>entry.comments);
+    const data = commentsDataProp.map(entry=>entry.comments);
 
     if(!dimensions) return;
 
     const xScale = scaleBand()
-                    .domain(data2.map(d=>d.year))
+                    .domain(commentsDataProp.map(d=>d.year))
                     .range([0,dimensions.width*0.4]) 
                     .padding(0.5);
 
     const xAxis = axisBottom(xScale)
-                    .ticks(data2.length);
+                    .ticks(commentsDataProp.length);
 
     svg
       .select(".x-axis")
@@ -61,7 +61,7 @@ export default function BarChart({ data2 }) {
 
     svg
       .selectAll(".bar")
-      .data(data2)
+      .data(commentsDataProp)
       .join("rect")
       .attr("class","bar")
       .style("transform", "scale(1,-1)")
@@ -73,7 +73,7 @@ export default function BarChart({ data2 }) {
       .transition()
       .attr("fill","#66c2a5")
       .attr("height",entry => dimensions.height - yScale(entry.comments));
-  },[data2 ,dimensions]);
+  },[commentsDataProp ,dimensions]);
 
 
   return (

@@ -108,19 +108,19 @@ const filterData = (data,startDate,endDate) => {
 
 export default function Charts () {
     const [keys, setKeys] = useState(allKeys);
-    const [data2, setData2] = useState(Comments);
-    const [data4, setData4] = useState(contributions);
+    const [commentsData] = useState(Comments);
+    const [contributionsData] = useState(contributions);
     
     const [startDate, setStartDate] = useState(new Date('January 1, 2020 00:00:00'));
     const [endDate, setEndDate] = useState(new Date('Dec 31, 2025 00:00:00'));
 
-    let data1 = data4;
-    let data3 = data2;
+    let contributionsDataProp = contributionsData;
+    let commentsDataProp = commentsData;
     if(endDate && startDate){
-      data1 = filterData(data1,startDate,endDate);
-      data3 = filterData(data2,startDate,endDate);
+      contributionsDataProp = filterData(contributionsData,startDate,endDate);
+      commentsDataProp = filterData(commentsData,startDate,endDate);
     }
-
+ 
     return (
         <div>
           <br/>
@@ -141,7 +141,7 @@ export default function Charts () {
               selected={endDate} 
               onChange={date => setEndDate(date)} 
               dateFormat='MM/dd/yyyy'
-              minDate={new Date()}
+              minDate={startDate}
               filterDate={date => date.getDay() !== 6 && date.getDay !== 0}
               isClearable
               showYearDropdown
@@ -152,13 +152,13 @@ export default function Charts () {
           Comment Contribution
           <br/>
           <br/>
-          <BarChart data2={data3}/>
+          <BarChart commentsDataProp={commentsDataProp}/>
 
           <br/><br/><br/>
           Code Contribution
           <br/><br/>
           
-          <StackedBarChart data={data1} keys={keys} colors={colors} />
+          <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
           
           <br/><br/>
           <div className="fields">

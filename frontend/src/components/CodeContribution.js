@@ -20,7 +20,7 @@ const useResizeObserver = (ref) => {
   return dimensions;
 };
 
-export default function StackedBarChart({ data,keys,colors }) {
+export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
@@ -33,7 +33,7 @@ export default function StackedBarChart({ data,keys,colors }) {
 
 
     const stackGenerator = stack().keys(keys);
-    const layers = stackGenerator(data);
+    const layers = stackGenerator(contributionsDataProp);
     // key: all the data related to the key
     // for every key, there is sequences for every key in the data array
     // key0 : [0,12] [0,16]   => layer 0
@@ -44,7 +44,7 @@ export default function StackedBarChart({ data,keys,colors }) {
     //console.log(extend);
 
     const xScale = scaleBand()
-      .domain(data.map(d => d.year))
+      .domain(contributionsDataProp.map(d => d.year))
       .range([0,width*0.4]) // To Change
       .padding(0.5);
 
@@ -85,7 +85,7 @@ export default function StackedBarChart({ data,keys,colors }) {
       .attr("y", sequence => yScale(sequence[1]))
       .attr("height", sequence => yScale(sequence[0])-yScale(sequence[1]));
 
-  },[colors, data,dimensions,keys]);
+  },[colors, contributionsDataProp,dimensions,keys]);
 
 
   return (
