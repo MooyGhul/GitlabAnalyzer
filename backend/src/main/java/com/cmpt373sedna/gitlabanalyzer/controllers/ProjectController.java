@@ -1,8 +1,8 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.model.Commit;
+import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommitRepository;
+import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
@@ -30,7 +30,7 @@ public class ProjectController {
 
     private List<JSONObject> issues;
 
-    private List<Commit> commits;
+    private List<CommitEntity> commits;
 
     private List<String> members;
 
@@ -38,7 +38,7 @@ public class ProjectController {
     private ProjectEntityRepository projectRepository;
 
     @Autowired
-    private CommitRepository commitRepository;
+    private CommitEntityRepository commitRepository;
 
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
@@ -65,10 +65,10 @@ public class ProjectController {
         this.commitRepository.saveAll(commits);
     }
 
-    private List<Commit> getAndParseCommits() {
+    private List<CommitEntity> getAndParseCommits() {
         List<JSONObject> commits = this.e.getCommits(this.url, this.projectToken);
 
-        return commits.stream().map(Commit::fromGitlabJSON).collect(Collectors.toList());
+        return commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
     public int getNumCommits() {

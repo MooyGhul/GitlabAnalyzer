@@ -17,15 +17,15 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Commit {
+public class CommitEntity {
     private @Id @GeneratedValue long commitId;
     private String commitName;
     private String author;
     private Instant commitDate;
 
-    public static Commit fromGitlabJSON(JSONObject json) {
+    public static CommitEntity fromGitlabJSON(JSONObject json) {
 
-        return Commit.builder()
+        return CommitEntity.builder()
                 .commitName(json.getString("title"))
                 .author(json.getString("author_name"))
                 .commitDate(Instant.parse(json.getString("committed_date")))
