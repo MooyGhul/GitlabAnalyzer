@@ -13,12 +13,14 @@ import javax.persistence.Id;
 import java.time.Instant;
 import java.util.List;
 
+import static org.apache.logging.log4j.util.Strings.isNotBlank;
+
 @Data
 @Builder
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class MergeRequest {
+public class MergeRequestEntity {
     private @Id int id;
     private int projectId;
     private int iid;
@@ -32,15 +34,17 @@ public class MergeRequest {
 
     private @ElementCollection List<String> commitIds;
 
-    public static MergeRequest fromGitlabJSON(JSONObject json) {
-        return MergeRequest.builder()
+    public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
+        String mergedAt = json.optString("merged_at");
+
+        return MergeRequestEntity.builder()
                 .id(json.getInt("id"))
                 .iid(json.getInt("iid"))
                 .authorId(json.getJSONObject("author").getInt("id"))
                 .projectId(json.getInt("project_id"))
                 .status(json.getString("state"))
                 .createdAt(Instant.parse(json.getString("created_at")))
-                .mergedAt(Instant.parse(json.getString("merged_at")))
+                .mergedAt(isNotBlank(mergedAt) ? Instant.parse(mergedAt) : null)
                 .build();
     }
 }
