@@ -15,7 +15,7 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-public class Issue {
+public class IssueEntity {
     private @Id int issueId;
     private int projectId;
     private String issueName;
@@ -24,14 +24,14 @@ public class Issue {
     private @Nullable Instant closedDate;
 
 
-    public static Issue fromGitlabJSON(JSONObject json) {
+    public static IssueEntity fromGitlabJSON(JSONObject json) {
         Object o = json.get("assignee");
         JSONObject assigneeObject = !JSONObject.NULL.equals(o) ? (JSONObject) o : null;
 
         o = json.get("closed_at");
         String closedDateString = !JSONObject.NULL.equals(o) ? json.getString("created_at") : null;
 
-        return Issue.builder()
+        return IssueEntity.builder()
                 .issueId(json.getInt("id"))
                 .projectId(json.getInt("project_id"))
                 .issueName(json.getString("title"))

@@ -1,20 +1,15 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.model.Issue;
+import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.IssueRepository;
+import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class ProjectController {
@@ -33,7 +28,7 @@ public class ProjectController {
 
     private List<JSONObject> mergeRequests;
 
-    private List<Issue> issues;
+    private List<IssueEntity> issues;
 
     private List<JSONObject> commits;
 
@@ -42,7 +37,7 @@ public class ProjectController {
     @Autowired
     private ProjectEntityRepository projectRepository;
     @Autowired
-    private IssueRepository issueRepository;
+    private IssueEntityRepository issueRepository;
 
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
@@ -70,9 +65,9 @@ public class ProjectController {
         this.issueRepository.saveAll(issues);
     }
 
-    private List<Issue> getAndParseIssues(String url) {
+    private List<IssueEntity> getAndParseIssues(String url) {
         List<JSONObject> issues = this.e.getIssues(url, this.projectToken);
-        return issues.stream().map(Issue::fromGitlabJSON).collect(Collectors.toList());
+        return issues.stream().map(IssueEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
     public int getNumCommits() {
@@ -86,7 +81,7 @@ public class ProjectController {
     public int getNumComments() {
         int sum = 0;
 
-        for(Issue issue: this.issues) {
+        for(IssueEntity issue: this.issues) {
             String url = this.url + "/issues" + issue.getIssueId() + "/notes";
             List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
             sum += issueComments.size();
