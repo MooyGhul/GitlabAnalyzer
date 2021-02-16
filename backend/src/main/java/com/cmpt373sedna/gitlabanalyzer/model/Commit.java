@@ -1,31 +1,34 @@
 package com.cmpt373sedna.gitlabanalyzer.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.json.JSONObject;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.Instant;
 
-@Entity
 @Data
+@Builder
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Commit {
     private @Id @GeneratedValue long commitId;
     private String commitName;
     private String author;
-    private Date commitDate;
-    private final String EMPTY_STRING = "";
+    private Instant commitDate;
 
-    public Commit(String commitName, String author, Date commitDate) {
-        this.commitName = commitName;
-        this.author = author;
-        this.commitDate = commitDate;
+    public static Commit fromGitlabJSON(JSONObject json) {
 
-    }
-
-    public Commit() {
-        this.commitName = EMPTY_STRING;
-        this.author = EMPTY_STRING;
-        this.commitDate = null;
+        return Commit.builder()
+                .commitName(json.getString("title"))
+                .author(json.getString("author_name"))
+                .commitDate(Instant.parse(json.getString("committed_date")))
+                .build();
     }
 }
