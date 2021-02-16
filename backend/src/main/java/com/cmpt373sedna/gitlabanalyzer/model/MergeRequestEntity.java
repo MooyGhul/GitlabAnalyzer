@@ -30,7 +30,7 @@ public class MergeRequestEntity {
     private Instant createdAt;
     private @Nullable Instant mergedAt;
 
-    private int authorId;
+    private String author;
 
     private @ElementCollection List<String> commitIds;
 
@@ -40,7 +40,7 @@ public class MergeRequestEntity {
         return MergeRequestEntity.builder()
                 .id(json.getInt("id"))
                 .iid(json.getInt("iid"))
-                .authorId(json.getJSONObject("author").getInt("id"))
+                .author(json.getJSONObject("author").getString("username"))
                 .projectId(json.getInt("project_id"))
                 .status(json.getString("state"))
                 .createdAt(Instant.parse(json.getString("created_at")))
