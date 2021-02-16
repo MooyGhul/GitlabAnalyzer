@@ -28,12 +28,15 @@ public class MergeRequest {
     private Instant createdAt;
     private @Nullable Instant mergedAt;
 
+    private int authorId;
+
     private @ElementCollection List<String> commitIds;
 
     public static MergeRequest fromGitlabJSON(JSONObject json) {
         return MergeRequest.builder()
                 .id(json.getInt("id"))
                 .iid(json.getInt("iid"))
+                .authorId(json.getJSONObject("author").getInt("id"))
                 .projectId(json.getInt("project_id"))
                 .status(json.getString("state"))
                 .createdAt(Instant.parse(json.getString("created_at")))
