@@ -1,6 +1,8 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
+import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProjectController {
 
@@ -27,12 +30,15 @@ public class ProjectController {
 
     private List<JSONObject> issues;
 
-    private List<JSONObject> commits;
+    private List<CommitEntity> commits;
 
     private List<String> members;
 
     @Autowired
     private ProjectEntityRepository projectRepository;
+
+    @Autowired
+    private CommitEntityRepository commitRepository;
 
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
@@ -46,7 +52,7 @@ public class ProjectController {
         this.mergeRequests = this.e.getMergeRequests(links[3], this.projectToken);
         this.issues = this.e.getIssues(links[4], this.projectToken);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
-        this.commits = this.e.getCommits(this.url, this.projectToken);
+        this.commits = this.getAndParseCommits();
 
         this.weights = new int[]{1, 1, 1, 1};
     }
@@ -56,6 +62,13 @@ public class ProjectController {
     @PostConstruct
     private void postConstructor() {
         this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
+        this.commitRepository.saveAll(commits);
+    }
+
+    private List<CommitEntity> getAndParseCommits() {
+        List<JSONObject> commits = this.e.getCommits(this.url, this.projectToken);
+
+        return commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
     public int getNumCommits() {
