@@ -111,8 +111,8 @@ export default function Charts () {
     const [data2, setData2] = useState(Comments);
     const [data4, setData4] = useState(contributions);
     
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
+    const [startDate, setStartDate] = useState(new Date('January 1, 2020 00:00:00'));
+    const [endDate, setEndDate] = useState(new Date('Dec 31, 2025 00:00:00'));
 
     let data1 = data4;
     let data3 = data2;
