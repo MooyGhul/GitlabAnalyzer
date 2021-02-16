@@ -1,7 +1,9 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
+import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequest;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
@@ -30,12 +32,15 @@ public class ProjectController {
 
     private List<JSONObject> issues;
 
-    private List<JSONObject> commits;
+    private List<CommitEntity> commits;
 
     private List<String> members;
 
     @Autowired
     private ProjectEntityRepository projectRepository;
+
+    @Autowired
+    private CommitEntityRepository commitRepository;
 
     @Autowired
     private MergeRequestRepository mergeRequestRepository;
@@ -52,15 +57,9 @@ public class ProjectController {
         this.mergeRequests = this.getAndParseMergeRequests(links[3]);
         this.issues = this.e.getIssues(links[4], this.projectToken);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
-        this.commits = this.e.getCommits(this.url, this.projectToken);
+        this.commits = this.getAndParseCommits();
 
         this.weights = new int[]{1, 1, 1, 1};
-    }
-
-    private List<MergeRequest> getAndParseMergeRequests(String url) {
-        List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
-
-        return mergeRequests.stream().map(MergeRequest::fromGitlabJSON).collect(Collectors.toList());
     }
 
     //projectRepository is not initialized until AFTER the constructor has been run
@@ -68,8 +67,20 @@ public class ProjectController {
     @PostConstruct
     private void postConstructor() {
         this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
-
+        this.commitRepository.saveAll(commits);
         this.mergeRequestRepository.saveAll(mergeRequests);
+    }
+
+    private List<CommitEntity> getAndParseCommits() {
+        List<JSONObject> commits = this.e.getCommits(this.url, this.projectToken);
+
+        return commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
+    }
+
+    private List<MergeRequest> getAndParseMergeRequests(String url) {
+        List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
+
+        return mergeRequests.stream().map(MergeRequest::fromGitlabJSON).collect(Collectors.toList());
     }
 
     public int getNumCommits() {

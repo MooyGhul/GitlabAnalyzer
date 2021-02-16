@@ -8,6 +8,7 @@ function App(props) {
       <Header
         pageTitle="Overview"
       />
+
       <ScoreBoard />
 
     </div>

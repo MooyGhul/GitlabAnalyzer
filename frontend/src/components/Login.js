@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import { AdminUser } from '../mockDataDir/mockAdminUser';
-import App from '../App';
+import UrlToken from './UrlToken';
 import styles from '../style/Login.module.css';
 
 //Note: Use AdminUser's username and password from mockInfo to login
@@ -15,10 +15,12 @@ function Login() {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
             ReactDOM.render(
             <React.StrictMode>
-                <App />
+                <UrlToken />
               </React.StrictMode>,
               document.getElementById('root')
             );
+        } else {
+            setUser({name:'', password: ''});
         }
     }
 
@@ -33,11 +35,11 @@ function Login() {
             <form className={styles.form} onSubmit={loginHandler}>
                 <label className={styles.label}>
                     Username
-                    <input type ='text' onChange={e=> setUser({...user, name: e.target.value})} />
+                    <input type ='text' value={user.name} onChange={e=> setUser({...user, name: e.target.value})} />
                 </label>
                 <label className={styles.label}>
                     Password
-                    <input type ='password' onChange={e=> setUser({...user, password: e.target.value})} />
+                    <input type ='password' value={user.password} onChange={e=> setUser({...user, password: e.target.value})} />
                 </label>
                     <button className={styles.button} type ='submit'>
                         Login
