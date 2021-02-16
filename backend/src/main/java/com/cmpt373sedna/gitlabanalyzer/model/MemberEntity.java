@@ -1,24 +1,37 @@
 package com.cmpt373sedna.gitlabanalyzer.model;
 
-import lombok.Getter;
-import org.json.JSONObject;
 
+import lombok.Getter;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 /**
  * Defines
  */
+@Entity
 public class MemberEntity {
     private @Id @Getter String memberID;
-    //TODO: add Commit class
-    //TODO: add Issue Class
-    //TODO: add Merge request
-    private @Getter JSONObject commentDetails;
-    private @Getter JSONObject codeContributionDetails;
+    private @Getter String name;
 
-    public MemberEntity(String memberID, JSONObject commentDetails, JSONObject codeContributionDetails) {
+    @OneToMany(mappedBy = "CommitEntity", cascade= CascadeType.ALL)
+    private List<CommitEntity> commits;
+
+    @OneToMany(mappedBy = "IssueEntity", cascade=CascadeType.ALL)
+    private List<IssueEntity> issues;
+
+    @OneToMany(mappedBy = "MergeRequestEntity", cascade=CascadeType.ALL)
+    private List<MergeRequestEntity> mergeRequests;
+
+    public MemberEntity(String memberID, String name, List<CommitEntity> commits, List<IssueEntity> issues, List<MergeRequestEntity> mergeRequests) {
         this.memberID = memberID;
-        this.commentDetails = commentDetails;
-        this.codeContributionDetails = codeContributionDetails;
+        this.name = name;
+        this.commits = commits;
+        this.issues = issues;
+        this.mergeRequests = mergeRequests;
     }
+
 }

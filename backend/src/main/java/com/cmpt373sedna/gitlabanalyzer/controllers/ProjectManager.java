@@ -16,7 +16,6 @@ public class ProjectManager {
         this.projectToken = token;
         this.allProjects = new ArrayList<>();
         this.selectedProjects = new ArrayList<>();
-
     }
 
     public void addProjects(List<String> urls) {
@@ -42,5 +41,9 @@ public class ProjectManager {
                 return;
             }
         }
+    }
+
+    public ProjectController getProject(int i) {
+        return allProjects.get(i);
     }
 }
