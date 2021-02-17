@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Button from '@material-ui/core/Button'; 
 import ProjectList from './components/ProjectList';
 import { makeStyles } from '@material-ui/core/styles';
+import { BrowserRouter } from 'react-router-dom';
  
 const useStyles = makeStyles({
 
@@ -21,23 +22,25 @@ const useStyles = makeStyles({
   function ProjectListPage(props) { 
     const classes = useStyles();
     return (
-      <div>    
+      <BrowserRouter>
+        <div>    
 
-        <Header
-          pageTitle="Project List"
-        />   
-          
-        <ProjectList/>     
-      
-        <Button variant="contained" color="primary" className={classes.analyzeButton}>
-          Start Analysis
-        </Button> 
+          <Header
+            pageTitle="Project List"
+          />   
+            
+          <ProjectList/>     
+        
+          <Button variant="contained" color="primary" className={classes.analyzeButton}>
+            Start Analysis
+          </Button> 
 
-        <Button variant="contained" color="secondary" className={classes.batchButton}>
-          Batch Process
-        </Button>    
+          <Button variant="contained" color="secondary" className={classes.batchButton}>
+            Batch Process
+          </Button>    
 
-      </div>
+        </div>
+      </BrowserRouter>
     );
   }
   
