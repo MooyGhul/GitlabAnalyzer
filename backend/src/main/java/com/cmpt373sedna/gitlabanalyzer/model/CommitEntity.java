@@ -1,9 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.json.JSONObject;
 
 import javax.persistence.Entity;
@@ -18,10 +15,11 @@ import java.time.Instant;
 @AllArgsConstructor
 
 public class CommitEntity {
-    private @Id @GeneratedValue long commitId;
-    private String commitName;
-    private String author;
-    private Instant commitDate;
+    private @Getter
+    @Id @GeneratedValue long commitId;
+    private @Getter String commitName;
+    private @Getter String author;
+    private @Getter Instant commitDate;
 
     public static CommitEntity fromGitlabJSON(JSONObject json) {
 
