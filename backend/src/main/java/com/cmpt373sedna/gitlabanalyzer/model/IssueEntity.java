@@ -8,6 +8,8 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.Instant;
 
 @Data
@@ -22,6 +24,10 @@ public class IssueEntity {
     private @Nullable String assignee;
     private @Nullable Instant openedDate;
     private @Nullable Instant closedDate;
+
+    @ManyToOne
+    //@JoinColumn(referencedColumnName = "memberID")
+    private MemberEntity memberEntity;
 
 
     public static IssueEntity fromGitlabJSON(JSONObject json) {

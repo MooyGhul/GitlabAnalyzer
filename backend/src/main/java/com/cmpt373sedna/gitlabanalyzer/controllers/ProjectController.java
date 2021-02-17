@@ -1,18 +1,13 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
+import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +35,7 @@ public class ProjectController {
 
     @Autowired
     private ProjectEntityRepository projectRepository;
+
     @Autowired
     private IssueEntityRepository issueRepository;
 
@@ -48,6 +44,9 @@ public class ProjectController {
 
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
+
+    @Autowired
+    private MemberEntityRepository memberEntityRepository;
 
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
@@ -60,7 +59,7 @@ public class ProjectController {
         this.url = links[2];
         this.mergeRequestEntities = this.getAndParseMergeRequests(links[3]);
         this.issues = this.getAndParseIssues(links[4]);
-        this.members = this.e.getRepoMembers(links[6], this.projectToken);
+        this.members = this.e.getRepoMembers(links[6], this.projectToken); //.getAndParseMembers(links[6]);
         this.commits = this.getAndParseCommits();
 
         this.weights = new int[]{1, 1, 1, 1};
@@ -74,6 +73,8 @@ public class ProjectController {
         this.commitRepository.saveAll(commits);
         this.mergeRequestEntityRepository.saveAll(mergeRequestEntities);
         this.issueRepository.saveAll(issues);
+        List<MemberEntity> memberEntities = getAndParseMembers();
+        this.memberEntityRepository.saveAll(memberEntities);
     }
 
     private List<IssueEntity> getAndParseIssues(String url) {
@@ -91,6 +92,19 @@ public class ProjectController {
         List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
 
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
+    }
+
+    private List<MemberEntity> getAndParseMembers() {
+        List<MemberEntity> memberEntities = new ArrayList<>();
+
+        for (int i = 0; i < this.members.size(); i++) {
+            List<MergeRequestEntity> mergeRequests = mergeRequestEntityRepository.getUserMergeRequests(this.members.get(i));
+            List<IssueEntity> issues = issueRepository.getUserIssues(this.members.get(i));
+            List<CommitEntity> commits = commitRepository.getUserCommits(this.members.get(i));
+            memberEntities.add(new MemberEntity(this.members.get(i), commits, issues, mergeRequests));
+        }
+
+        return memberEntities;
     }
 
     public int getNumCommits() {

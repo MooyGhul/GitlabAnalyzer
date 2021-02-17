@@ -1,14 +1,13 @@
 package com.cmpt373sedna.gitlabanalyzer.model;
 
+import com.sun.istack.Nullable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.json.JSONObject;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
 
 @Data
@@ -22,6 +21,10 @@ public class CommitEntity {
     private String commitName;
     private String author;
     private Instant commitDate;
+
+    @ManyToOne
+    //@JoinColumn(referencedColumnName = "memberID")
+    private MemberEntity memberEntity;
 
     public static CommitEntity fromGitlabJSON(JSONObject json) {
 

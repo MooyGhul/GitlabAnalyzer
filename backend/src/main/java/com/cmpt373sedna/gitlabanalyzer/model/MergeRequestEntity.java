@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
 
@@ -33,6 +31,10 @@ public class MergeRequestEntity {
     private String author;
 
     private @ElementCollection List<String> commitIds;
+
+    @ManyToOne
+    //@JoinColumn(referencedColumnName = "memberID")
+    private MemberEntity memberEntity;
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
         String mergedAt = json.optString("merged_at");
