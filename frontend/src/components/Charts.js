@@ -75,14 +75,6 @@ const colors = {
   "CommitDaily": "#a6d854"
 };
 
-var getKeys = function(obj){
-  var values = [];
-  for(var value in obj){
-    values.push(value);
-  }
-  return values;
-}
-
 const filterData = (data,startDate,endDate) => {
   return data.filter(function(currData){
     console.log(currData.year.split("-"));
