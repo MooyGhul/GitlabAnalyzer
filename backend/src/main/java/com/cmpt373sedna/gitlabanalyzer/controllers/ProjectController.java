@@ -11,11 +11,15 @@ import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Controller
 public class ProjectController {
 
     final private int projectId;
@@ -40,6 +44,7 @@ public class ProjectController {
 
     @Autowired
     private ProjectEntityRepository projectRepository;
+
     @Autowired
     private IssueEntityRepository issueRepository;
 
@@ -125,5 +130,17 @@ public class ProjectController {
 
     public List<String> getMembers() {
         return members;
+    }
+
+    @GetMapping("/project/{projectId}")
+    JSONObject getProject(@PathVariable(value="projectId") int projectId, @RequestParam String startDate,
+                                       @RequestParam String endDate) {
+        Optional<ProjectEntity> project = this.projectRepository.findById(projectId);
+        Iterable<CommitEntity> commits = this.commitRepository.findAll();
+        JSONObject returnObj = new JSONObject();
+        returnObj.put("project", project);
+        returnObj.put("members", this.getMembers());
+        returnObj.put("commits", commits);
+        return returnObj;
     }
 }

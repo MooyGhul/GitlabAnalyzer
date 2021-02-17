@@ -1,6 +1,7 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -9,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Component
 public class Extractor {
     private final RestTemplate restTemplate;
 
@@ -21,7 +22,6 @@ public class Extractor {
         try {
             String tempUri = getApiUrl(url);
             URI uri = URI.create(tempUri +"?access_token=" + projectToken);
-            // Will need to change uri for an input url parameter
             String result = restTemplate.getForObject(uri, String.class);
             JSONObject jsonObject = new JSONObject(result);
 
