@@ -3,40 +3,51 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class Extractor {
-    final String personalToken = "XQUSyUSDiQUxsy6CoP8_";
-    final String projectId = "2"; // Our GitLabAnalyzer Repo
-    final String uri = "http://cmpt373-1211-14.cmpt.sfu.ca:8929/api/v4/projects/" + projectId;
     private final RestTemplate restTemplate;
 
     public Extractor() {
         this.restTemplate = new RestTemplate();
     }
 
-    public String[] getBasicRepoLinks() {
+    public String[] getBasicRepoLinks(String url, String projectToken) {
         try {
+            String tempUri = getApiUrl(url);
+            URI uri = URI.create(tempUri +"?access_token=" + projectToken);
             // Will need to change uri for an input url parameter
-            String result = restTemplate.getForObject(uri +"?private_token=" + personalToken, String.class);
+            String result = restTemplate.getForObject(uri, String.class);
             JSONObject jsonObject = new JSONObject(result);
 
             Integer id = (Integer) jsonObject.get("id");
             String name = (String)jsonObject.get("name");
             JSONObject links = (JSONObject) jsonObject.get("_links");
+            String rootLink = (String) links.get("self");
             String mergeRequestLink = (String) links.get("merge_requests");
             String issuesLink = (String) links.get("issues");
             String repoBranchesLink = (String)  links.get("repo_branches");
             String membersLink = (String)  links.get("members");
 
-            return new String[]{id.toString(), name, mergeRequestLink, issuesLink, repoBranchesLink, membersLink};
+            return new String[]{id.toString(), name, rootLink, mergeRequestLink, issuesLink, repoBranchesLink, membersLink};
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    private String getApiUrl(String url) {
+        int rootUrlIndex = url.indexOf('/', url.startsWith("https://") ? 8 : 7);
+        String baseUrl = url.substring(0, rootUrlIndex+1);
+        String query = url.substring(rootUrlIndex+1);
+        query = URLEncoder.encode(query, StandardCharsets.UTF_8);
+        return baseUrl + "api/v4/projects/" + query;
     }
 
     private List<JSONObject> getJsonObjects(String URL) {
@@ -47,38 +58,38 @@ public class Extractor {
         return jsonList;
     }
 
-    public List<JSONObject> getMergeRequests(String url) {
-        String mrURL = url + "?private_token=" + personalToken;
+    public List<JSONObject> getMergeRequests(String url, String projectToken) {
+        String mrURL = url + "?state=all&private_token=" + projectToken;
         return getJsonObjects(mrURL);
     }
 
-    public List<JSONObject> getMergeRequestComments(String MRId) {
-        String MRCommentURL = uri + "/merge_requests/" + MRId + "/notes?private_token=" + personalToken;
+    public List<JSONObject> getMergeRequestComments(String url, String projectToken) {
+        String MRCommentURL = url + "/notes?access_token=" + projectToken;
         return getJsonObjects(MRCommentURL);
     }
 
-    public List<JSONObject> getBranches(String url) {
-        String branchURL = url + "?private_token=" + personalToken;
+    public List<JSONObject> getBranches(String url, String projectToken) {
+        String branchURL = url + "?access_token=" + projectToken;
         return getJsonObjects(branchURL);
     }
 
-    public List<JSONObject> getIssues(String url) {
-        String issuesURL = url + "?private_token=" + personalToken;
+    public List<JSONObject> getIssues(String url, String projectToken) {
+        String issuesURL = url + "?access_token=" + projectToken;
         return getJsonObjects(issuesURL);
     }
 
-    public List<JSONObject> getCommits(String url) {
-        String commitURL = url + "/repository/commits?private_token=" + personalToken;
+    public List<JSONObject> getCommits(String url, String projectToken) {
+        String commitURL = url + "/repository/commits?access_token=" + projectToken;
         return getJsonObjects(commitURL);
     }
 
-    public List<JSONObject> getIssueComments(String url) {
-        String commentUrl = url + "?private_token=" + personalToken;
+    public List<JSONObject> getIssueComments(String url, String projectToken) {
+        String commentUrl = url + "?access_token=" + projectToken;
         return getJsonObjects(commentUrl);
     }
 
-    public List<String> getRepoMembers(String url) {
-        String memberURL = url + "?private_token=" + personalToken;
+    public List<String> getRepoMembers(String url, String projectToken) {
+        String memberURL = url + "?access_token=" + projectToken;
         String result = restTemplate.getForObject(memberURL, String.class);
         JSONArray objs = new JSONArray(result);
         List<String> members = new ArrayList<>();
