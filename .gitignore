@@ -3,3 +3,4 @@
 .gradle/
 .idea/
 backend/lombok.config
+/backend/src/main/resources/public/*
