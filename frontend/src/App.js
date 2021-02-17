@@ -10,7 +10,6 @@ function App(props) {
       <Header
         pageTitle="Overview"
       />
-      <br/><br/><br/>
       <ScoreBoard />
       <br/><br/><br/>
       <Charts />
