@@ -11,18 +11,15 @@ import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Controller
 public class ProjectController {
 
-    final private int projectId;
+    final private @Getter int projectId;
 
     final private @Getter String projectName;
 
@@ -34,13 +31,13 @@ public class ProjectController {
 
     private int[] weights;
 
-    private List<MergeRequestEntity> mergeRequestEntities;
+    private @Getter List<MergeRequestEntity> mergeRequestEntities;
 
     private List<IssueEntity> issues;
 
-    private List<CommitEntity> commits;
+    private @Getter List<CommitEntity> commits;
 
-    private List<String> members;
+    private @Getter List<String> members;
 
     @Autowired
     private ProjectEntityRepository projectRepository;
@@ -75,10 +72,11 @@ public class ProjectController {
     //so the Project has to be added to the repo after the constructor has been initialized
     @PostConstruct
     private void postConstructor() {
-        this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
-        this.commitRepository.saveAll(commits);
-        this.mergeRequestEntityRepository.saveAll(mergeRequestEntities);
-        this.issueRepository.saveAll(issues);
+        this.projectRepository.save(new ProjectEntity(this.projectId, this.projectName, this.getNumCommits(),
+                                        this.getNumMR(), this.getNumComments()));
+        this.commitRepository.saveAll(this.commits);
+        this.mergeRequestEntityRepository.saveAll(this.mergeRequestEntities);
+        this.issueRepository.saveAll(this.issues);
     }
 
     private List<IssueEntity> getAndParseIssues(String url) {
@@ -126,21 +124,5 @@ public class ProjectController {
 
     public int getNumIssues() {
         return this.issues.size();
-    }
-
-    public List<String> getMembers() {
-        return members;
-    }
-
-    @GetMapping("/project/{projectId}")
-    JSONObject getProject(@PathVariable(value="projectId") int projectId, @RequestParam String startDate,
-                                       @RequestParam String endDate) {
-        Optional<ProjectEntity> project = this.projectRepository.findById(projectId);
-        Iterable<CommitEntity> commits = this.commitRepository.findAll();
-        JSONObject returnObj = new JSONObject();
-        returnObj.put("project", project);
-        returnObj.put("members", this.getMembers());
-        returnObj.put("commits", commits);
-        return returnObj;
     }
 }
