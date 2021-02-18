@@ -22,9 +22,12 @@ public class CommitEntity {
     private String author;
     private Instant commitDate;
 
+    /*
     @ManyToOne
     //@JoinColumn(referencedColumnName = "memberID")
     private MemberEntity memberEntity;
+
+     */
 
     public static CommitEntity fromGitlabJSON(JSONObject json) {
 

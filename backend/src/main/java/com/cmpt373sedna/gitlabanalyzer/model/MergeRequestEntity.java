@@ -32,9 +32,11 @@ public class MergeRequestEntity {
 
     private @ElementCollection List<String> commitIds;
 
+    /*
     @ManyToOne
     //@JoinColumn(referencedColumnName = "memberID")
     private MemberEntity memberEntity;
+     */
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
         String mergedAt = json.optString("merged_at");

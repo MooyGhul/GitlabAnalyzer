@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface MergeRequestEntityRepository extends CrudRepository<MergeRequestEntity, Integer> {
-    @Query("SELECT mr FROM MergeRequestEntity mr WHERE mr.author = ?1")
-    List<MergeRequestEntity> getUserMergeRequests(String author);
+    //@Query("SELECT mr FROM MergeRequestEntity mr WHERE mr.author = ?1")
+    List<MergeRequestEntity> findAllByAuthor(String author);
 }
