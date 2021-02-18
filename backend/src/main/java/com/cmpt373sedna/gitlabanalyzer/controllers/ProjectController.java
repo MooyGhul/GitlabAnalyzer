@@ -5,10 +5,8 @@ import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,8 +32,6 @@ public class ProjectController {
 
     private List<String> members;
 
-    private @Getter List<MemberEntity> memberEntities;
-
     @Autowired
     private ProjectEntityRepository projectRepository;
 
@@ -47,9 +43,6 @@ public class ProjectController {
 
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
-
-    //@Autowired
-    //private MemberEntityRepository memberEntityRepository;
 
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
@@ -76,8 +69,6 @@ public class ProjectController {
         this.commitRepository.saveAll(commits);
         this.mergeRequestEntityRepository.saveAll(mergeRequestEntities);
         this.issueRepository.saveAll(issues);
-        this.memberEntities = getAndParseMembers();
-        //this.memberEntityRepository.saveAll(memberEntities);
     }
 
     private List<IssueEntity> getAndParseIssues(String url) {
@@ -95,19 +86,6 @@ public class ProjectController {
         List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
 
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
-    }
-
-    private List<MemberEntity> getAndParseMembers() {
-        List<MemberEntity> mes = new ArrayList<>();
-
-        for (int i = 0; i < this.members.size(); i++) {
-            //List<MergeRequestEntity> mergeRequests = mergeRequestEntityRepository.getUserMergeRequests(this.members.get(i));
-            //List<IssueEntity> issues = issueRepository.getUserIssues(this.members.get(i));
-            //List<CommitEntity> commits = commitRepository.getUserCommits(this.members.get(i));
-            mes.add(new MemberEntity(this.members.get(i)));
-        }
-
-        return mes;
     }
 
     public int getNumCommits() {
@@ -142,20 +120,5 @@ public class ProjectController {
 
     public List<String> getMembers() {
         return members;
-    }
-
-    public void printMemberEntities() {
-        commitRepository.findAllByAuthor(members.get(0));
-        mergeRequestEntityRepository.findAllByAuthor(members.get(0));
-        issueRepository.findAllByAssignee(members.get(0));
-
-        for (MemberEntity m: memberEntities) {
-
-            System.out.println(m.getMemberID());
-            System.out.println(m.getMergeRequests());
-            System.out.println(m.getCommits());
-            System.out.println(m.getIssues());
-            System.out.println("\n\n");
-        }
     }
 }

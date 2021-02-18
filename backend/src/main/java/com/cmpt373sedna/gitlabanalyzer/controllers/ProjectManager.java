@@ -42,8 +42,4 @@ public class ProjectManager {
             }
         }
     }
-
-    public ProjectController getProject(int i) {
-        return allProjects.get(i);
-    }
 }

@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface IssueEntityRepository extends CrudRepository<IssueEntity, Integer> {
-    //@Query("SELECT i FROM IssueEntity i WHERE i.assignee = ?1")
+
     List<IssueEntity> findAllByAssignee(String assignee);
 }
 
