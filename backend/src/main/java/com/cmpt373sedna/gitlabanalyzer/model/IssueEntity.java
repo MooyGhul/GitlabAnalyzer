@@ -25,14 +25,6 @@ public class IssueEntity {
     private @Nullable Instant openedDate;
     private @Nullable Instant closedDate;
 
-    /*
-    @ManyToOne
-    //@JoinColumn(referencedColumnName = "memberID")
-    private MemberEntity memberEntity;
-
-     */
-
-
     public static IssueEntity fromGitlabJSON(JSONObject json) {
         Object o = json.get("assignee");
         JSONObject assigneeObject = !JSONObject.NULL.equals(o) ? (JSONObject) o : null;

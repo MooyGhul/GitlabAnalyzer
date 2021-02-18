@@ -17,7 +17,7 @@ class MergeRequestEntityTest {
                 .iid(1)
                 .projectId(3)
                 .status("opened")
-                .authorId(1)
+                .author("admin")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
                 .mergedAt(null)
                 .build();
@@ -36,7 +36,7 @@ class MergeRequestEntityTest {
                 .iid(1)
                 .projectId(3)
                 .status("merged")
-                .authorId(1)
+                .author("admin")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
                 .mergedAt(Instant.parse("2018-09-07T11:16:17.520Z"))
                 .build();
