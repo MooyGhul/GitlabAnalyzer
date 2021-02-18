@@ -11,7 +11,6 @@ import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 
 import javax.annotation.PostConstruct;
 import java.util.List;

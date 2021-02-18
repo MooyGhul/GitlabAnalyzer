@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/project")
-public class RESTController {
+public class ProjectRESTController {
 
     private ProjectManager projectManager;
 
@@ -63,7 +64,7 @@ public class RESTController {
 
     @GetMapping("/{projectId}/merge_requests")
     Iterable<MergeRequestEntity> getProjectMergeRequests(@PathVariable(value="projectId") int projectId) {
-        return this.mergeRequestEntityRepository.findAll();
+        return this.mergeRequestEntityRepository.findAllByProjectId(projectId);
     }
 
     @GetMapping("/{projectId}/commits")
@@ -72,16 +73,15 @@ public class RESTController {
     }
 
     @GetMapping("/{projectId}")
-    JSONObject getProject(@PathVariable(value="projectId") int projectId, @RequestParam String startDate,
+    List<MergeRequestEntity> getProject(@PathVariable(value="projectId") int projectId, @RequestParam String startDate,
                                        @RequestParam String endDate) {
 
-        Iterable<ProjectEntity> project = this.projectRepository.findAll();
-        Iterable<CommitEntity> commits = this.commitRepository.findAll();
+        return this.mergeRequestEntityRepository.findAllByProjectId(projectId);
 
-        JSONObject returnObj = new JSONObject();
-        returnObj.put("project", project);
-//        returnObj.put("members", selectedProject.getMembers());
-        returnObj.put("commits", commits);
-        return returnObj;
+//        JSONObject returnObj = new JSONObject();
+//        returnObj.put("project", project);
+////        returnObj.put("members", selectedProject.getMembers());
+//        returnObj.put("commits", commits);
+//        return returnObj;
     }
 }
