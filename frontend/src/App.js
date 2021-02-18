@@ -9,9 +9,9 @@ function App() {
     <BrowserRouter>
         <Switch>
             <Redirect exact from='/' to='/login' />
-//            <Route exact path='/login'> <Login /> </Route>
-//            <Route exact path='/token'> <UrlToken /> </Route>
-//            <Route exact path='/overview'> <OverviewPage /> </Route>
+            <Route exact path='/login'> <Login /> </Route>
+            <Route exact path='/token'> <UrlToken /> </Route>
+            <Route exact path='/overview'> <OverviewPage /> </Route>
         </Switch>
     </BrowserRouter>
 

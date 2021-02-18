@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 //import ReactDOM from 'react-dom';
 import { useHistory } from 'react-router-dom';
-import App from '../App';
 import { Token } from '../mockDataDir/mockToken';
 
 // Note: Use token from mockToken

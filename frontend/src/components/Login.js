@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import { useHistory } from 'react-router-dom';
 import { AdminUser } from '../mockDataDir/mockAdminUser';
-import UrlToken from './UrlToken';
+//import UrlToken from './UrlToken';
 import styles from '../style/Login.module.css';
 
 //Note: Use AdminUser's username and password from mockInfo to login
