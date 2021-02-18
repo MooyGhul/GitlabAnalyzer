@@ -32,23 +32,11 @@ public class ProjectController {
 
     private @Getter List<MergeRequestEntity> mergeRequestEntities;
 
-    private List<IssueEntity> issues;
+    private @Getter List<IssueEntity> issues;
 
     private @Getter List<CommitEntity> commits;
 
     private @Getter List<String> members;
-
-    @Autowired
-    private ProjectEntityRepository projectRepository;
-
-    @Autowired
-    private IssueEntityRepository issueRepository;
-
-    @Autowired
-    private CommitEntityRepository commitRepository;
-
-    @Autowired
-    private MergeRequestEntityRepository mergeRequestEntityRepository;
 
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
@@ -67,17 +55,6 @@ public class ProjectController {
         this.weights = new int[]{1, 1, 1, 1};
     }
 
-    //projectRepository is not initialized until AFTER the constructor has been run
-    //so the Project has to be added to the repo after the constructor has been initialized
-    @PostConstruct
-    private void postConstructor() {
-        this.projectRepository.save(new ProjectEntity(this.projectId, this.projectName, this.getNumCommits(),
-                                        this.getNumMR(), this.getNumComments()));
-        this.commitRepository.saveAll(this.commits);
-        this.mergeRequestEntityRepository.saveAll(this.mergeRequestEntities);
-        this.issueRepository.saveAll(this.issues);
-    }
-
     private List<IssueEntity> getAndParseIssues(String url) {
         List<JSONObject> issues = this.e.getIssues(url, this.projectToken);
         return issues.stream().map(IssueEntity::fromGitlabJSON).collect(Collectors.toList());
@@ -85,7 +62,7 @@ public class ProjectController {
 
     private List<CommitEntity> getAndParseCommits() {
         List<JSONObject> commits = this.e.getCommits(this.url, this.projectToken);
-
+        commits.forEach(commit -> commit.put("project_id", this.projectId));
         return commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
@@ -107,7 +84,7 @@ public class ProjectController {
         int sum = 0;
 
         for(IssueEntity issue: this.issues) {
-            String url = this.url + "/issues" + issue.getIssueId() + "/notes";
+            String url = this.url + "/issues/" + issue.getIssueIid() + "/notes";
             List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
             sum += issueComments.size();
         }

@@ -9,7 +9,7 @@ public class ProjectManager {
     private @Getter List<ProjectController> allProjects;
     private @Getter List<ProjectController> selectedProjects;
     final private Extractor e;
-    final private String projectToken;
+    final String projectToken;
 
     public ProjectManager(String token) {
         this.e = new Extractor();
@@ -25,8 +25,10 @@ public class ProjectManager {
         }
     }
 
-    public void addProject(String url) {
-        allProjects.add(new ProjectController(this.e, url, this.projectToken));
+    public ProjectController addProject(String url) {
+        ProjectController p = new ProjectController(this.e, url, this.projectToken);
+        allProjects.add(p);
+        return p;
     }
 
     public void selectProjects(List<String> selectedProjects) {

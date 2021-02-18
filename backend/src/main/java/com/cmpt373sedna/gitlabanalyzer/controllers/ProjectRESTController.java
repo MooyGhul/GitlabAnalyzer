@@ -7,15 +7,11 @@ import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 @RestController
 @RequestMapping("/project")
@@ -41,13 +37,19 @@ public class ProjectRESTController {
         this.projectManager = new ProjectManager(token);
     }
 
+//    "http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer"
     @PostMapping("/add")
-    void addProject() {
-        this.projectManager.addProject("http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer");
+    void addProject(@RequestParam String url) {
+        ProjectController p = this.projectManager.addProject(url);
+        this.projectRepository.save(new ProjectEntity(p.getProjectId(), p.getProjectName(), p.getNumCommits(), p.getNumMR(), p.getNumComments()));
+        this.commitRepository.saveAll(p.getCommits());
+        this.issueRepository.saveAll(p.getIssues());
+        this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
     }
 
     @GetMapping("/all")
     Iterable<ProjectEntity> all() {
+        Iterable<ProjectEntity> p = this.projectRepository.findAll();
         return this.projectRepository.findAll();
     }
 
@@ -64,24 +66,13 @@ public class ProjectRESTController {
 
     @GetMapping("/{projectId}/merge_requests")
     Iterable<MergeRequestEntity> getProjectMergeRequests(@PathVariable(value="projectId") int projectId) {
+        Iterable<MergeRequestEntity> m = this.mergeRequestEntityRepository.findAllByProjectId(projectId);
         return this.mergeRequestEntityRepository.findAllByProjectId(projectId);
     }
 
     @GetMapping("/{projectId}/commits")
     Iterable<CommitEntity> getProjectCommits(@PathVariable(value="projectId") int projectId) {
-        return this.commitRepository.findAll();
-    }
-
-    @GetMapping("/{projectId}")
-    List<MergeRequestEntity> getProject(@PathVariable(value="projectId") int projectId, @RequestParam String startDate,
-                                       @RequestParam String endDate) {
-
-        return this.mergeRequestEntityRepository.findAllByProjectId(projectId);
-
-//        JSONObject returnObj = new JSONObject();
-//        returnObj.put("project", project);
-////        returnObj.put("members", selectedProject.getMembers());
-//        returnObj.put("commits", commits);
-//        return returnObj;
+        Iterable<CommitEntity> m = this.commitRepository.findAllByProjectId(projectId);
+        return this.commitRepository.findAllByProjectId(projectId);
     }
 }
