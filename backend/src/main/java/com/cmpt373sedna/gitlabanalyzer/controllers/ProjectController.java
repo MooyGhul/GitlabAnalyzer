@@ -55,7 +55,7 @@ public class ProjectController {
         this.url = links[2];
         this.mergeRequestEntities = this.getAndParseMergeRequests(links[3]);
         this.issues = this.getAndParseIssues(links[4]);
-        this.members = this.e.getRepoMembers(links[6], this.projectToken); //.getAndParseMembers(links[6]);
+        this.members = this.e.getRepoMembers(links[6], this.projectToken);
         this.commits = this.getAndParseCommits();
 
         this.weights = new int[]{1, 1, 1, 1};
