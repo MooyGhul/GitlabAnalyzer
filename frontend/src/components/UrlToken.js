@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-//import ReactDOM from 'react-dom';
 import { useHistory } from 'react-router-dom';
 import { Token } from '../mockDataDir/mockToken';
 
@@ -17,12 +16,7 @@ function UrlToken() {
 
         if(urlToken.token === Token.token) {
             history.push('/overview');
-//            ReactDOM.render(
-//                <React.StrictMode>
-//                    <App />
-//                </React.StrictMode>,
-//                document.getElementById('root')
-//            );
+
         } else {
             setUrlToken({url: urlString, token:''});
             setErrorMsg('Url or token is incorrect. Try Again.');

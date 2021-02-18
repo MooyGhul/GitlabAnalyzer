@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-//import ReactDOM from 'react-dom';
 import { useHistory } from 'react-router-dom';
 import { AdminUser } from '../mockDataDir/mockAdminUser';
-//import UrlToken from './UrlToken';
 import styles from '../style/Login.module.css';
 
 //Note: Use AdminUser's username and password from mockInfo to login
@@ -16,12 +14,7 @@ function Login() {
 
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
             history.push('/token');
-//            ReactDOM.render(
-//            <React.StrictMode>
-//                <UrlToken />
-//              </React.StrictMode>,
-//              document.getElementById('root')
-//            );
+
         } else {
             setUser({name:'', password: ''});
         }
