@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
+import { useHistory } from 'react-router-dom';
 import App from '../App';
-import { Token } from '../mockDataDir/mockToken'
+import { Token } from '../mockDataDir/mockToken';
 
 // Note: Use token from mockToken
 const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
 
 function UrlToken() {
+    const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: urlString, token:''});
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -15,12 +17,13 @@ function UrlToken() {
         console.log({urlToken});
 
         if(urlToken.token === Token.token) {
-            ReactDOM.render(
-                <React.StrictMode>
-                    <App />
-                </React.StrictMode>,
-                document.getElementById('root')
-            );
+            history.push('/overview');
+//            ReactDOM.render(
+//                <React.StrictMode>
+//                    <App />
+//                </React.StrictMode>,
+//                document.getElementById('root')
+//            );
         } else {
             setUrlToken({url: urlString, token:''});
             setErrorMsg('Url or token is incorrect. Try Again.');
