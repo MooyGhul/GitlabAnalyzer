@@ -3,10 +3,8 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
+import com.cmpt373sedna.gitlabanalyzer.repository.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,7 +40,7 @@ public class ProjectRESTController {
     void addProject(@RequestParam String url) {
         ProjectController p = this.projectManager.addProject(url);
         this.projectRepository.save(new ProjectEntity(p.getProjectId(), p.getProjectName(), p.getNumCommits(), p.getNumMR(), p.getNumComments()));
-        this.commitRepository.saveAll(p.getCommits());
+        this.commitRepository.saveAll(p.getCommitEntities());
         this.issueRepository.saveAll(p.getIssues());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
     }
@@ -51,6 +49,13 @@ public class ProjectRESTController {
     Iterable<ProjectEntity> all() {
         Iterable<ProjectEntity> p = this.projectRepository.findAll();
         return this.projectRepository.findAll();
+    }
+
+    @GetMapping("/{projectId}/overview")
+    Iterable<JSONObject> getProjectOverview(@PathVariable(value="projectId") int projectId) {
+        Iterable<MergeRequestEntity> mergeRequestEntities = this.mergeRequestEntityRepository.findAllByProjectId(projectId);
+        Iterable<CommitEntity> commitEntities = this.commitRepository.findAllByProjectId(projectId);
+        return null;
     }
 
     @GetMapping("/{projectId}/members")

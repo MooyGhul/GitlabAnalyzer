@@ -1,7 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -77,13 +76,18 @@ public class Extractor {
         return getJsonObjects(issuesURL);
     }
 
-    public List<JSONObject> getCommits(String url, String projectToken, List<JSONObject> mergeRequests) {
-//        String commitURL = url + "/repository/commits?access_token=" + projectToken;
+    public List<JSONObject> getCommits(String url, String projectToken) {
+        int page = 1;
         List<JSONObject> commits = new ArrayList<>();
-        for(JSONObject mr: mergeRequests) {
-            String commitURL = url + "/merge_requests/" + mr.getInt("iid") + "/commits?access_token=" + projectToken;
-            List<JSONObject> newCommits = getJsonObjects(commitURL);
+        List<JSONObject> newCommits;
+        while(true) {
+            String commitURL = url + "/repository/commits?per_page=100&page=" + page + "&access_token=" + projectToken;
+            newCommits = getJsonObjects(commitURL);
+            if(newCommits.isEmpty()) {
+                break;
+            }
             commits.addAll(newCommits);
+            page++;
         }
         return commits;
     }
