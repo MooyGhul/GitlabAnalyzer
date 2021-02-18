@@ -77,9 +77,15 @@ public class Extractor {
         return getJsonObjects(issuesURL);
     }
 
-    public List<JSONObject> getCommits(String url, String projectToken) {
-        String commitURL = url + "/repository/commits?access_token=" + projectToken;
-        return getJsonObjects(commitURL);
+    public List<JSONObject> getCommits(String url, String projectToken, List<JSONObject> mergeRequests) {
+//        String commitURL = url + "/repository/commits?access_token=" + projectToken;
+        List<JSONObject> commits = new ArrayList<>();
+        for(JSONObject mr: mergeRequests) {
+            String commitURL = url + "/merge_requests/" + mr.getInt("iid") + "/commits?access_token=" + projectToken;
+            List<JSONObject> newCommits = getJsonObjects(commitURL);
+            commits.addAll(newCommits);
+        }
+        return commits;
     }
 
     public List<JSONObject> getIssueComments(String url, String projectToken) {

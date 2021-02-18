@@ -11,8 +11,10 @@ import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
 import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,10 +49,9 @@ public class ProjectController {
         this.projectId = Integer.parseInt(links[0]);
         this.projectName = links[1];
         this.url = links[2];
-        this.mergeRequestEntities = this.getAndParseMergeRequests(links[3]);
+        this.getAndParseMergeRequestsAndCommits(links[3]);
         this.issues = this.getAndParseIssues(links[4]);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
-        this.commits = this.getAndParseCommits();
 
         this.weights = new int[]{1, 1, 1, 1};
     }
@@ -60,16 +61,12 @@ public class ProjectController {
         return issues.stream().map(IssueEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
-    private List<CommitEntity> getAndParseCommits() {
-        List<JSONObject> commits = this.e.getCommits(this.url, this.projectToken);
-        commits.forEach(commit -> commit.put("project_id", this.projectId));
-        return commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
-    }
-
-    private List<MergeRequestEntity> getAndParseMergeRequests(String url) {
+    private void getAndParseMergeRequestsAndCommits(String url) {
         List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
-
-        return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
+        List<JSONObject> commits = this.e.getCommits(this.url, this.projectToken, mergeRequests);
+        commits.forEach(commit -> commit.put("project_id", this.projectId));
+        this.mergeRequestEntities = mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
+        this.commits = commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
     public int getNumCommits() {
