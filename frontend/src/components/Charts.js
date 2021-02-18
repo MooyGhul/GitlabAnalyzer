@@ -122,7 +122,6 @@ export default function Charts () {
               selected={startDate} 
               onChange={date => setStartDate(date)} 
               dateFormat='MM/dd/yyyy'
-              filterDate={date => date.getDay() !== 6 && date.getDay !== 0}
               isClearable
               showYearDropdown
               scrollableMonthYearDropdown
