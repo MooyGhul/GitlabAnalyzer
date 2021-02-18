@@ -1,17 +1,20 @@
-import ScoreBoard from './components/ScoreBoard';
-import Header from './components/Header';
-
-function App(props) {
+import React from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Login from './components/Login';
+import UrlToken from './components/UrlToken';
+import OverviewPage from './OverviewPage';
+function App() {
 
   return (
-    <div>
-      <Header
-        pageTitle="Overview"
-      />
+    <BrowserRouter>
+        <Switch>
+            <Redirect exact from='/' to='/login' />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/token' component={UrlToken} />
+            <Route exact path='/overview' component={OverviewPage} />
+        </Switch>
+    </BrowserRouter>
 
-      <ScoreBoard />
-
-    </div>
   );
 }
 
