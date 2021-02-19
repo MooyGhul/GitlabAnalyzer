@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,7 +19,7 @@ class MergeRequestEntityTest {
                 .projectId(3)
                 .status("opened")
                 .author("admin")
-                .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
+                .createdAt(Instant.parse("2017-04-29T07:00:00Z"))
                 .mergedAt(null)
                 .build();
 
@@ -38,7 +39,7 @@ class MergeRequestEntityTest {
                 .status("merged")
                 .author("admin")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
-                .mergedAt(Instant.parse("2018-09-07T11:16:17.520Z"))
+                .mergedAt(Instant.parse("2018-09-07T07:00:00Z"))
                 .build();
 
         String jsonString = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleMergedMR.json").readAllBytes());

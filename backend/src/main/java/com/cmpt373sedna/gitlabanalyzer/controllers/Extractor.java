@@ -53,6 +53,17 @@ public class Extractor {
         JSONArray jsonResponse =  new JSONArray(response);
         List<JSONObject> jsonList = new ArrayList<>();
         jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
+//        for(Object obj: jsonResponse) {
+//            JSONObject o = (JSONObject) obj;
+//            if(o.has("commit_date") && o.isNull("commit_date")) {
+//                String time = (String) o.get("commit_date");
+//                o.put("commit_date", time.substring(0, time.indexOf("T")));
+//            } else if(o.has("merged_at") && !o.isNull("merged_at")) {
+//                String time = (String) o.get("merged_at");
+//                o.put("merged_at", time.substring(0, time.indexOf("T")));
+//            }
+//            jsonList.add(o);
+//        }
         return jsonList;
     }
 
