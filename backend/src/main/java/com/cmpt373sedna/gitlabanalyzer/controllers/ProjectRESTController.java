@@ -32,7 +32,6 @@ public class ProjectRESTController {
 
     @PostMapping("/create")
     void initializeUser(@RequestParam String token) {
-        System.out.println();
         this.projectManager = new ProjectManager(token);
     }
 
