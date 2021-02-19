@@ -4,12 +4,15 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MergeRequestEntityTest {
 
+    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     @Test
     void fromGitlabJSON_parses_open_MR_correctly() throws IOException {
         MergeRequestEntity expected = MergeRequestEntity.builder()
@@ -18,7 +21,7 @@ class MergeRequestEntityTest {
                 .projectId(3)
                 .status("opened")
                 .author("admin")
-                .createdAt(Instant.parse("2017-04-29T07:00:00Z"))
+                .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
                 .mergedAt(null)
                 .build();
 
@@ -30,7 +33,7 @@ class MergeRequestEntityTest {
     }
 
     @Test
-    void fromGitlabJSON_parses_merged_MR_correctly() throws IOException {
+    void fromGitlabJSON_parses_merged_MR_correctly() throws IOException, ParseException {
         MergeRequestEntity expected = MergeRequestEntity.builder()
                 .id(1)
                 .iid(1)
@@ -38,7 +41,7 @@ class MergeRequestEntityTest {
                 .status("merged")
                 .author("admin")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
-                .mergedAt(Instant.parse("2018-09-07T07:00:00Z"))
+                .mergedAt(sdf.parse("2018-09-07T11:16:17.520Z").toInstant())
                 .build();
 
         String jsonString = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleMergedMR.json").readAllBytes());
