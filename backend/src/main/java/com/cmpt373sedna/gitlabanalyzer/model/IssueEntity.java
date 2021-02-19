@@ -24,7 +24,6 @@ public class IssueEntity {
     private @Nullable Instant openedDate;
     private @Nullable Instant closedDate;
 
-
     public static IssueEntity fromGitlabJSON(JSONObject json) {
         Object o = json.get("assignee");
         JSONObject assigneeObject = !JSONObject.NULL.equals(o) ? (JSONObject) o : null;

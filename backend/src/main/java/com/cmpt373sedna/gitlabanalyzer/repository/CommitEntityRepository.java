@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CommitEntityRepository extends CrudRepository<CommitEntity, Integer> {
 
-    List<CommitEntity> findAllByProjectId(int id);
+public interface CommitEntityRepository extends CrudRepository<CommitEntity, Long> {
+    List<CommitEntity> findAllByProjectId(long id);
+    List<CommitEntity> findAllByAuthor(String author);
+
 }

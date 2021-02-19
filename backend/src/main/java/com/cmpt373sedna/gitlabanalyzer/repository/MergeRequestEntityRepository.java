@@ -10,5 +10,5 @@ import java.util.List;
 public interface MergeRequestEntityRepository extends CrudRepository<MergeRequestEntity, Integer> {
 
     List<MergeRequestEntity> findAllByProjectId(int id);
-
+    List<MergeRequestEntity> findAllByAuthor(String author);
 }
