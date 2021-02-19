@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import App from '../App';
 import { Token } from '../mockDataDir/mockToken' 
-import ProjectInfoPage from '../ProjectInfoPage/ProjectInfoPage'
+import ProjectInfoPage from '../ProjectInfoPage/ProjectInfoPage' 
 
 // Note: Use token from mockToken
 const urlString = 'https://csil-git1.cs.surrey.sfu.ca';

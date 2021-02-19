@@ -1,17 +1,21 @@
 import Header from '../components/Header'; 
-import MemberList from './MemberList';
-import './ProjectInfoPage.css'
-
+import WideHeader from './WideHeader/WideHeader';
+import ProjectOverview from './ProjectOverview/ProjectOverview';
 
 function ProjectInfoPage(props) {
      
     return (
       <div>
-        
+        <WideHeader/>
+
         <Header
           pageTitle="Project Information"
         />
-        <MemberList/>
+
+        <ProjectOverview/>  
+
+        
+       
          
   
       </div>

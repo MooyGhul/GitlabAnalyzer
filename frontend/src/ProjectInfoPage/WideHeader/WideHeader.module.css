@@ -1,0 +1,15 @@
+.body{
+    position: fixed;
+    background-color:rgb(224,225,253);
+    width: 100%;
+    height: 40%;
+    margin: 0;
+    top:0;
+    left:0;
+    margin-right:0;
+    z-index:50;
+}
+
+.projectTitle{
+    color: red;
+}
