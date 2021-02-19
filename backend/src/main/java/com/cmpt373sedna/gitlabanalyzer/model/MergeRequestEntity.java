@@ -8,6 +8,8 @@ import org.json.JSONObject;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.List;
 
@@ -34,15 +36,20 @@ public class MergeRequestEntity {
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
         String mergedAt = json.optString("merged_at");
-
-        return MergeRequestEntity.builder()
-                .id(json.getInt("id"))
-                .iid(json.getInt("iid"))
-                .author(json.getJSONObject("author").getString("username"))
-                .projectId(json.getInt("project_id"))
-                .status(json.getString("state"))
-                .createdAt(Instant.parse(json.getString("created_at")))
-                .mergedAt(isNotBlank(mergedAt) ? Instant.parse(mergedAt) : null)
-                .build();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return MergeRequestEntity.builder()
+                    .id(json.getInt("id"))
+                    .iid(json.getInt("iid"))
+                    .author(json.getJSONObject("author").getString("username"))
+                    .projectId(json.getInt("project_id"))
+                    .status(json.getString("state"))
+                    .createdAt(Instant.parse(json.getString("created_at")))
+                    .mergedAt(isNotBlank(mergedAt) ? sdf.parse(mergedAt).toInstant() : null)
+                    .build();
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
