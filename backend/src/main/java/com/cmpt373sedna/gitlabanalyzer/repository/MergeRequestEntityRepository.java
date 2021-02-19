@@ -2,7 +2,6 @@ package com.cmpt373sedna.gitlabanalyzer.repository;
 
 import com.cmpt373sedna.gitlabanalyzer.model.CodeContributionHistory;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -14,10 +13,10 @@ public interface MergeRequestEntityRepository extends CrudRepository<MergeReques
 
     List<MergeRequestEntity> findAllByProjectId(int id);
     List<MergeRequestEntity> findAllByAuthor(String author);
-
-    @Query("SELECT new CodeContributionHistory(commitCounts.commitCount, mrCounts.mrCount, 0, date)" +
-            "FROM (SELECT Count(mr), mr.mergedAt as mrCount FROM merge_request_entity mr GROUP BY mr.mergedAt) as mrCounts" +
-            "        LEFT JOIN (SELECT Count(c), c.commitDate as commitCount FROM CommitEntity c GROUP BY c.commitDate) as commitCounts" +
-            "        ON mrCounts.mergedAt == commitCounts.commitDate", nativeQuery = true)
-    List<CodeContributionHistory> findContributions();
+    
+    @Query(value="SELECT commitCounts.commitCount, mrCounts.mrCount, 0, mrCounts.merged_at " +
+            "FROM (SELECT Count(mr) AS mrCount, mr.merged_at FROM merge_request_entity mr WHERE mr.project_id = :projectId GROUP BY mr.merged_at) as mrCounts" +
+            "        LEFT JOIN (SELECT Count(c) AS commitCount, c.commit_date FROM commit_entity c WHERE c.project_id = :projectId GROUP BY c.commit_date) as commitCounts" +
+            "        ON mrCounts.merged_at = commitCounts.commit_date", nativeQuery = true)
+        List<?> findContributions(int projectId);
 }

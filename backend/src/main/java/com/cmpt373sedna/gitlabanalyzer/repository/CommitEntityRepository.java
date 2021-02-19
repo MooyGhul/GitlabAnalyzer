@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CommitEntityRepository extends CrudRepository<CommitEntity, Long> {
-    List<CommitEntity> findAllByProjectId(long id);
+    List<CommitEntity> findAllByProjectId(int id);
     List<CommitEntity> findAllByAuthor(String author);
 
 }

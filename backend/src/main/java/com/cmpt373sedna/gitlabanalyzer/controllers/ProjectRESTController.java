@@ -1,5 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
+import com.cmpt373sedna.gitlabanalyzer.model.CodeContributionHistory;
 import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
@@ -52,10 +53,8 @@ public class ProjectRESTController {
     }
 
     @GetMapping("/{projectId}/overview")
-    Iterable<JSONObject> getProjectOverview(@PathVariable(value="projectId") int projectId) {
-        Iterable<MergeRequestEntity> mergeRequestEntities = this.mergeRequestEntityRepository.findAllByProjectId(projectId);
-        Iterable<CommitEntity> commitEntities = this.commitRepository.findAllByProjectId(projectId);
-        return null;
+    List<?> getProjectOverview(@PathVariable(value="projectId") int projectId) {
+        return this.mergeRequestEntityRepository.findContributions(projectId);
     }
 
     @GetMapping("/{projectId}/members")
