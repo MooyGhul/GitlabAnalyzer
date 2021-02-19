@@ -3,6 +3,8 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from './components/Login';
 import UrlToken from './components/UrlToken';
 import OverviewPage from './OverviewPage';
+import PrivateRoute from './PrivateRoute';
+
 function App() {
 
   return (
@@ -11,7 +13,7 @@ function App() {
             <Redirect exact from='/' to='/login' />
             <Route exact path='/login'> <Login /> </Route>
             <Route exact path='/token'> <UrlToken /> </Route>
-            <Route exact path='/overview'> <OverviewPage /> </Route>
+            <PrivateRoute path='/overview' isAuthenticated={false} component={OverviewPage} />
         </Switch>
     </BrowserRouter>
 
