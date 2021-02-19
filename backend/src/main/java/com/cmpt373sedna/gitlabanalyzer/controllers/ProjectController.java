@@ -26,6 +26,8 @@ public class ProjectController {
 
     private @Getter List<CommitEntity> commitEntities;
 
+//    private @Getter List<CodeContributionHistory> contributionHistories;
+
     private @Getter List<String> members;
 
     public ProjectController(Extractor e, String url, String projectToken) {
@@ -39,6 +41,7 @@ public class ProjectController {
         this.url = links[2];
         this.mergeRequestEntities = this.getAndParseMergeRequests(links[3]);
         this.issues = this.getAndParseIssues(links[4]);
+//        this.contributionHistories = this.getContributionHistories();
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
         this.commitEntities = this.getAndParseCommits();
 
@@ -59,6 +62,18 @@ public class ProjectController {
         List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
     }
+
+//    private List<CodeContributionHistory> getCodeContributions() {
+//        int mrCount = 0;
+//        int commitCount = 0;
+//        for(MergeRequestEntity mr: this.mergeRequestEntities) {
+//            for(CommitEntity commit : this.commitEntities) {
+//                if(mr.getMergedAt() == commit.getCommitDate()) {
+//                    commitCount++;
+//                }
+//            }
+//        }
+//    }
 
     public int getNumCommits() {
         return this.commitEntities.size();
