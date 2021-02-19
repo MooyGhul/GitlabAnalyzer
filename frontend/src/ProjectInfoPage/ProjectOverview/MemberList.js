@@ -1,5 +1,5 @@
 import { DataGrid } from '@material-ui/data-grid';
-import { makeStyles, StylesProvider } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 100},
