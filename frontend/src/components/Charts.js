@@ -126,7 +126,8 @@ export default function Charts () {
               showYearDropdown
               scrollableMonthYearDropdown
             />
-          <br />
+
+          &nbsp;&nbsp;&nbsp;
           End date:
             <DatePicker 
               selected={endDate} 
@@ -138,16 +139,11 @@ export default function Charts () {
               scrollableMonthYearDropdown
             />
           <br/>
-          <br/>
-          Comment Contribution
-          <br/>
-          <br/>
+          <h2>Comment Contribution</h2>
           <BarChart commentsDataProp={commentsDataProp}/>
 
-          <br/><br/><br/>
-          Code Contribution
-          <br/><br/>
-          
+          <br/>
+          <h2>Code Contribution</h2>          
           <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
           
           <br/><br/>

@@ -64,6 +64,19 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
       .call(yAxis);
     
     svg
+      .append("text")             
+      .attr("transform",
+            "translate(" + (width*0.38) + " ," + (height*1.2) + ")")
+      .text("Date");
+    
+    svg
+      .append("text")             
+      .attr("transform",
+            "translate(" + (-40) + " ," + (-height*0.05) + ")")
+      .text("# of Contributions");
+
+
+    svg
       .selectAll(".layer")
       .data(layers)
       .join("g")
