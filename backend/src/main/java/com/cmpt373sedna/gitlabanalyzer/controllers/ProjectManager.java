@@ -9,7 +9,7 @@ public class ProjectManager {
     private @Getter List<ProjectController> allProjects;
     private @Getter List<ProjectController> selectedProjects;
     final private Extractor e;
-    final String projectToken;
+    final private String projectToken;
 
     public ProjectManager(String token) {
         this.e = new Extractor();

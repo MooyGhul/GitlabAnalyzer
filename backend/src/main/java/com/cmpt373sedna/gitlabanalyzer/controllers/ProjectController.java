@@ -22,7 +22,7 @@ public class ProjectController {
 
     private @Getter List<MergeRequestEntity> mergeRequestEntities;
 
-    private @Getter List<IssueEntity> issues;
+    private @Getter List<IssueEntity> issuesEntities;
 
     private @Getter List<CommitEntity> commitEntities;
 
@@ -38,7 +38,7 @@ public class ProjectController {
         this.projectName = links[1];
         this.url = links[2];
         this.mergeRequestEntities = this.getAndParseMergeRequests(links[3]);
-        this.issues = this.getAndParseIssues(links[4]);
+        this.issuesEntities = this.getAndParseIssues(links[4]);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
         this.commitEntities = this.getAndParseCommits();
 
@@ -71,7 +71,7 @@ public class ProjectController {
     public int getNumComments() {
         int sum = 0;
 
-        for(IssueEntity issue: this.issues) {
+        for(IssueEntity issue: this.issuesEntities) {
             String url = this.url + "/issues/" + issue.getIssueIid() + "/notes";
             List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
             sum += issueComments.size();
@@ -87,6 +87,6 @@ public class ProjectController {
     }
 
     public int getNumIssues() {
-        return this.issues.size();
+        return this.issuesEntities.size();
     }
 }

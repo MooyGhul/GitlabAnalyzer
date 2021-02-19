@@ -42,7 +42,7 @@ public class ProjectRESTController {
         ProjectController p = this.projectManager.addProject(url);
         this.projectRepository.save(new ProjectEntity(p.getProjectId(), p.getProjectName(), p.getNumCommits(), p.getNumMR(), p.getNumComments()));
         this.commitRepository.saveAll(p.getCommitEntities());
-        this.issueRepository.saveAll(p.getIssues());
+        this.issueRepository.saveAll(p.getIssuesEntities());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
     }
 
