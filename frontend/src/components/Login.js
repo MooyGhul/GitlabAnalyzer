@@ -8,21 +8,20 @@ import styles from '../style/Login.module.css';
 function Login() {
     const history = useHistory();
     const [user, setUser] = useState({name:'', password:''});
-    const [validUser, setValidUser] = useState(false);
 
-    const getUserStatus  = () => {
+    const authenticateUser  = () => {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
             return true;
+        } else {
+            return false;
         }
-        return false;
     }
 
     const login = user => {
         console.log({user});
 
-        setValidUser(getUserStatus());
         // setLoginStatus(validUser);
-        if(validUser) {
+        if(authenticateUser()){
             history.push('/token');
         } else {
             setUser({name:'', password: ''});

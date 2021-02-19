@@ -12,20 +12,18 @@ function UrlToken() {
     const [errorMsg, setErrorMsg] = useState('');
     const [validToken, setValidToken] = useState(false);
 
-    const getTokenStatus  = () => {
+    const authenticateToken  = () => {
         if(urlToken.token === Token.token) {
             return true;
-        }
-        return false;
+        } else {
+            return false;
+         }
     }
 
     const checkToken = urlToken => {
-        setValidToken(getTokenStatus());
-        // setTokenStatus(validToken);
-        if(validToken) {
+
+        if(authenticateToken()) {
             history.push('/overview');
-
-
         } else {
             setUrlToken({url: urlString, token:''});
             setErrorMsg('Url or token is incorrect. Try Again.');
