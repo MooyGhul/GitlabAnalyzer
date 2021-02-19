@@ -4,6 +4,7 @@ import Login from './components/Login';
 import UrlToken from './components/UrlToken';
 import OverviewPage from './OverviewPage';
 import PrivateRoute from './PrivateRoute';
+import Authentication from "./Authentication";
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
             <Redirect exact from='/' to='/login' />
             <Route exact path='/login'> <Login /> </Route>
             <Route exact path='/token'> <UrlToken /> </Route>
-            <PrivateRoute path='/overview' isAuthenticated={false} component={OverviewPage} />
+            <PrivateRoute path='/overview' component={OverviewPage} />
         </Switch>
     </BrowserRouter>
 

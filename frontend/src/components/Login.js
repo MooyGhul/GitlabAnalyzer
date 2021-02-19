@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AdminUser } from '../mockDataDir/mockAdminUser';
-// import { setLoginStatus } from "../LoginStatus";
+import Authentication from '../Authentication';
 import styles from '../style/Login.module.css';
 
 //Note: Use AdminUser's username and password from mockInfo to login
@@ -11,6 +11,7 @@ function Login() {
 
     const authenticateUser  = () => {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
+            Authentication.onValidUser();
             return true;
         } else {
             return false;
@@ -20,7 +21,6 @@ function Login() {
     const login = user => {
         console.log({user});
 
-        // setLoginStatus(validUser);
         if(authenticateUser()){
             history.push('/token');
         } else {

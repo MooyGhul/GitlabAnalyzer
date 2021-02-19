@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Token } from '../mockDataDir/mockToken';
-// import { setTokenStatus } from "../LoginStatus";
+import Authentication from "../Authentication";
 
 // Note: Use token from mockToken
 const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
@@ -10,10 +10,11 @@ function UrlToken() {
     const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: urlString, token:''});
     const [errorMsg, setErrorMsg] = useState('');
-    const [validToken, setValidToken] = useState(false);
 
     const authenticateToken  = () => {
         if(urlToken.token === Token.token) {
+            Authentication.onValidToken();
+            Authentication.onAuthentication();
             return true;
         } else {
             return false;
@@ -21,7 +22,6 @@ function UrlToken() {
     }
 
     const checkToken = urlToken => {
-
         if(authenticateToken()) {
             history.push('/overview');
         } else {
@@ -33,7 +33,6 @@ function UrlToken() {
     const nextHandler = event => {
         event.preventDefault();
         console.log({urlToken});
-
         checkToken(urlToken);
     }
 

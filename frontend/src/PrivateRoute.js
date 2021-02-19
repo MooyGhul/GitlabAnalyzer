@@ -1,15 +1,15 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-// import { isFullyLogin} from "./LoginStatus";
+import Authentication from "./Authentication";
 
-const PrivateRoute = ({ component: Component, isAuthenticated, ...rest}) => {
+const PrivateRoute = ({ component: Component, ...rest}) => {
 
     console.log("Did this work?");
-    console.log({isAuthenticated});
+
 
     return(
         <Route {...rest} render={props => (
-            isAuthenticated ?
+            Authentication.isAuthenticated() ?
                 (<Component {...props} />)
                 : (<Redirect to ="/login" />)
         )} />
