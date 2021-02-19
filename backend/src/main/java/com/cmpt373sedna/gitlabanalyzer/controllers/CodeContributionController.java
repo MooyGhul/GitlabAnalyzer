@@ -21,9 +21,6 @@ public class CodeContributionController {
 
     private List<String> members;
 
-    @Autowired
-    private CodeContributionRepository contributionRepository;
-
     public CodeContributionController(String url, String token) {
         this.e = new Extractor();
         String[] links = this.e.getBasicRepoLinks(url, token);

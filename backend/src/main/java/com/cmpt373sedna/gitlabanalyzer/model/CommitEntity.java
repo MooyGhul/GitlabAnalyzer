@@ -11,7 +11,6 @@ import java.time.Instant;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class CommitEntity {
     private @Getter
     @Id @GeneratedValue long commitId;
