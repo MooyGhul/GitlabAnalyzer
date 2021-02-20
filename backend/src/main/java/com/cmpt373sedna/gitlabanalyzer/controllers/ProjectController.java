@@ -4,6 +4,8 @@ import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.CommentEntity;
+import com.cmpt373sedna.gitlabanalyzer.repository.CommentEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
@@ -13,6 +15,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +41,8 @@ public class ProjectController {
 
     private List<String> members;
 
+    private int comments;
+
     @Autowired
     private ProjectEntityRepository projectRepository;
     @Autowired
@@ -48,6 +53,9 @@ public class ProjectController {
 
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
+
+    @Autowired
+    private CommentEntityRepository commentEntityRepository;
 
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
@@ -62,6 +70,7 @@ public class ProjectController {
         this.issues = this.getAndParseIssues(links[4]);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
         this.commits = this.getAndParseCommits();
+        this.comments = this.getNumComments();
 
         this.weights = new int[]{1, 1, 1, 1};
     }
