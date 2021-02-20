@@ -23,7 +23,7 @@ function UrlToken() {
 
     const checkToken = () => {
         if(authenticateToken()) {
-            //Change this to page list
+            //TODO: Change this to page list
             history.push('/overview');
         } else {
             setUrlToken({url: urlString, token:''});
