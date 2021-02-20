@@ -14,6 +14,7 @@ function App() {
             <Redirect exact from='/' to='/login' />
             <Route exact path='/login'> <Login /> </Route>
             <Route exact path='/token'> <UrlToken /> </Route>
+            {/*Add private route for project list*/}
             <PrivateRoute path='/overview' component={OverviewPage} />
             <Route component={NotFound} />
         </Switch>

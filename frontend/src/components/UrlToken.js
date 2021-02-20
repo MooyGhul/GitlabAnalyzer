@@ -23,6 +23,7 @@ function UrlToken() {
 
     const checkToken = () => {
         if(authenticateToken()) {
+            //Change this to page list
             history.push('/overview');
         } else {
             setUrlToken({url: urlString, token:''});
@@ -32,7 +33,6 @@ function UrlToken() {
 
     const nextHandler = event => {
         event.preventDefault();
-        console.log({urlToken});
         checkToken();
     }
 

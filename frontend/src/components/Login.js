@@ -30,7 +30,6 @@ function Login() {
 
     const loginHandler = event => {
         event.preventDefault();
-        console.log({user});
         login(user);
     }
 
