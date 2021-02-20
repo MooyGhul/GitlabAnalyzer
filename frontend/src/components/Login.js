@@ -8,6 +8,7 @@ import styles from '../style/Login.module.css';
 function Login() {
     const history = useHistory();
     const [user, setUser] = useState({name:'', password:''});
+    const [errorMsg, setErrorMsg] = useState('');
 
     const authenticateUser  = () => {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
@@ -18,25 +19,26 @@ function Login() {
         }
     }
 
-    const login = user => {
-        console.log({user});
-
+    const login = () => {
         if(authenticateUser()){
             history.push('/token');
         } else {
             setUser({name:'', password: ''});
+            setErrorMsg('Incorrect username or password. Please try again.');
         }
     }
 
     const loginHandler = event => {
         event.preventDefault();
+        console.log({user});
         login(user);
     }
 
     return(
         <div>
-            <h2> Login </h2>
+            <h2>Login</h2>
             <form className={styles.form} onSubmit={loginHandler}>
+                <h3>{errorMsg}</h3>
                 <label className={styles.label}>
                     Username
                     <input type ='text' value={user.name} onChange={e=> setUser({...user, name: e.target.value})} />
@@ -50,7 +52,7 @@ function Login() {
                     </button>
             </form>
         </div>
-    )
+    );
 }
 
 export default Login;

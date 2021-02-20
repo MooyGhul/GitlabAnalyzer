@@ -21,19 +21,19 @@ function UrlToken() {
          }
     }
 
-    const checkToken = urlToken => {
+    const checkToken = () => {
         if(authenticateToken()) {
             history.push('/overview');
         } else {
             setUrlToken({url: urlString, token:''});
-            setErrorMsg('Url or token is incorrect. Try Again.');
+            setErrorMsg('Incorrect url or token. Please try again.');
         }
     }
 
     const nextHandler = event => {
         event.preventDefault();
         console.log({urlToken});
-        checkToken(urlToken);
+        checkToken();
     }
 
     return(
@@ -55,7 +55,7 @@ function UrlToken() {
                 </button>
             </form>
         </div>
-    )
+    );
 }
 
 export default UrlToken;

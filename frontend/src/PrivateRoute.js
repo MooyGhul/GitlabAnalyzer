@@ -4,9 +4,6 @@ import Authentication from "./Authentication";
 
 const PrivateRoute = ({ component: Component, ...rest}) => {
 
-    console.log("Did this work?");
-
-
     return(
         <Route {...rest} render={props => (
             Authentication.isAuthenticated() ?
