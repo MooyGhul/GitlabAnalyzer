@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.lang.Nullable;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.List;
 
@@ -30,21 +30,26 @@ public class MergeRequestEntity {
     private Instant createdAt;
     private @Nullable Instant mergedAt;
 
-    private int authorId;
+    private String author;
 
     private @ElementCollection List<String> commitIds;
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
         String mergedAt = json.optString("merged_at");
-
-        return MergeRequestEntity.builder()
-                .id(json.getInt("id"))
-                .iid(json.getInt("iid"))
-                .authorId(json.getJSONObject("author").getInt("id"))
-                .projectId(json.getInt("project_id"))
-                .status(json.getString("state"))
-                .createdAt(Instant.parse(json.getString("created_at")))
-                .mergedAt(isNotBlank(mergedAt) ? Instant.parse(mergedAt) : null)
-                .build();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return MergeRequestEntity.builder()
+                    .id(json.getInt("id"))
+                    .iid(json.getInt("iid"))
+                    .author(json.getJSONObject("author").getString("username"))
+                    .projectId(json.getInt("project_id"))
+                    .status(json.getString("state"))
+                    .createdAt(Instant.parse(json.getString("created_at")))
+                    .mergedAt(isNotBlank(mergedAt) ? sdf.parse(mergedAt).toInstant() : null)
+                    .build();
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
