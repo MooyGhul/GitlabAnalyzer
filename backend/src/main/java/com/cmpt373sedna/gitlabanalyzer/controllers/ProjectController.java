@@ -41,7 +41,9 @@ public class ProjectController {
 
     private List<String> members;
 
-    private int comments;
+    private List<CommentEntity> comments;
+
+    private int totalComments;
 
     @Autowired
     private ProjectEntityRepository projectRepository;
@@ -70,8 +72,8 @@ public class ProjectController {
         this.issues = this.getAndParseIssues(links[4]);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
         this.commits = this.getAndParseCommits();
-        this.comments = this.getNumComments();
-
+        this.totalComments = this.getNumComments();
+        this.comments = this.getAndParseComments();
         this.weights = new int[]{1, 1, 1, 1};
     }
 
@@ -102,6 +104,23 @@ public class ProjectController {
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
+    private List<CommentEntity> getAndParseComments() {
+        List<JSONObject> comments = null;
+        for(IssueEntity issue: this.issues) {
+            String url = this.url + "/issues" + issue.getIssueId() + "/notes";
+            List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
+            comments.addAll(issueComments);
+        }
+
+        for(MergeRequestEntity mr: this.mergeRequestEntities) {
+            String url =  this.url + "/merge_requests/" + mr.getIid();
+            List<JSONObject> mrComments = this.e.getMergeRequestComments(url, this.projectToken);
+            comments.addAll(mrComments);
+        }
+
+        return comments.stream().map(CommentEntity::fromGitlabJSON).collect(Collectors.toList());
+    }
+
     public int getNumCommits() {
         return this.commits.size();
     }
@@ -111,21 +130,7 @@ public class ProjectController {
     }
 
     public int getNumComments() {
-        int sum = 0;
-
-        for(IssueEntity issue: this.issues) {
-            String url = this.url + "/issues" + issue.getIssueId() + "/notes";
-            List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
-            sum += issueComments.size();
-        }
-
-        for(MergeRequestEntity mr: this.mergeRequestEntities) {
-            String url =  this.url + "/merge_requests/" + mr.getIid();
-            List<JSONObject> mrComments = this.e.getMergeRequestComments(url, this.projectToken);
-            sum += mrComments.size();
-        }
-
-        return sum;
+        return this.comments.size();
     }
 
     public int getNumIssues() {

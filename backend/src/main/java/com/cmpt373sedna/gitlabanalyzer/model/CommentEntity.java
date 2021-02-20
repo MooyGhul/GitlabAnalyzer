@@ -23,19 +23,13 @@ public class CommentEntity {
     private int totalComments;
 
 
-    public void CommentEntity() {
+    public static CommentEntity fromGitlabJSON(JSONObject json) {
 
-        return;
-        /*
         return CommentEntity.builder()
                 .commenter(json.getString("title"))
                 .commentText(json.getString("comment_text"))
                 .commentDate(Instant.parse(json.getString("comment_date")))
-                .totalComments(json.getInt("total_comments"))
                 .build();
-
-         */
-
     }
 
 }
