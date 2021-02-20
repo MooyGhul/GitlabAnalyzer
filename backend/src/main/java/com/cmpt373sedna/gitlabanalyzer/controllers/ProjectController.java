@@ -1,13 +1,7 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
+import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import lombok.Getter;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +34,7 @@ public class ProjectController {
 
     @Autowired
     private ProjectEntityRepository projectRepository;
+
     @Autowired
     private IssueEntityRepository issueRepository;
 
