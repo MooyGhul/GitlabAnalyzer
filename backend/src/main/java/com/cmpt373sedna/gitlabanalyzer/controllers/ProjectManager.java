@@ -24,8 +24,10 @@ public class ProjectManager {
         }
     }
 
-    public void addProject(String url) {
-        allProjects.add(new ProjectController(this.e, url, this.projectToken));
+    public ProjectController addProject(String url) {
+        ProjectController p = new ProjectController(this.e, url, this.projectToken);
+        allProjects.add(p);
+        return p;
     }
 
     public void selectProjects(List<String> selectedProjects) {

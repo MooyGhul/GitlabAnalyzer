@@ -1,16 +1,19 @@
 package com.cmpt373sedna.gitlabanalyzer.model;
 import lombok.Data;
+import lombok.Getter;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
 @Data
 public class ProjectEntity {
-    private @Id int repoId;
-    private String repoName;
-    private int numCommits;
-    private int numMR;
-    private int numComments;
+    private @Getter
+    @Id int repoId;
+    private @Getter String repoName;
+    private @Getter int numCommits;
+    private @Getter int numMR;
+    private @Getter int numComments;
 
     public ProjectEntity(int repoId, String repoName, int numCommits, int numMR, int numComments) {
         this.repoId = repoId;

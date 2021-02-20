@@ -8,8 +8,6 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.time.Instant;
 
 @Data
@@ -19,6 +17,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class IssueEntity {
     private @Id int issueId;
+    private int issueIid;
     private int projectId;
     private String issueName;
     private @Nullable String assignee;
@@ -34,6 +33,7 @@ public class IssueEntity {
 
         return IssueEntity.builder()
                 .issueId(json.getInt("id"))
+                .issueIid(json.getInt("iid"))
                 .projectId(json.getInt("project_id"))
                 .issueName(json.getString("title"))
                 .assignee(!JSONObject.NULL.equals(assigneeObject) ? assigneeObject.getString("name") : null)
