@@ -1,5 +1,5 @@
 import styles from './ProjectOverview.module.css'
-import MemberList from './MemberList';  
+import MemberList from './MemberList'
 
 
 function ProjectOverview(){

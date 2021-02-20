@@ -2,6 +2,7 @@ import React from 'react';
  import styles from './ProjectTitle.module.css'
 
 const ProjectTitle = (props) => {
+
     return (
     <div className={styles.projectTitle}>
         <h1>{props.projectTitle}</h1>

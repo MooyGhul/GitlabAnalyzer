@@ -7,6 +7,7 @@ function WideHeader() {
   return(
       
       <div className={styles.body}>      
+      
         <ProjectTitle  
           projectTitle="Sudoku Solver"
           projectID="1234"
