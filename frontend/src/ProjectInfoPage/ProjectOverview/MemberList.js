@@ -38,7 +38,8 @@ function MemberList(props) {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-        'https://hn.algolia.com/api/v1/search?query=redux'
+        'http://localhost:3000/{projectId}/members'
+        // 'https://hn.algolia.com/api/v1/search?query=redux'
 
       );
       setData(result.data);
