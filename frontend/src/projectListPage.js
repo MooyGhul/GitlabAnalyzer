@@ -4,8 +4,7 @@ import Button from '@material-ui/core/Button';
 import ProjectList from './components/ProjectList';
 import { makeStyles } from '@material-ui/core/styles'; 
 import App from './App';
-import ReactDOM from 'react-dom';
-import UrlToken from './components/UrlToken';
+import ReactDOM from 'react-dom'; 
  
 const useStyles = makeStyles({
 
