@@ -16,7 +16,6 @@ public class ProjectManager {
         this.projectToken = token;
         this.allProjects = new ArrayList<>();
         this.selectedProjects = new ArrayList<>();
-
     }
 
     public void addProjects(List<String> urls) {
@@ -25,8 +24,10 @@ public class ProjectManager {
         }
     }
 
-    public void addProject(String url) {
-        allProjects.add(new ProjectController(this.e, url, this.projectToken));
+    public ProjectController addProject(String url) {
+        ProjectController p = new ProjectController(this.e, url, this.projectToken);
+        allProjects.add(p);
+        return p;
     }
 
     public void selectProjects(List<String> selectedProjects) {

@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Extractor {
     private final RestTemplate restTemplate;
 
@@ -21,7 +20,6 @@ public class Extractor {
         try {
             String tempUri = getApiUrl(url);
             URI uri = URI.create(tempUri +"?access_token=" + projectToken);
-            // Will need to change uri for an input url parameter
             String result = restTemplate.getForObject(uri, String.class);
             JSONObject jsonObject = new JSONObject(result);
 
@@ -79,8 +77,19 @@ public class Extractor {
     }
 
     public List<JSONObject> getCommits(String url, String projectToken) {
-        String commitURL = url + "/repository/commits?access_token=" + projectToken;
-        return getJsonObjects(commitURL);
+        int page = 1;
+        List<JSONObject> commits = new ArrayList<>();
+        List<JSONObject> newCommits;
+        while(true) {
+            String commitURL = url + "/repository/commits?per_page=100&page=" + page + "&access_token=" + projectToken;
+            newCommits = getJsonObjects(commitURL);
+            if(newCommits.isEmpty()) {
+                break;
+            }
+            commits.addAll(newCommits);
+            page++;
+        }
+        return commits;
     }
 
     public List<JSONObject> getIssueComments(String url, String projectToken) {
