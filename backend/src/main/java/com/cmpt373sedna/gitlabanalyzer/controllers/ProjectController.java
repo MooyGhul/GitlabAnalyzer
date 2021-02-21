@@ -1,5 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
+
 import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
@@ -16,12 +17,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.criteria.CriteriaBuilder;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
+import lombok.Getter;
+import org.json.JSONObject;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class ProjectController {
 
-    final private int projectId;
+    final private @Getter int projectId;
 
     final private @Getter String projectName;
 
@@ -33,13 +38,9 @@ public class ProjectController {
 
     private int[] weights;
 
-    private List<MergeRequestEntity> mergeRequestEntities;
+    private @Getter List<MergeRequestEntity> mergeRequestEntities;
 
-    private List<IssueEntity> issues;
-
-    private List<CommitEntity> commits;
-
-    private List<String> members;
+    private @Getter List<IssueEntity> issuesEntities;
 
     private List<CommentEntity> comments;
 
@@ -49,12 +50,9 @@ public class ProjectController {
     private ProjectEntityRepository projectRepository;
     @Autowired
     private IssueEntityRepository issueRepository;
+    private @Getter List<CommitEntity> commitEntities;
 
-    @Autowired
-    private CommitEntityRepository commitRepository;
-
-    @Autowired
-    private MergeRequestEntityRepository mergeRequestEntityRepository;
+    private @Getter List<String> members;
 
     @Autowired
     private CommentEntityRepository commentEntityRepository;
@@ -69,44 +67,32 @@ public class ProjectController {
         this.projectName = links[1];
         this.url = links[2];
         this.mergeRequestEntities = this.getAndParseMergeRequests(links[3]);
-        this.issues = this.getAndParseIssues(links[4]);
+        this.issuesEntities = this.getAndParseIssues(links[4]);
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
-        this.commits = this.getAndParseCommits();
-        this.totalComments = this.getNumComments();
         this.comments = this.getAndParseComments();
-        this.weights = new int[]{1, 1, 1, 1};
-    }
+        this.commitEntities = this.getAndParseCommits();
 
-    //projectRepository is not initialized until AFTER the constructor has been run
-    //so the Project has to be added to the repo after the constructor has been initialized
-    @PostConstruct
-    private void postConstructor() {
-        this.projectRepository.save(new ProjectEntity(projectId, projectName, getNumCommits(), getNumMR(), getNumComments()));
-        this.commitRepository.saveAll(commits);
-        this.mergeRequestEntityRepository.saveAll(mergeRequestEntities);
-        this.issueRepository.saveAll(issues);
+        this.weights = new int[]{1, 1, 1, 1};
     }
 
     private List<IssueEntity> getAndParseIssues(String url) {
         List<JSONObject> issues = this.e.getIssues(url, this.projectToken);
         return issues.stream().map(IssueEntity::fromGitlabJSON).collect(Collectors.toList());
     }
-
     private List<CommitEntity> getAndParseCommits() {
         List<JSONObject> commits = this.e.getCommits(this.url, this.projectToken);
-
+        commits.forEach(commit -> commit.put("project_id", this.projectId));
         return commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
     private List<MergeRequestEntity> getAndParseMergeRequests(String url) {
         List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
-
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
     private List<CommentEntity> getAndParseComments() {
         List<JSONObject> comments = null;
-        for(IssueEntity issue: this.issues) {
+        for(IssueEntity issue: this.issuesEntities) {
             String url = this.url + "/issues" + issue.getIssueId() + "/notes";
             List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
             comments.addAll(issueComments);
@@ -121,8 +107,9 @@ public class ProjectController {
         return comments.stream().map(CommentEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
+
     public int getNumCommits() {
-        return this.commits.size();
+        return this.commitEntities.size();
     }
 
     public int getNumMR() {
@@ -134,10 +121,6 @@ public class ProjectController {
     }
 
     public int getNumIssues() {
-        return this.issues.size();
-    }
-
-    public List<String> getMembers() {
-        return members;
+        return this.issuesEntities.size();
     }
 }
