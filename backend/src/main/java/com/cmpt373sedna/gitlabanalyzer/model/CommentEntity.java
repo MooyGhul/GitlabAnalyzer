@@ -15,12 +15,12 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentEntity {
-    private @Id @GeneratedValue @Nullable  int commentId;
-    private @Nullable int mergeRequestId;
+    private @Id @GeneratedValue int commentId;
+    private String commentType;
+    private int commentTypeId;
     private @Nullable String commentText;
     private @Nullable String commenter;
     private @Nullable Instant commentDate;
-    private int totalComments;
 
 
     public static CommentEntity fromGitlabJSON(JSONObject json) {
