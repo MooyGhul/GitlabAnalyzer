@@ -23,8 +23,7 @@ function UrlToken() {
 
     const checkToken = () => {
         if(authenticateToken()) {
-            //TODO: Change this to page list
-            history.push('/overview');
+            history.push('/projectList');
         } else {
             setUrlToken({url: urlString, token:''});
             setErrorMsg('Incorrect url or token. Please try again.');
