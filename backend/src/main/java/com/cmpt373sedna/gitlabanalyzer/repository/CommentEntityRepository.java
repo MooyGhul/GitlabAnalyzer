@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CommentEntityRepository extends CrudRepository<CommentEntity, Long> {
-    List<CommentEntity> findAllByProjectId(int id);
-    //List<CommentEntity> findAllByAuthor(String commenter);
+
 }
