@@ -4,13 +4,6 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.3",
-<<<<<<< HEAD
-    "@material-ui/data-grid": "^4.0.0-alpha.20",
-    "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/react": "^11.2.3",
-    "@testing-library/user-event": "^12.6.2",
-    "axios": "^0.21.1",
-=======
     "@material-ui/data-grid": "^4.0.0-alpha.19",
     "@react-navigation/native": "^5.9.2",
     "@react-navigation/stack": "^5.14.2",
@@ -18,16 +11,11 @@
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
     "d3": "^6.5.0",
->>>>>>> c8fd7763b4318c2978a6e2fc993373c45cff4a45
     "react": "^17.0.1",
     "react-datepicker": "^3.4.1",
     "react-dom": "^17.0.1",
-<<<<<<< HEAD
-    "react-hook-form": "^6.15.2",
-=======
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
->>>>>>> c8fd7763b4318c2978a6e2fc993373c45cff4a45
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },

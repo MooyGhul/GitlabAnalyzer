@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-<<<<<<< HEAD
-// import App from '../App';
-import { Token } from '../mockDataDir/mockToken' 
-import ProjectInfoPage from '../ProjectInfoPage/ProjectInfoPage' 
-=======
-import { Token } from '../mockDataDir/mockToken'
-import ProjectListPage from '../projectListPage';
-
->>>>>>> c8fd7763b4318c2978a6e2fc993373c45cff4a45
+import App from '../App';
+import { Token } from '../mockDataDir/mockToken';
+import ProjectListPage from '../ProjectListPage';
 
 // Note: Use token from mockToken
 const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
@@ -24,11 +18,7 @@ function UrlToken() {
         if(urlToken.token === Token.token) {
             ReactDOM.render(
                 <React.StrictMode>
-<<<<<<< HEAD
-                    <ProjectInfoPage />
-=======
                     <ProjectListPage />
->>>>>>> c8fd7763b4318c2978a6e2fc993373c45cff4a45
                 </React.StrictMode>,
                 document.getElementById('root')
             );
