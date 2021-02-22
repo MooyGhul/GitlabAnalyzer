@@ -48,12 +48,11 @@ unit-test:backend:
     reports:
       junit: backend/build/test-results/test/**/TEST-*.xml
 
-
 deploy:dev:
   stage: deploy
   needs:
     - docker-build
   script:
-    - docker-compose -d
+    - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_$CI_COMMIT_REF_SLUG up -d
   image: docker/compose
   when: manual
