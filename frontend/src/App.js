@@ -14,7 +14,9 @@ function App(props) {
       <ScoreBoard />
       <br/><br/><br/>
       <Charts />
+
       <DataFetching />
+
     </div>
   );
 }
