@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-import App from '../App';
 import { Token } from '../mockDataDir/mockToken'
+import ProjectListPage from '../projectListPage';
+
 
 // Note: Use token from mockToken
 const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
@@ -17,7 +18,7 @@ function UrlToken() {
         if(urlToken.token === Token.token) {
             ReactDOM.render(
                 <React.StrictMode>
-                    <App />
+                    <ProjectListPage />
                 </React.StrictMode>,
                 document.getElementById('root')
             );
