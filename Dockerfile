@@ -5,4 +5,4 @@ ADD ./frontend/build /app/public
 
 EXPOSE 8080
 
-ENTRYPOINT java -jar /app/gitlabanalyzer.jar
+ENTRYPOINT java -cp "/app/*:/app" org.springframework.boot.loader.JarLauncher
