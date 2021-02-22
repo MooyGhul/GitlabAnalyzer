@@ -1,8 +1,8 @@
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button } from '@material-ui/core'
-import React, { useEffect, useState } from 'react';
-import axios from 'axios'
+import React from 'react'; 
+import App from '../../App'
+import ReactDOM from 'react-dom'; 
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 100},
@@ -32,6 +32,16 @@ const useStyles = makeStyles({
 
 
 function MemberList(props) {
+
+  
+  const buttonClickHandler = event => {
+    ReactDOM.render(
+      <React.StrictMode>
+          <App />
+      </React.StrictMode>,
+      document.getElementById('root')
+  );
+}
   const classes = useStyles();
   // const [data, setData] = useState ({ hits: []});
   
@@ -58,8 +68,7 @@ function MemberList(props) {
     //  </div>
       <div className={classes.memberList}>        
         <h3>Please select a student from the member list below.</h3>
-        <DataGrid rows={rows} columns={columns} pageSize={5} />
-        <Button variant="contained">Analyze</Button>
+        <DataGrid rows={rows} columns={columns} pageSize={5} onRowClick={buttonClickHandler} />
       </div>
     );
   }

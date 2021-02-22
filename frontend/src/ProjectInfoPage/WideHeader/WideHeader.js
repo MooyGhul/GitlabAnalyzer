@@ -21,6 +21,7 @@ function WideHeader() {
         <div className={styles.memberAndDate}>
           <img 
             src="https://img.icons8.com/windows/32/000000/group-background-selected.png" 
+            alt="memberIcon"
           />  
           <h3>8 members</h3>
 
