@@ -1,0 +1,43 @@
+stages:
+  - build
+  - unit-test
+
+build:backend:
+  stage: build
+  script:
+    - ./gradlew assemble
+  image: gradle:jre15
+  cache:
+    paths:
+      - ./backend/build
+      - ./.gradle
+    policy: push
+
+build:frontend:
+  stage: build
+  script:
+    - cd frontend
+    - npm i
+    - npm run build
+  image: node:lts-alpine
+  cache:
+    paths:
+      - ./frontend/build
+      - ./frontend/node_modules
+    policy: push
+
+unit-test:backend:
+  stage: unit-test
+  needs:
+    - build:backend
+  script:
+    - ./gradlew test
+  image: gradle:jre15
+  cache:
+    paths:
+      - backend/build/
+      - .gradle/
+    policy: pull
+  artifacts:
+    reports:
+      junit: backend/build/test-results/test/**/TEST-*.xml
