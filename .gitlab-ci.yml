@@ -7,16 +7,18 @@ stages:
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle # from https://stackoverflow.com/a/36050711
 
+cache:
+  paths:
+    - ./backend/build
+    - ./.gradle
+    - ./frontend/build
+    - ./frontend/node_modules
+
 build:backend:
   stage: build
   script:
     - ./gradlew assemble
   image: gradle:jre15
-  cache:
-    paths:
-      - ./backend/build
-      - ./.gradle
-    policy: push
 
 build:frontend:
   stage: build
@@ -25,11 +27,6 @@ build:frontend:
     - npm i
     - npm run build
   image: node:lts-alpine
-  cache:
-    paths:
-      - ./frontend/build
-      - ./frontend/node_modules
-    policy: push
 
 docker-build:
   stage: docker-build
@@ -39,13 +36,6 @@ docker-build:
   script:
     - docker build -t gitlabanalyzer:$CI_COMMIT_REF_SLUG .
   image: docker
-  cache:
-    paths:
-      - ./backend/build
-      - ./.gradle
-      - ./frontend/build
-      - ./frontend/node_modules
-    policy: pull
 
 unit-test:backend:
   stage: unit-test
@@ -54,11 +44,6 @@ unit-test:backend:
   script:
     - ./gradlew test
   image: gradle:jre15
-  cache:
-    paths:
-      - ./backend/build
-      - ./.gradle
-    policy: pull
   artifacts:
     reports:
       junit: backend/build/test-results/test/**/TEST-*.xml
