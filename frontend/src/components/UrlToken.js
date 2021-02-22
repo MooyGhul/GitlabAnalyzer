@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
-import App from '../App';
+import ReactDOM from 'react-dom'; 
 import { Token } from '../mockDataDir/mockToken';
 import ProjectListPage from '../ProjectListPage';
 
