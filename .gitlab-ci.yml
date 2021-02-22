@@ -1,6 +1,8 @@
 stages:
   - build
+  - docker-build
   - unit-test
+  - deploy
 
 build:backend:
   stage: build
@@ -26,6 +28,22 @@ build:frontend:
       - ./frontend/node_modules
     policy: push
 
+docker-build:
+  stage: docker-build
+  needs:
+    - build:backend
+    - build:frontend
+  script:
+    - docker build -t gitlabanalyzer:$CI_COMMIT_REF_SLUG .
+  image: docker
+  cache:
+    paths:
+      - backend/build/
+      - .gradle/
+      - ./frontend/build
+      - ./frontend/node_modules
+    policy: pull
+
 unit-test:backend:
   stage: unit-test
   needs:
@@ -41,3 +59,13 @@ unit-test:backend:
   artifacts:
     reports:
       junit: backend/build/test-results/test/**/TEST-*.xml
+
+
+deploy:dev:
+  stage: deploy
+  needs:
+    - docker-build
+  script:
+    - docker-compose -d
+  image: docker/compose
+  when: manual
