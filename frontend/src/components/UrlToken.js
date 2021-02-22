@@ -10,7 +10,7 @@ const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
 function UrlToken() {
     const [urlToken, setUrlToken] = useState({url: urlString, token:''});
     const [errorMsg, setErrorMsg] = useState('');
-
+    
     const nextHandler = event => {
         event.preventDefault();
         console.log({urlToken});

@@ -33,35 +33,34 @@ const useStyles = makeStyles({
 
 function MemberList(props) {
   const classes = useStyles();
-  const [data, setData] = useState ({ hits: []});
+  // const [data, setData] = useState ({ hits: []});
   
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(
-        'http://localhost:3000/{projectId}/members'
-        // 'https://hn.algolia.com/api/v1/search?query=redux'
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await axios(
+  //       'http://localhost:3000/{projectId}/members'
+  //       // 'https://hn.algolia.com/api/v1/search?query=redux'
 
-      );
-      setData(result.data);
-    };
-    fetchData();
-  }, []);
-
+  //     );
+  //     setData(result.data);
+  //   };
+  //   fetchData();
+  // }, []);
   return (
-     <div>
-       <ul>
-      {data.hits.map(item => (
-        <li key={item.objectID}>
-          <a href={item.url}>{item.title}</a>
-        </li>
-      ))}
-    </ul>
-     </div>
-      // <div className={classes.memberList}>        
-      //   <h3>Please select a student from the member list below.</h3>
-      //   <DataGrid rows={rows} columns={columns} pageSize={5} />
-      //   <Button variant="contained">Analyze</Button>
-      // </div>
+    //  <div>
+    //    <ul>
+    //   {data.hits.map(item => (
+    //     <li key={item.objectID}>
+    //       <a href={item.url}>{item.title}</a>
+    //     </li>
+    //   ))}
+    // </ul>
+    //  </div>
+      <div className={classes.memberList}>        
+        <h3>Please select a student from the member list below.</h3>
+        <DataGrid rows={rows} columns={columns} pageSize={5} />
+        <Button variant="contained">Analyze</Button>
+      </div>
     );
   }
   

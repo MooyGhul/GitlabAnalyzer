@@ -10,6 +10,25 @@
     z-index:50;
 }
 
-.projectTitle{
-    color: red;
+.basicInfo{
+    position: absolute;
+    top: 35%;
+    left:15%;
+}
+
+.avatar{
+    position: absolute;
+    width:8%; 
+    top:40%;
+    left:5%;
+    background-color: white;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+    border-radius: 50px;
+}
+
+.memberAndDate{
+    position:absolute;
+    right:10%;
+    top:40%;
 }
