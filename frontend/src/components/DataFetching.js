@@ -13,10 +13,7 @@ function DataFetching() {
 
     try {
       await axios.post('http://localhost:8080/project/create?token=XQUSyUSDiQUxsy6CoP8_');
-      console.log("FLAG 1");
       await axios.post('http://localhost:8080/project/add?url=http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer');
-      console.log("FLAG 2");
-      console.log("FLAG 3");
       const res = await axios.get('http://localhost:8080/project/all');
 
       setProjects(res.data);   
