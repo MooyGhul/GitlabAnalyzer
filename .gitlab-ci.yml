@@ -12,6 +12,7 @@ cache:
   paths:
     - ./backend/build
     - ./.gradle
+    - ./.npm
     - ./frontend/build
     - ./frontend/node_modules
 
@@ -25,7 +26,7 @@ build:frontend:
   stage: build
   script:
     - cd frontend
-    - npm i
+    - npm ci --cache .npm --prefer-offline
     - npm run build
   image: node:lts-alpine
 
