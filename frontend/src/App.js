@@ -1,23 +1,25 @@
-import ScoreBoard from './components/ScoreBoard';
-import Header from './components/Header';
-import Charts from './components/Charts';
-import DataFetching from './components/DataFetching';
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Login from './components/Login';
+import UrlToken from './components/UrlToken';
+import ProjectListPage from './ProjectListPage';
+import OverviewPage from './OverviewPage';
+import PrivateRoute from './PrivateRoute';
+import NotFound from './components/NotFound';
 
-function App(props) {
+function App() {
 
   return (
-    <div>
-      <Header
-        pageTitle="Overview"
-      />
-      <ScoreBoard />
-      <br/><br/><br/>
-      <Charts />
-
-      <DataFetching />
-
-    </div>
+    <BrowserRouter>
+        <Switch>
+            <Redirect exact from='/' to='/login' />
+            <Route exact path='/login'> <Login /> </Route>
+            <Route exact path='/token'> <UrlToken /> </Route>
+            <PrivateRoute path='/projectList' component={ProjectListPage} />
+            <PrivateRoute path='/overview' component={OverviewPage} />
+            <Route component={NotFound} />
+        </Switch>
+    </BrowserRouter>
   );
 }
 
