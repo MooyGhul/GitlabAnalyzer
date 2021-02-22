@@ -31,6 +31,9 @@ export default function BarChart({ commentsDataProp }) {
   useEffect(() => {
     const svg = select(svgRef.current);
 
+    const { width } =
+    dimensions || wrapperRef.current.getBoundingClientRect();
+
     const data = commentsDataProp.map(entry=>entry.comments);
 
     if(!dimensions) return;
@@ -59,6 +62,18 @@ export default function BarChart({ commentsDataProp }) {
       .select(".y-axis")
       .call(yAxis);
 
+    svg
+      .append("text")             
+      .attr("transform",
+            "translate(" + (width*0.38) + " ," + (dimensions.height*1.2) + ")")
+      .text("Date");
+    
+    svg
+      .append("text")             
+      .attr("transform",
+            "translate(" + (-40) + " ," + (-dimensions.height*0.05) + ")")
+      .text("# of Comments");
+    
     svg
       .selectAll(".bar")
       .data(commentsDataProp)
