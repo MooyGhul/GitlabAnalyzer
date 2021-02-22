@@ -8,6 +8,7 @@ before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle # from https://stackoverflow.com/a/36050711
 
 cache:
+  key: ${CI_COMMIT_REF_SLUG}
   paths:
     - ./backend/build
     - ./.gradle
@@ -53,6 +54,6 @@ deploy:dev:
   needs:
     - docker-build
   script:
-    - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_$CI_COMMIT_REF_SLUG up -d
+    - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_dev up -d
   image: docker/compose
   when: manual
