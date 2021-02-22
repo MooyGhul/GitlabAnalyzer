@@ -4,6 +4,7 @@ import { AdminUser } from '../mockDataDir/mockAdminUser';
 import UrlToken from './UrlToken';
 import styles from '../style/Login.module.css';
 
+
 //Note: Use AdminUser's username and password from mockInfo to login
 
 function Login() {
@@ -15,7 +16,9 @@ function Login() {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
             ReactDOM.render(
             <React.StrictMode>
+ 
                 <UrlToken />
+ 
               </React.StrictMode>,
               document.getElementById('root')
             );
