@@ -1,0 +1,8 @@
+# Based off https://www.baeldung.com/spring-boot-postgresql-docker
+version: '2'
+
+services:
+  app:
+    image: 'gitlabanalyzer:${CI_COMMIT_REF_SLUG}'
+    ports:
+      - 8080:8080
