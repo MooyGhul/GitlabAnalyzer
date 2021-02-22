@@ -28,7 +28,7 @@ const useStyles = makeStyles({
   }
 })
 
-function MemberList(props) {
+function MemberList(props) { 
  
   const buttonClickHandler = event => {
     history.push('/overview');
