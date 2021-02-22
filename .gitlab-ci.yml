@@ -4,6 +4,9 @@ stages:
   - unit-test
   - deploy
 
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle # from https://stackoverflow.com/a/36050711
+
 build:backend:
   stage: build
   script:
@@ -38,8 +41,8 @@ docker-build:
   image: docker
   cache:
     paths:
-      - backend/build/
-      - .gradle/
+      - ./backend/build
+      - ./.gradle
       - ./frontend/build
       - ./frontend/node_modules
     policy: pull
@@ -53,8 +56,8 @@ unit-test:backend:
   image: gradle:jre15
   cache:
     paths:
-      - backend/build/
-      - .gradle/
+      - ./backend/build
+      - ./.gradle
     policy: pull
   artifacts:
     reports:
