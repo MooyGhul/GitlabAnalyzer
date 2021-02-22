@@ -2,10 +2,9 @@ import React from 'react';
 import Header from './components/Header';
 import Button from '@material-ui/core/Button'; 
 import ProjectList from './components/ProjectList';
-import { makeStyles } from '@material-ui/core/styles'; 
-import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage'
-import ReactDOM from 'react-dom'; 
- 
+import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
+
 const useStyles = makeStyles({
 
     analyzeButton: {
@@ -20,16 +19,12 @@ const useStyles = makeStyles({
     },
   });
 
-  function ProjectListPage(props) { 
+  function ProjectListPage(props) {
+    const history = useHistory();
     const classes = useStyles();
 
     const buttonClickHandler = event => {
-        ReactDOM.render(
-          <React.StrictMode>
-              <ProjectInfoPage />
-          </React.StrictMode>,
-          document.getElementById('root')
-      );
+            history.push('/overview');
     }
 
     return ( 

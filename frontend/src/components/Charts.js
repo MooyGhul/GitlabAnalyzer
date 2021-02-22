@@ -2,8 +2,8 @@ import React,{useState} from "react";
 import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
 import {Comments} from "../mockDataDir/mockCodeContri";
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 let contributions = [
   {
@@ -77,7 +77,6 @@ const colors = {
 
 const filterData = (data,startDate,endDate) => {
   return data.filter(function(currData){
-    console.log(currData.year.split("-"));
     const currYear =parseInt(currData.year.split("-")[0]);
     const currMonth = parseInt(currData.year.split("-")[1]);
     const currDate =  parseInt(currData.year.split("-")[2]);
@@ -121,33 +120,29 @@ export default function Charts () {
             <DatePicker 
               selected={startDate} 
               onChange={date => setStartDate(date)} 
-              dateFormat='MM/dd/yyyy'
+              dateFormat="MM/dd/yyyy"
               isClearable
               showYearDropdown
               scrollableMonthYearDropdown
             />
-          <br />
+
+          &nbsp;&nbsp;&nbsp;
           End date:
             <DatePicker 
               selected={endDate} 
               onChange={date => setEndDate(date)} 
-              dateFormat='MM/dd/yyyy'
+              dateFormat="MM/dd/yyyy"
               minDate={startDate}
               isClearable
               showYearDropdown
               scrollableMonthYearDropdown
             />
           <br/>
-          <br/>
-          Comment Contribution
-          <br/>
-          <br/>
+          <h2>Comment Contribution</h2>
           <BarChart commentsDataProp={commentsDataProp}/>
 
-          <br/><br/><br/>
-          Code Contribution
-          <br/><br/>
-          
+          <br/>
+          <h2>Code Contribution</h2>          
           <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
           
           <br/><br/>
