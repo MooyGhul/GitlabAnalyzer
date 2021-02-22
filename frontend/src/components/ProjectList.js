@@ -12,15 +12,15 @@ const ProjectList = (props) => {
     ]
 
     const rows = [
-        { id: 1, project: 'sudoku solver', date: '02-03-2019' },
-        { id: 2, project: 'sudoku solver', date: '02-03-2019' },
-        { id: 3, project: 'sudoku solver', date: '02-03-2019' },
-        { id: 4, project: 'sudoku solver', date: '02-03-2019' },
-        { id: 5, project: 'sudoku solver', date: '02-03-2019' },
-        { id: 6, project: 'sudoku solver', date: '02-03-2019' },
-        { id: 7, project: 'sudoku solver', date: '02-03-2019' },
-        { id: 8, project: 'sudoku solver', date: '02-03-2019' },
-        { id: 9, project: 'sudoku solver', date: '02-03-2019' },
+        { id: 1, project: 'Sudoku solver', date: '02-03-2019' },
+        { id: 2, project: 'Packman game', date: '02-03-2019' },
+        { id: 3, project: 'Pygame project', date: '02-03-2019' },
+        { id: 4, project: 'CMPT 276 Lens calculator', date: '02-03-2019' },
+        { id: 5, project: 'CMPT 276 Minegame', date: '02-03-2019' },
+        { id: 6, project: 'A* search', date: '02-03-2019' },
+        { id: 7, project: 'Project 2', date: '02-03-2019' },
+        { id: 8, project: 'CMPT 300 ass2', date: '02-03-2019' },
+        { id: 9, project: 'Sedna - project', date: '02-03-2019' },
         { id: 10, project: 'sudoku solver', date: '02-03-2019' },
         { id: 11, project: 'sudoku solver', date: '02-03-2019' },
         { id: 12, project: 'sudoku solver', date: '02-03-2019' },
@@ -31,7 +31,7 @@ const ProjectList = (props) => {
     return (
         <div className={styles.projectList}>
             <div style={{ display: 'flex', height: '100%' }}>
-                <div style={{ flexGrow: 1 }}>
+                <div style={{ flexGrow: 2 }}>
                 <DataGrid rows={rows} columns={columns} pageSize={10} checkboxSelection />
                 </div>
             </div>

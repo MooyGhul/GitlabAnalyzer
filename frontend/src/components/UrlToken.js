@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Token } from '../mockDataDir/mockToken';
 import Authentication from "../Authentication";
+import Header from "./Header";
 
 // Note: Use token from mockToken
 const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
@@ -37,6 +38,7 @@ function UrlToken() {
 
     return(
         <div>
+            <Header pageTitle="Gitlab Analyzer" />
             <form onSubmit={nextHandler}>
                 <h3>{errorMsg}</h3>
                 <label>
