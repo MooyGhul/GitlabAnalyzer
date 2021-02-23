@@ -55,6 +55,7 @@ deploy:dev:
   needs:
     - docker-build
   script:
+    - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_dev stop
     - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_dev up -d
   image: docker/compose
   when: manual

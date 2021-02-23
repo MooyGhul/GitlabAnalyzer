@@ -1,4 +1,4 @@
-docker rm gitlabanalyzer # ensure docker compose always use fresh build
+docker-compose stop
 
 set -e  # Allow stuff above to fail, stuff below should stop script on failure
 
@@ -11,4 +11,4 @@ cd ../
 
 docker build -t gitlabanalyzer .
 
-docker-compose up
+docker-compose up -d
