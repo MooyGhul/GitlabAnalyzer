@@ -3,6 +3,12 @@ import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
 import {Comments} from "../mockDataDir/mockCodeContri";
 import DatePicker from "react-datepicker";
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import { 
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 import "react-datepicker/dist/react-datepicker.css";
 
 let contributions = [
@@ -113,18 +119,24 @@ export default function Charts () {
     }
 
     return (
-        <div>
-          <br/>
-          <br/>
-          Start date:
-            <DatePicker 
-              selected={startDate} 
-              onChange={date => setStartDate(date)} 
-              dateFormat="MM/dd/yyyy"
-              isClearable
-              showYearDropdown
-              scrollableMonthYearDropdown
-            />
+      <div>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <Grid container justify="space-around">
+        <KeyboardDatePicker
+          disableToolbar
+          variant="inline"
+          format="MM/dd/yyyy"
+          margin="normal"
+          id="date-picker-inline"
+          label="Date picker inline"
+          value={startDate}
+          onChange={date => setStartDate(date)}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+      </Grid>
+    </MuiPickersUtilsProvider>
 
           &nbsp;&nbsp;&nbsp;
           End date:
