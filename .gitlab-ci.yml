@@ -7,7 +7,7 @@ stages:
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle # from https://stackoverflow.com/a/36050711
 
-cache:
+cache: &global_cache
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - backend/build
@@ -15,6 +15,7 @@ cache:
     - .npm
     - frontend/build
     - frontend/node_modules
+  policy: pull-push
 
 build:backend:
   stage: build
@@ -38,6 +39,9 @@ docker-build:
   script:
     - docker build -t gitlabanalyzer:$CI_COMMIT_REF_SLUG .
   image: docker
+  cache:
+    <<: *global_cache
+    policy: pull
 
 unit-test:backend:
   stage: unit-test
@@ -46,6 +50,9 @@ unit-test:backend:
   script:
     - ./gradlew test
   image: gradle:jre15
+  cache:
+    <<: *global_cache
+    policy: pull
   artifacts:
     reports:
       junit: backend/build/test-results/test/**/TEST-*.xml
@@ -57,5 +64,8 @@ deploy:dev:
   script:
     - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_dev stop
     - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_dev up -d
+  cache:
+    <<: *global_cache
+    policy: pull
   image: docker/compose
   when: manual
