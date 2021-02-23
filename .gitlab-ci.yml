@@ -10,11 +10,11 @@ before_script:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - ./backend/build
-    - ./.gradle
-    - ./.npm
-    - ./frontend/build
-    - ./frontend/node_modules
+    - backend/build
+    - .gradle
+    - .npm
+    - frontend/build
+    - frontend/node_modules
 
 build:backend:
   stage: build
