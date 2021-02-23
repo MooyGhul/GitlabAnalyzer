@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     const classes = useStyles();
 
     const buttonClickHandler = event => {
-            history.push('/overview');
+            history.push('/projectInfo');
     }
 
     return ( 

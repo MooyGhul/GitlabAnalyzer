@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AdminUser } from '../mockDataDir/mockAdminUser';
 import Authentication from '../Authentication';
 import styles from '../style/Login.module.css';
+import Header from './Header'
 
 //Note: Use AdminUser's username and password from mockInfo to login
 function Login() {
@@ -35,6 +36,7 @@ function Login() {
 
     return(
         <div>
+            <Header pageTitle="Gitlab Analyzer" />
             <h2>Login</h2>
             <form className={styles.form} onSubmit={loginHandler}>
                 <h3>{errorMsg}</h3>
