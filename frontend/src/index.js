@@ -6,7 +6,7 @@ import OverviewPage from './OverviewPage';
 
 ReactDOM.render(
   <React.StrictMode>
-    <OverviewPage />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
