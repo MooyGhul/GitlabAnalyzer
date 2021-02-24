@@ -68,7 +68,11 @@ public class Extractor {
 
     public List<JSONObject> getMergeRequestComments(String url, String projectToken) {
         String MRCommentURL = url + "/notes?access_token=" + projectToken;
-        return getJsonObjects(MRCommentURL);
+        List<JSONObject> mergeRequests =  getJsonObjects(MRCommentURL);
+        for(JSONObject mr: mergeRequests) {
+            mr.put("commentType", "merge_request");
+        }
+        return mergeRequests;
     }
 
     public List<JSONObject> getBranches(String url, String projectToken) {
@@ -99,7 +103,11 @@ public class Extractor {
 
     public List<JSONObject> getIssueComments(String url, String projectToken) {
         String commentUrl = url + "?access_token=" + projectToken;
-        return getJsonObjects(commentUrl);
+        List<JSONObject> comments =  getJsonObjects(commentUrl);
+        for(JSONObject comment: comments) {
+            comment.put("commentType", "issue");
+        }
+        return comments;
     }
 
     public List<String> getRepoMembers(String url, String projectToken) {
