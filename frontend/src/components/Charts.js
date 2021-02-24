@@ -117,7 +117,7 @@ export default function Charts () {
       contributionsDataProp = filterData(contributionsData,startDate,endDate);
       commentsDataProp = filterData(commentsData,startDate,endDate);
     }
-
+  
     return (
       <div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -158,6 +158,11 @@ export default function Charts () {
           <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
           
           <br/><br/>
+          {/* 
+          // the fields class is changed from the following tutorial:
+          // https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=17
+          // the tutorial "Using React (Hooks) with D3 – [15] Stacked Bar Chart"
+          */}
           <div className="fields">
             {allKeys.map(key => (
               <div key={key} className="field">
