@@ -2,7 +2,6 @@ import React,{useState} from "react";
 import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
 import {Comments} from "../mockDataDir/mockCodeContri";
-import DatePicker from "react-datepicker";
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { 
