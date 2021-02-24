@@ -7,6 +7,7 @@ import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Extractor {
@@ -49,11 +50,15 @@ public class Extractor {
     }
 
     private List<JSONObject> getJsonObjects(String URL) {
-        String response = restTemplate.getForObject(URL, String.class);
-        JSONArray jsonResponse =  new JSONArray(response);
-        List<JSONObject> jsonList = new ArrayList<>();
-        jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
-        return jsonList;
+        try {
+            String response = restTemplate.getForObject(URL, String.class);
+            JSONArray jsonResponse = new JSONArray(response);
+            List<JSONObject> jsonList = new ArrayList<>();
+            jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
+            return jsonList;
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
     }
 
     public List<JSONObject> getMergeRequests(String url, String projectToken) {
