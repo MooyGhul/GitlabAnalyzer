@@ -67,7 +67,7 @@ export default function BarChart({ commentsDataProp }) {
     svg
       .append("text")             
       .attr("transform",
-            "translate(" + (width*0.38) + " ," + (dimensions.height*1.2) + ")")
+            "translate(" + (width*0.38) + " ," + (dimensions.height*1.13) + ")")
       .text("Date");
     
     svg
@@ -76,6 +76,14 @@ export default function BarChart({ commentsDataProp }) {
             "translate(" + (-40) + " ," + (-dimensions.height*0.05) + ")")
       .text("# of Comments");
     
+    svg.append("text")
+      .attr("x", (width *0.22))             
+      .attr("y", -50 )
+      .attr("text-anchor", "middle")  
+      .style("font-size", "40px") 
+      .style("text-decoration", "underline")  
+      .text("Comment Contribution");
+
     svg
       .selectAll(".bar")
       .data(commentsDataProp)

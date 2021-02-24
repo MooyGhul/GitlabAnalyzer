@@ -66,7 +66,7 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
     svg
       .append("text")             
       .attr("transform",
-            "translate(" + (width*0.38) + " ," + (height*1.2) + ")")
+            "translate(" + (width*0.38) + " ," + (height*1.13) + ")")
       .text("Date");
     
     svg
@@ -97,6 +97,14 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
       .attr("width",xScale.bandwidth())
       .attr("y", sequence => yScale(sequence[1]))
       .attr("height", sequence => yScale(sequence[0])-yScale(sequence[1]));
+
+      svg.append("text")
+        .attr("x", (width *0.22))             
+        .attr("y", -50 )
+        .attr("text-anchor", "middle")  
+        .style("font-size", "40px") 
+        .style("text-decoration", "underline")  
+        .text("Code Contribution");
 
   },[colors, contributionsDataProp,dimensions,keys]);
 

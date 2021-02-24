@@ -155,15 +155,13 @@ export default function Charts () {
         </Grid>
       </MuiPickersUtilsProvider>
 
-          <br/>
-          <h2>Comment Contribution</h2>
+          <br/>       
+          <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
+
+          <br/><br/><br/><br/><br/><br/><br/><br/>
           <BarChart commentsDataProp={commentsDataProp}/>
 
-          <br/>
-          <h2>Code Contribution</h2>          
-          <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
-          
-          <br/><br/>
+          <br/><br/><br/><br/>
           {/* 
           // the fields class is changed from the following tutorial:
           // https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=17
