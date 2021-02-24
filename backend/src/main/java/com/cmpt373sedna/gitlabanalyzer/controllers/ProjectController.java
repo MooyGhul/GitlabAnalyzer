@@ -21,6 +21,7 @@ import com.cmpt373sedna.gitlabanalyzer.model.*;
 import lombok.Getter;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,24 +39,17 @@ public class ProjectController {
 
     private int[] weights;
 
+    private int totalComments;
+
     private @Getter List<MergeRequestEntity> mergeRequestEntities;
 
     private @Getter List<IssueEntity> issuesEntities;
 
-    private List<CommentEntity> comments;
+    private @Getter List<CommentEntity> comments;
 
-    private int totalComments;
-
-    @Autowired
-    private ProjectEntityRepository projectRepository;
-    @Autowired
-    private IssueEntityRepository issueRepository;
     private @Getter List<CommitEntity> commitEntities;
 
     private @Getter List<String> members;
-
-    @Autowired
-    private CommentEntityRepository commentEntityRepository;
 
     public ProjectController(Extractor e, String url, String projectToken) {
         this.e = e;
@@ -91,9 +85,9 @@ public class ProjectController {
     }
 
     private List<CommentEntity> getAndParseComments() {
-        List<JSONObject> comments = null;
+        List<JSONObject> comments = new ArrayList<>();
         for(IssueEntity issue: this.issuesEntities) {
-            String url = this.url + "/issues" + issue.getIssueId() + "/notes";
+            String url = this.url + "/issues/" + issue.getIssueId() + "/notes";
             List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
             comments.addAll(issueComments);
         }

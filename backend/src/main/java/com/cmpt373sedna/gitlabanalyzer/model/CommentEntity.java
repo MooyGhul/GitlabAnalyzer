@@ -26,9 +26,9 @@ public class CommentEntity {
     public static CommentEntity fromGitlabJSON(JSONObject json) {
 
         return CommentEntity.builder()
-                .commenter(json.getString("title"))
-                .commentText(json.getString("comment_text"))
-                .commentDate(Instant.parse(json.getString("comment_date")))
+                .commenter(json.getJSONObject("author").getString("username"))
+                .commentText(json.getString("body"))
+                .commentDate(Instant.parse(json.getString("created_at")))
                 .build();
     }
 
