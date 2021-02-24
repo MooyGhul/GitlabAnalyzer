@@ -121,34 +121,41 @@ export default function Charts () {
     return (
       <div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
-        <KeyboardDatePicker
-          disableToolbar
-          variant="inline"
-          format="MM/dd/yyyy"
-          margin="normal"
-          id="date-picker-inline"
-          label="Date picker inline"
-          value={startDate}
-          onChange={date => setStartDate(date)}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-      </Grid>
-    </MuiPickersUtilsProvider>
+        <Grid container justify="space-around">
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="MM/dd/yyyy"
+            margin="normal"
+            id="date-picker-inline"
+            label="Date picker inline"
+            value={startDate}
+            onChange={date => setStartDate(date)}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+        </Grid>
+      </MuiPickersUtilsProvider>
 
-          &nbsp;&nbsp;&nbsp;
-          End date:
-            <DatePicker 
-              selected={endDate} 
-              onChange={date => setEndDate(date)} 
-              dateFormat="MM/dd/yyyy"
-              minDate={startDate}
-              isClearable
-              showYearDropdown
-              scrollableMonthYearDropdown
-            />
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+        <Grid container justify="space-around">
+          <KeyboardDatePicker
+            disableToolbar
+            variant="inline"
+            format="MM/dd/yyyy"
+            margin="normal"
+            id="date-picker-inline"
+            label="Date picker inline"
+            value={endDate}
+            onChange={date => setEndDate(date)}
+            KeyboardButtonProps={{
+              'aria-label': 'change date',
+            }}
+          />
+        </Grid>
+      </MuiPickersUtilsProvider>
+
           <br/>
           <h2>Comment Contribution</h2>
           <BarChart commentsDataProp={commentsDataProp}/>
