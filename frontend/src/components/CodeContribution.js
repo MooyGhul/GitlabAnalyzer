@@ -1,6 +1,5 @@
 import React,{useRef,useEffect, useState} from 'react';
 import { select, axisBottom, axisLeft, scaleBand, scaleLinear ,stack, max } from 'd3';
-//import useResizeObserver from "./useResizeObserver";
 
 const useResizeObserver = (ref) => {
   const [dimensions, setDimensions] = useState(null);

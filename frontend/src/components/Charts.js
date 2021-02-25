@@ -80,6 +80,8 @@ const colors = {
   "CommitDaily": "#a6d854"
 };
 
+// This part will be replaced when backend data is retrieved.
+// Now I dont know what type of data will provided. 
 const filterData = (data,startDate,endDate) => {
   return data.filter(function(currData){
     const currYear =parseInt(currData.year.split("-")[0]);
@@ -166,6 +168,7 @@ export default function Charts () {
           // the fields class is changed from the following tutorial:
           // https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=17
           // the tutorial "Using React (Hooks) with D3 – [15] Stacked Bar Chart"
+          // This part will be refactored when using new chart library.
           */}
           <div className="fields">
             {allKeys.map(key => (
