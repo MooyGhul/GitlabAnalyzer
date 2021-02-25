@@ -1,7 +1,7 @@
 import styles from "../style/projectList.module.css"
 import { DataGrid } from '@material-ui/data-grid';
 import React,{useState, useEffect} from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 
 
 const ProjectList = (props) => {
@@ -16,8 +16,6 @@ const ProjectList = (props) => {
     useEffect(() => {    
         
           const fetchData = async () => {
-            await axios.post('http://localhost:8080/project/create?token=XQUSyUSDiQUxsy6CoP8_');
-            await axios.post('http://localhost:8080/project/add?url=http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer');
             const result = await axios.get('http://localhost:8080/project/all')
             
             setData(result.data);
