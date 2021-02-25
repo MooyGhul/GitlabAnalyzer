@@ -9,6 +9,7 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import "react-datepicker/dist/react-datepicker.css";
+import './OverviewPage.css';
 
 let contributions = [
   {
@@ -157,11 +158,11 @@ export default function Charts () {
         </Grid>
       </MuiPickersUtilsProvider>
 
-          <br/>       
-          <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
+          <br/>
+            <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
 
           <br/><br/><br/><br/><br/><br/><br/><br/>
-          <BarChart commentsDataProp={commentsDataProp}/>
+          <BarChart className="charts" commentsDataProp={commentsDataProp}/>
 
           <br/><br/><br/><br/>
           {/* 

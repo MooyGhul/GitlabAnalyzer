@@ -110,7 +110,7 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
 
   return (
     <div ref={wrapperRef} style={{marginbottom: "2rem"}}>
-      <svg ref={svgRef}>
+      <svg class="charts"  ref={svgRef}>
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>

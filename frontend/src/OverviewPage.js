@@ -2,7 +2,6 @@ import ScoreBoard from './components/ScoreBoard';
 import Header from './components/Header';
 import Charts from "./components/Charts";
 import DataFetching from './components/DataFetching';
-import './OverviewPage.css';
 
 function OverviewPage(props) {
 
