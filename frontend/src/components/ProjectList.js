@@ -1,15 +1,14 @@
 import styles from "../style/projectList.module.css"
 import { DataGrid } from '@material-ui/data-grid';
 import React,{useState, useEffect} from 'react';
-import axios from 'axios';
-import { setRef } from "@material-ui/core";
+import axios from 'axios'; 
 
 
 const ProjectList = (props) => {
         
     const columns = [
         { field: 'id', headerName: 'ID', width:200 },
-        { field: 'projectName', headerName: 'Project', width: 400 },
+        { field: 'projectName', headerName: 'Project Name', width: 400 },
      
     ]
  
@@ -27,10 +26,7 @@ const ProjectList = (props) => {
         }, []); 
      
     let rows = []
-    data.forEach(project => rows.push({id: project.repoId, projectName:project.repoName}))
-
-
-    
+    data.forEach(project => rows.push({id: project.repoId, projectName:project.repoName}))  
 
     return (           
         
