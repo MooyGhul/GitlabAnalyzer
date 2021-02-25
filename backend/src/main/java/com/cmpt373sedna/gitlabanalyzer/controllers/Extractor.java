@@ -1,12 +1,14 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Extractor {
@@ -49,11 +51,15 @@ public class Extractor {
     }
 
     private List<JSONObject> getJsonObjects(String URL) {
-        String response = restTemplate.getForObject(URL, String.class);
-        JSONArray jsonResponse =  new JSONArray(response);
-        List<JSONObject> jsonList = new ArrayList<>();
-        jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
-        return jsonList;
+        try {
+            String response = restTemplate.getForObject(URL, String.class);
+            JSONArray jsonResponse = new JSONArray(response);
+            List<JSONObject> jsonList = new ArrayList<>();
+            jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
+            return jsonList;
+        } catch (HttpClientErrorException e) {
+            return Collections.emptyList();
+        }
     }
 
     public List<JSONObject> getMergeRequests(String url, String projectToken) {
@@ -63,7 +69,11 @@ public class Extractor {
 
     public List<JSONObject> getMergeRequestComments(String url, String projectToken) {
         String MRCommentURL = url + "/notes?access_token=" + projectToken;
-        return getJsonObjects(MRCommentURL);
+        List<JSONObject> mergeRequests =  getJsonObjects(MRCommentURL);
+        for(JSONObject mr: mergeRequests) {
+            mr.put("commentType", "merge_request");
+        }
+        return mergeRequests;
     }
 
     public List<JSONObject> getBranches(String url, String projectToken) {
@@ -94,7 +104,11 @@ public class Extractor {
 
     public List<JSONObject> getIssueComments(String url, String projectToken) {
         String commentUrl = url + "?access_token=" + projectToken;
-        return getJsonObjects(commentUrl);
+        List<JSONObject> comments =  getJsonObjects(commentUrl);
+        for(JSONObject comment: comments) {
+            comment.put("commentType", "issue");
+        }
+        return comments;
     }
 
     public List<String> getRepoMembers(String url, String projectToken) {
