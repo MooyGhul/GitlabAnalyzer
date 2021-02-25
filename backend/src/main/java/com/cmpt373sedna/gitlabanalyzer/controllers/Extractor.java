@@ -1,6 +1,7 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -56,7 +57,7 @@ public class Extractor {
             List<JSONObject> jsonList = new ArrayList<>();
             jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
             return jsonList;
-        } catch (Exception e) {
+        } catch (HttpClientErrorException e) {
             return Collections.emptyList();
         }
     }
