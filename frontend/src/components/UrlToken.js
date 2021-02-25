@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Token } from '../mockDataDir/mockToken';
 import Authentication from "../Authentication";
@@ -6,11 +6,11 @@ import Header from "./Header";
 import axios from 'axios';
 
 // Note: Use token from mockToken
-const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
+// const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
 
 function UrlToken() {
     const history = useHistory();
-    const [urlToken, setUrlToken] = useState({url: urlString, token:''});
+    const [urlToken, setUrlToken] = useState({url: '', token:''});
     const [errorMsg, setErrorMsg] = useState('');
 
     const authenticateToken  = () => {
@@ -21,21 +21,21 @@ function UrlToken() {
         } else {
             return false;
          }
-    }
-    
+    }   
      
     const checkToken = async() => {
-        if(authenticateToken()) { 
-            await axios.post('http://localhost:8080/project/create?token=XQUSyUSDiQUxsy6CoP8_');
-            await axios.post('http://localhost:8080/project/add?url=http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer');
+        if(authenticateToken()) {  
             history.push('/projectList');
+            await axios.post('http://localhost:8080/project/create?token='+ urlToken.token);
+            await axios.post('http://localhost:8080/project/add?url='+ urlToken.url); 
+            
         } else {
-            setUrlToken({url: urlString, token:''});
+            setUrlToken({url: urlToken.url, token:urlToken.token});
             setErrorMsg('Incorrect url or token. Please try again.');
         }
     }
 
-    const nextHandler = event => {
+    const nextHandler = event => { 
         event.preventDefault();
         checkToken();
     }
