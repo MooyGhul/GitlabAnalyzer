@@ -9,7 +9,6 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import "react-datepicker/dist/react-datepicker.css";
-import './OverviewPage.css';
 
 let contributions = [
   {
@@ -161,10 +160,7 @@ export default function Charts () {
           <br/>
             <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
 
-          <br/><br/><br/><br/><br/><br/><br/><br/>
-          <BarChart className="charts" commentsDataProp={commentsDataProp}/>
-
-          <br/><br/><br/><br/>
+          <br/><br/><br/><br/><br/><br/>
           {/* 
           // the fields class is changed from the following tutorial:
           // https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=17
@@ -192,6 +188,11 @@ export default function Charts () {
               </div>
             ))}
           </div>
-        </div>
+
+
+          <BarChart className="charts" commentsDataProp={commentsDataProp}/>
+
+          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          </div>
     );
 }
