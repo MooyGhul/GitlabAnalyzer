@@ -9,6 +9,7 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import "react-datepicker/dist/react-datepicker.css";
+import {makeStyles} from "@material-ui/core/styles";
 
 let contributions = [
   {
@@ -121,46 +122,56 @@ export default function Charts () {
   
     return (
       <div>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid container justify="space-around">
-          <KeyboardDatePicker
-            disableToolbar
-            variant="inline"
-            format="MM/dd/yyyy"
-            margin="normal"
-            id="date-picker-inline"
-            label="Date picker inline"
-            value={startDate}
-            onChange={date => setStartDate(date)}
-            KeyboardButtonProps={{
-              'aria-label': 'change date',
-            }}
-          />
-        </Grid>
-      </MuiPickersUtilsProvider>
-
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid container justify="space-around">
-          <KeyboardDatePicker
-            disableToolbar
-            variant="inline"
-            format="MM/dd/yyyy"
-            margin="normal"
-            id="date-picker-inline"
-            label="Date picker inline"
-            value={endDate}
-            onChange={date => setEndDate(date)}
-            KeyboardButtonProps={{
-              'aria-label': 'change date',
-            }}
-          />
-        </Grid>
-      </MuiPickersUtilsProvider>
-
-          <br/>
+      <Grid container xs={12} spacing={6}  direction="column">
+      <Grid item xs={6} >
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify="space-around">
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Date picker inline"
+              value={startDate}
+              onChange={date => setStartDate(date)}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </Grid>
+        </MuiPickersUtilsProvider>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify="space-around">
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="MM/dd/yyyy"
+              margin="normal"
+              id="date-picker-inline"
+              label="Date picker inline"
+              value={endDate}
+              onChange={date => setEndDate(date)}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }}
+            />
+          </Grid>
+        </MuiPickersUtilsProvider>
+      </Grid>
+      <Grid container spacing={5} xs={12}>
+      <Grid item xs={6} >
             <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
 
-          <br/><br/><br/><br/><br/><br/>
+
+          
+          </Grid>
+          <Grid item xs={6} >
+          <BarChart className="charts" commentsDataProp={commentsDataProp}/>
+          </Grid>
+          </Grid>
+          <Grid item xs={6} >
+          
           {/* 
           // the fields class is changed from the following tutorial:
           // https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=17
@@ -188,11 +199,9 @@ export default function Charts () {
               </div>
             ))}
           </div>
-
-
-          <BarChart className="charts" commentsDataProp={commentsDataProp}/>
-
-          <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+          </Grid>
+          </Grid>
+          
           </div>
     );
 }

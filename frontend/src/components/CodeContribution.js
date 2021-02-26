@@ -44,7 +44,7 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
 
     const xScale = scaleBand()
       .domain(contributionsDataProp.map(d => d.year))
-      .range([0,width*0.4]) // To Change
+      .range([0,width]) // To Change
       .padding(0.5);
 
     const xAxis = axisBottom(xScale);
@@ -65,7 +65,7 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
     svg
       .append("text")             
       .attr("transform",
-            "translate(" + (width*0.38) + " ," + (height*1.13) + ")")
+            "translate(" + (width*0.9) + " ," + (height*1.13) + ")")
       .text("Date");
     
     svg
@@ -98,7 +98,7 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
       .attr("height", sequence => yScale(sequence[0])-yScale(sequence[1]));
 
       svg.append("text")
-        .attr("x", (width *0.22))             
+        .attr("x", (width *0.44))             
         .attr("y", -50 )
         .attr("text-anchor", "middle")  
         .style("font-size", "40px") 

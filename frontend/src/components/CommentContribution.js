@@ -43,7 +43,7 @@ export default function BarChart({ commentsDataProp }) {
 
     const xScale = scaleBand()
                     .domain(commentsDataProp.map(d=>d.year))
-                    .range([0,dimensions.width*0.4]) 
+                    .range([0,dimensions.width]) 
                     .padding(0.5);
 
     const xAxis = axisBottom(xScale)
@@ -68,7 +68,7 @@ export default function BarChart({ commentsDataProp }) {
     svg
       .append("text")             
       .attr("transform",
-            "translate(" + (width*0.38) + " ," + (dimensions.height*1.13) + ")")
+            "translate(" + (width*0.9) + " ," + (dimensions.height*1.13) + ")")
       .text("Date");
     
     svg
@@ -78,7 +78,7 @@ export default function BarChart({ commentsDataProp }) {
       .text("# of Comments");
     
     svg.append("text")
-      .attr("x", (width *0.22))             
+      .attr("x", (width *0.44))             
       .attr("y", -50 )
       .attr("text-anchor", "middle")  
       .style("font-size", "40px") 
