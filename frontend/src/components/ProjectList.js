@@ -9,7 +9,6 @@ const ProjectList = (props) => {
     const columns = [
         { field: 'id', headerName: 'ID', width:200 },
         { field: 'projectName', headerName: 'Project Name', width: 400 },
-     
     ]
  
     const [data, setData] = useState ([]);
