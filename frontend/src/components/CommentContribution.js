@@ -104,7 +104,7 @@ export default function BarChart({ commentsDataProp }) {
 
   return (
     <div ref={wrapperRef} style={{marginbottom: "2rem"}}>
-      <svg class="charts" ref={svgRef}>
+      <svg className="charts" ref={svgRef}>
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>
