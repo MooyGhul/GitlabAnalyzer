@@ -23,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
 function OverviewPage(props) {
   const classes = useStyles();
   return (
-
     <Grid container spacing={2} className = {classes.grid}>
       <Grid item xs={12} >
         <Header
               pageTitle="Overview Test"
         />
+      </Grid>
+      <Grid item xs={12} >
       </Grid>
       <Grid item xs={6} >
         <ScoreBoard />
@@ -39,9 +40,6 @@ function OverviewPage(props) {
       </Grid>
       <DataFetching />
     </Grid>
-
-
-
   );
 }
 
