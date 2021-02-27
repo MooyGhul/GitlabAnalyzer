@@ -10,7 +10,7 @@ Run `sudo ./build.sh` to :
 - automatically build backend & frontend
 - start via Docker compose
 
-Connect to application via `localhost:8000`
+Connect to application via `localhost:8080`
 
 # Starting Backend Locally
 
