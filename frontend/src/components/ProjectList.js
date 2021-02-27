@@ -22,8 +22,7 @@ const ProjectList = (props) => {
           fetchData();
         }, []); 
      
-    let rows = []
-    data.forEach(project => rows.push({id: project.repoId, projectName:project.repoName}))  
+    const rows = data.map(project => ({id: project.repoId, projectName:project.repoName}))  
 
     return (           
         

@@ -40,6 +40,14 @@ function UrlToken() {
             <Header pageTitle="Gitlab Analyzer" />
             <form onSubmit={nextHandler}>
                 <h3>{errorMsg}</h3>
+                <br>
+                </br>
+                <br>
+                </br>
+                <br>
+                </br>
+                <br>
+                </br>
                 <label>
                     Enter GitLab Server URL
                     <input type ='url' value={urlToken.url}
