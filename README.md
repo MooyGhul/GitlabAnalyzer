@@ -1,8 +1,16 @@
 # Sedna
 
+# Install dependencies:
+
+'sudo apt install docker.io docker-compose'
+
 # Starting Backend via Docker Compose
 
-Run `build.sh` to automatically build backend & frontend, then start via Docker compose.
+Run `sudo ./build.sh` to :
+- automatically build backend & frontend
+- start via Docker compose
+
+Connect to application via `localhost:8080`
 
 # Starting Backend Locally
 
