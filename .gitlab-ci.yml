@@ -68,8 +68,8 @@ deploy:dev:
   needs:
     - docker-build
   script:
-    - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_dev stop
-    - docker-compose -f docker-compose.yml -f docker-compose.dev.ym -p gitlabanalyzer_dev up -d
+    - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev stop
+    - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev up -d
   cache: {}
   image: docker/compose
   when: manual
