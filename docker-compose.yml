@@ -19,7 +19,7 @@ services:
 
   db:
     image: 'postgres'
-    container_name: db
+    container_name: gitlabanalyzer_db
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password

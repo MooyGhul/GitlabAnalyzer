@@ -3,6 +3,10 @@ version: '2'
 
 services:
   app:
+    container_name: gitlabanalyzer_app_dev
     image: 'gitlabanalyzer:${CI_COMMIT_REF_SLUG}'
     ports:
       - 9000:8080
+  db:
+    container_name: gitlabanalyzer_db_dev
+
