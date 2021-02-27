@@ -44,7 +44,7 @@ docker-build:
     - build:frontend
   script:
     - docker build -t gitlabanalyzer:$CI_COMMIT_REF_SLUG .
-  image: docker
+  image: docker:19.03.12
   cache: {}
 
 unit-test:backend:
@@ -68,8 +68,9 @@ deploy:dev:
   needs:
     - docker-build
   script:
+    - apk add docker-compose
     - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev stop
     - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev up -d
   cache: {}
-  image: docker/compose
+  image: docker:19.03.12
   when: manual
