@@ -9,7 +9,6 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import "react-datepicker/dist/react-datepicker.css";
-import {makeStyles} from "@material-ui/core/styles";
 
 let contributions = [
   {
