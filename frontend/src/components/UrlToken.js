@@ -1,39 +1,38 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { Token } from '../mockDataDir/mockToken';
+import { useHistory } from 'react-router-dom';  
 import Authentication from "../Authentication";
 import Header from "./Header";
-
-// Note: Use token from mockToken
-const urlString = 'https://csil-git1.cs.surrey.sfu.ca';
+import axios from 'axios';
 
 function UrlToken() {
     const history = useHistory();
-    const [urlToken, setUrlToken] = useState({url: urlString, token:''});
+    const [urlToken, setUrlToken] = useState({url: '', token:''});
     const [errorMsg, setErrorMsg] = useState('');
 
-    const authenticateToken  = () => {
-        if(urlToken.token === Token.token) {
-            Authentication.onValidToken();
-            Authentication.onAuthentication();
-            return true;
-        } else {
-            return false;
-         }
-    }
+    const authenticateToken  = async () => {
+        await axios.post('http://localhost:8080/project/create?token='+ urlToken.token);
+        await axios.post('http://localhost:8080/project/add?url='+ urlToken.url)
+        .then(function(response){
+            console.log(response.status);
+            if (response.status === 200){
+                Authentication.onValidToken();
+                Authentication.onAuthentication();
+                history.push('/projectList');
+            }
+        })
+        .catch(function(error){
+            console.log(error.response.status);
+            if (error.response.status === 500){
+                setUrlToken({url: urlToken.url, token:urlToken.token});
+                setErrorMsg('Incorrect url or token. Please try again.');
+            }
+        }) 
+    }   
+       
 
-    const checkToken = () => {
-        if(authenticateToken()) {
-            history.push('/projectList');
-        } else {
-            setUrlToken({url: urlString, token:''});
-            setErrorMsg('Incorrect url or token. Please try again.');
-        }
-    }
-
-    const nextHandler = event => {
+    const nextHandler = event => { 
         event.preventDefault();
-        checkToken();
+        authenticateToken();
     }
 
     return(
@@ -41,6 +40,14 @@ function UrlToken() {
             <Header pageTitle="Gitlab Analyzer" />
             <form onSubmit={nextHandler}>
                 <h3>{errorMsg}</h3>
+                <br>
+                </br>
+                <br>
+                </br>
+                <br>
+                </br>
+                <br>
+                </br>
                 <label>
                     Enter GitLab Server URL
                     <input type ='url' value={urlToken.url}
