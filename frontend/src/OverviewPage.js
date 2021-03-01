@@ -1,4 +1,4 @@
-import ScoreBoard from './components/ScoreBoard';
+import Banner from "./components/Banner";
 import Header from './components/Header';
 import Charts from "./components/Charts";
 import DataFetching from './components/DataFetching';
@@ -30,12 +30,10 @@ function OverviewPage(props) {
         />
       </Grid>
       <Grid item xs={12} >
-      </Grid>
-      <Grid item xs={6} >
-        <ScoreBoard />
+        <Banner />
       </Grid>
 
-      <Grid container xs={12} >
+      <Grid container >
         <Charts />
       </Grid>
       <DataFetching />
