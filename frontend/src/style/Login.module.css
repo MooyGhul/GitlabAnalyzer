@@ -1,17 +1,4 @@
-.Button {
-    border-radius: 8px;
-    background-color: #7553FF;
-    color: white;
-    padding: 10px 24px;
-    font-size: 16px;
-    float: right;    
-}
-
-
-.Button:disabled { /* Increase the specificity */
-    color: #7553FF;
-  }
-
+ 
 .form {
     width: 300px;
     font-size: 20px;

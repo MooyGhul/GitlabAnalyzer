@@ -5,9 +5,12 @@ import Authentication from '../Authentication';
 import Header from './Header'
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button'; 
+import styles from '../style/Login.module.css'
+import Box from '@material-ui/core/Box';  
+import logo from '../logo/gitlab_analyzer.png';
+
+
 
 function Login() {
     const history = useHistory();
@@ -38,43 +41,79 @@ function Login() {
     }
 
     const useStyles = makeStyles((theme) => ({
-        root: { 
-            fontFamily:'PT Sans, sans-serif' 
-        },  
+        
+        h2:{
+            fontFamily:'PT Sans, sans-serif',  
+            marginTop: '30%',
+            marginBottom: '15%',
+            color: 'rgb(58,58,58)'
+        },
 
-        formContainer:{
-            backgroundColor:'#7553FF',   
-            width:'30%',
+        h4:{
+            fontFamily:'PT Sans, sans-serif',  
+            color: 'rgb(58,58,58)'
+        },
+
+        formBox:{ 
+            width:'25%',
+            height:'55%',
+            // backgroundImage: 'linear-gradient(to bottom right,rgb(92,58,171), rgb(214,35,113))',
+            // backgroundColor: 'rgb(92,58,171)',   
             position: 'absolute', 
             left: '50%', 
             top: '50%',
-            transform: 'translate(-50%, -50%)'
+            transform: 'translate(-50%, -50%)',
+            textAlign: 'center',
+            
+        },
+        
+        customButton:{
+            marginTop:'15%',
+            width:'50%',
+            backgroundImage: 'linear-gradient(to bottom right,rgb(92,58,171), rgb(214,35,113))',
+            backgroundColor: 'rgb(92,58,171)',     
         },
 
-        textfield: {
-            display: 'block',
-            marginBottom: '5%', 
+        customTextField: {
+            width: '70%'
+        },         
+        
+        logo: {
+            width:"50%",
+            position: 'absolute',
+            left: '50%', 
+            top: '15%',
+            transform: 'translate(-50%, -50%)', 
+
         }
       })
       )
       ;
+
+      const defaultProps = {
+        bgcolor: 'background.paper',
+        borderColor: 'rgb(195,195,195)',
+        m: 1,
+        border: 1, 
+      };
     
     const classes = useStyles();
 
     return(
-        <div className={classes.root} >
-            {/* <Header pageTitle='Gitlab Analyzer' /> */}          
-           
-             <Container className={classes.formContainer}>
-                <h2 className={classes.h2}>Login</h2>
+        <div className={styles.root} >
+            <Header pageTitle='Gitlab Analyzer' />          
+            
+             <Box className={classes.formBox} borderRadius={16} {...defaultProps}  boxShadow={8}  > 
+             <img src={logo} alt="Logo" className={classes.logo}/>      
+
+                <h2 className={classes.h2}>LOGIN</h2>
                 <form noValidate autoComplete='off' onSubmit={loginHandler}>
-                    <h3>{errorMsg}</h3>
-                    <TextField id='standard-basic' className={classes.textfield} label='Username' value={user.name} fullWidth onChange={e=> setUser({...user, name: e.target.value})}/>
-                    <TextField id='standard-basic' className={classes.textfield} label='Password' alue={user.password} fullWidth onChange={e=> setUser({...user, password: e.target.value})}/>                
-                    <Button variant='contained'  type ='submit' color='secondary'> Log in</Button>
-    
+                    <h4 className={classes.h4}>{errorMsg}</h4>
+                    <TextField id='username' classes={{root: classes.customTextField}} label='Username' value={user.name} fullWidth onChange={e=> setUser({...user, name: e.target.value})}/>
+                    <TextField id='password' classes={{root: classes.customTextField}} label='Password' value={user.password} fullWidth onChange={e=> setUser({...user, password: e.target.value})}/>                
+                    <Button classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'> Log in</Button>    
                 </form>  
-            </Container>
+            </Box>
              
         </div>
     );

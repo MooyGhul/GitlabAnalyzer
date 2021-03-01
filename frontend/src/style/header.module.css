@@ -1,8 +1,9 @@
  
 .header {
+    font-family: PT Sans, sans-serif;
     position: fixed;
     color: white;
-    background-color: #7553FF;
+    background-color: rgb(92,58,171);
     padding: 3vh;
     font-size: 20px;
     text-align: center;
