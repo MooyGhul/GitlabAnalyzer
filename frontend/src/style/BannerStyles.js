@@ -1,7 +1,9 @@
 export default {
 
     container: {
-        marginTop: "35px"
+        marginTop: "35px",
+        backgroundColor: '#d1d0ff',
+        width: '100%'
     },
 
     large: {
