@@ -7,6 +7,8 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 
+import CodeContributionTable from './components/CodeContributionTable';
+
 const useStyles = makeStyles((theme) => ({
   grid: {
     width: "100%",
@@ -39,7 +41,16 @@ function OverviewPage(props) {
         <Charts />
       </Grid>
       <DataFetching />
+
+     <Grid container xs={12} >
+        <CodeContributionTable />
+     </Grid>
+
     </Grid>
+
+
+
+
   );
 }
 
