@@ -36,7 +36,7 @@ function Login() {
 
     const loginHandler = event => {
         event.preventDefault();
-        login(user);
+        login();
     }
 
     const useStyles = makeStyles((theme) => ({        
@@ -91,8 +91,7 @@ function Login() {
             <Header pageTitle='Gitlab Analyzer' />          
             
              <Box className={classes.formBox} borderRadius={16} {...defaultProps}  boxShadow={8}  > 
-             <img src={logo} alt="Logo" className={classes.logo}/>      
-
+                <img src={logo} alt="Logo" className={classes.logo}/>      
                 <h2 className={classes.h2}>LOGIN</h2>
                 <form noValidate autoComplete='off' onSubmit={loginHandler}>
                     <h4 className={classes.h4}>{errorMsg}</h4>
