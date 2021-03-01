@@ -24,7 +24,11 @@ const useStyles = makeStyles({
     const classes = useStyles();
 
     const buttonClickHandler = event => {
-            history.push('/overview');
+            history.push({
+              pathname:'/projectInfo',
+              state: {id:2},
+              
+            });
     }
 
     return ( 
