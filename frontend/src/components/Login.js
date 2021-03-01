@@ -5,8 +5,7 @@ import Authentication from '../Authentication';
 import Header from './Header'
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button'; 
-import styles from '../style/Login.module.css'
+import Button from '@material-ui/core/Button';  
 import Box from '@material-ui/core/Box';  
 import logo from '../logo/gitlab_analyzer.png';
 
@@ -40,25 +39,15 @@ function Login() {
         login(user);
     }
 
-    const useStyles = makeStyles((theme) => ({
-        
-        h2:{
-            fontFamily:'PT Sans, sans-serif',  
+    const useStyles = makeStyles((theme) => ({        
+        h2:{ 
             marginTop: '30%',
-            marginBottom: '15%',
-            color: 'rgb(58,58,58)'
-        },
-
-        h4:{
-            fontFamily:'PT Sans, sans-serif',  
-            color: 'rgb(58,58,58)'
+            marginBottom: '15%', 
         },
 
         formBox:{ 
             width:'25%',
-            height:'55%',
-            // backgroundImage: 'linear-gradient(to bottom right,rgb(92,58,171), rgb(214,35,113))',
-            // backgroundColor: 'rgb(92,58,171)',   
+            height:'55%', 
             position: 'absolute', 
             left: '50%', 
             top: '50%',
@@ -70,7 +59,7 @@ function Login() {
         customButton:{
             marginTop:'15%',
             width:'50%',
-            backgroundImage: 'linear-gradient(to bottom right,rgb(92,58,171), rgb(214,35,113))',
+            backgroundImage: 'linear-gradient(to bottom right,rgb(100,7,254), rgb(214,35,113))',
             backgroundColor: 'rgb(92,58,171)',     
         },
 
@@ -86,10 +75,8 @@ function Login() {
             transform: 'translate(-50%, -50%)', 
 
         }
-      })
-      )
-      ;
-
+      }));
+      
       const defaultProps = {
         bgcolor: 'background.paper',
         borderColor: 'rgb(195,195,195)',
@@ -100,7 +87,7 @@ function Login() {
     const classes = useStyles();
 
     return(
-        <div className={styles.root} >
+        <div>
             <Header pageTitle='Gitlab Analyzer' />          
             
              <Box className={classes.formBox} borderRadius={16} {...defaultProps}  boxShadow={8}  > 

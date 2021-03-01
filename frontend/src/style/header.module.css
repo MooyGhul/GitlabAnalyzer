@@ -1,9 +1,8 @@
  
-.header {
-    font-family: PT Sans, sans-serif;
+.header { 
     position: fixed;
     color: white;
-    background-color: rgb(92,58,171);
+    background-color: rgb(70, 12, 163);
     padding: 3vh;
     font-size: 20px;
     text-align: center;
