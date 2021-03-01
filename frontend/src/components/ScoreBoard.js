@@ -1,12 +1,12 @@
-import { Grid, withStyles } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import LanguageType from "../components/LanguageType";
 import Scores from "../components/Scores";
-import styles from "../style/ScoreBoardStyles";
+import useStyles from "../style/ScoreBoardStyles";
 
 const ScoreBoard = (props) => {
-  const { classes } = props;
+  const classes = useStyles(props);
   const [language, setLanguage] = useState("C++");
 
   const handleFile = (newLanguage) => {
@@ -32,4 +32,4 @@ const ScoreBoard = (props) => {
   );
 };
 
-export default withStyles(styles)(ScoreBoard);
+export default ScoreBoard;

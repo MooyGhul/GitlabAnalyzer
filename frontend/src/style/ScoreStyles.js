@@ -1,4 +1,6 @@
-const styles = {
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
   root: {
     width: "500px",
     backgroundColor: "#e4e3ff",
@@ -11,6 +13,6 @@ const styles = {
   title: {
     fontWeight: "bold",
   },
-};
+}));
 
-export default styles;
+export default useStyles;

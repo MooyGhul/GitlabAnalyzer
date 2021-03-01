@@ -1,20 +1,26 @@
-import { Avatar, Grid, Typography, withStyles } from "@material-ui/core";
+import { Avatar, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import ScoreBoard from "./ScoreBoard";
-import styles from "../style/BannerStyles";
+import useStyles from "../style/BannerStyles";
 
 const Banner = (props) => {
-  const { classes, avatar_url, membername } = props;
+  const { avatar_url, membername } = props;
+  const classes = useStyles();
+
   return (
     <Grid container justify={"space-evenly"} className={classes.container}>
       <Grid item md={6} sm={12} className={classes.profile}>
         <Avatar
-          alt="https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
-          src={avatar_url}
+          alt=""
+          src={
+            avatar_url
+              ? avatar_url
+              : "https://cdn4.iconfinder.com/data/icons/avatars-xmas-giveaway/128/batman_hero_avatar_comics-512.png"
+          }
           className={classes.large}
         />
         <Typography className={classes.details}>
-          {membername ? membername : "Batman"}
+          {membername ? membername : "Unavailable"}
         </Typography>
       </Grid>
 
@@ -25,4 +31,4 @@ const Banner = (props) => {
   );
 };
 
-export default withStyles(styles)(Banner);
+export default Banner;

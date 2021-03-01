@@ -1,4 +1,6 @@
-const styles = {
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: "58px",
     backgroundColor: "#d1d0ff",
@@ -20,6 +22,6 @@ const styles = {
   details: {
     fontSize: "35px",
   },
-};
+}));
 
-export default styles;
+export default useStyles;
