@@ -71,7 +71,7 @@ deploy:dev:
     - docker-build
   script:
     - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev up -d
-    - curl --retry 30 --retry-delay 2 --retry-connrefused --connect-timeout 5 "http://localhost:9000" >> /dev/null
+    - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:9000" >> /dev/null
   cache: {}
   tags:
     - shell
@@ -84,7 +84,7 @@ deploy:dev-wipe-db:
   script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci stop
     - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev up -d
-    - curl --retry 30 --retry-delay 2 --retry-connrefused --connect-timeout 5 "http://localhost:9000" >> /dev/null
+    - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:9000" >> /dev/null
   cache: {}
   tags:
     - shell
@@ -97,7 +97,7 @@ deploy:ci:
   script:
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci stop
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci up -d
-    - curl --retry 30 --retry-delay 2 --retry-connrefused --connect-timeout 5 "http://localhost:7000" >> /dev/null
+    - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:7000" >> /dev/null
   cache: {}
   tags:
     - shell
@@ -108,7 +108,7 @@ deploy:staging:
     - deploy:ci
   script:
     - docker-compose -f docker-compose.yml -f docker-compose.staging.yml -p gitlabanalyzer_staging up -d
-    - curl --retry 30 --retry-delay 2 --retry-connrefused --connect-timeout 5 "http://localhost:8080" >> /dev/null
+    - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:8080" >> /dev/null
   cache: {}
   tags:
     - shell
@@ -121,7 +121,7 @@ deploy:prod:
     - deploy:ci
   script:
     - docker-compose -f docker-compose.yml -f docker-compose.prod.yml -p gitlabanalyzer_prod up -d
-    - curl --retry 30 --retry-delay 2 --retry-connrefused --connect-timeout 5 "http://localhost" >> /dev/null
+    - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost" >> /dev/null
   cache: {}
   tags:
     - shell
