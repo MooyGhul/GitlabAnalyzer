@@ -29,7 +29,7 @@ function OverviewPage(props) {
               pageTitle="Overview Test"
         />
       </Grid>
-      <Grid container xs={12} >
+      <Grid container >
         <Banner />
       </Grid>
 

@@ -1,4 +1,6 @@
-const styles = {
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
   buttons: {
     marginTop: "80px",
     display: "flex",
@@ -9,6 +11,6 @@ const styles = {
   button: {
     margin: "15px",
   },
-};
+}));
 
-export default styles;
+export default useStyles;
