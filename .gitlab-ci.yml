@@ -82,7 +82,7 @@ deploy:dev-wipe-db:
   needs:
     - docker-build
   script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci stop
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci stop --volumes
     - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev up -d
     - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:9000" >> /dev/null
   cache: {}
@@ -95,7 +95,7 @@ deploy:ci:
   needs:
     - docker-build
   script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci stop
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci stop --volumes
     - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci up -d
     - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:7000" >> /dev/null
   cache: {}

@@ -15,7 +15,7 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
 
   db:
-    image: 'postgres'
+    image: 'postgres:13.2'
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password

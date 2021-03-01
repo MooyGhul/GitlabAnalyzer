@@ -9,4 +9,5 @@ services:
       - 8080:8080
   db:
     container_name: gitlabanalyzer_db_staging
-
+    volumes:
+      - /var/lib/docker/volumes/gitlabanalyzer_db_staging:/var/lib/postgresql/data
