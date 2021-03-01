@@ -5,8 +5,8 @@ const styles = {
   },
 
   large: {
-    height: "20vh",
-    width: "20vh",
+    height: "18vh",
+    width: "18vh",
   },
 
   profile: {
@@ -14,6 +14,7 @@ const styles = {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
+    marginTop: "10px",
   },
 
   details: {
