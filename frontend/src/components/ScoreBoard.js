@@ -15,10 +15,10 @@ const ScoreBoard = (props) => {
 
   return (
     <Grid container spacing={2} className={classes.root}>
-      <Grid item>
+      <Grid item md={6} sm={12}>
         <Scores language={language} />
       </Grid>
-      <Grid item className={classes.buttons}>
+      <Grid item md={6} sm={12} className={classes.buttons}>
         <Grid item className={classes.button}>
           <LanguageType onChange={handleFile} />
         </Grid>

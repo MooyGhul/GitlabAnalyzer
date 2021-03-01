@@ -9,7 +9,7 @@ const Banner = (props) => {
 
   return (
     <Grid container justify={"space-evenly"} className={classes.container}>
-      <Grid item md={6} sm={12} className={classes.profile}>
+      <Grid item md={6} sm={6} className={classes.profile}>
         <Avatar
           alt=""
           src={
@@ -24,7 +24,7 @@ const Banner = (props) => {
         </Typography>
       </Grid>
 
-      <Grid item md={6} sm={12}>
+      <Grid item md={6} sm={6}>
         <ScoreBoard />
       </Grid>
     </Grid>
