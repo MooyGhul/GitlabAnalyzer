@@ -1,24 +1,24 @@
-export default {
+const styles = {
+  container: {
+    marginTop: "35px",
+    backgroundColor: "#d1d0ff",
+  },
 
-    container: {
-        marginTop: "35px",
-        backgroundColor: '#d1d0ff',
-        width: '100%'
-    },
+  large: {
+    height: "20vh",
+    width: "20vh",
+  },
 
-    large: {
-        'height': '20vh',
-        'width': '20vh'
-    },
+  profile: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
 
-    profile: {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
+  details: {
+    fontSize: "35px",
+  },
+};
 
-    details: {
-        fontSize: '35px'
-    }
-}
+export default styles;
