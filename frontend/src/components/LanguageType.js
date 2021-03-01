@@ -47,6 +47,7 @@ const LanguageType = (props) => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
         variant="menu"
+        disableScrollLock={true}
       >
         {options.map((option, index) => (
           <MenuItem
