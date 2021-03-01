@@ -1,19 +1,35 @@
-import React,{useState} from "react";
+import { Grid, withStyles } from "@material-ui/core";
+import React, { useState } from "react";
+import Button from "@material-ui/core/Button";
 import LanguageType from "../components/LanguageType";
 import Scores from "../components/Scores";
+import styles from "../style/ScoreBoardStyles";
 
+const ScoreBoard = (props) => {
+  const { classes } = props;
+  const [language, setLanguage] = useState("C++");
 
-export default function ScoreBoard () {
+  const handleFile = (newLanguage) => {
+    setLanguage(newLanguage);
+  };
 
-    const [language, setLanguage] = useState(['']);
+  return (
+    <Grid container spacing={2} className={classes.root}>
+      <Grid item>
+        <Scores language={language} />
+      </Grid>
+      <Grid item className={classes.buttons}>
+        <Grid item className={classes.button}>
+          <LanguageType onChange={handleFile} />
+        </Grid>
+        <Grid item className={classes.button}>
+          <Button variant="contained" color="primary">
+            Configure weights
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
 
-    const handleFile = (newLanguage) => {setLanguage(newLanguage)};
-
-    return (
-        <div>
-            <Scores language={language}/>
-            <LanguageType onChange={handleFile}/> 
-            <button >Configure weights</button>             
-        </div>
-    );
-}
+export default withStyles(styles)(ScoreBoard);
