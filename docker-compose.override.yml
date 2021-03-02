@@ -7,5 +7,6 @@ services:
     image: 'gitlabanalyzer:latest'
     ports:
       - 8080:8080
+      - 8000:8000
   db:
     container_name: gitlabanalyzer_db

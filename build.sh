@@ -1,14 +1,21 @@
 docker-compose stop
 
-set -e  # Allow stuff above to fail, stuff below should stop script on failure
+if [ "$1" != "backend" ]; then
+  cd frontend || exit
+  npm i --no-save
+  npm run build
+  cd ../ || exit
+else
+  echo "Skipping frontend build"
+fi
 
-cd frontend
-npm i
-npm run build
-cd ../
-
-./gradlew assemble
+if [ "$1" != "frontend" ]; then
+  ./gradlew assemble
+else
+  echo "Skipping backend build"
+fi
 
 docker build -t gitlabanalyzer .
 
 docker-compose up -d
+docker-compose logs -f
