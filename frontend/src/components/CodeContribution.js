@@ -1,7 +1,10 @@
 import React,{useRef,useEffect, useState} from 'react';
 import { select, axisBottom, axisLeft, scaleBand, scaleLinear ,stack, max } from 'd3';
-//import useResizeObserver from "./useResizeObserver";
 
+// the useResizeObserver function and how to call it is from the following tutorial"
+// https://www.youtube.com/watch?v=a4rstx9Pz2o&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=8
+// the tutorial "Using React (Hooks) with D3 – [06] Responsive Chart Components with ResizeObserver"
+// will replace with some existing library when have chance to look into it.
 const useResizeObserver = (ref) => {
   const [dimensions, setDimensions] = useState(null);
 
@@ -45,7 +48,7 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
 
     const xScale = scaleBand()
       .domain(contributionsDataProp.map(d => d.year))
-      .range([0,width*0.4]) // To Change
+      .range([0,width]) // To Change
       .padding(0.5);
 
     const xAxis = axisBottom(xScale);
@@ -66,7 +69,7 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
     svg
       .append("text")             
       .attr("transform",
-            "translate(" + (width*0.38) + " ," + (height*1.2) + ")")
+            "translate(" + (width*0.9) + " ," + (height*1.13) + ")")
       .text("Date");
     
     svg
@@ -98,12 +101,20 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
       .attr("y", sequence => yScale(sequence[1]))
       .attr("height", sequence => yScale(sequence[0])-yScale(sequence[1]));
 
+      svg.append("text")
+        .attr("x", (width *0.44))             
+        .attr("y", -50 )
+        .attr("text-anchor", "middle")  
+        .style("font-size", "40px") 
+        .style("text-decoration", "underline")  
+        .text("Code Contribution");
+
   },[colors, contributionsDataProp,dimensions,keys]);
 
 
   return (
     <div ref={wrapperRef} style={{marginbottom: "2rem"}}>
-      <svg ref={svgRef}>
+      <svg className="charts"  ref={svgRef}>
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>

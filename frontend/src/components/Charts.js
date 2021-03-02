@@ -2,7 +2,12 @@ import React,{useState} from "react";
 import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
 import {Comments} from "../mockDataDir/mockCodeContri";
-import DatePicker from "react-datepicker";
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import { 
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker
+} from '@material-ui/pickers';
 import "react-datepicker/dist/react-datepicker.css";
 
 let contributions = [
@@ -75,6 +80,8 @@ const colors = {
   "CommitDaily": "#a6d854"
 };
 
+// This part will be replaced when backend data is retrieved.
+// Now I dont know what type of data will provided. 
 const filterData = (data,startDate,endDate) => {
   return data.filter(function(currData){
     const currYear =parseInt(currData.year.split("-")[0]);
@@ -111,41 +118,62 @@ export default function Charts () {
       contributionsDataProp = filterData(contributionsData,startDate,endDate);
       commentsDataProp = filterData(commentsData,startDate,endDate);
     }
-
+  
     return (
-        <div>
-          <br/>
-          <br/>
-          Start date:
-            <DatePicker 
-              selected={startDate} 
-              onChange={date => setStartDate(date)} 
-              dateFormat="MM/dd/yyyy"
-              isClearable
-              showYearDropdown
-              scrollableMonthYearDropdown
-            />
-
-          &nbsp;&nbsp;&nbsp;
-          End date:
-            <DatePicker 
-              selected={endDate} 
-              onChange={date => setEndDate(date)} 
-              dateFormat="MM/dd/yyyy"
-              minDate={startDate}
-              isClearable
-              showYearDropdown
-              scrollableMonthYearDropdown
-            />
-          <br/>
-          <h2>Comment Contribution</h2>
-          <BarChart commentsDataProp={commentsDataProp}/>
-
-          <br/>
-          <h2>Code Contribution</h2>          
-          <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
-          
-          <br/><br/>
+      <div>
+      <Grid container xs={12} spacing={6}  direction="column">
+        <Grid item xs={6} >
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify="space-around">
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Date picker inline"
+                value={startDate}
+                onChange={date => setStartDate(date)}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <Grid container justify="space-around">
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="MM/dd/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Date picker inline"
+                value={endDate}
+                onChange={date => setEndDate(date)}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
+              />
+            </Grid>
+          </MuiPickersUtilsProvider>
+        </Grid>
+        <Grid container spacing={5} xs={12}>
+          <Grid item xs={6} >
+            <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
+          </Grid>
+          <Grid item xs={6} >
+            <BarChart className="charts" commentsDataProp={commentsDataProp}/>
+          </Grid>
+        </Grid>
+        <Grid item xs={12} ></Grid>
+        <Grid item xs={6} >
+          {/* 
+          // the fields class is changed from the following tutorial:
+          // https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=17
+          // the tutorial "Using React (Hooks) with D3 – [15] Stacked Bar Chart"
+          // This part will be refactored when using new chart library.
+          */}
           <div className="fields">
             {allKeys.map(key => (
               <div key={key} className="field">
@@ -167,6 +195,8 @@ export default function Charts () {
               </div>
             ))}
           </div>
-        </div>
+        </Grid>
+        </Grid>
+      </div>
     );
 }
