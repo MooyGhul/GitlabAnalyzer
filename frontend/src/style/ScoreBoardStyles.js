@@ -2,10 +2,13 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
-    marginTop: "80px",
+    [theme.breakpoints.up("md")]: {
+      marginTop: "80px",
+      marginLeft: "0px",
+    },
+    marginLeft: "80px",
     display: "flex",
-    flexDirection: "column",
-    justify: "space-evenly",
+    justify: "space-between",
   },
 
   button: {
