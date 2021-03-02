@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { AdminUser } from '../mockDataDir/mockAdminUser';
-import Authentication from '../Authentication';
+//import { useHistory } from 'react-router-dom';
+//import { AdminUser } from '../mockDataDir/mockAdminUser';
+//import Authentication from '../Authentication';
 import styles from '../style/Login.module.css';
 import Header from './Header'
-import axios from 'axios';
 
-const baseURL = "https://cas.sfu.ca/cas/login";
 //Note: Use AdminUser's username and password from mockInfo to login
 function Login() {
-    const history = useHistory();
+    //const history = useHistory();
     const [user, setUser] = useState({name:'', password:''});
-    const [errorMsg, setErrorMsg] = useState('');
-
+    //const [errorMsg, setErrorMsg] = useState('');
+/*
     const authenticateUser  = () => {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
             Authentication.onValidUser();
@@ -21,7 +19,8 @@ function Login() {
             return false;
         }
     }
-
+    */
+/*
     const login = () => {
         if(authenticateUser()){
             history.push('/token');
@@ -30,7 +29,7 @@ function Login() {
             setErrorMsg('Incorrect username or password. Please try again.');
         }
     }
-
+*/
 /*
 // Causing CORS issue
     async function getAuthenticated(){
@@ -63,7 +62,7 @@ function Login() {
             <Header pageTitle="Gitlab Analyzer" />
             <h2>Login</h2>
             <form className={styles.form} onSubmit={loginHandler}>
-                <h3>{errorMsg}</h3>
+                {/*<h3>{errorMsg}</h3>*/}
                 <label className={styles.label}>
                     Username
                     <input type ='text' value={user.name} onChange={e=> setUser({...user, name: e.target.value})} />

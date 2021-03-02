@@ -5,6 +5,7 @@ import Header from "./Header";
 import axios from 'axios';
 
 function UrlToken() {
+    
     const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: '', token:''});
     const [errorMsg, setErrorMsg] = useState('');
@@ -37,12 +38,13 @@ function UrlToken() {
         const data = new URLSearchParams(window.location.search)
         console.log(data.get('ticket'))
         setLoginToken(data.get('ticket'))
+        console.log(loginToken)
     }
 
     const nextHandler = event => {
         event.preventDefault();
         addLoginToken();
-        //checkToken();
+        authenticateToken();
     }
 
     return(
@@ -50,14 +52,7 @@ function UrlToken() {
             <Header pageTitle="Gitlab Analyzer" />
             <form onSubmit={nextHandler}>
                 <h3>{errorMsg}</h3>
-                <br>
-                </br>
-                <br>
-                </br>
-                <br>
-                </br>
-                <br>
-                </br>
+                
                 <label>
                     Enter GitLab Server URL
                     <input type ='url' value={urlToken.url}
