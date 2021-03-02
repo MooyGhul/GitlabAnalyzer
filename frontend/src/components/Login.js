@@ -4,7 +4,9 @@ import { AdminUser } from '../mockDataDir/mockAdminUser';
 import Authentication from '../Authentication';
 import styles from '../style/Login.module.css';
 import Header from './Header'
+import axios from 'axios';
 
+const baseURL = "https://cas.sfu.ca/cas/login";
 //Note: Use AdminUser's username and password from mockInfo to login
 function Login() {
     const history = useHistory();
@@ -29,9 +31,31 @@ function Login() {
         }
     }
 
+/*
+// Causing CORS issue
+    async function getAuthenticated(){
+        const response =
+          await axios.get(baseURL,
+              { params: {service: 'http://cmpt373-1211-14.cmpt.sfu.ca:8080/login'}}
+
+          )
+        console.log(response.data)
+        return true;
+    }
+*/
+   /*
+   // CORS issue again!
+   const getAuthenticated = async () => {
+    const response = await fetch(baseURL, {qs:{service: 'http://cmpt373-1211-14.cmpt.sfu.ca:8080/login'}});
+    //const jsonData = await response.json();
+    //setUserData(jsonData);
+    console.log(response.data);
+    return true;
+  };*/
+
     const loginHandler = event => {
         event.preventDefault();
-        login(user);
+        window.location = 'https://cas.sfu.ca/cas/login?service=http://cmpt373-1211-14.cmpt.sfu.ca:8080/token';
     }
 
     return(
@@ -57,3 +81,12 @@ function Login() {
 }
 
 export default Login;
+
+
+/*
+1. Click login
+2. Redirect to CAS
+3. Wait for CAS response and parameter
+4. Store the ticket number into ticket list
+
+*/

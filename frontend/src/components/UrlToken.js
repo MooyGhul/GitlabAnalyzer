@@ -11,6 +11,7 @@ function UrlToken() {
     const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: urlString, token:''});
     const [errorMsg, setErrorMsg] = useState('');
+    const [loginToken, setLoginToken] = useState('');
 
     const authenticateToken  = () => {
         if(urlToken.token === Token.token) {
@@ -31,8 +32,16 @@ function UrlToken() {
         }
     }
 
+    const addLoginToken = () => {
+        console.log(window.location.href);
+        const data = new URLSearchParams(window.location.search)
+        console.log(data.get('ticket'))
+        setLoginToken(data.get('ticket'))
+    }
+
     const nextHandler = event => {
         event.preventDefault();
+        addLoginToken();
         checkToken();
     }
 
