@@ -45,10 +45,10 @@ const Scores = (props) => {
           </section>
           <Divider />
           <section className={classes.titles}>
-            <p>{api.TotalCommit ? 0 : 1}</p>
-            <p>{api.TotalMR ? 0 : 1}</p>
-            <p>{api.TotalFiles ? 0 : 1}</p>
-            <p>{api.TotalScore ? 0 : 1}</p>
+            <p>{api.TotalCommit ? api.TotalCommit : 0}</p>
+            <p>{api.TotalMR ? api.TotalMR : 0}</p>
+            <p>{api.TotalFiles ? api.TotalFiles : 0}</p>
+            <p>{api.TotalScore ? api.TotalScore : 0}</p>
           </section>
         </CardContent>
       </Card>
