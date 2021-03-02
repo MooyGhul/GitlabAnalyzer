@@ -42,7 +42,7 @@ function UrlToken() {
     const nextHandler = event => {
         event.preventDefault();
         addLoginToken();
-        checkToken();
+        //checkToken();
     }
 
     return(
