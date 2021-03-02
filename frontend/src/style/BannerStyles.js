@@ -2,7 +2,12 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    marginTop: "58px",
+    [theme.breakpoints.up("md")]: {
+      marginTop: "245px",
+    },
+    [theme.breakpoints.down("md")]: {
+      marginTop: "330px",
+    },
     backgroundColor: "#d1d0ff",
   },
 
