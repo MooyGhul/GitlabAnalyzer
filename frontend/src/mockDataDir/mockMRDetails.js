@@ -1,21 +1,18 @@
 export const MRDetails = [
   {
-    status:'merged'
-    year: "2021-1-25",
-    des: 'Fix the Navigation Bar',
+    date: "2021-1-25",
+    name: 'Fix the Navigation Bar',
     score: 25
 
   },
   {
-    status:'merged',
-    year: "2021-1-25",
-    des: 'Apply Material UI to Overview',
-    score: 60
+    date: "2021-1-25",
+    name: 'Apply Material UI to Overview',
+    score: 30
   },
   {
-    status:'merged',
-    year: "2021-1-25",
-    des: 'Create Database',
+    date: "2021-1-25",
+    name: 'Create Database',
     score: 60
   }
 ];

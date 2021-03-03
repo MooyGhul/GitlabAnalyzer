@@ -1,17 +1,17 @@
 export const CommitDetails = [
  {
-    year: "2021-1-14",
-    commitName: 'Fix Merge Conflict',
-    score: 60
+    date: "2021-1-14",
+    name: 'Fix Merge Conflict',
+    score: 50
   },
  {
-    year: "2021-1-15",
-    commitName: 'Add Login form',
-    score: 60
+    date: "2021-1-15",
+    name: 'Add Login form',
+    score: 70
   },
  {
-    year: "2021-1-25",
-    commitName: 'Add page not found',
+    date: "2021-1-25",
+    name: 'Add page not found',
     score: 60
  }
 
