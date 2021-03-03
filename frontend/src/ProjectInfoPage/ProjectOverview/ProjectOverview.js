@@ -21,7 +21,7 @@ function ProjectOverview() {
       setData(result.data);
     };
     fetchData();
-  }, []);
+  }, [projectID]);
 
   const rows = [];
 
