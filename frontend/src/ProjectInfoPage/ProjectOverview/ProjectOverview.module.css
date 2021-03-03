@@ -4,5 +4,10 @@
     width:100%;
 }
 
-
+.memberList{ 
+    position: absolute;
+    height: 400;
+    margin-top: 2em;
+    left: '10%';
+  }
  

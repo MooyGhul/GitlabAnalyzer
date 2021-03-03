@@ -1,13 +1,18 @@
-import styles from './ProjectOverview.module.css'
-import MemberList from './MemberList'  
+import styles from './ProjectOverview.module.css'  
 import { useLocation } from 'react-router-dom';
 import React,{useState, useEffect} from 'react';
-import axios from 'axios'; 
+import axios from 'axios';  
+import { DataGrid } from '@material-ui/data-grid';
+import { useHistory } from 'react-router-dom';
+import {useStyles} from './ProjectOverviewStyle';
 
 
 function ProjectOverview(){   
     const location = useLocation();
     const projectID = location.state.id
+    const history = useHistory();
+    const classes = useStyles();
+
     const [data, setData] = useState ([]);
     useEffect(() => {    
         
@@ -17,15 +22,37 @@ function ProjectOverview(){
             setData(result.data);
           };
           fetchData();
-        }, []); 
-    console.log(data);
- 
+        }, []);          
+   
+
+    const rows = [];
+
+    for(var i = 0; i < data.length; i++) {
+        var obj = {};      
+        obj['id'] = i;
+        obj['studentID'] = data[i];
+        rows.push(obj);
+    } 
+
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 100},
+        { field: 'studentID', headerName: 'Student ID', width: 200},
+      ];
+
+    const buttonClickHandler = event => {
+        history.push('/overview');
+    }   
+      
 
     return(
-        <div className={styles.ProjectOverview}>
+        <div className={classes.projectOverview}>
             <img className={styles.exportIcon} src="https://img.icons8.com/color/48/000000/export-pdf.png" alt="export"/>         
             {console.log(location.state.id)}
-            <MemberList/> 
+            
+      
+                <h3>Please select a student from the member list below.</h3>
+                <DataGrid rows={rows} columns={columns} pageSize={5} onRowClick={buttonClickHandler} className={classes.memberList}/>
+        
             
         </div>
     );
