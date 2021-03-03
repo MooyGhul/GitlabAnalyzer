@@ -9,6 +9,7 @@ import {
   KeyboardDatePicker
 } from '@material-ui/pickers';
 import "react-datepicker/dist/react-datepicker.css";
+import Calendar from "./Calendar";
 
 let contributions = [
   {
@@ -112,6 +113,9 @@ export default function Charts () {
     const [startDate, setStartDate] = useState(new Date('January 1, 2020 00:00:00'));
     const [endDate, setEndDate] = useState(new Date('Dec 31, 2025 00:00:00'));
 
+    const handleStartDate = (newDate) => {setStartDate(newDate)};
+    const handleEndDate = (newDate) => {setEndDate(newDate)};
+
     let contributionsDataProp = contributionsData;
     let commentsDataProp = commentsData;
     if(endDate && startDate){
@@ -123,44 +127,11 @@ export default function Charts () {
       <div>
       <Grid container xs={12} spacing={6}  direction="column">
         <Grid item xs={6} >
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Date picker inline"
-                value={startDate}
-                onChange={date => setStartDate(date)}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Date picker inline"
-                value={endDate}
-                onChange={date => setEndDate(date)}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
-              />
-            </Grid>
-          </MuiPickersUtilsProvider>
+          <Calendar onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
         </Grid>
         <Grid container spacing={5} xs={12}>
           <Grid item xs={6} >
-            <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
+            <StackedBarChart startDate={startDate} endDate={endDate} contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
           </Grid>
           <Grid item xs={6} >
             <BarChart className="charts" commentsDataProp={commentsDataProp}/>
