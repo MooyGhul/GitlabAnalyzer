@@ -6,9 +6,6 @@ import './OverviewPage.css';
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
-import { useLocation } from "react-router-dom";
-
-
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -24,12 +21,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function OverviewPage(props) {
-  const location = useLocation();
-  const myparam = location.state.params;
   const classes = useStyles();
-  
   return (
-    console.log(myparam),
     <Grid container spacing={2} className = {classes.grid}>
       <Grid item xs={12} >
         <Header
@@ -47,7 +40,6 @@ function OverviewPage(props) {
       </Grid>
       <DataFetching />
     </Grid>
-     
   );
 }
 

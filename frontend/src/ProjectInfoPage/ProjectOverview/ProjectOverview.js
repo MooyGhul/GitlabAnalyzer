@@ -7,7 +7,7 @@ function ProjectOverview(){
 
     return(
         <div className={styles.ProjectOverview}>
-            <img className={styles.exportIcon} src="https://img.icons8.com/color/48/000000/export-pdf.png" alt="export"/>         
+            <img className={styles.exportIcon} src="https://img.icons8.com/color/48/000000/export-pdf.png" alt="export"/>      
             {console.log(location.state.id)}
             <MemberList/> 
             
