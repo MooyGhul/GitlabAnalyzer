@@ -24,13 +24,11 @@ const ScoreBoard = (props) => {
       const commits = await axios.get(
         "http://localhost:8080/project/" + project_id + "/commits"
       );
-      console.log("merge_requests count: ", mergeRequests.length);
-      console.log("commit countss: ", commits.length);
       setMergeRequestCount(mergeRequests.data.length);
       setCommitCount(commits.data.length);
     };
     fetchData();
-  }, []);
+  }, [project_id]);
 
   const handleFile = (newLanguage) => {
     setLanguage(newLanguage);

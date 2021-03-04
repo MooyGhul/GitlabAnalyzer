@@ -45,7 +45,7 @@ const Scores = (props) => {
                 <p className={classes.title}>Total MR</p>
               </section>
               <Divider />
-              <section className={classes.titles}>
+              <section className={classes.values}>
                 <p>{commitCount ? commitCount : 0}</p>
                 <p>{mergeRequestCount ? mergeRequestCount : 0}</p>
               </section>
@@ -60,7 +60,7 @@ const Scores = (props) => {
                 <p className={classes.title}>Score for {language} Files</p>
               </section>
               <Divider />
-              <section className={classes.titles}>
+              <section className={classes.values}>
                 <p>{api.TotalScore ? api.TotalScore : 0}</p>
               </section>
             </CardContent>
