@@ -8,7 +8,7 @@ import javax.persistence.Table;
 import java.util.List;
 
 @Repository
-public interface CommitEntityRepository extends CrudRepository<CommitEntity, Long> {
+public interface CommitEntityRepository extends CrudRepository<CommitEntity, String> {
     List<CommitEntity> findAllByProjectId(int id);
     List<CommitEntity> findAllByAuthor(String author);
 
