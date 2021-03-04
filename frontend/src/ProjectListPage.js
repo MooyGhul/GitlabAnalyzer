@@ -19,15 +19,14 @@ const useStyles = makeStyles({
     },
   });
 
-  function ProjectListPage(props) {
+  function ProjectListPage() {
     const history = useHistory();
     const classes = useStyles();
 
-    const buttonClickHandler = event => {
+    const buttonClickHandler = () => {
             history.push({
-              pathname:'/projectInfo',
+              pathname:'/projectInfo/' + 2,
               state: {id:2},
-              
             });
     }
 

@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 function MemberList(props) { 
  
   const buttonClickHandler = event => {
-    history.push('/overview');
+    history.push('/overview/' + 2 + "/" + 1);
 }
 
   const classes = useStyles();

@@ -5,6 +5,7 @@ import LanguageType from "../components/LanguageType";
 import Scores from "../components/Scores";
 import useStyles from "../style/ScoreBoardStyles";
 import axios from "axios";
+import {useParams} from "react-router-dom";
 
 const ScoreBoard = (props) => {
   const [mergeRequestCount, setMergeRequestCount] = useState(0);
@@ -13,15 +14,18 @@ const ScoreBoard = (props) => {
   const classes = useStyles(props);
   const [language, setLanguage] = useState("C++");
 
+  const {project_id} = useParams();
+
   useEffect(() => {
     const fetchData = async () => {
       const mergeRequests = await axios.get(
-        "http://localhost:8080/project/2/merge_requests"
+        "http://localhost:8080/project/" + project_id + "/merge_requests"
       );
       const commits = await axios.get(
-        "http://localhost:8080/project/2/commits"
+        "http://localhost:8080/project/" + project_id + "/commits"
       );
-
+      console.log("merge_requests count: ", mergeRequests.length);
+      console.log("commit countss: ", commits.length);
       setMergeRequestCount(mergeRequests.data.length);
       setCommitCount(commits.data.length);
     };
