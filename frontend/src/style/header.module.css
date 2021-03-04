@@ -1,8 +1,8 @@
  
-.header {
+.header { 
     position: fixed;
     color: white;
-    background-color: #7553FF;
+    background-color: rgb(70, 12, 163);
     padding: 3vh;
     font-size: 20px;
     text-align: center;
