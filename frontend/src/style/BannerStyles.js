@@ -3,10 +3,10 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.up("md")]: {
-      marginTop: "290px",
+      marginTop: "22vh",
     },
-    [theme.breakpoints.down("md")]: {
-      marginTop: "330px",
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "37vh",
     },
     backgroundColor: "#d1d0ff",
   },

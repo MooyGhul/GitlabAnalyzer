@@ -34,8 +34,6 @@ const Scores = (props) => {
   }
 
   return (
-    <div>
-      <h2> ScoreBoard </h2>
       <Grid container justify={"space-evenly"}>
         <Grid item md={6} sm={12}>
           <Card className={classes.root}>
@@ -67,7 +65,6 @@ const Scores = (props) => {
           </Card>
         </Grid>
       </Grid>
-    </div>
   );
 };
 

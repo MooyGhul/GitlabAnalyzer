@@ -35,8 +35,8 @@ const ScoreBoard = (props) => {
   };
 
   return (
-    <Grid container spacing={2} className={classes.root}>
-      <Grid item md={6} sm={12}>
+    <Grid container spacing={2}>
+      <Grid item md={6} sm={6}>
         <Scores
           mergeRequestCount={mergeRequestCount}
           commitCount={commitCount}
@@ -44,21 +44,23 @@ const ScoreBoard = (props) => {
         />
       </Grid>
 
-      <Grid item md={6} sm={12} className={classes.buttons}>
+      <Grid item md={6} sm={6}>
+        <Grid item className={classes.buttons}>
+          <Grid item className={classes.button}>
+            <Button variant="contained" color="primary">
+              Configure weights
+            </Button>
+          </Grid>
+
+          <Grid item className={classes.button}>
+            <Button variant="contained" color="primary">
+              Copy Scores
+            </Button>
+          </Grid>
+        </Grid>
+
         <Grid item className={classes.button}>
           <LanguageType onChange={handleFile} />
-        </Grid>
-
-        <Grid item className={classes.button}>
-          <Button variant="contained" color="primary">
-            Configure weights
-          </Button>
-        </Grid>
-
-        <Grid item className={classes.button}>
-          <Button variant="contained" color="primary">
-            Copy Scores
-          </Button>
         </Grid>
       </Grid>
     </Grid>

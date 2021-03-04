@@ -2,13 +2,13 @@
   position: fixed;
   color: white;
   background-color: rgb(70, 12, 163);
-  padding: 3vh;
+  padding: 3vh 0 3vh 0;
   font-size: 20px;
   text-align: center;
   z-index: 100;
   width: 100%;
   height: 2%;
   margin: 0;
-  top: 0%;
-  left: 0%;
+  top: 0;
+  left: 0;
 }

@@ -23,7 +23,6 @@ const Banner = (props) => {
           {membername ? membername : "Unavailable"}
         </Typography>
       </Grid>
-
       <Grid item md={8} sm={6}>
         <ScoreBoard />
       </Grid>
