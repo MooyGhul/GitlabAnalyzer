@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AdminUser } from '../mockDataDir/mockAdminUser';
-import Authentication from '../Authentication';
-import styles from '../style/Login.module.css';
+import Authentication from '../Authentication'; 
 import Header from './Header'
+import TextField from '@material-ui/core/TextField'; 
+import Button from '@material-ui/core/Button';  
+import Box from '@material-ui/core/Box';  
+import logo from '../logo/gitlab_analyzer.png';
+import {useStyles} from '../style/LoginStyle'
 
-//Note: Use AdminUser's username and password from mockInfo to login
+
 function Login() {
     const history = useHistory();
     const [user, setUser] = useState({name:'', password:''});
@@ -31,27 +35,25 @@ function Login() {
 
     const loginHandler = event => {
         event.preventDefault();
-        login(user);
+        login();
     }
+        
+    const classes = useStyles();
 
     return(
         <div>
-            <Header pageTitle="Gitlab Analyzer" />
-            <h2>Login</h2>
-            <form className={styles.form} onSubmit={loginHandler}>
-                <h3>{errorMsg}</h3>
-                <label className={styles.label}>
-                    Username
-                    <input type ='text' value={user.name} onChange={e=> setUser({...user, name: e.target.value})} />
-                </label>
-                <label className={styles.label}>
-                    Password
-                    <input type ='password' value={user.password} onChange={e=> setUser({...user, password: e.target.value})} />
-                </label>
-                    <button className={styles.button} type ='submit'>
-                        Login
-                    </button>
-            </form>
+            <Header pageTitle='Gitlab Analyzer' />          
+            
+             <Box className={classes.formBox} borderRadius={16} boxShadow={8}  > 
+                <img src={logo} alt="Logo" className={classes.logo}/>      
+                <h2 className={classes.h2}>LOGIN</h2>
+                <form noValidate autoComplete='off' onSubmit={loginHandler}>
+                    <h4 className={classes.h4}>{errorMsg}</h4>
+                    <TextField id='username' classes={{root: classes.customTextField}} label='Username' value={user.name} fullWidth onChange={e=> setUser({...user, name: e.target.value})}/>
+                    <TextField id='password' classes={{root: classes.customTextField}} label='Password' value={user.password} fullWidth onChange={e=> setUser({...user, password: e.target.value})}/>                
+                    <Button classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'> Log in</Button>    
+                </form>  
+            </Box>             
         </div>
     );
 }
