@@ -14,7 +14,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class CommitEntity {
     private @Getter
-    @Id @GeneratedValue long commitId;
+    @Id String commitId;
     private @Getter int projectId;
     private @Getter String commitName;
     private @Getter String author;
@@ -24,6 +24,7 @@ public class CommitEntity {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return CommitEntity.builder()
+                    .commitId((json.getString("id")))
                     .projectId(json.getInt("project_id"))
                     .commitName(json.getString("title"))
                     .author(json.getString("author_name"))

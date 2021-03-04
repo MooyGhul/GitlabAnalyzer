@@ -3,6 +3,11 @@ import { useHistory } from 'react-router-dom';
 import Authentication from "../Authentication";
 import Header from "./Header";
 import axios from 'axios';
+import Box from '@material-ui/core/Box';  
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button'; 
+import logo from '../logo/gitlab_analyzer.png';
+import {useStyles} from '../style/UrlTokenStyle'
 
 function UrlToken() {
     const history = useHistory();
@@ -27,41 +32,34 @@ function UrlToken() {
                 setErrorMsg('Incorrect url or token. Please try again.');
             }
         }) 
-    }   
-       
+    }          
 
     const nextHandler = event => { 
         event.preventDefault();
         authenticateToken();
-    }
+    }        
+     
+    const classes = useStyles();
 
     return(
         <div>
             <Header pageTitle="Gitlab Analyzer" />
+            <Box className={classes.formBox} borderRadius={16} boxShadow={8}>
+            <img src={logo} alt="Logo" className={classes.logo}/>   
             <form onSubmit={nextHandler}>
+                <h2 className={classes.h2}> Server information </h2>
+
                 <h3>{errorMsg}</h3>
-                <br>
-                </br>
-                <br>
-                </br>
-                <br>
-                </br>
-                <br>
-                </br>
-                <label>
-                    Enter GitLab Server URL
-                    <input type ='url' value={urlToken.url}
-                        onChange={e=> setUrlToken({...urlToken, url: e.target.value})} />
-                </label>
-                <label>
-                    Enter Token
-                    <input type ='text' value={urlToken.token}
-                        onChange={e=> setUrlToken({...urlToken, token: e.target.value})} />
-                </label>
-                <button type ='submit'>
-                    Next
-                </button>
+
+                <TextField id='url' classes={{root: classes.customTextField}} label='Server URL' value={urlToken.url}
+                        onChange={e=> setUrlToken({...urlToken, url: e.target.value})}/>
+
+                <TextField id='url' classes={{root: classes.customTextField}} label='Server Token'  value={urlToken.token}
+                        onChange={e=> setUrlToken({...urlToken, token: e.target.value})}/>
+                 
+                <Button classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'>Next</Button>   
             </form>
+            </Box>
         </div>
     );
 }
