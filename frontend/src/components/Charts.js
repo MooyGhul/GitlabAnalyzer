@@ -10,6 +10,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
+import { spacing } from '@material-ui/system';
 import "react-datepicker/dist/react-datepicker.css";
 
 let contributions = [
@@ -170,9 +171,6 @@ export default function Charts () {
           <Grid item xs={6} >
             <BarChart className="charts" commentsDataProp={commentsDataProp}/>
           </Grid>
-          <Grid> 
-            <IssueBarChart classname="charts" issuesDataProp={issuesDataProp}/>
-          </Grid>
         </Grid>
         <Grid item xs={12} ></Grid>
         <Grid item xs={6} >
@@ -204,6 +202,11 @@ export default function Charts () {
             ))}
           </div>
         </Grid>
+        </Grid>
+        <Grid container spacing={5} xs={12} pb={6} mb={6}>
+          <Grid item xs={6}> 
+            <IssueBarChart classname="charts" issuesDataProp={issuesDataProp}/>
+          </Grid>
         </Grid>
       </div>
     );
