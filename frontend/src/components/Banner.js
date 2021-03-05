@@ -4,7 +4,7 @@ import ScoreBoard from "./ScoreBoard";
 import useStyles from "../style/BannerStyles";
 
 const Banner = (props) => {
-  const { avatar_url, membername } = props;
+  const { avatar_url, memberName } = props;
   const classes = useStyles();
 
   return (
@@ -20,7 +20,7 @@ const Banner = (props) => {
           className={classes.large}
         />
         <Typography className={classes.details}>
-          {membername ? membername : "Unavailable"}
+          {memberName ? memberName : "Unavailable"}
         </Typography>
       </Grid>
       <Grid item md={8} sm={6}>

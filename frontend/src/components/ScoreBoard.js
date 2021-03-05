@@ -1,11 +1,13 @@
+import axios from "axios";
+import {useParams} from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
+import FileCopyIcon from '@material-ui/icons/FileCopy';
+import SearchIcon from '@material-ui/icons/Search';
 import LanguageType from "../components/LanguageType";
 import Scores from "../components/Scores";
 import useStyles from "../style/ScoreBoardStyles";
-import axios from "axios";
-import {useParams} from "react-router-dom";
 
 const ScoreBoard = (props) => {
   const [mergeRequestCount, setMergeRequestCount] = useState(0);
@@ -36,7 +38,7 @@ const ScoreBoard = (props) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item md={6} sm={6}>
+      <Grid item md={8} sm={6}>
         <Scores
           mergeRequestCount={mergeRequestCount}
           commitCount={commitCount}
@@ -44,22 +46,22 @@ const ScoreBoard = (props) => {
         />
       </Grid>
 
-      <Grid item md={6} sm={6}>
+      <Grid item md={4} sm={6}>
         <Grid item className={classes.buttons}>
-          <Grid item className={classes.button}>
-            <Button variant="contained" color="primary">
-              Configure weights
+          <Grid item >
+            <Button variant="contained" color="primary" className={classes.button}>
+              Score Breakdown <SearchIcon className={classes.icon}/>
             </Button>
           </Grid>
 
-          <Grid item className={classes.button}>
-            <Button variant="contained" color="primary">
-              Copy Scores
+          <Grid item >
+            <Button variant="contained" color="primary" className={classes.button}>
+              Copy Scores <FileCopyIcon className={classes.icon}/>
             </Button>
           </Grid>
         </Grid>
 
-        <Grid item className={classes.button}>
+        <Grid item className={classes.language}>
           <LanguageType onChange={handleFile} />
         </Grid>
       </Grid>
