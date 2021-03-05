@@ -35,10 +35,10 @@ function Login() {
 
     const loginHandler = event => {
         event.preventDefault();
-        if(state.loginMethod==1){
+        if(state.loginMethod===1){
             login(user);
         }
-        else if(state.loginMethod==2){
+        else if(state.loginMethod===2){
             window.location = 'https://cas.sfu.ca/cas/login?service=http://cmpt373-1211-14.cmpt.sfu.ca:8080/token';
         }
     }
@@ -48,7 +48,7 @@ function Login() {
             <Header pageTitle="Gitlab Analyzer" />
             <h2>Login</h2>
             <form className={styles.form} onSubmit={loginHandler}>
-                {/*<h3>{errorMsg}</h3>*/}
+                <h3>{errorMsg}</h3>
                 <label className={styles.label}>
                     Username
                     <input type ='text' value={user.name} onChange={e=> setUser({...user, name: e.target.value})} />
