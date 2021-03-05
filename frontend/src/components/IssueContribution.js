@@ -104,11 +104,11 @@ export default function IssueBarChart({ issuesDataProp }) {
 
 
   return (
-    <div ref={wrapperRef} style={{marginbottom: "2rem"}}>
+    <div ref={wrapperRef} style={{marginBottom: "10rem"}}>
       <svg className="charts" ref={svgRef}>
         <g className="x-axis" />
         <g className="y-axis" />
       </svg>
     </div>
   );
-}
+} 

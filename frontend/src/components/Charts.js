@@ -202,12 +202,11 @@ export default function Charts () {
           </div>
         </Grid>
         </Grid>
-        <Grid container spacing={5} xs={12} pb={6} mb={6}>
+        <Grid container spacing={5}>
           <Grid item xs={6}> 
             <IssueBarChart classname="charts" issuesDataProp={issuesDataProp}/>
           </Grid>
         </Grid>
-        <box m={1}></box>
       </div>
     );
 }
