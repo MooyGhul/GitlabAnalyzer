@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-//import { useHistory } from 'react-router-dom';
-//import { AdminUser } from '../mockDataDir/mockAdminUser';
-//import Authentication from '../Authentication';
+import { useHistory } from 'react-router-dom';
+import { AdminUser } from '../mockDataDir/mockAdminUser';
+import Authentication from '../Authentication';
 import styles from '../style/Login.module.css';
 import Header from './Header'
 
 //Note: Use AdminUser's username and password from mockInfo to login
 function Login() {
-    //const history = useHistory();
+    const state = {
+        loginMethod: 2
+    };
+    const history = useHistory();
     const [user, setUser] = useState({name:'', password:''});
-    //const [errorMsg, setErrorMsg] = useState('');
-/*
+    const [errorMsg, setErrorMsg] = useState('');
+
     const authenticateUser  = () => {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
             Authentication.onValidUser();
@@ -19,8 +22,7 @@ function Login() {
             return false;
         }
     }
-    */
-/*
+
     const login = () => {
         if(authenticateUser()){
             history.push('/token');
@@ -29,32 +31,16 @@ function Login() {
             setErrorMsg('Incorrect username or password. Please try again.');
         }
     }
-*/
-/*
-// Causing CORS issue
-    async function getAuthenticated(){
-        const response =
-          await axios.get(baseURL,
-              { params: {service: 'http://cmpt373-1211-14.cmpt.sfu.ca:8080/login'}}
 
-          )
-        console.log(response.data)
-        return true;
-    }
-*/
-   /*
-   // CORS issue again!
-   const getAuthenticated = async () => {
-    const response = await fetch(baseURL, {qs:{service: 'http://cmpt373-1211-14.cmpt.sfu.ca:8080/login'}});
-    //const jsonData = await response.json();
-    //setUserData(jsonData);
-    console.log(response.data);
-    return true;
-  };*/
 
     const loginHandler = event => {
         event.preventDefault();
-        window.location = 'https://cas.sfu.ca/cas/login?service=http://cmpt373-1211-14.cmpt.sfu.ca:8080/token';
+        if(state.loginMethod==1){
+            login(user);
+        }
+        else if(state.loginMethod==2){
+            window.location = 'https://cas.sfu.ca/cas/login?service=http://cmpt373-1211-14.cmpt.sfu.ca:8080/token';
+        }
     }
 
     return(
@@ -71,8 +57,11 @@ function Login() {
                     Password
                     <input type ='password' value={user.password} onChange={e=> setUser({...user, password: e.target.value})} />
                 </label>
-                    <button className={styles.button} type ='submit'>
+                    <button className={styles.button} onClick={() => (state.loginMethod = 1)} type ='submit'>
                         Login
+                    </button>
+                    <button className={styles.button} onClick={() => (state.loginMethod = 2)} type ='submit'>
+                        Login with SSO
                     </button>
             </form>
         </div>
