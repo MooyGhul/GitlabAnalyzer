@@ -3,6 +3,7 @@ import { Grid } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import { CardContent, Divider } from "@material-ui/core";
 import useStyles from "../style/ScoreStyles";
+import WeightDialog from "./WeightsDialog";
 import { StudentJS } from "../mockDataDir/mockJS";
 import { StudentJava } from "../mockDataDir/mockJava";
 import { StudentPython } from "../mockDataDir/mockPython";
@@ -11,6 +12,7 @@ import { EmptyChoice } from "../mockDataDir/mockEmpty";
 
 const Scores = (props) => {
   let { mergeRequestCount, commitCount, language } = props;
+  let weights = {commits: 1, mr: 2}
   const classes = useStyles(props);
   let api = "";
   switch (language) {
@@ -35,9 +37,10 @@ const Scores = (props) => {
 
   return (
       <Grid container justify={"space-evenly"}>
-        <Grid item md={6} sm={12}>
-          <Card className={classes.root}>
+        <Grid item md={8} sm={12}>
+          <Card className={classes.card1}>
             <CardContent>
+              <WeightDialog weights={weights}/>
               <section className={classes.titles}>
                 <p className={classes.title}>Total Commit</p>
                 <p className={classes.title}>Total MR</p>
@@ -51,9 +54,10 @@ const Scores = (props) => {
           </Card>
         </Grid>
 
-        <Grid item md={6} sm={12}>
-          <Card className={classes.root}>
+        <Grid item md={4} sm={12}>
+          <Card className={classes.card2}>
             <CardContent>
+              <WeightDialog weights={weights}/>
               <section className={classes.titles}>
                 <p className={classes.title}>Score for {language} Files</p>
               </section>

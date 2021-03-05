@@ -1,15 +1,29 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    card1: {
         backgroundColor: "#e4e3ff",
-        marginRight: "20px",
         height: "90%",
+        width: "40vh",
         marginTop: "2vh",
         [theme.breakpoints.down("sm")]: {
-            width: "90%",
+            marginRight: "20px",
+            width: "30vh",
             height: "80%",
-            marginLeft: "5%"
+            marginLeft: "-8vh",
+        },
+    },
+    card2: {
+        backgroundColor: "#e4e3ff",
+        height: "90%",
+        width: "30vh",
+        marginTop: "2vh",
+        marginLeft: "-10vh",
+        [theme.breakpoints.down("sm")]: {
+        marginRight: "20px",
+            width: "30vh",
+            height: "80%",
+            marginLeft: "-8vh",
         },
     },
     titles: {
