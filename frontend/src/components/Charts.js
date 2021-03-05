@@ -10,7 +10,6 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDatePicker
 } from '@material-ui/pickers';
-import { spacing } from '@material-ui/system';
 import "react-datepicker/dist/react-datepicker.css";
 
 let contributions = [
@@ -208,6 +207,7 @@ export default function Charts () {
             <IssueBarChart classname="charts" issuesDataProp={issuesDataProp}/>
           </Grid>
         </Grid>
+        <box m={1}></box>
       </div>
     );
 }

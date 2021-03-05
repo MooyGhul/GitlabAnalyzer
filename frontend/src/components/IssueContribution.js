@@ -84,7 +84,7 @@ export default function IssueBarChart({ issuesDataProp }) {
       .attr("text-anchor", "middle")  
       .style("font-size", "40px") 
       .style("text-decoration", "underline")  
-      .text("Comment Contribution");
+      .text("Issue Contribution");
 
     svg
       .selectAll(".bar")
