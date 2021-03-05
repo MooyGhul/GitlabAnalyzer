@@ -1,4 +1,9 @@
 import React from 'react';
+import Box from '@material-ui/core/Box';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -20,6 +25,14 @@ const useStyles = makeStyles({
   },
 });
 
+const useRowStyles = makeStyles({
+  root: {
+    '& > *': {
+      borderBottom: 'unset',
+    },
+  },
+});
+
 const rows = [].concat(MRDetails, CommitDetails);
 const columns = [
   {id: 'type', label: 'Type'},
@@ -30,14 +43,50 @@ const columns = [
 ]
 console.log(rows);
 
+function Row(props) {
+  const { row } = props;
+  const [open, setOpen] = React.useState(false);
+  const classes = useRowStyles();
+
+  return (
+    <React.Fragment>
+      <TableRow className={classes.root}>
+        <TableCell>
+          <IconButton size='small' onClick={() => setOpen(!open)}>
+            {open ? <ExpandLess /> : <ExpandMore />}
+          </IconButton>
+        </TableCell>
+        <TableCell component='th' scope='row'>
+          {row.type}
+        </TableCell>
+        <TableCell>{row.date}</TableCell>
+        <TableCell>{row.name}</TableCell>
+        <TableCell>{row.score}</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <Box margin={1}>
+            <h2>Code Diff</h2>
+            <div>Here's some code differences...</div>
+          </Box>
+        </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
+
+}
+
 function CodeContributionTable () {
   const classes = useStyles();
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
+              <TableCell />
               {columns.map((column) => (
                 <TableCell key={column.id}>
                   {column.label}
@@ -47,18 +96,14 @@ function CodeContributionTable () {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <TableRow key={row.name}>
-                <TableCell>{row.type}</TableCell>
-                <TableCell>{row.date}</TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.score}</TableCell>
-              </TableRow>
-            ))}
+              <Row key ={row.name} row={row} />
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
     </Paper>
   );
 }
+
 
 export default CodeContributionTable;
