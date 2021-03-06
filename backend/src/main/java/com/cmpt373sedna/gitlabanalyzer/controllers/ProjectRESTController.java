@@ -16,8 +16,6 @@ public class ProjectRESTController {
 
     private ProjectManager projectManager;
 
-    private MemberController memberController;
-
     @Autowired
     private ProjectEntityRepository projectRepository;
 
