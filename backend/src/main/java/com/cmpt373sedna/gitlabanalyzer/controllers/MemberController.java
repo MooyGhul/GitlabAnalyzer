@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/project/{projectId}")
+@RequestMapping("/project/{projectId}/member")
 public class MemberController {
 
     @Autowired
