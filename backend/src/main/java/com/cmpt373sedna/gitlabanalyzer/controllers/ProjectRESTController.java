@@ -16,6 +16,8 @@ public class ProjectRESTController {
 
     private ProjectManager projectManager;
 
+    private MemberController memberController;
+
     @Autowired
     private ProjectEntityRepository projectRepository;
 
@@ -75,17 +77,5 @@ public class ProjectRESTController {
     Iterable<CommitEntity> getProjectCommits(@PathVariable(value="projectId") int projectId) {
         Iterable<CommitEntity> m = this.commitRepository.findAllByProjectId(projectId);
         return this.commitRepository.findAllByProjectId(projectId);
-    }
-
-    @GetMapping("/{projectId}/{memberName}/commits")
-    Iterable<CommitEntity> getMemberCommits(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "memberName") String author) {
-        Iterable<CommitEntity> m = this.commitRepository.findAllByProjectIdAndAuthor(projectId, author);
-        return this.commitRepository.findAllByProjectIdAndAuthor(projectId, author);
-    }
-
-    @GetMapping("/{projectId}/{memberName}/merge_requests")
-    Iterable<CommitEntity> getMemberMergeRequest(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "memberName") String author) {
-        Iterable<CommitEntity> m = this.commitRepository.findAllByProjectIdAndAuthor(projectId, author);
-        return this.commitRepository.findAllByProjectIdAndAuthor(projectId, author);
     }
 }
