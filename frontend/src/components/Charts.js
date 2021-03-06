@@ -3,7 +3,7 @@ import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
 import IssueBarChart from "./IssueContribution"; 
 import {Comments} from "../mockDataDir/mockCodeContri";
-import {IssueWordCount} from "../mockDataDir/MockIssues"; 
+import {IssuesWordCount} from "../mockDataDir/MockIssues";
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { 
@@ -110,7 +110,7 @@ export default function Charts () {
     const [keys, setKeys] = useState(allKeys);
     const [commentsData] = useState(Comments);
     const [contributionsData] = useState(contributions);
-    const [issuesData] = useState(IssueWordCount); 
+    const [issuesData] = useState(IssuesWordCount); 
     
     const [startDate, setStartDate] = useState(new Date('January 1, 2020 00:00:00'));
     const [endDate, setEndDate] = useState(new Date('Dec 31, 2025 00:00:00'));

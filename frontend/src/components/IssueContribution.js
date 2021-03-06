@@ -38,7 +38,7 @@ export default function IssueBarChart({ issuesDataProp }) {
     const { width } =
     dimensions || wrapperRef.current.getBoundingClientRect();
 
-    const data = issuesDataProp.map(entry=>entry.issues);
+    const data = issuesDataProp.map(entry=>entry.IssueWordCount);
 
     if(!dimensions) return;
 
@@ -99,7 +99,7 @@ export default function IssueBarChart({ issuesDataProp }) {
       .attr("width",xScale.bandwidth())
       .transition()
       .attr("fill","#66c2a5")
-      .attr("height",entry => dimensions.height - yScale(entry.comments));
+      .attr("height",entry => dimensions.height - yScale(entry.IssueWordCount));
   },[issuesDataProp ,dimensions]);
 
 

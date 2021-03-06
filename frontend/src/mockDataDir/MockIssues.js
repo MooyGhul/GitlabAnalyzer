@@ -1,4 +1,4 @@
-export const IssueWordCount = [
+export const IssuesWordCount = [
     {
       year: "2021-1-25",
       IssueWordCount: 22
