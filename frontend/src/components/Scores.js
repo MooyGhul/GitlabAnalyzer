@@ -9,9 +9,10 @@ import { StudentJava } from "../mockDataDir/mockJava";
 import { StudentPython } from "../mockDataDir/mockPython";
 import { StudentC } from "../mockDataDir/mockC";
 import { EmptyChoice } from "../mockDataDir/mockEmpty";
+import LanguageType from "./LanguageType";
 
 const Scores = (props) => {
-  let { mergeRequestCount, commitCount, language } = props;
+  let { mergeRequestCount, commitCount, language, onChange } = props;
   let weights = {commits: 1, mr: 2}
   const classes = useStyles(props);
   let api = "";
@@ -57,7 +58,7 @@ const Scores = (props) => {
         <Grid item md={4} sm={12}>
           <Card className={classes.card2}>
             <CardContent>
-              <WeightDialog weights={weights}/>
+              <LanguageType language={language} onChange={onChange}/>
               <section className={classes.titles}>
                 <p className={classes.title}>Score for {language} Files</p>
               </section>

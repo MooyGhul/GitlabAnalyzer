@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import SearchIcon from '@material-ui/icons/Search';
-import LanguageType from "../components/LanguageType";
 import Scores from "../components/Scores";
 import useStyles from "../style/ScoreBoardStyles";
 
@@ -43,6 +42,7 @@ const ScoreBoard = (props) => {
           mergeRequestCount={mergeRequestCount}
           commitCount={commitCount}
           language={language}
+          onChange={handleFile}
         />
       </Grid>
 
@@ -59,10 +59,6 @@ const ScoreBoard = (props) => {
               Copy Scores <FileCopyIcon className={classes.icon}/>
             </Button>
           </Grid>
-        </Grid>
-
-        <Grid item className={classes.language}>
-          <LanguageType onChange={handleFile} />
         </Grid>
       </Grid>
     </Grid>

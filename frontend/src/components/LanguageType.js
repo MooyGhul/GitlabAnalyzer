@@ -1,66 +1,57 @@
-import React, { useState } from "react";
+import React  from "react";
 import Button from "@material-ui/core/Button";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import { withStyles } from "@material-ui/core";
-import styles from "../style/LanguageTypeStyles";
+import {
+    Dialog,
+    DialogActions,
+    DialogTitle, List, ListItem, ListItemText
+} from "@material-ui/core";
+import SettingsIcon from "@material-ui/icons/Settings";
 
 const LanguageType = (props) => {
-  // TO DO :
-  // When backend is ready, either GREY OUT "PLEASE CHOOSE LANGUAGE"
-  // or calculate overall submission when ppl choose "PLEASE CHOOSE LANGUAGE"
-
-  const { classes } = props;
   const options = ["JS", "C++", "Java", "Python"];
 
-  const [anchorEl, setAnchorEl] = useState(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    const [open, setOpen] = React.useState(false);
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
-  const handleFile = (event, index) => {
-    props.onChange(options[index]);
-    setSelectedIndex(index);
-    handleClose();
-  };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleListItemClick = (event, index) => {
+        props.onChange(options[index]);
+        setSelectedIndex(index);
+        handleClose();
+    };
 
   return (
     <div>
-      <Button
-        aria-controls="simple-menu"
-        aria-haspopup="true"
-        onClick={handleClick}
-        className={classes.languageBtn}
-      >
-        File Type: {options[selectedIndex]}
-      </Button>
-      <Menu
-        id="language-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-        variant="menu"
-        disableScrollLock={true}
-      >
-        {options.map((option, index) => (
-          <MenuItem
-            key={option}
-            selected={index === selectedIndex}
-            onClick={(event) => handleFile(event, index)}
-          >
-            {option}
-          </MenuItem>
-        ))}
-      </Menu>
+        <SettingsIcon style={{backgroundColor: "#e4e3ff"}} onClick={handleClickOpen}/>
+        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+            <DialogTitle id="form-dialog-title">Configure Weighting</DialogTitle>
+            <List>
+                {options.map((option, index) => (
+                    <ListItem button onClick={(event) => handleListItemClick(event, index)}
+                              key={option} selected={index === selectedIndex}>
+                        <ListItemText primary={option} />
+                    </ListItem>
+                ))}
+            </List>
+            <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={handleClose} color="primary">
+                    Confirm
+                </Button>
+            </DialogActions>
+        </Dialog>
     </div>
   );
 };
 
-export default withStyles(styles)(LanguageType);
+export default LanguageType;

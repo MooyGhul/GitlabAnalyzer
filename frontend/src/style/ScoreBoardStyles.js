@@ -14,12 +14,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justify: "space-between",
   },
-  language: {
-    [theme.breakpoints.down("md")]: {
-      margin: "5px"
-    },
-    margin: "5px 0 0 -55px",
-  },
   button: {
     margin: "5px",
     height: "5vh",
