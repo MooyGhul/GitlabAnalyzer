@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme) => ({
     },
     
     customButton:{
-        marginTop:'15%',
-        width:'50%',
+        marginTop:'10%',
+        width:'60%',
         backgroundImage: 'linear-gradient(to bottom right,rgb(100,7,254), rgb(214,35,113))',
         backgroundColor: 'rgb(92,58,171)',     
     },

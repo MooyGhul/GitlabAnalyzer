@@ -12,7 +12,7 @@ import java.util.List;
 public interface MergeRequestEntityRepository extends CrudRepository<MergeRequestEntity, Integer> {
 
     List<MergeRequestEntity> findAllByProjectId(int id);
-    List<MergeRequestEntity> findAllByAuthor(String author);
+    List<MergeRequestEntity> findAllByProjectIdAndAuthor(int id, String author);
     
     @Query(value="SELECT commitCounts.commitCount, mrCounts.mrCount, 0, mrCounts.merged_at " +
             "FROM (SELECT Count(mr) AS mrCount, mr.merged_at FROM merge_request_entity mr WHERE mr.project_id = :projectId GROUP BY mr.merged_at) as mrCounts" +

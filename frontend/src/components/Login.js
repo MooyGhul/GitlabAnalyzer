@@ -11,6 +11,9 @@ import {useStyles} from '../style/LoginStyle'
 
 
 function Login() {
+    const state = {
+        loginMethod: 2
+    };
     const history = useHistory();
     const [user, setUser] = useState({name:'', password:''});
     const [errorMsg, setErrorMsg] = useState('');
@@ -33,9 +36,15 @@ function Login() {
         }
     }
 
+
     const loginHandler = event => {
         event.preventDefault();
-        login();
+        if(state.loginMethod===1){
+            login(user);
+        }
+        else if(state.loginMethod===2){
+            window.location = 'https://cas.sfu.ca/cas/login?service=http://cmpt373-1211-14.cmpt.sfu.ca:8080/token';
+        }
     }
         
     const classes = useStyles();
@@ -51,7 +60,8 @@ function Login() {
                     <h4 className={classes.h4}>{errorMsg}</h4>
                     <TextField id='username' classes={{root: classes.customTextField}} label='Username' value={user.name} fullWidth onChange={e=> setUser({...user, name: e.target.value})}/>
                     <TextField id='password' classes={{root: classes.customTextField}} label='Password' value={user.password} fullWidth onChange={e=> setUser({...user, password: e.target.value})}/>                
-                    <Button classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'> Log in</Button>    
+                    <Button classes={{root: classes.customButton}} variant='contained'  onClick={() => (state.loginMethod = 1)} type ='submit' color='secondary'> Log in</Button>
+                    <Button classes={{root: classes.customButton}} variant='contained' onClick={() => (state.loginMethod = 2)} type ='submit' color='secondary'> Login with SSO </Button>
                 </form>  
             </Box>             
         </div>
