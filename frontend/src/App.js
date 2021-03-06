@@ -7,6 +7,7 @@ import OverviewPage from './OverviewPage';
 import PrivateRoute from './PrivateRoute';
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
 import NotFound from './components/NotFound';
+import './style/App.css'
 
 function App() {
 
