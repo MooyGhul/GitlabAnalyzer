@@ -45,9 +45,6 @@ const LanguageType = (props) => {
                 <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
-                <Button onClick={handleClose} color="primary">
-                    Confirm
-                </Button>
             </DialogActions>
         </Dialog>
     </div>
