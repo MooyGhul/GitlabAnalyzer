@@ -14,6 +14,7 @@ import java.util.Optional;
 @RequestMapping("/project")
 public class ProjectRESTController {
 
+    @Autowired
     private ProjectManager projectManager;
 
     @Autowired
@@ -29,12 +30,14 @@ public class ProjectRESTController {
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
     @PostMapping("/create")
+    @Deprecated
     void initializeUser(@RequestParam String token) {
-        this.projectManager = new ProjectManager(token);
+        this.projectManager.setProjectToken(token);
     }
 
 //    "http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer"
     @PostMapping("/add")
+    @Deprecated
     void addProject(@RequestParam String url) {
         ProjectController p = this.projectManager.addProject(url);
         this.projectRepository.save(new ProjectEntity(p.getProjectId(), p.getProjectName(), p.getNumCommits(), p.getNumMR(), p.getNumComments()));

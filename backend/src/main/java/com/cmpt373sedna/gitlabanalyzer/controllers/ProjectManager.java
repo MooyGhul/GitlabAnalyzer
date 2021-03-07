@@ -1,19 +1,21 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ProjectManager {
     private @Getter List<ProjectController> allProjects;
     private @Getter List<ProjectController> selectedProjects;
     final private Extractor e;
-    final private String projectToken;
+    private @Setter  String projectToken;
 
-    public ProjectManager(String token) {
+    public ProjectManager() {
         this.e = new Extractor();
-        this.projectToken = token;
         this.allProjects = new ArrayList<>();
         this.selectedProjects = new ArrayList<>();
     }
