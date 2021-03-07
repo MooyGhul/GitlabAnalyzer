@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button'; 
 import logo from '../logo/gitlab_analyzer.png';
 import {useStyles} from '../style/UrlTokenStyle'
+import {Grid} from "@material-ui/core";
 
 function UrlToken() {
     const history = useHistory();
@@ -42,7 +43,7 @@ function UrlToken() {
     const classes = useStyles();
 
     return(
-        <div>
+        <Grid container>
             <Header pageTitle="Gitlab Analyzer" />
             <Box className={classes.formBox} borderRadius={16} boxShadow={8}>
             <img src={logo} alt="Logo" className={classes.logo}/>   
@@ -60,7 +61,7 @@ function UrlToken() {
                 <Button classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'>Next</Button>   
             </form>
             </Box>
-        </div>
+        </Grid>
     );
 }
 
