@@ -17,6 +17,7 @@ import java.time.Instant;
 public class CommentEntity {
     private @Id @GeneratedValue int commentId;
     private String commentType;
+    private int projectId;
     private int commentTypeId;
     private @Nullable String commentText;
     private @Nullable String commenter;
@@ -27,6 +28,7 @@ public class CommentEntity {
 
         return CommentEntity.builder()
                 .commentId(json.getInt("id"))
+                .projectId(json.getInt("project_id"))
                 .commenter(json.getJSONObject("author").getString("username"))
                 .commentType(json.getString("commentType"))
                 .commentText(json.getString("body"))

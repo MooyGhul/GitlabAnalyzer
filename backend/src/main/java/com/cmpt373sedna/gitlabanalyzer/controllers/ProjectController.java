@@ -84,7 +84,7 @@ public class ProjectController {
             List<JSONObject> mrComments = this.e.getMergeRequestComments(url, this.projectToken);
             comments.addAll(mrComments);
         }
-
+        comments.forEach(comment -> comment.put("project_id", this.projectId));
         return comments.stream().map(CommentEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
