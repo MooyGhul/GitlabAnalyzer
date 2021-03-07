@@ -32,7 +32,7 @@ const LanguageType = (props) => {
     <div>
         <SettingsIcon style={{backgroundColor: "#e4e3ff"}} onClick={handleClickOpen}/>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogTitle id="form-dialog-title">Configure Weighting</DialogTitle>
+            <DialogTitle id="form-dialog-title">Select File Type</DialogTitle>
             <List>
                 {options.map((option, index) => (
                     <ListItem button onClick={(event) => handleListItemClick(event, index)}

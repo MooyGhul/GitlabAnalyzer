@@ -2,10 +2,6 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    [theme.breakpoints.up("xl")]: {
-      height: "25vh",
-    },
-
     [theme.breakpoints.up("lg")]: {
       height: "25vh",
     },
