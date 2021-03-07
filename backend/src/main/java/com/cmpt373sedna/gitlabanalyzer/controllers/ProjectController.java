@@ -97,12 +97,24 @@ public class ProjectController {
     }
 
     private List<MergeRequestDiffVersionsEntity> getAndParseMergeRequestsDiffVersions(String url) {
-        List<JSONObject> mergeRequestsDiffVersions = e.getMergeRequestsDiff(url, this.projectToken);
+        List<JSONObject> mergeRequestsDiffVersions =  new ArrayList<>();
+        for(MergeRequestEntity mr: this.mergeRequestEntities) {
+            String MRUrl =  this.url + mr.getIid();
+            List<JSONObject> list = e.getMergeRequestsDiff(MRUrl, this.projectToken);
+            mergeRequestsDiffVersions.addAll(list);
+        }
         return mergeRequestsDiffVersions.stream().map(MergeRequestDiffVersionsEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
     private List<MergeRequestDiffsEntity> getAndParseMergeRequestsDiffs(String url) {
-        List<JSONObject> mergeRequestsDiffs = e.getMergeRequestsDiffChanges(url, this.projectToken);
+        List<JSONObject> mergeRequestsDiffs = new ArrayList<>();
+        for(MergeRequestEntity mr: this.mergeRequestEntities) {
+            for(MergeRequestDiffVersionsEntity mrDiff: this.MRDiffVersions) {
+                String MRUrl = this.url + mr.getIid() + "/versions/" + mrDiff.getId();
+                List<JSONObject> list = e.getMergeRequestsDiff(MRUrl, this.projectToken);
+                mergeRequestsDiffs.addAll(list);
+            }
+        }
         return mergeRequestsDiffs.stream().map(MergeRequestDiffsEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
