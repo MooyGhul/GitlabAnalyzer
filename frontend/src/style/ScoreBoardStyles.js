@@ -2,15 +2,16 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   buttons: {
-    [theme.breakpoints.up("md")]: {
-      marginTop: "5vh",
-      marginLeft: "-60px"
+    [theme.breakpoints.up("lg")]: {
+      marginTop: "6vh",
+      marginLeft: "20px",
     },
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down("sm")]: {
       marginTop: "12vh",
-      marginLeft: "0px",
-      flexDirection: "column"
     },
+    marginTop: "15vh",
+    flexDirection: "column",
+    marginLeft: "-80px",
     display: "flex",
     justify: "space-between",
   },
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   icon: {
     backgroundColor: "#3f51b5",
-  }
+  },
 }));
 
 export default useStyles;

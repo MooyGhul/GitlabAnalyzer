@@ -1,10 +1,10 @@
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import FileCopyIcon from '@material-ui/icons/FileCopy';
-import SearchIcon from '@material-ui/icons/Search';
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import SearchIcon from "@material-ui/icons/Search";
 import Scores from "../components/Scores";
 import useStyles from "../style/ScoreBoardStyles";
 
@@ -15,7 +15,7 @@ const ScoreBoard = (props) => {
   const classes = useStyles(props);
   const [language, setLanguage] = useState("C++");
 
-  const {project_id} = useParams();
+  const { project_id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +37,7 @@ const ScoreBoard = (props) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item md={8} sm={6}>
+      <Grid item lg={8} md={8} sm={8}>
         <Scores
           mergeRequestCount={mergeRequestCount}
           commitCount={commitCount}
@@ -46,17 +46,25 @@ const ScoreBoard = (props) => {
         />
       </Grid>
 
-      <Grid item md={4} sm={6}>
+      <Grid item lg={4} md={4} sm={4}>
         <Grid item className={classes.buttons}>
-          <Grid item >
-            <Button variant="contained" color="primary" className={classes.button}>
-              Score Breakdown <SearchIcon className={classes.icon}/>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            >
+              Score Breakdown <SearchIcon className={classes.icon} />
             </Button>
           </Grid>
 
-          <Grid item >
-            <Button variant="contained" color="primary" className={classes.button}>
-              Copy Scores <FileCopyIcon className={classes.icon}/>
+          <Grid item>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+            >
+              Copy Scores <FileCopyIcon className={classes.icon} />
             </Button>
           </Grid>
         </Grid>
