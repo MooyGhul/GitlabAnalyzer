@@ -4,10 +4,13 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from "@material-ui/core/Grid";
 import axios from 'axios';
 import {useParams} from "react-router";
+import CommentJson from "../mockDataDir/mockComments";
+import useStyles from "../style/CommentContributionPageStyles";
 
 const CommentContributionPage = (props) => {
-    const expand = useState(false);
-    const [comments, setComments] = useState([1,2,3,4]);
+    const expand = useState(true);
+    const [comments, setComments] = useState(CommentJson);
+    const classes = useStyles(props);
 
     const {project_id, member_id} = useParams();
 
@@ -21,27 +24,25 @@ const CommentContributionPage = (props) => {
         try {
             fetchData();
         } catch {
-            setComments([1,2,3,4]);
+            setComments(CommentJson);
         }
     }, [project_id, member_id]);
 
     return (
-        <Grid container>
+        <Grid container className={classes.root}>
             {comments.map(comment => (
-                <Accordion key={1}>
+                <Accordion key={comment.id}>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                         aria-controls="panel1a-content"
-                        aria-expanded={expand}
                         id="panel1a-header"
                     >
-                        <Typography >Bob</Typography>
-                        <Typography >Fred</Typography>
+                        <Typography className={classes.secondaryHeading}>{comment.updated_at}</Typography>
+                        <Typography className={classes.heading}>{comment.author.username}</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
                         <Typography>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                            sit amet blandit leo lobortis eget.
+                            {comment.body}
                         </Typography>
                     </AccordionDetails>
                 </Accordion>
