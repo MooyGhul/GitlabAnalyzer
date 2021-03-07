@@ -5,6 +5,8 @@ import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.CommentEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffVersionsEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffsEntity;
 import lombok.Getter;
 import org.json.JSONObject;
 
@@ -36,6 +38,10 @@ public class ProjectController {
 
     private @Getter List<CommitEntity> commitEntities;
 
+    private @Getter List<MergeRequestDiffVersionsEntity> MRDiffVersions;
+
+    private @Getter List<MergeRequestDiffsEntity> MRDiffs;
+
     private @Getter List<String> members;
 
     public ProjectController(Extractor e, String url, String projectToken) {
@@ -52,6 +58,8 @@ public class ProjectController {
         this.members = this.e.getRepoMembers(links[6], this.projectToken);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
+        this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions(links[3]);
+        this.MRDiffs = this.getAndParseMergeRequestsDiffs(links[3]);
 
         this.weights = new int[]{1, 1, 1, 1};
     }
@@ -86,6 +94,16 @@ public class ProjectController {
         }
 
         return comments.stream().map(CommentEntity::fromGitlabJSON).collect(Collectors.toList());
+    }
+
+    private List<MergeRequestDiffVersionsEntity> getAndParseMergeRequestsDiffVersions(String url) {
+        List<JSONObject> mergeRequestsDiffVersions = e.getMergeRequestsDiff(url, this.projectToken);
+        return mergeRequestsDiffVersions.stream().map(MergeRequestDiffVersionsEntity::fromGitlabJSON).collect(Collectors.toList());
+    }
+
+    private List<MergeRequestDiffsEntity> getAndParseMergeRequestsDiffs(String url) {
+        List<JSONObject> mergeRequestsDiffs = e.getMergeRequestsDiffChanges(url, this.projectToken);
+        return mergeRequestsDiffs.stream().map(MergeRequestDiffsEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
 
