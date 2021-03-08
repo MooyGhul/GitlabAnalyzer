@@ -6,28 +6,36 @@ import {
     TableRow,
     Typography
 } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
-import axios from 'axios';
-import {useParams} from "react-router";
-import CommentJson from "../mockDataDir/mockComments";
-import useStyles from "../style/CommentContributionPageStyles";
-import Header from "./Header";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Grid from "@material-ui/core/Grid";
+import axios from 'axios';
+import {useParams} from "react-router";
+import Header from "./Header";
+import CommentJson from "../mockDataDir/mockComments";
+import useStyles from "../style/CommentContributionPageStyles";
+
 
 const CommentRow = (props) => {
     const {comment, expandAll} = props;
     const [open, setOpen] = React.useState(false);
+    const classes = useStyles();
 
     return (
         <Fragment>
             <TableRow onClick={() => setOpen(!open)}>
                 <TableCell component="th" scope="row">
-                    {comment.updated_at}
+                    <Typography gutterBottom component="div" className={classes.rowBody}>
+                        {comment.updated_at}
+                    </Typography>
                 </TableCell>
-                <TableCell align="left">{comment.author.username}</TableCell>
+                <TableCell align="left">
+                    <Typography gutterBottom component="div" className={classes.rowBody}>
+                        {comment.author.username}
+                    </Typography>
+                </TableCell>
                 <TableCell align="left">0</TableCell>
                 <TableCell>
                     <IconButton aria-label="expand row" size="small">
@@ -39,7 +47,7 @@ const CommentRow = (props) => {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <Typography gutterBottom component="div">
+                            <Typography gutterBottom component="div" className={classes.rowBody}>
                                 {comment.body}
                             </Typography>
                         </Box>
@@ -77,7 +85,7 @@ const CommentContributionPage = (props) => {
             <Grid item>
                 <Header pageTitle={"Commets"}/>
             </Grid>
-            <Grid item className={classes.accordian}>
+            <Grid item className={classes.accordian} >
                 <Button variant="contained" color="primary" onClick={() => setExpandAll(!expandAll)}>Expand All</Button>
             </Grid>
             <Grid item>
@@ -93,7 +101,7 @@ const CommentContributionPage = (props) => {
                         </TableHead>
                         <TableBody>
                             {comments.map(comment => (
-                                <CommentRow comment={comment} expandAll={expandAll} setExpandall={setExpandAll}/>
+                                <CommentRow key={comment.id} comment={comment} expandAll={expandAll} setExpandall={setExpandAll}/>
                             ))}
                         </TableBody>
                     </Table>

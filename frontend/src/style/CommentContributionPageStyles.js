@@ -13,10 +13,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#d1d0ff",
         color: theme.palette.common.white,
     },
-    secondaryHeading: {
-        fontSize: theme.typography.pxToRem(15),
-        color: theme.palette.text.secondary,
-    },
     accordian: {
         marginTop: "12vh",
     },
