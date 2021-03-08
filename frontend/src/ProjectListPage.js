@@ -1,29 +1,17 @@
 import Header from "./components/Header";
-import Button from "@material-ui/core/Button";
-import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button"; 
 import { useHistory } from "react-router-dom";
 import { DataGrid } from "@material-ui/data-grid";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styles from "./style/projectList.module.css";
-
-const useStyles = makeStyles({
-  analyzeButton: {
-    position: "absolute",
-    top: "85%",
-    left: "68%",
-  },
-  batchButton: {
-    position: "absolute",
-    top: "85%",
-    left: "55%",
-  },
-});
+import styles from "./style/projectList.module.css"; 
+import {useStyles} from './style/ProjectListPageStyle'
 
 function ProjectListPage(props) {
-  const history = useHistory();
+  const history = useHistory(); 
+  const [errorMsg, setErrorMsg] = useState('');
   const classes = useStyles();
-
+  
   const columns = [
     { field: "id", headerName: "ID", width: 200 },
     { field: "projectName", headerName: "Project Name", width: 400 },
@@ -55,8 +43,7 @@ function ProjectListPage(props) {
   const buttonClickHandler = (event) => {
     
     if (projectIdArray.length === 0) {
-      console.log("Please select a project.");
-      console.log(projectIdArray);
+      setErrorMsg('You have not selected any projects!');  
     } else if (projectIdArray.length === 1) {
       history.push({
         pathname: "/projectInfo",
@@ -70,8 +57,9 @@ function ProjectListPage(props) {
   return (
     <div>
       <Header pageTitle="Project List" />
+      
       <div className={styles.projectList}>
-        <div style={{ display: "flex", height: "100%" }}>
+        <div style={{ display: "flex", height: "100%", marginTop: "5%" }}>
           <div style={{ flexGrow: 2 }}>
             <DataGrid
               rows={rows}
@@ -83,6 +71,7 @@ function ProjectListPage(props) {
           </div>
         </div>
       </div>
+      <h3 className={classes.errorMsg}>{errorMsg}</h3>
 
       <Button
         variant="contained"
@@ -100,6 +89,9 @@ function ProjectListPage(props) {
       >
         Batch Process
       </Button>
+
+
+
     </div>
   );
 }
