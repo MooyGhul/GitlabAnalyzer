@@ -39,7 +39,7 @@ const CommentRow = (props) => {
                 <TableCell align="left">0</TableCell>
                 <TableCell>
                     <IconButton aria-label="expand row" size="small">
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                        {open || expandAll ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
             </TableRow>
@@ -83,17 +83,19 @@ const CommentContributionPage = (props) => {
     return (
         <Grid container className={classes.root}>
             <Grid item>
-                <Header pageTitle={"Commets"}/>
+                <Header pageTitle={"Comments"}/>
             </Grid>
             <Grid item className={classes.accordian} >
-                <Button variant="contained" color="primary" onClick={() => setExpandAll(!expandAll)}>Expand All</Button>
+                <Button variant="contained" onClick={() => setExpandAll(!expandAll)} className={classes.expandBtn}>
+                    {expandAll ? "Collapse All" : "Expand All"}
+                </Button>
             </Grid>
             <Grid item>
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow className={classes.head}>
-                                <TableCell align="left">Date</TableCell>
+                                <TableCell align="left" style={{maxWidth: "20px"}}>Date</TableCell>
                                 <TableCell align="left">Author</TableCell>
                                 <TableCell align="left">Word Count</TableCell>
                                 <TableCell />

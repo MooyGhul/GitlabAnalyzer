@@ -13,6 +13,13 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#d1d0ff",
         color: theme.palette.common.white,
     },
+    expandBtn: {
+        position: "fixed",
+        bottom: "1vh",
+        right: "1vw",
+        backgroundColor: "#7553ff",
+        color: theme.palette.common.white
+    },
     accordian: {
         marginTop: "12vh",
     },
