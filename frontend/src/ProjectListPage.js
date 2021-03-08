@@ -44,23 +44,25 @@ function ProjectListPage(props) {
     projectName: project.repoName,
   }));
 
-  const projectIdArray = [];
+  let projectIdArray = [];
 
-  const getValue = (e) => {
-    console.warn(e.data.id);
-    projectIdArray.push(e.data.id);
-    console.log(projectIdArray);
+  const getValue = (e) => { 
+    console.log(e.selectionModel);
+    projectIdArray = e.selectionModel; 
+    return projectIdArray;
   };
 
   const buttonClickHandler = (event) => {
+    
     if (projectIdArray.length === 0) {
       console.log("Please select a project.");
+      console.log(projectIdArray);
     } else if (projectIdArray.length === 1) {
       history.push({
         pathname: "/projectInfo",
         state: { id: projectIdArray[0] },
       });
-    } else {
+    } else { 
       console.log("multiple projects have been selected ");
     }
   };
@@ -76,7 +78,7 @@ function ProjectListPage(props) {
               columns={columns}
               pageSize={10}
               checkboxSelection
-              onRowSelected={(e) => getValue(e)}
+              onSelectionModelChange={(e) => getValue(e)}
             />
           </div>
         </div>
