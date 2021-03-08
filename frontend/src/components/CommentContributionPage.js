@@ -1,24 +1,58 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary, Table,
+    Collapse, IconButton, Paper, Table, TableBody,
     TableCell, TableContainer,
     TableHead,
     TableRow,
     Typography
 } from "@material-ui/core";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from "@material-ui/core/Grid";
 import axios from 'axios';
 import {useParams} from "react-router";
 import CommentJson from "../mockDataDir/mockComments";
 import useStyles from "../style/CommentContributionPageStyles";
 import Header from "./Header";
+import Button from "@material-ui/core/Button";
+import Box from "@material-ui/core/Box";
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+const CommentRow = (props) => {
+    const {comment, expandAll} = props;
+    const [open, setOpen] = React.useState(false);
+
+    return (
+        <Fragment>
+            <TableRow onClick={() => setOpen(!open)}>
+                <TableCell component="th" scope="row">
+                    {comment.updated_at}
+                </TableCell>
+                <TableCell align="left">{comment.author.username}</TableCell>
+                <TableCell align="left">0</TableCell>
+                <TableCell>
+                    <IconButton aria-label="expand row" size="small">
+                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    </IconButton>
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                    <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
+                        <Box margin={1}>
+                            <Typography gutterBottom component="div">
+                                {comment.body}
+                            </Typography>
+                        </Box>
+                    </Collapse>
+                </TableCell>
+            </TableRow>
+        </Fragment>
+    );
+}
 
 const CommentContributionPage = (props) => {
-    const expand = useState(true);
     const [comments, setComments] = useState(CommentJson);
+    const [expandAll, setExpandAll] = React.useState(false);
     const classes = useStyles(props);
 
     const {project_id, member_id} = useParams();
@@ -43,36 +77,27 @@ const CommentContributionPage = (props) => {
             <Grid item>
                 <Header pageTitle={"Commets"}/>
             </Grid>
-            <TableContainer className={classes.accordian}>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left">Date</TableCell>
-                            <TableCell align="left">Author</TableCell>
-                            <TableCell align="center">Word Count</TableCell>
-                        </TableRow>
-                    </TableHead>
-                </Table>
-            </TableContainer>
-
+            <Grid item className={classes.accordian}>
+                <Button variant="contained" color="primary" onClick={() => setExpandAll(!expandAll)}>Expand All</Button>
+            </Grid>
             <Grid item>
-            {comments.map(comment => (
-                <Accordion key={comment.id}>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                        aria-controls="panel1a-content"
-                        id="comment-accordian"
-                    >
-                        <Typography className={classes.secondaryHeading}>{comment.updated_at}</Typography>
-                        <Typography className={classes.heading}>{comment.author.username}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                        <Typography>
-                            {comment.body}
-                        </Typography>
-                    </AccordionDetails>
-                </Accordion>
-            ))}
+                <TableContainer component={Paper}>
+                    <Table>
+                        <TableHead>
+                            <TableRow className={classes.head}>
+                                <TableCell align="left">Date</TableCell>
+                                <TableCell align="left">Author</TableCell>
+                                <TableCell align="left">Word Count</TableCell>
+                                <TableCell />
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {comments.map(comment => (
+                                <CommentRow comment={comment} expandAll={expandAll} setExpandall={setExpandAll}/>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Grid>
         </Grid>
     );

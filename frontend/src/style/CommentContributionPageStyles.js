@@ -4,32 +4,22 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
         display: "flex",
-        flexDirection: "column"
+        flexDirection: "column",
+        '& > *': {
+            borderBottom: 'unset',
+        },
     },
-    heading: {
-        fontSize: theme.typography.pxToRem(15),
-        flexBasis: '33.33%',
-        flexShrink: 0,
-        marginLeft: "5vh"
+    head: {
+        backgroundColor: "#d1d0ff",
+        color: theme.palette.common.white,
     },
     secondaryHeading: {
         fontSize: theme.typography.pxToRem(15),
         color: theme.palette.text.secondary,
     },
     accordian: {
-        justifyContent: "space-evenly",
         marginTop: "12vh",
-        width: "100%"
     },
-    tableHeader: {
-        fontSize: theme.typography.pxToRem(15),
-        flexBasis: '33.33%',
-        flexShrink: 0,
-        marginLeft: "5vh"
-    },
-    title: {
-        marginLeft: "2vh"
-    }
 }));
 
 export default useStyles;
