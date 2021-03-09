@@ -34,15 +34,13 @@ const useStyles = makeStyles((theme) => ({
       width: "30vw",
       height: "80%",
     },
+    '& section p:first-of-type': {
+    }
   },
   titles: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-evenly",
-    [theme.breakpoints.up("lg")]: {
-      marginTop: "-2vh",
-    },
-    marginTop: "-4vh",
     marginBottom: "-2vh",
   },
   title: {

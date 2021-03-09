@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   buttons: {
     [theme.breakpoints.up("lg")]: {
-      marginTop: "6vh",
+      marginTop: "4vh",
       marginLeft: "20px",
     },
     [theme.breakpoints.down("sm")]: {

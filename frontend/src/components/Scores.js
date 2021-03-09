@@ -56,7 +56,7 @@ const Scores = (props) => {
         <Card className={classes.card2}>
           <CardContent>
             <LanguageType language={language} onChange={onChange} />
-            <section className={classes.titles}>
+            <section className={classes.titles} style={{marginTop: "-3vh"}}>
               <p className={classes.title}>Score for {language} Files</p>
             </section>
             <Divider />
