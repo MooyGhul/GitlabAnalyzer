@@ -38,19 +38,16 @@ public class MemberController {
     }
     @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/versions")
     Iterable<MergeRequestDiffVersionsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "authorName") String authorName) {
-        Iterable<MergeRequestDiffVersionsEntity> m = this.mergeRequestDiffVersionRepository.findAllVersionsByProjectIdMRIidAndAuthor(projectId, MRIid, authorName);
         return this.mergeRequestDiffVersionRepository.findAllVersionsByProjectIdMRIidAndAuthor(projectId, MRIid, authorName);
     }
 
     @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/diffId/{versionId}")
     Iterable<MergeRequestDiffsEntity> getMergeRequestDiffs(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "versionId") int versionId) {
-        Iterable<MergeRequestDiffsEntity> m = this.mergeRequestDiffRepository.findSpecificDiffByAuthorName(projectId, MRIid, versionId);
         return this.mergeRequestDiffRepository.findSpecificDiffByAuthorName(projectId, MRIid, versionId);
     }
 
     @GetMapping("/{authorName}/merge_requests")
     Iterable<MergeRequestDiffsEntity> getMergeRequestDiffsByAuthor(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "authorName") String authorName) {
-        Iterable<MergeRequestDiffsEntity> m = this.mergeRequestDiffRepository.findAllByProjectIdAndAuthorName(projectId, authorName);
         return this.mergeRequestDiffRepository.findAllByProjectIdAndAuthorName(projectId, authorName);
     }
 }
