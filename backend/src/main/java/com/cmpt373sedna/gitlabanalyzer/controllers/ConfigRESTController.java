@@ -29,7 +29,7 @@ public class ConfigRESTController {
     }
 
     @PostMapping("/{configId}/load")
-    public ConfigEntity loadConfig(@PathVariable String configId) {
+    public void loadConfig(@PathVariable String configId) {
         ConfigEntity config = configEntityRepository.findById(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
     }
 }

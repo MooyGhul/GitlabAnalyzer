@@ -1,4 +1,7 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
+
+import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.client.HttpClientErrorException;
@@ -16,6 +19,22 @@ public class Extractor {
 
     public Extractor() {
         this.restTemplate = new RestTemplate();
+    }
+
+    public List<ProjectEntity> getProjects(ConfigEntity config) {
+        String apiUrl = getApiUrl(config.getUrl());
+
+        URI uri = URI.create(apiUrl + "?visibility=private");
+        String result = restTemplate.getForObject(uri, String.class);
+        JSONArray projectsArray = new JSONArray(result);
+
+        List<ProjectEntity> projects = new ArrayList<>();
+
+        projectsArray.forEach(projectJSON -> {
+
+        });
+
+        return projects;
     }
 
     public String[] getBasicRepoLinks(String url, String projectToken) {
