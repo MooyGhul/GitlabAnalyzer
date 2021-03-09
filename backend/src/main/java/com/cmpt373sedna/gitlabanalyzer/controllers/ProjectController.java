@@ -101,6 +101,8 @@ public class ProjectController {
         for(MergeRequestEntity mr: this.mergeRequestEntities) {
             String MRUrl =  this.url + mr.getIid();
             List<JSONObject> list = e.getMergeRequestsDiff(MRUrl, this.projectToken);
+            list.forEach(mrDiffs -> mrDiffs.put("project_id", this.projectId));
+            list.forEach(mrDiffs -> mrDiffs.put("merge_request_iid", mr.getIid()));
             mergeRequestsDiffVersions.addAll(list);
         }
         return mergeRequestsDiffVersions.stream().map(MergeRequestDiffVersionsEntity::fromGitlabJSON).collect(Collectors.toList());
@@ -111,7 +113,9 @@ public class ProjectController {
         for(MergeRequestEntity mr: this.mergeRequestEntities) {
             for(MergeRequestDiffVersionsEntity mrDiff: this.MRDiffVersions) {
                 String MRUrl = this.url + mr.getIid() + "/versions/" + mrDiff.getId();
-                List<JSONObject> list = e.getMergeRequestsDiff(MRUrl, this.projectToken);
+                List<JSONObject> list = e.getMergeRequestsDiffChanges(MRUrl, this.projectToken);
+                list.forEach(mrDiffs -> mrDiffs.put("project_id", this.projectId));
+                list.forEach(mrDiffs -> mrDiffs.put("merge_request_iid", mr.getIid()));
                 mergeRequestsDiffs.addAll(list);
             }
         }

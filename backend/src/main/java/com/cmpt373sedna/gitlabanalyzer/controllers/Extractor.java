@@ -78,17 +78,15 @@ public class Extractor {
 
     // url: GET /projects/:id/merge_requests/:merge_request_iid
     public List<JSONObject> getMergeRequestsDiff(String url, String projectToken) {
-        List<JSONObject> MRDiffVersions;
         String MRVersionsURL = url + "/versions"+"&access_token=" + projectToken;
-        MRDiffVersions = getJsonObjects(MRVersionsURL);
+        List<JSONObject> MRDiffVersions = getJsonObjects(MRVersionsURL);
         return MRDiffVersions;
     }
 
     // url: GET /projects/:id/merge_requests/:merge_request_iid/versions/:version_id
     public List<JSONObject> getMergeRequestsDiffChanges(String url, String projectToken) {
-        List<JSONObject> MRDiffs;
         String MRVersionsURL = url + "&access_token=" + projectToken;
-        MRDiffs = getJsonObjects(MRVersionsURL);
+        List<JSONObject> MRDiffs = getJsonObjects(MRVersionsURL);
         return MRDiffs;
     }
 

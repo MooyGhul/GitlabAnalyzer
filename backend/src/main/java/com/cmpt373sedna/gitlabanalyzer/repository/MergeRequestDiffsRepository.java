@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface MergeRequestDiffsRepository extends CrudRepository<MergeRequestDiffsEntity, Integer> {
-    List<MergeRequestDiffsEntity> findAllByMRIidandversionID(String id, int MRIid);
+    List<MergeRequestDiffsEntity> findAllByProjectIdAndAuthorName(int id, String authorName);
+    List<MergeRequestDiffsEntity> findSpecificDiffByAuthorName(int id, int MRId, int versionId);
 }
