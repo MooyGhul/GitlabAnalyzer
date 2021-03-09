@@ -4,6 +4,7 @@ import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Component
 public class Extractor {
     private final RestTemplate restTemplate;
 
@@ -24,14 +26,19 @@ public class Extractor {
     public List<ProjectEntity> getProjects(ConfigEntity config) {
         String apiUrl = getApiUrl(config.getUrl());
 
-        URI uri = URI.create(apiUrl + "?visibility=private");
+        URI uri = URI.create(apiUrl + "?visibility=private&access_token=" + config.getToken());
         String result = restTemplate.getForObject(uri, String.class);
         JSONArray projectsArray = new JSONArray(result);
 
         List<ProjectEntity> projects = new ArrayList<>();
 
-        projectsArray.forEach(projectJSON -> {
+        projectsArray.forEach(obj -> {
+            JSONObject projectJSON = (JSONObject) obj;
 
+            projects.add(ProjectEntity.builder()
+                    .repoId(projectJSON.getInt("id"))
+                    .repoName(projectJSON.getString("name"))
+                    .build());
         });
 
         return projects;
@@ -66,7 +73,10 @@ public class Extractor {
         String baseUrl = url.substring(0, rootUrlIndex+1);
         String query = url.substring(rootUrlIndex+1);
         query = URLEncoder.encode(query, StandardCharsets.UTF_8);
-        return baseUrl + "api/v4/projects/" + query;
+        if (query.length() > 0) {
+            return baseUrl + "api/v4/projects/" + query;
+        }
+        return baseUrl + "api/v4/projects";
     }
 
     private List<JSONObject> getJsonObjects(String URL) {

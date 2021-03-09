@@ -1,10 +1,7 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.CommentEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
 import lombok.Getter;
 import org.json.JSONObject;
 
@@ -43,6 +40,24 @@ public class ProjectController {
         this.projectToken = projectToken;
         // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
         String[] links = this.e.getBasicRepoLinks(url, projectToken);
+
+        this.projectId = Integer.parseInt(links[0]);
+        this.projectName = links[1];
+        this.url = links[2];
+        this.mergeRequestEntities = this.getAndParseMergeRequests(links[3]);
+        this.issuesEntities = this.getAndParseIssues(links[4]);
+        this.members = this.e.getRepoMembers(links[6], this.projectToken);
+        this.comments = this.getAndParseComments();
+        this.commitEntities = this.getAndParseCommits();
+
+        this.weights = new int[]{1, 1, 1, 1};
+    }
+
+    public ProjectController(Extractor e, ConfigEntity configEntity, ProjectEntity projectEntity) {
+        this.e = e;
+        this.projectToken = configEntity.getToken();
+        // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
+        String[] links = this.e.getBasicRepoLinks(configEntity.getUrl() + projectEntity.getRepoId(), projectToken);
 
         this.projectId = Integer.parseInt(links[0]);
         this.projectName = links[1];
