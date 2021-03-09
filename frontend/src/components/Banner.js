@@ -11,7 +11,6 @@ const Banner = (props) => {
     <Grid container justify={"space-evenly"} className={classes.container}>
       <Grid item md={4} sm={4} className={classes.profile}>
         <Avatar
-          alt=""
           src={
             avatar_url
               ? avatar_url
@@ -20,7 +19,7 @@ const Banner = (props) => {
           className={classes.large}
         />
         <Typography className={classes.details}>
-          {memberName ? memberName : "Unavailable"}
+          {memberName ? memberName : "Name Unavailable"}
         </Typography>
       </Grid>
       <Grid item md={8} sm={8}>

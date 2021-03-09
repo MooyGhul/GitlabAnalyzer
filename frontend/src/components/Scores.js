@@ -48,8 +48,8 @@ const Scores = (props) => {
             </section>
             <Divider />
             <section className={classes.values}>
-              <p>{commitCount ? commitCount : 0}</p>
-              <p>{mergeRequestCount ? mergeRequestCount : 0}</p>
+              <p>{commitCount ? commitCount : "N/A"}</p>
+              <p>{mergeRequestCount ? mergeRequestCount : "N/A"}</p>
             </section>
           </CardContent>
         </Card>
@@ -64,7 +64,7 @@ const Scores = (props) => {
             </section>
             <Divider />
             <section className={classes.values}>
-              <p>{api.TotalScore ? api.TotalScore : 0}</p>
+              <p>{api.TotalScore ? api.TotalScore : "N/A"}</p>
             </section>
           </CardContent>
         </Card>
