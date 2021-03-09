@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
+import StackedBarChartPanel from "./StackedBarChartPanel";
 import {Comments} from "../mockDataDir/mockCodeContri";
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
@@ -110,11 +111,12 @@ export default function Charts () {
     const [commentsData] = useState(Comments);
     const [contributionsData] = useState(contributions);
     
-    const [startDate, setStartDate] = useState(new Date('January 1, 2020 00:00:00'));
-    const [endDate, setEndDate] = useState(new Date('Dec 31, 2025 00:00:00'));
+    const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
+    const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
 
     const handleStartDate = (newDate) => {setStartDate(newDate)};
     const handleEndDate = (newDate) => {setEndDate(newDate)};
+    const handleKeys = (newKey) => {setKeys(newKey)};
 
     let contributionsDataProp = contributionsData;
     let commentsDataProp = commentsData;
@@ -127,7 +129,7 @@ export default function Charts () {
       <div>
       <Grid container xs={12} spacing={6}  direction="column">
         <Grid item xs={6} >
-          <Calendar onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
+          <Calendar startDate={startDate} endDate={endDate} onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
         </Grid>
         <Grid container spacing={5} xs={12}>
           <Grid item xs={6} >
@@ -146,25 +148,7 @@ export default function Charts () {
           // This part will be refactored when using new chart library.
           */}
           <div className="fields">
-            {allKeys.map(key => (
-              <div key={key} className="field">
-                <input
-                  id={key}
-                  type="checkbox"
-                  checked={keys.includes(key)}
-                  onChange={e => {
-                    if (e.target.checked) {
-                      setKeys(Array.from(new Set([...keys, key])));
-                    } else {
-                      setKeys(keys.filter(_key => _key !== key));
-                    }
-                  }}
-                />
-                <label htmlFor={key} style={{ color: colors[key] }}>
-                  {key}
-                </label>
-              </div>
-            ))}
+            <StackedBarChartPanel colors={colors} keys={keys} allKeys={allKeys} onKeyChange={handleKeys} />
           </div>
         </Grid>
         </Grid>

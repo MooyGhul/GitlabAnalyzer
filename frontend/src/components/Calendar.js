@@ -7,14 +7,14 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import Grid from '@material-ui/core/Grid';
 
-const Calendar = (startDate, endDate, onStartDateChange, onEndDateChange) => {
+export default function  Calendar (props){
+
   const startDateChange = (event)=>{
-    onStartDateChange.onChange(event.target.value);
+    props.onStartDateChange(event);
   };
   const endDateChange = (event)=>{
-    onEndDateChange.onChange(event.target.value);
+    props.onEndDateChange(event);
   };
-  
 
   return (
     <div>
@@ -27,7 +27,7 @@ const Calendar = (startDate, endDate, onStartDateChange, onEndDateChange) => {
                 margin="normal"
                 id="date-picker-inline"
                 label="Date picker inline"
-                value={startDate}
+                value={new Date(props.startDate)}
                 onChange={startDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
@@ -44,7 +44,7 @@ const Calendar = (startDate, endDate, onStartDateChange, onEndDateChange) => {
                 margin="normal"
                 id="date-picker-inline"
                 label="Date picker inline"
-                value={endDate}
+                value={new Date(props.endDate)}
                 onChange={endDateChange}
                 KeyboardButtonProps={{
                   'aria-label': 'change date',
@@ -55,6 +55,4 @@ const Calendar = (startDate, endDate, onStartDateChange, onEndDateChange) => {
   ​  </div>
   );
 }
-
-export default Calendar;
 
