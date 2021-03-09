@@ -25,10 +25,7 @@ const WeightDialog = (props) => {
 
   return (
     <div>
-      <SettingsIcon
-        style={{ backgroundColor: "none" }}
-        onClick={handleClickOpen}
-      />
+      <SettingsIcon style={{ background: "none" }} onClick={handleClickOpen} />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Configure Weighting</DialogTitle>
         <DialogContent>

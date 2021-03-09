@@ -33,10 +33,7 @@ const LanguageType = (props) => {
 
   return (
     <div>
-      <SettingsIcon
-        style={{ backgroundColor: "none" }}
-        onClick={handleClickOpen}
-      />
+      <SettingsIcon style={{ background: "none" }} onClick={handleClickOpen} />
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Select File Type</DialogTitle>
         <List>
