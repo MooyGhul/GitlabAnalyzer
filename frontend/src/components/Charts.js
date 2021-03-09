@@ -4,11 +4,6 @@ import StackedBarChart from "./CodeContribution";
 import StackedBarChartPanel from "./StackedBarChartPanel";
 import {Comments} from "../mockDataDir/mockCodeContri";
 import Grid from '@material-ui/core/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import { 
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "./Calendar";
 
