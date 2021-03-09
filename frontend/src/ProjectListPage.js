@@ -43,7 +43,7 @@ function ProjectListPage(props) {
   const buttonClickHandler = (event) => {
     
     if (projectIdArray.length === 0) {
-      setErrorMsg('You have not selected any projects!');  
+      setErrorMsg('You have not selected any projects!.');  
     } else if (projectIdArray.length === 1) {
       history.push({
         pathname: "/projectInfo",
