@@ -7,11 +7,12 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import SearchIcon from "@material-ui/icons/Search";
 import Scores from "../components/Scores";
 import useStyles from "../style/ScoreBoardStyles";
+import WeightDialog from "./WeightsDialog";
 
 const ScoreBoard = (props) => {
   const [mergeRequestCount, setMergeRequestCount] = useState(0);
   const [commitCount, setCommitCount] = useState(0);
-
+  const [weights, setWeights] = useState({ commitScore: 1, mrScore: 2, fileScore: 3 });
   const classes = useStyles(props);
   const [language, setLanguage] = useState("C++");
 
@@ -57,7 +58,9 @@ const ScoreBoard = (props) => {
               Score Breakdown <SearchIcon className={classes.icon} />
             </Button>
           </Grid>
-
+          <Grid item>
+           <WeightDialog weights={weights} setWeights={setWeights}/>
+          </Grid>
           <Grid item>
             <Button
               variant="contained"

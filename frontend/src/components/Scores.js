@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import { CardContent, Divider } from "@material-ui/core";
 import useStyles from "../style/ScoreStyles";
-import WeightDialog from "./WeightsDialog";
 import { StudentJS } from "../mockDataDir/mockJS";
 import { StudentJava } from "../mockDataDir/mockJava";
 import { StudentPython } from "../mockDataDir/mockPython";
@@ -13,7 +12,6 @@ import LanguageType from "./LanguageType";
 
 const Scores = (props) => {
   let { mergeRequestCount, commitCount, language, onChange } = props;
-  let weights = { commits: 1, mr: 2 };
   const classes = useStyles(props);
   let api = "";
   switch (language) {
@@ -41,7 +39,6 @@ const Scores = (props) => {
       <Grid item lg={6} md={12} sm={12}>
         <Card className={classes.card1}>
           <CardContent>
-            <WeightDialog weights={weights} />
             <section className={classes.titles}>
               <p className={classes.title}>Total Commit</p>
               <p className={classes.title}>Total MR</p>
