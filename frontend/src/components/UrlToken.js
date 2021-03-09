@@ -11,9 +11,11 @@ import {useStyles} from '../style/UrlTokenStyle'
 import {Grid} from "@material-ui/core";
 
 function UrlToken() {
+    
     const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: '', token:''});
     const [errorMsg, setErrorMsg] = useState('');
+    const [loginToken, setLoginToken] = useState('');
 
     const authenticateToken  = async () => {
         await axios.post('http://localhost:8080/project/create?token='+ urlToken.token);
@@ -35,8 +37,18 @@ function UrlToken() {
         }) 
     }          
 
-    const nextHandler = event => { 
+
+    const addLoginToken = () => {
+        console.log(window.location.href);
+        const data = new URLSearchParams(window.location.search)
+        console.log(data.get('ticket'))
+        setLoginToken(data.get('ticket'))
+        console.log(loginToken)
+    }
+
+    const nextHandler = event => {
         event.preventDefault();
+        addLoginToken();
         authenticateToken();
     }        
      
@@ -51,6 +63,7 @@ function UrlToken() {
                 <h2 className={classes.h2}> Server information </h2>
 
                 <h3>{errorMsg}</h3>
+
 
                 <TextField id='url' classes={{root: classes.customTextField}} label='Server URL' value={urlToken.url}
                         onChange={e=> setUrlToken({...urlToken, url: e.target.value})}/>
