@@ -141,12 +141,6 @@ export default function Charts () {
         </Grid>
         <Grid item xs={12} ></Grid>
         <Grid item xs={6} >
-          {/* 
-          // the fields class is changed from the following tutorial:
-          // https://www.youtube.com/watch?v=bXN9anQN_kQ&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=17
-          // the tutorial "Using React (Hooks) with D3 – [15] Stacked Bar Chart"
-          // This part will be refactored when using new chart library.
-          */}
           <div className="fields">
             <StackedBarChartPanel colors={colors} keys={keys} allKeys={allKeys} onKeyChange={handleKeys} />
           </div>
