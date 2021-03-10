@@ -13,14 +13,13 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import { CommitDetails } from '../mockDataDir/mockCommitDetails';
-import { MRDetails } from '../mockDataDir/mockMRDetails';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {TableFooter, TablePagination} from "@material-ui/core";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
 import * as PropTypes from "prop-types";
+import {CodeContributionData} from "../mockDataDir/mockCodeContributionData";
 
-const rows = [].concat(MRDetails, CommitDetails);
+const rows = CodeContributionData;
 
 const columns = [
   {id: 'type', label: 'Type'},
@@ -167,6 +166,7 @@ const CodeContributionTable = () => {
         <Table stickyHeader className={classes.table}>
           <TableHead>
             <TableRow>
+              {/*TODO: Replace this with Expand/UnExpand*/}
               <TableCell />
               {columns.map((column) => (
                 <TableCell key={column.id}>
@@ -180,7 +180,7 @@ const CodeContributionTable = () => {
                 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : rows
             ).map((row) => (
-              <Row key ={row.name} row={row} />
+              <Row key ={row.id} row={row} />
             ))}
 
             {emptyRows > 0 && (
