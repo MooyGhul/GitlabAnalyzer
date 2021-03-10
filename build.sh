@@ -1,16 +1,21 @@
-if [ ! -e ./backend/src/main/resources/public ]; then
-  ln -s ../../../../frontend/build ./backend/src/main/resources/public
+docker-compose stop
+
+if [ "$1" != "backend" ]; then
+  cd frontend || exit
+  npm i --no-save
+  npm run build
+  cd ../ || exit
+else
+  echo "Skipping frontend build"
 fi
-docker rm gitlabanalyzer # ensure docker compose always use fresh build
 
-set -e  # Allow stuff above to fail, stuff below should stop script on failure
-
-cd frontend
-npm run build
-cd ../
-
-./gradlew assemble
+if [ "$1" != "frontend" ]; then
+  ./gradlew assemble
+else
+  echo "Skipping backend build"
+fi
 
 docker build -t gitlabanalyzer .
 
-docker-compose up
+docker-compose up -d
+docker-compose logs -f
