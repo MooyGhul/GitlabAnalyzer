@@ -40,15 +40,16 @@ public class MemberController {
     Iterable<MergeRequestEntity> getMemberMergeRequest(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "memberName") String author) {
         return this.mergeRequestRepository.findAllByProjectIdAndAuthor(projectId, author);
     }
-    @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/versions")
-    Iterable<MergeRequestDiffVersionsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "authorName") String authorName) {
-        return this.mergeRequestDiffVersionRepository.findAllVersionsByProjectIdMRIidAndAuthor(projectId, MRIid, authorName);
-    }
 
-    @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/diffId/{versionId}")
-    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffs(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "versionId") int versionId) {
-        return this.mergeRequestDiffRepository.findSpecificDiffByAuthorName(projectId, MRIid, versionId);
+    @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/versions")
+    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int merge_request_iid, @PathVariable(value = "authorName") String authorName) {
+        return this.mergeRequestDiffRepository.findAllByProjectIdAndMergerequestiidAndAuthorName(projectId, merge_request_iid, authorName);
     }
+/*
+    @GetMapping("/merge_requests/{merge_request_iid}/diffId/{versionId}")
+    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffs(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int merge_request_iid, @PathVariable(value = "versionId") int versionId) {
+        return this.mergeRequestDiffRepository.findAllByProjectIdAndMerge_request_iidAndVersionId(projectId, merge_request_iid, versionId);
+    }*/
 
     @GetMapping("/{authorName}/merge_requests")
     Iterable<MergeRequestDiffsEntity> getMergeRequestDiffsByAuthor(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "authorName") String authorName) {
