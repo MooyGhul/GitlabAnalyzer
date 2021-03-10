@@ -28,12 +28,12 @@ const CommentRow = (props) => {
             <TableRow onClick={() => setOpen(!open)}>
                 <TableCell component="th" scope="row">
                     <Typography gutterBottom component="div" className={classes.rowBody}>
-                        {comment.updated_at}
+                        {comment.commentDate}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">
                     <Typography gutterBottom component="div" className={classes.rowBody}>
-                        {comment.author.username}
+                        {comment.commenter}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">0</TableCell>
@@ -47,8 +47,11 @@ const CommentRow = (props) => {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
                         <Box margin={1}>
+                            <Typography variant={"h6"} gutterBottom component="div" className={classes.rowBody}>
+                                Comment Type: {comment.commentType}
+                            </Typography>
                             <Typography gutterBottom component="div" className={classes.rowBody}>
-                                {comment.body}
+                                Body: {comment.commentText}
                             </Typography>
                         </Box>
                     </Collapse>
@@ -63,22 +66,23 @@ const CommentContributionPage = (props) => {
     const [expandAll, setExpandAll] = React.useState(false);
     const classes = useStyles(props);
 
-    const {project_id, member_id} = useParams();
+    const {projectId, memberId} = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
             const commentResult = await axios.get(
-                `http://localhost:8080/project/${project_id}/member/${member_id}/comments`
+                `http://localhost:8080/project/25513/member/${memberId}/comments`
             );
-            console.log(`Comment Result ${commentResult}`);
-            setComments(commentResult);
+            setComments(commentResult.data);
         }
         try {
-            fetchData();
+            fetchData().then(() => {
+                console.log("Successfully obtained comments");
+            });
         } catch {
             setComments(CommentJson);
         }
-    }, [project_id, member_id]);
+    }, [projectId, memberId]);
 
     return (
         <Grid container className={classes.root}>
@@ -95,15 +99,15 @@ const CommentContributionPage = (props) => {
                     <Table>
                         <TableHead>
                             <TableRow className={classes.head}>
-                                <TableCell align="left" style={{maxWidth: "20px"}}>Date</TableCell>
-                                <TableCell align="left">Author</TableCell>
-                                <TableCell align="left">Word Count</TableCell>
+                                <TableCell align="left" style={{fontWeight: "bold"}}>Date</TableCell>
+                                <TableCell align="left" style={{fontWeight: "bold"}}>Author</TableCell>
+                                <TableCell align="left" style={{fontWeight: "bold"}}>Word Count</TableCell>
                                 <TableCell />
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {comments.map(comment => (
-                                <CommentRow key={comment.id} comment={comment} expandAll={expandAll} setExpandall={setExpandAll}/>
+                                <CommentRow key={comment.commentId} comment={comment} expandAll={expandAll} setExpandall={setExpandAll}/>
                             ))}
                         </TableBody>
                     </Table>

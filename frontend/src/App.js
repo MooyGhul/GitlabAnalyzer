@@ -6,6 +6,7 @@ import ProjectListPage from './ProjectListPage';
 import OverviewPage from './OverviewPage';
 import PrivateRoute from './PrivateRoute';
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
+import CommentContributionPage from './components/CommentContributionPage'
 import NotFound from './components/NotFound';
 import './style/App.css'
 
@@ -20,6 +21,7 @@ function App() {
             <PrivateRoute path='/projectList' component={ProjectListPage} />
             <PrivateRoute path='/projectInfo' component={ProjectInfoPage} />
             <PrivateRoute path='/overview' component={OverviewPage} />
+            <PrivateRoute path='/project/:projectId/:memberId/comments' component={CommentContributionPage} />
             <Route component={NotFound} />
         </Switch>
     </BrowserRouter>

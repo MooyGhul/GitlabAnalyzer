@@ -3,6 +3,7 @@ import com.sun.istack.Nullable;
 import lombok.*;
 import org.json.JSONObject;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,6 +20,7 @@ public class CommentEntity {
     private String commentType;
     private int projectId;
     private int commentTypeId;
+    @Column(columnDefinition="text")
     private @Nullable String commentText;
     private @Nullable String commenter;
     private @Nullable Instant commentDate;
