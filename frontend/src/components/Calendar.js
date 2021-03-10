@@ -7,8 +7,7 @@ import {
 import "react-datepicker/dist/react-datepicker.css";
 import Grid from '@material-ui/core/Grid';
 
-export default function  Calendar (props){
-
+const Calendar = (props) => {
   const startDateChange = (event)=>{
     props.onStartDateChange(event);
   };
@@ -56,3 +55,6 @@ export default function  Calendar (props){
   );
 }
 
+
+
+export default Calendar;
