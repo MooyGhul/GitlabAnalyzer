@@ -21,7 +21,6 @@ function App() {
             <PrivateRoute path='/projectList' component={ProjectListPage} />
             <PrivateRoute path='/projectInfo' component={ProjectInfoPage} />
             <PrivateRoute path='/overview' component={OverviewPage} />
-            //TODO: Change this after finding a way to connect from overview page
             <Route exact path='/codeContributions' component={CodeContributionPage} />
 
           <Route component={NotFound} />

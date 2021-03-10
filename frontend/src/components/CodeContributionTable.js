@@ -38,7 +38,7 @@ const useRowStyles = makeStyles({
   },
 });
 
-const Row = (props) => {
+function Row(props) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
@@ -70,7 +70,6 @@ const Row = (props) => {
       </TableRow>
     </React.Fragment>
   );
-
 }
 
 const usePaginationStyle = makeStyles((theme) => ({
@@ -106,24 +105,21 @@ function TablePaginationActions(props) {
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
-        aria-label="first page"
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page" >
+      <IconButton onClick={handleBackButtonClick} disabled={page === 0} >
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
       >
         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
       >
         {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
       </IconButton>
@@ -144,7 +140,7 @@ const useStyles = makeStyles({
   },
 });
 
-const CodeContributionTable = () => {
+function CodeContributionTable () {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -166,9 +162,8 @@ const CodeContributionTable = () => {
         <Table stickyHeader className={classes.table}>
           <TableHead>
             <TableRow>
-              {/*TODO: Replace this with Expand/UnExpand*/}
               <TableCell />
-              {columns.map((column) => (
+                {columns.map((column) => (
                 <TableCell key={column.id}>
                   {column.label}
                 </TableCell>
@@ -197,10 +192,6 @@ const CodeContributionTable = () => {
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
-                SelectProps={{
-                  inputProps: { 'aria-label': 'rows per page' },
-                  native: true,
-                }}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
                 ActionsComponent={TablePaginationActions}
