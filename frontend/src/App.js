@@ -7,6 +7,7 @@ import OverviewPage from './OverviewPage';
 import PrivateRoute from './PrivateRoute';
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
 import NotFound from './components/NotFound';
+import CodeContributionPage from "./CodeContributionPage";
 import './style/App.css'
 
 function App() {
@@ -20,7 +21,10 @@ function App() {
             <PrivateRoute path='/projectList' component={ProjectListPage} />
             <PrivateRoute path='/projectInfo' component={ProjectInfoPage} />
             <PrivateRoute path='/overview' component={OverviewPage} />
-            <Route component={NotFound} />
+            //TODO: Change this after finding a way to connect from overview page
+            <Route exact path='/codeContributions' component={CodeContributionPage} />
+
+          <Route component={NotFound} />
         </Switch>
     </BrowserRouter>
   );
