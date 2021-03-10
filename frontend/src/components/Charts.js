@@ -121,7 +121,7 @@ export default function Charts () {
   
     return (
       <div>
-      <Grid container xs={12} spacing={6}  direction="column">
+      <Grid container spacing={6}  direction="column">
         <Grid item xs={6} >
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <Grid container justify="space-around">
@@ -158,7 +158,7 @@ export default function Charts () {
             </Grid>
           </MuiPickersUtilsProvider>
         </Grid>
-        <Grid container spacing={5} xs={12}>
+        <Grid container spacing={5}>
           <Grid item xs={6} >
             <StackedBarChart contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
           </Grid>
@@ -166,7 +166,6 @@ export default function Charts () {
             <BarChart className="charts" commentsDataProp={commentsDataProp}/>
           </Grid>
         </Grid>
-        <Grid item xs={12} ></Grid>
         <Grid item xs={6} >
           {/* 
           // the fields class is changed from the following tutorial:
