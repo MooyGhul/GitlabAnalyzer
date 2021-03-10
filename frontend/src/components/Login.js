@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';  
 import logo from '../logo/gitlab_analyzer.png';
 import {useStyles} from '../style/LoginStyle'
+import Grid from "@material-ui/core/Grid";
 
 
 function Login() {
@@ -50,8 +51,8 @@ function Login() {
     const classes = useStyles();
 
     return(
-        <div>
-            <Header pageTitle='Gitlab Analyzer' />          
+        <Grid container>
+            <Header pageTitle='Gitlab Analyzer' />
             
              <Box className={classes.formBox} borderRadius={16} boxShadow={8}  > 
                 <img src={logo} alt="Logo" className={classes.logo}/>      
@@ -64,7 +65,7 @@ function Login() {
                     <Button classes={{root: classes.customButton}} variant='contained' onClick={() => (state.loginMethod = 2)} type ='submit' color='secondary'> Login with SSO </Button>
                 </form>  
             </Box>             
-        </div>
+        </Grid>
     );
 }
 
