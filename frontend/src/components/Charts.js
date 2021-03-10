@@ -121,26 +121,23 @@ export default function Charts () {
     }
   
     return (
-      <div>
-      <Grid container xs={12} spacing={6}  direction="column">
+      <Grid container spacing={6}  direction="column">
         <Grid item xs={6} >
           <Calendar startDate={startDate} endDate={endDate} onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
         </Grid>
-        <Grid container spacing={5} xs={12}>
-          <Grid item xs={6} >
+        <Grid container spacing={5} >
+          <Grid item xs={5} >
             <StackedBarChart startDate={startDate} endDate={endDate} contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
           </Grid>
-          <Grid item xs={6} >
+          <Grid item xs={5} >
             <BarChart className="charts" commentsDataProp={commentsDataProp}/>
           </Grid>
         </Grid>
-        <Grid item xs={12} ></Grid>
         <Grid item xs={6} >
           <div className="fields">
             <StackedBarChartPanel colors={colors} keys={keys} allKeys={allKeys} onKeyChange={handleKeys} />
           </div>
         </Grid>
-        </Grid>
-      </div>
+      </Grid>
     );
 }
