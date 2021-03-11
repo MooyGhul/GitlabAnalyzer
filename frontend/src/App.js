@@ -6,7 +6,7 @@ import ProjectListPage from './ProjectListPage';
 import OverviewPage from './OverviewPage';
 import PrivateRoute from './PrivateRoute';
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
-import CommentContributionPage from './components/CommentContributionPage'
+import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
 import NotFound from './components/NotFound';
 import './style/App.css'
 
