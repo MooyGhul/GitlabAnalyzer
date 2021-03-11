@@ -66,12 +66,12 @@ public class ProjectController {
     private List<CommentEntity> getAndParseComments() {
         List<JSONObject> comments = new ArrayList<>();
         for(IssueEntity issue : this.issuesEntities) {
-            List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectId, issue.getIssueId());
+            List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectId, issue.getIssueIid());
             comments.addAll(issueComments);
         }
 
         for(MergeRequestEntity mr : this.mergeRequestEntities) {
-            List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectId, mr.getId());
+            List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectId, mr.getIid());
             comments.addAll(mrComments);
         }
 

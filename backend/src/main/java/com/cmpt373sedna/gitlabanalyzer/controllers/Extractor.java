@@ -94,7 +94,7 @@ public class Extractor {
     }
 
     private URI buildUri(ConfigEntity config, String path) {
-        return URI.create(config.getUrl() + "api/v4/projects/ "+ path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
+        return URI.create(config.getUrl() + "api/v4/projects/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
     }
 
     private URI buildUri(ConfigEntity config) {

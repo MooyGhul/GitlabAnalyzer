@@ -45,15 +45,15 @@ public class ProjectManager {
     }
 
     public ProjectController addProject(String url) {
-        ConfigEntity config = ConfigEntity.builder()
-                .token(this.projectToken)
-                .url(url)
-                .build();
-
         int rootUrlIndex = url.indexOf('/', url.startsWith("https://") ? 8 : 7);
         String baseUrl = url.substring(0, rootUrlIndex+1);
         String projectId = url.substring(rootUrlIndex+1);
         projectId = URLEncoder.encode(projectId, StandardCharsets.UTF_8);
+
+        ConfigEntity config = ConfigEntity.builder()
+                .token(this.projectToken)
+                .url(baseUrl)
+                .build();
 
         ProjectEntity projectEntity = this.extractor.getProject(config, projectId);
 
