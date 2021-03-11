@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import {makeStyles} from "@material-ui/core/styles";
 import { DataGrid } from '@material-ui/data-grid';
+import Banner from "../components/Banner";
 
 const useStyles = makeStyles((theme) => ({
     grid: {
@@ -50,7 +51,7 @@ function IssueContributionPage(props) {
                 <h1 className>This is a test</h1>
             </Grid>
             <Grid item xs={12} className={styles.text}>
-                <h1>Scoreboard goes here</h1>
+                <Banner></Banner>
             </Grid>
             <Grid item xs={12} className={styles.text}>
                 <h2>Issues created for *Insert date here*</h2>
