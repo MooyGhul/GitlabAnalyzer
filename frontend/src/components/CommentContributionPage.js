@@ -14,6 +14,7 @@ import Grid from "@material-ui/core/Grid";
 import axios from 'axios';
 import {useParams} from "react-router";
 import Header from "./Header";
+import Banner from "./Banner";
 import CommentJson from "../mockDataDir/mockComments";
 import useStyles from "../style/CommentContributionPageStyles";
 
@@ -36,7 +37,7 @@ const CommentRow = (props) => {
                         {comment.commenter}
                     </Typography>
                 </TableCell>
-                <TableCell align="left">0</TableCell>
+                <TableCell align="left">{comment.wordCount}</TableCell>
                 <TableCell>
                     <IconButton aria-label="expand row" size="small">
                         {open || expandAll ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
@@ -88,6 +89,7 @@ const CommentContributionPage = (props) => {
         <Grid container className={classes.root}>
             <Grid item>
                 <Header pageTitle={"Comments"}/>
+                <Banner />
             </Grid>
             <Grid item className={classes.accordian} >
                 <Button variant="contained" onClick={() => setExpandAll(!expandAll)} className={classes.expandBtn}>
