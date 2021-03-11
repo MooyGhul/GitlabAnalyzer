@@ -68,6 +68,7 @@ const Charts = () => {
         <Grid container spacing={5} >
           <Grid item xs={5} >
             <StackedBarChart startDate={startDate} endDate={endDate} contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
+
           </Grid>
           <Grid item xs={5} >
             <BarChart className="charts" commentsDataProp={commentsDataProp}/>
