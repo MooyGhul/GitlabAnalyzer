@@ -39,12 +39,12 @@ const CommentRow = (props) => {
                 </TableCell>
                 <TableCell align="left">{comment.wordCount}</TableCell>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small">
-                        {open || expandAll ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    <IconButton size="small">
+                        {open || expandAll ? <KeyboardArrowUpIcon style={{background: "none"}}/> : <KeyboardArrowDownIcon style={{background: "none"}}  />}
                     </IconButton>
                 </TableCell>
             </TableRow>
-            <TableRow>
+            <TableRow className={classes.expandBody} style={open || expandAll ? {borderBottom: "medium solid #7553ff"} : {}}>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
                         <Box margin={1}>
@@ -96,14 +96,14 @@ const CommentContributionPage = (props) => {
                     {expandAll ? "Collapse All" : "Expand All"}
                 </Button>
             </Grid>
-            <Grid item>
+            <Grid item className={classes.table}>
                 <TableContainer component={Paper}>
                     <Table>
                         <TableHead>
                             <TableRow className={classes.head}>
-                                <TableCell align="left" style={{fontWeight: "bold"}}>Date</TableCell>
-                                <TableCell align="left" style={{fontWeight: "bold"}}>Author</TableCell>
-                                <TableCell align="left" style={{fontWeight: "bold"}}>Word Count</TableCell>
+                                <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Date</TableCell>
+                                <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Author</TableCell>
+                                <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Word Count</TableCell>
                                 <TableCell />
                             </TableRow>
                         </TableHead>

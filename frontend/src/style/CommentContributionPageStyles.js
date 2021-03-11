@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#d1d0ff",
         color: theme.palette.common.white,
     },
+    table: {
+        margin: "4% auto 0 auto",
+        width: "90%"
+    },
     expandBtn: {
         position: "fixed",
         bottom: "1vh",
@@ -20,9 +24,9 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#7553ff",
         color: theme.palette.common.white
     },
-    accordian: {
-        marginTop: "12vh",
-    },
+    expandBody: {
+        backgroundColor: "rgb(142,154,175, 0.15)",
+    }
 }));
 
 export default useStyles;
