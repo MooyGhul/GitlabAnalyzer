@@ -11,13 +11,13 @@ import java.util.stream.Collectors;
 
 public class ProjectController {
 
-    final private @Getter int projectId;
+    private @Getter int projectId;
 
     final private @Getter String projectName;
 
-    final private Extractor extractor;
+    private Extractor extractor;
 
-    final private ConfigEntity config;
+    private ConfigEntity config;
 
     private int[] weights;
 
@@ -39,13 +39,18 @@ public class ProjectController {
 
         this.projectId = projectEntity.getRepoId();
         this.projectName = projectEntity.getRepoName();
+
+        this.weights = new int[]{1, 1, 1, 1};
+    }
+
+    public ProjectController load() {
         this.mergeRequestEntities = this.getAndParseMergeRequests();
         this.issuesEntities = this.getAndParseIssues();
         this.members = this.extractor.getRepoMembers(this.config, this.projectId);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
 
-        this.weights = new int[]{1, 1, 1, 1};
+        return this;
     }
 
     private List<IssueEntity> getAndParseIssues() {

@@ -5,7 +5,9 @@ import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +41,7 @@ public class ProjectRESTController {
     @PostMapping("/add")
     @Deprecated
     void addProject(@RequestParam String url) {
-        ProjectController p = this.projectManager.addProject(url);
+        ProjectController p = this.projectManager.getOrAddProject(url);
         this.projectRepository.save(new ProjectEntity(p.getProjectId(), p.getProjectName(), p.getNumCommits(), p.getNumMR(), p.getNumComments()));
         this.commitRepository.saveAll(p.getCommitEntities());
         this.issueRepository.saveAll(p.getIssuesEntities());
@@ -50,6 +52,14 @@ public class ProjectRESTController {
     Iterable<ProjectEntity> all() {
         return this.projectRepository.findAll();
     }
+
+    @PostMapping("/{projectId}/load")
+    void load(@PathVariable() int projectId) {
+        this.projectManager.findProject(projectId)
+                .map(ProjectController::load)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    }
+
 
     @GetMapping("/{projectId}/overview")
     List<?> getProjectOverview(@PathVariable(value="projectId") int projectId) {

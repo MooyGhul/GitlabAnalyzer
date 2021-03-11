@@ -40,11 +40,12 @@ public class ProjectManager {
 
     public void addProjects(List<String> urls) {
         for (String url: urls) {
-            addProject(url);
+            getOrAddProject(url);
         }
     }
 
-    public ProjectController addProject(String url) {
+    @Deprecated
+    public ProjectController getOrAddProject(String url) {
         int rootUrlIndex = url.indexOf('/', url.startsWith("https://") ? 8 : 7);
         String baseUrl = url.substring(0, rootUrlIndex+1);
         String projectId = url.substring(rootUrlIndex+1);
@@ -58,11 +59,12 @@ public class ProjectManager {
         ProjectEntity projectEntity = this.extractor.getProject(config, projectId);
 
         ProjectController p = new ProjectController(this.extractor, config, projectEntity);
+        p.load();
         allProjects.add(p);
         return p;
     }
 
-    public ProjectController loadProject(ConfigEntity config, ProjectEntity project) {
+    public ProjectController getOrAddProject(ConfigEntity config, ProjectEntity project) {
         Optional<ProjectController> existing = this.allProjects.stream()
                 .filter(controller -> controller.getProjectId() == project.getRepoId())
                 .findFirst();
@@ -73,6 +75,13 @@ public class ProjectManager {
 
         ProjectController projectController = new ProjectController(this.extractor, config, project);
         allProjects.add(projectController);
+        return projectController;
+    }
+
+    public ProjectController loadProject(ConfigEntity config, ProjectEntity project) {
+        ProjectController projectController = getOrAddProject(config, project);
+
+        projectController.load();
 
         this.commitRepository.saveAll(projectController.getCommitEntities());
         this.issueRepository.saveAll(projectController.getIssuesEntities());
@@ -94,5 +103,10 @@ public class ProjectManager {
                 return;
             }
         }
+    }
+    public Optional<ProjectController> findProject(int projectId) {
+        return this.allProjects.stream()
+                .filter(project -> project.getProjectId() == projectId)
+                .findFirst();
     }
 }
