@@ -2,25 +2,17 @@ import { Grid, TableContainer } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import {makeStyles} from "@material-ui/core/styles";
-import { DataGrid } from '@material-ui/data-grid';
 import Banner from "../components/Banner";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
-    grid: {
-      width: "100%",
-      margin: "0px"
-    },
-    dataGrid: {
-        height: 900, 
-        width: '100%',
-        alignContent: 'center',
-        whiteSpace: 'unset',
-    },
     text: {
         textAlign: 'center'
     },
@@ -32,14 +24,21 @@ const useStyles = makeStyles((theme) => ({
     },
     dateCol: {
         minWidth: 100,
+        maxHeight: 50,
         fontWeight: 'bold',
     }, 
     issueCol: {
-        minWidth: 200,
+        minWidth: 250,
+        maxHeight: 50,
         fontWeight: 'bold',
     },
     noteCol: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        maxHeight: 50,
+
+    },
+    dropDown: {
+        minWidth:50
     }
   }));
 
@@ -63,6 +62,18 @@ function IssueContributionPage(props) {
     const history = useHistory();
     const styles = useStyles(); 
 
+    const rowHoverHandler = event => {
+        this.setState({
+            background: 'grey'
+        })
+    }
+
+    const dropDownIcon = (
+        <Button startIcon={<ExpandMoreIcon/>}>
+            
+        </Button>
+    )
+
     return(
         <Grid container justify='center' alignItems='center'>
             <Grid item xs={12}>
@@ -76,13 +87,13 @@ function IssueContributionPage(props) {
                 <h2>Insert issue bar chart here</h2>
             </Grid>
             <Grid item xs={8}>
-                {/*<DataGrid rows={rows} columns={columns} className={styles.dataGrid}/>*/}
                 <TableContainer className={styles.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell className={styles.dateCol}> Date</TableCell>
-                            <TableCell className={styles.issueCol}> Issue</TableCell>
+                            <TableCell className={styles.dateCol}>Date</TableCell>
+                            <TableCell className={styles.issueCol}>Issue</TableCell>
                             <TableCell className={styles.noteCol}>Note</TableCell>
+                            <TableCell classNane={styles.dropDown}>drop</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -91,6 +102,7 @@ function IssueContributionPage(props) {
                                 <TableCell component="th" scope="row">{row.date}</TableCell>
                                 <TableCell>{row.issue}</TableCell>
                                 <TableCell>{row.note}</TableCell>
+                                <tableCell align='center'>{dropDownIcon}</tableCell>
                             </TableRow>
                         ))}
                     </TableBody>
