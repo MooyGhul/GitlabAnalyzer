@@ -16,7 +16,6 @@ import axios from 'axios';
 import {useParams} from "react-router";
 import Header from "./Header";
 import Banner from "./Banner";
-import CommentJson from "../mockDataDir/mockComments";
 import useStyles from "../style/CommentContributionPageStyles";
 
 
@@ -66,7 +65,7 @@ const CommentRow = (props) => {
 }
 
 const CommentContributionPage = (props) => {
-    const [comments, setComments] = useState(CommentJson);
+    const [comments, setComments] = useState([]);
     const [expandAll, setExpandAll] = React.useState(false);
     const classes = useStyles(props);
 
@@ -79,13 +78,11 @@ const CommentContributionPage = (props) => {
             );
             setComments(commentResult.data);
         }
-        try {
-            fetchData().then(() => {
-                console.log("Successfully obtained comments");
-            });
-        } catch {
-            setComments(CommentJson);
-        }
+        fetchData().then(() => {
+            console.log("Successfully obtained comments");
+        }).catch(() => {
+        console.log("Failed to obtain comments");
+        });
     }, [projectId, memberId]);
 
     return (
