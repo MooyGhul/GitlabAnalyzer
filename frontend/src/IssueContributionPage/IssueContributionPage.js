@@ -44,13 +44,8 @@ function IssueContributionPage(props) {
 
     return(
         <Grid container justify='center' alignItems='center'>
-            <Grid item>
-                <Header pageTitle="Issue Contribution"></Header>
-            </Grid>
             <Grid item xs={12}>
-                <h1 className>This is a test</h1>
-            </Grid>
-            <Grid item xs={12} className={styles.text}>
+                <Header pageTitle="Issue Contribution"></Header>
                 <Banner></Banner>
             </Grid>
             <Grid item xs={12} className={styles.text}>
