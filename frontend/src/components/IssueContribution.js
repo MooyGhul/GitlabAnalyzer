@@ -1,10 +1,6 @@
 import React,{useRef,useEffect, useState} from 'react';
 import { select, axisBottom, axisLeft ,scaleLinear, scaleBand } from 'd3';
 
-// the useResizeObserver function and how to call it is from the following tutorial"
-// https://www.youtube.com/watch?v=a4rstx9Pz2o&list=PLDZ4p-ENjbiPo4WH7KdHjh_EMI7Ic8b2B&index=8
-// the tutorial "Using React (Hooks) with D3 – [06] Responsive Chart Components with ResizeObserver"
-// will replace with some existing library when have chance to look into it.
 const useResizeObserver = (ref) => {
   const [dimensions, setDimensions] = useState(null);
 
