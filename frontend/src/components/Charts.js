@@ -41,7 +41,7 @@ const filterData = (data,startDate,endDate) => {
   });
 };
 
-export default function Charts () {
+const Charts = () => {
     const [keys, setKeys] = useState(allKeys);
     const [commentsData] = useState(Comments);
     const [contributionsData] = useState(contributions);
@@ -81,3 +81,5 @@ export default function Charts () {
       </Grid>
     );
 }
+
+export default Charts;
