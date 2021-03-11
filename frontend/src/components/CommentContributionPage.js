@@ -24,12 +24,26 @@ const CommentRow = (props) => {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
+    const monthNames = ["January", "February", "March",
+        "April", "May", "June", "July", "August", "September",
+        "October", "November", "December"];
+
+    const formatDate = (commentDate) => {
+        let date = new Date(commentDate);
+        let month = monthNames[date.getMonth()];
+        let day = date.getDate();
+        let year = date.getFullYear();
+        let time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+
+        return `${month} ${day}, ${year} @ ${time}`;
+    }
+
     return (
         <Fragment>
             <TableRow onClick={() => setOpen(!open)}>
                 <TableCell component="th" scope="row">
                     <Typography gutterBottom component="div">
-                        {comment.commentDate}
+                        {formatDate(comment.commentDate)}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">
