@@ -8,43 +8,44 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton'
 import React from 'react';
-import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { borders } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
     text: {
         textAlign: 'center'
     },
-    header: {
-        textAlign: 'center'
-    },
     table: {
-        borderTopWidth:1
+        borderTopWidth: 1, 
+        borderBottomWidth: 1,
+        borderRightWidth: 1,
+        borderLeftWidth: 1,
+        borderColor: '#eee',
+        borderStyle: 'solid',
     },
-    dateCol: {
+    tableCell: {
+        borderRightWidth: 1,
+        borderColor: 'red',
+        borderStyle: 'solid',
+    },
+    header: {
+        backgroundColor: "#e4e3ff"
+    },
+    dateColumn: {
         minWidth: 100,
-        maxHeight: 30,
         fontWeight: 'bold',
     }, 
-    issueCol: {
+    issueColumn: {
         minWidth: 300,
-        maxHeight: 30,
         fontWeight: 'bold',
     },
-    noteCol: {
+    noteColumn: {
         fontWeight: 'bold',
-        maxHeight: 30,
     },
     dropDown: {
         minWidth:50
@@ -57,9 +58,6 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         maxWidth: 400
-        //white-space: nowrap;
-        //overflow: hidden;
-        //text-overflow: ellipsis;
     }
   }));
 
@@ -109,7 +107,7 @@ function Row(props) {
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <Typography variant="h7" gutterBottom component="div">Note:</Typography>
+                            <Typography variant="h7" gutterBottom component="div" className={styles.noteColumn}>Full Note:</Typography>
                             <Typography variant="h8">{row.note}</Typography>
                         </Box>
                     </Collapse>
@@ -118,62 +116,6 @@ function Row(props) {
         </React.Fragment>
     );
 }
-
-/*
-function IssueContributionPage(props) {
-    const history = useHistory();
-    const styles = useStyles(); 
-
-    const rowHoverHandler = event => {
-        this.setState({
-            background: 'grey'
-        })
-    }
-
-    const dropDownIcon = (
-        <IconButton className={styles.icon} size='small'>
-            <ExpandMoreIcon className={styles.icon}/>
-        </IconButton>
-    )
-
-    return(
-        <Grid container justify='center' alignItems='center'>
-            <Grid item xs={12}>
-                <Header pageTitle="Issue Contribution"/>
-                <Banner></Banner>
-            </Grid>
-            <Grid item xs={12} className={styles.text}>
-                <h2>Issues created for *Insert date here*</h2>
-            </Grid>
-            <Grid item xs={12} className={styles.text}>
-                <h2>Insert issue bar chart here</h2>
-            </Grid>
-            <Grid item xs={8}>
-                <TableContainer className={styles.table}>
-                    <TableHead >
-                        <TableRow>
-                            <TableCell className={styles.dateCol} align='left'>Date</TableCell>
-                            <TableCell className={styles.issueCol} align='left'>Issue</TableCell>
-                            <TableCell className={styles.noteCol} align='left'>Note</TableCell>
-                            <TableCell className={styles.dropDown} align='left'>drop</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">{row.date}</TableCell>
-                                <TableCell>{row.issue}</TableCell>
-                                <TableCell>{row.note}</TableCell>
-                                <tableCell align='center'>{dropDownIcon}</tableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </TableContainer>
-            </Grid>
-        </Grid>
-    );
-}
-*/
 
 export default function IssueContributionPage() {
     const styles = useStyles(); 
@@ -190,13 +132,13 @@ export default function IssueContributionPage() {
                 <h2>Insert issue bar chart here</h2>
             </Grid>
             <Grid item xs={8}>
-                <TableContainer borders={1}>
+                <TableContainer className={styles.table}>
                     <Table aria-label="collapsible table">
-                        <TableHead >
+                        <TableHead className={styles.header}>
                                 <TableRow>
-                                    <TableCell className={styles.dateCol} align='left'>Date</TableCell>
-                                    <TableCell className={styles.issueCol} align='left'>Issue</TableCell>
-                                    <TableCell className={styles.noteCol} align='left'>Note</TableCell>
+                                    <TableCell className={styles.dateColumn} align='left'>Date</TableCell>
+                                    <TableCell className={styles.issueColumn} align='left'>Issue</TableCell>
+                                    <TableCell className={styles.noteColumn} align='left'>Note</TableCell>
                                     <TableCell className={styles.dropDown} align='left'></TableCell>
                                 </TableRow>
                         </TableHead>
@@ -204,7 +146,7 @@ export default function IssueContributionPage() {
                                 {rows.map((row) => (
                                     <Row key={Row.id} row={row}/>
                                 ))}
-                            </TableBody>
+                        </TableBody>
                     </Table>
                 </TableContainer>
             </Grid>
