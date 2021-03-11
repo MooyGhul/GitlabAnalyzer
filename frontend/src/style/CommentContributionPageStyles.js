@@ -17,6 +17,13 @@ const useStyles = makeStyles((theme) => ({
         margin: "4% auto 0 auto",
         width: "90%"
     },
+    wordCount: {
+        paddingLeft: "5em"
+    },
+    rowBody: {
+        fontSize: "1.1rem",
+        width: "80%",
+    },
     expandBtn: {
         position: "fixed",
         bottom: "1vh",
@@ -26,6 +33,20 @@ const useStyles = makeStyles((theme) => ({
     },
     expandBody: {
         backgroundColor: "rgb(142,154,175, 0.15)",
+    },
+    icon: {
+        background: "none",
+        hover: "none"
+    },
+    mrIcon: {
+        color: "white",
+        backgroundColor: "#0096c7",
+        marginLeft: "2vw"
+    },
+    issueIcon: {
+        color: "white",
+        backgroundColor: "#f4a261",
+        marginLeft: "2vw"
     }
 }));
 

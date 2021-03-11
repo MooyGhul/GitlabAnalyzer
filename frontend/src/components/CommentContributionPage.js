@@ -4,7 +4,8 @@ import {
     TableCell, TableContainer,
     TableHead,
     TableRow,
-    Typography
+    Typography,
+    Avatar
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Box from "@material-ui/core/Box";
@@ -28,19 +29,24 @@ const CommentRow = (props) => {
         <Fragment>
             <TableRow onClick={() => setOpen(!open)}>
                 <TableCell component="th" scope="row">
-                    <Typography gutterBottom component="div" className={classes.rowBody}>
+                    <Typography gutterBottom component="div">
                         {comment.commentDate}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">
-                    <Typography gutterBottom component="div" className={classes.rowBody}>
+                    <Typography gutterBottom component="div">
                         {comment.commenter}
                     </Typography>
                 </TableCell>
-                <TableCell align="left">{comment.wordCount}</TableCell>
+                <TableCell align="left" className={classes.wordCount}>{comment.wordCount}</TableCell>
+                <TableCell>
+                        {comment.commentType === "MergeRequest" ? <Avatar className={classes.mrIcon}>M</Avatar> :
+                            <Avatar className={classes.issueIcon}>I</Avatar>}
+                </TableCell>
                 <TableCell>
                     <IconButton size="small">
-                        {open || expandAll ? <KeyboardArrowUpIcon style={{background: "none"}}/> : <KeyboardArrowDownIcon style={{background: "none"}}  />}
+                        {open || expandAll ? <KeyboardArrowUpIcon className={classes.icon}/> :
+                            <KeyboardArrowDownIcon className={classes.icon}  />}
                     </IconButton>
                 </TableCell>
             </TableRow>
@@ -48,11 +54,8 @@ const CommentRow = (props) => {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <Typography variant={"h6"} gutterBottom component="div" className={classes.rowBody}>
-                                Comment Type: {comment.commentType}
-                            </Typography>
                             <Typography gutterBottom component="div" className={classes.rowBody}>
-                                Body: {comment.commentText}
+                                {comment.commentText}
                             </Typography>
                         </Box>
                     </Collapse>
@@ -104,6 +107,7 @@ const CommentContributionPage = (props) => {
                                 <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Date</TableCell>
                                 <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Author</TableCell>
                                 <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Word Count</TableCell>
+                                <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Comment Type</TableCell>
                                 <TableCell />
                             </TableRow>
                         </TableHead>
