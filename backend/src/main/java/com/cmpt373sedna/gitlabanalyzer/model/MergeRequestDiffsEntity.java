@@ -22,13 +22,13 @@ public class MergeRequestDiffsEntity {
     private String authorName;
     private Instant createdAt;
     private String diff;
-    private int merge_request_iid;
+    private int MRIid;
     private int projectId;
 
     public static MergeRequestDiffsEntity fromGitlabJSON(JSONObject json) {
         return MergeRequestDiffsEntity.builder()
                 .versionId(json.getInt("id"))
-                .merge_request_iid(json.getInt("merge_request_iid"))
+                .MRIid(json.getInt("merge_request_iid"))
                 .projectId(json.getInt("project_id"))
                 .headCommitSHA(json.getString("head_commit_sh"))
                 .baseCommitSHA(json.getString("base_commit_sh"))

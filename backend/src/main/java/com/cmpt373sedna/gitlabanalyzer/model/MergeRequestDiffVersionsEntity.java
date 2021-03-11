@@ -20,7 +20,7 @@ public class MergeRequestDiffVersionsEntity {
     private String headCommitSHA;
     private String baseCommitSHA;
     private String startCommitSHA;
-    private int merge_request_iid;
+    private int MRIid;
     private int projectId;
     private Instant createdAt;
     //private String authorName;
@@ -30,7 +30,7 @@ public class MergeRequestDiffVersionsEntity {
     public static MergeRequestDiffVersionsEntity fromGitlabJSON(JSONObject json) {
         return MergeRequestDiffVersionsEntity.builder()
                 .id(json.getInt("id"))
-                .merge_request_iid(json.getInt("merge_request_iid"))
+                .MRIid(json.getInt("merge_request_iid"))
                 .projectId(json.getInt("project_id"))
                 .headCommitSHA(json.getString("head_commit_sh"))
                 .baseCommitSHA(json.getString("base_commit_sh"))

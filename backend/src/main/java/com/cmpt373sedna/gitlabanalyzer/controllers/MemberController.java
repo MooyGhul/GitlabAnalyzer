@@ -42,14 +42,14 @@ public class MemberController {
     }
 
     @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/versions")
-    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int merge_request_iid, @PathVariable(value = "authorName") String authorName) {
-        return this.mergeRequestDiffRepository.findAllByProjectIdAndMergerequestiidAndAuthorName(projectId, merge_request_iid, authorName);
+    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "authorName") String authorName) {
+        return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndAuthorName(projectId, MRIid, authorName);
     }
-/*
+
     @GetMapping("/merge_requests/{merge_request_iid}/diffId/{versionId}")
-    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffs(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int merge_request_iid, @PathVariable(value = "versionId") int versionId) {
-        return this.mergeRequestDiffRepository.findAllByProjectIdAndMerge_request_iidAndVersionId(projectId, merge_request_iid, versionId);
-    }*/
+    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffs(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "versionId") int versionId) {
+        return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndVersionId(projectId, MRIid, versionId);
+    }
 
     @GetMapping("/{authorName}/merge_requests")
     Iterable<MergeRequestDiffsEntity> getMergeRequestDiffsByAuthor(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "authorName") String authorName) {
