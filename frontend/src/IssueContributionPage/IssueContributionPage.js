@@ -11,6 +11,15 @@ import TableRow from '@material-ui/core/TableRow';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Box from '@material-ui/core/Box';
+import Collapse from '@material-ui/core/Collapse';
+import Typography from '@material-ui/core/Typography';
+import Paper from '@material-ui/core/Paper';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const useStyles = makeStyles((theme) => ({
     text: {
@@ -39,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
     },
     dropDown: {
         minWidth:50
+    },
+    icon: {
+        background: 'none'
     }
   }));
 
@@ -58,6 +70,67 @@ const rows = [
     {id: 3, date: 'Mar 10, 2020', issue: '#3 fix a bug that is breaking things because', note: 'Dont ever, for any reason, do anything, to anyone, for any reason, ever, no matter what, no matter where, or who, or who you are with, or where you are going, or where youve been, ever, for any reason whatsoever.'}
 ]
 
+const useRowStyles = makeStyles({
+    root: {
+      '& > *': {
+        borderBottom: 'unset',
+      },
+    },
+  });
+
+function Row(props) {
+    const {row} = props;
+    const [open, setOpen] = React.useState(false);
+    const classes = useRowStyles();
+    const styles = useStyles(); 
+
+    return (
+        <React.Fragment>
+            <TableRow className={classes.root}>
+                <TableCell>
+                    <IconButton aria-label="expand row" size="small" onClick={()=>setOpen(!open)}>
+                        {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
+                    </IconButton>
+                </TableCell>
+                <TableCell component="th" scope="row">{row.date}</TableCell>
+                <TableCell>{row.issue}</TableCell>
+                <TableCell>{row.note}</TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Box margin={1}>
+                            <Typography variant="h6" gutterBottom component="div">
+                                Issue Note
+                            </Typography>
+                            <Table size="small" aria-label="purchases">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell className={styles.dateCol} align='left'>Date</TableCell>
+                                    <TableCell className={styles.issueCol} align='left'>Issue</TableCell>
+                                    <TableCell className={styles.noteCol} align='left'>Note</TableCell>
+                                    <TableCell className={styles.dropDown} align='left'>drop</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell component="th" scope="row">{row.date}</TableCell>
+                                        <TableCell>{row.issue}</TableCell>
+                                        <TableCell>{row.note}</TableCell>
+                                    </TableRow>
+                                ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
+                    </Collapse>
+                </TableCell>
+            </TableRow>
+        </React.Fragment>
+    );
+}
+
+/*
 function IssueContributionPage(props) {
     const history = useHistory();
     const styles = useStyles(); 
@@ -69,9 +142,9 @@ function IssueContributionPage(props) {
     }
 
     const dropDownIcon = (
-        <Button startIcon={<ExpandMoreIcon/>}>
-            
-        </Button>
+        <IconButton className={styles.icon} size='small'>
+            <ExpandMoreIcon className={styles.icon}/>
+        </IconButton>
     )
 
     return(
@@ -88,12 +161,12 @@ function IssueContributionPage(props) {
             </Grid>
             <Grid item xs={8}>
                 <TableContainer className={styles.table}>
-                    <TableHead>
+                    <TableHead >
                         <TableRow>
-                            <TableCell className={styles.dateCol}>Date</TableCell>
-                            <TableCell className={styles.issueCol}>Issue</TableCell>
-                            <TableCell className={styles.noteCol}>Note</TableCell>
-                            <TableCell classNane={styles.dropDown}>drop</TableCell>
+                            <TableCell className={styles.dateCol} align='left'>Date</TableCell>
+                            <TableCell className={styles.issueCol} align='left'>Issue</TableCell>
+                            <TableCell className={styles.noteCol} align='left'>Note</TableCell>
+                            <TableCell className={styles.dropDown} align='left'>drop</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -111,5 +184,40 @@ function IssueContributionPage(props) {
         </Grid>
     );
 }
+*/
 
-export default IssueContributionPage;
+export default function IssueContributionPage() {
+    const styles = useStyles(); 
+    return (
+        <Grid container justify='center' alignItems='center'>
+            <Grid item xs={12}>
+                <Header pageTitle="Issue Contribution"/>
+                <Banner></Banner>
+            </Grid>
+            <Grid item xs={12} className={styles.text}>
+                <h2>Issues created for *Insert date here*</h2>
+            </Grid>
+            <Grid item xs={12} className={styles.text}>
+                <h2>Insert issue bar chart here</h2>
+            </Grid>
+            <Grid item xs={8}></Grid>
+            <TableContainer>
+                <Table aria-label="collapsible table">
+                    <TableHead >
+                            <TableRow>
+                                <TableCell className={styles.dateCol} align='left'>Date</TableCell>
+                                <TableCell className={styles.issueCol} align='left'>Issue</TableCell>
+                                <TableCell className={styles.noteCol} align='left'>Note</TableCell>
+                                <TableCell className={styles.dropDown} align='left'>drop</TableCell>
+                            </TableRow>
+                    </TableHead>
+                    <TableBody>
+                            {rows.map((row) => (
+                               <Row key={Row.id} row={row}/>
+                            ))}
+                        </TableBody>
+                </Table>
+            </TableContainer>
+        </Grid>
+    )
+}
