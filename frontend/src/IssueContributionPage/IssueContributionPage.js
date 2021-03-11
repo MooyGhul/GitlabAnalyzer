@@ -20,6 +20,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import { borders } from '@material-ui/system';
 
 const useStyles = makeStyles((theme) => ({
     text: {
@@ -29,28 +30,36 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'center'
     },
     table: {
-        minWidth: 650,
+        borderTopWidth:1
     },
     dateCol: {
         minWidth: 100,
-        maxHeight: 50,
+        maxHeight: 30,
         fontWeight: 'bold',
     }, 
     issueCol: {
-        minWidth: 250,
-        maxHeight: 50,
+        minWidth: 300,
+        maxHeight: 30,
         fontWeight: 'bold',
     },
     noteCol: {
         fontWeight: 'bold',
-        maxHeight: 50,
-
+        maxHeight: 30,
     },
     dropDown: {
         minWidth:50
     },
     icon: {
         background: 'none'
+    },
+    noteText: {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        maxWidth: 400
+        //white-space: nowrap;
+        //overflow: hidden;
+        //text-overflow: ellipsis;
     }
   }));
 
@@ -89,7 +98,7 @@ function Row(props) {
             <TableRow className={classes.root}>
                 <TableCell component="th" scope="row">{row.date}</TableCell>
                 <TableCell>{row.issue}</TableCell>
-                <TableCell>{row.note}</TableCell>
+                <TableCell className={styles.noteText}>{row.note}</TableCell>
                 <TableCell>
                     <IconButton aria-label="expand row" size="small" onClick={()=>setOpen(!open)}>
                         {open ? <KeyboardArrowUpIcon className={styles.icon}/> : <KeyboardArrowDownIcon className={styles.icon}/>}
@@ -181,7 +190,7 @@ export default function IssueContributionPage() {
                 <h2>Insert issue bar chart here</h2>
             </Grid>
             <Grid item xs={8}>
-                <TableContainer>
+                <TableContainer borders={1}>
                     <Table aria-label="collapsible table">
                         <TableHead >
                                 <TableRow>
