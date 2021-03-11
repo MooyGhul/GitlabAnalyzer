@@ -87,41 +87,21 @@ function Row(props) {
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
-                <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={()=>setOpen(!open)}>
-                        {open ? <KeyboardArrowUpIcon/> : <KeyboardArrowDownIcon/>}
-                    </IconButton>
-                </TableCell>
                 <TableCell component="th" scope="row">{row.date}</TableCell>
                 <TableCell>{row.issue}</TableCell>
                 <TableCell>{row.note}</TableCell>
+                <TableCell>
+                    <IconButton aria-label="expand row" size="small" onClick={()=>setOpen(!open)}>
+                        {open ? <KeyboardArrowUpIcon className={styles.icon}/> : <KeyboardArrowDownIcon className={styles.icon}/>}
+                    </IconButton>
+                </TableCell>
             </TableRow>
             <TableRow>
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            <Typography variant="h6" gutterBottom component="div">
-                                Issue Note
-                            </Typography>
-                            <Table size="small" aria-label="purchases">
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell className={styles.dateCol} align='left'>Date</TableCell>
-                                    <TableCell className={styles.issueCol} align='left'>Issue</TableCell>
-                                    <TableCell className={styles.noteCol} align='left'>Note</TableCell>
-                                    <TableCell className={styles.dropDown} align='left'>drop</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <TableRow key={row.id}>
-                                        <TableCell component="th" scope="row">{row.date}</TableCell>
-                                        <TableCell>{row.issue}</TableCell>
-                                        <TableCell>{row.note}</TableCell>
-                                    </TableRow>
-                                ))}
-                                </TableBody>
-                            </Table>
+                            <Typography variant="h7" gutterBottom component="div">Note:</Typography>
+                            <Typography variant="h8">{row.note}</Typography>
                         </Box>
                     </Collapse>
                 </TableCell>
@@ -200,24 +180,25 @@ export default function IssueContributionPage() {
             <Grid item xs={12} className={styles.text}>
                 <h2>Insert issue bar chart here</h2>
             </Grid>
-            <Grid item xs={8}></Grid>
-            <TableContainer>
-                <Table aria-label="collapsible table">
-                    <TableHead >
-                            <TableRow>
-                                <TableCell className={styles.dateCol} align='left'>Date</TableCell>
-                                <TableCell className={styles.issueCol} align='left'>Issue</TableCell>
-                                <TableCell className={styles.noteCol} align='left'>Note</TableCell>
-                                <TableCell className={styles.dropDown} align='left'>drop</TableCell>
-                            </TableRow>
-                    </TableHead>
-                    <TableBody>
-                            {rows.map((row) => (
-                               <Row key={Row.id} row={row}/>
-                            ))}
-                        </TableBody>
-                </Table>
-            </TableContainer>
+            <Grid item xs={8}>
+                <TableContainer>
+                    <Table aria-label="collapsible table">
+                        <TableHead >
+                                <TableRow>
+                                    <TableCell className={styles.dateCol} align='left'>Date</TableCell>
+                                    <TableCell className={styles.issueCol} align='left'>Issue</TableCell>
+                                    <TableCell className={styles.noteCol} align='left'>Note</TableCell>
+                                    <TableCell className={styles.dropDown} align='left'></TableCell>
+                                </TableRow>
+                        </TableHead>
+                        <TableBody>
+                                {rows.map((row) => (
+                                    <Row key={Row.id} row={row}/>
+                                ))}
+                            </TableBody>
+                    </Table>
+                </TableContainer>
+            </Grid>
         </Grid>
     )
 }
