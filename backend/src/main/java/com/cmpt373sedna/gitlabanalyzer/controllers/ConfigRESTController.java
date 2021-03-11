@@ -37,6 +37,14 @@ public class ConfigRESTController {
         return this.configEntityRepository.findAll();
     }
 
+    @PutMapping("/{configId}")
+    public ConfigEntity replace(@PathVariable String configId, @RequestBody ConfigEntity body) {
+        if (!configId.equals(body.getId())) {
+            throw new IllegalArgumentException("URL ID and body ID don't match");
+        }
+        return this.configEntityRepository.save(body);
+    }
+
     @GetMapping("/{configId}")
     public ConfigEntity get(@PathVariable String configId) {
         return this.configEntityRepository.findById(configId).orElse(null);

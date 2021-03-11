@@ -10,6 +10,8 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +20,7 @@ import java.util.Optional;
 public class ProjectManager {
     private @Getter List<ProjectController> allProjects;
     private @Getter List<ProjectController> selectedProjects;
-    final private Extractor e;
+    final private Extractor extractor;
     private @Setter  String projectToken;
 
     @Autowired
@@ -31,7 +33,7 @@ public class ProjectManager {
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
     public ProjectManager() {
-        this.e = new Extractor();
+        this.extractor = new Extractor();
         this.allProjects = new ArrayList<>();
         this.selectedProjects = new ArrayList<>();
     }
@@ -43,7 +45,19 @@ public class ProjectManager {
     }
 
     public ProjectController addProject(String url) {
-        ProjectController p = new ProjectController(this.e, url, this.projectToken);
+        ConfigEntity config = ConfigEntity.builder()
+                .token(this.projectToken)
+                .url(url)
+                .build();
+
+        int rootUrlIndex = url.indexOf('/', url.startsWith("https://") ? 8 : 7);
+        String baseUrl = url.substring(0, rootUrlIndex+1);
+        String projectId = url.substring(rootUrlIndex+1);
+        projectId = URLEncoder.encode(projectId, StandardCharsets.UTF_8);
+
+        ProjectEntity projectEntity = this.extractor.getProject(config, projectId);
+
+        ProjectController p = new ProjectController(this.extractor, config, projectEntity);
         allProjects.add(p);
         return p;
     }
@@ -57,7 +71,7 @@ public class ProjectManager {
             return existing.get();
         }
 
-        ProjectController projectController = new ProjectController(this.e, config, project);
+        ProjectController projectController = new ProjectController(this.extractor, config, project);
         allProjects.add(projectController);
 
         this.commitRepository.saveAll(projectController.getCommitEntities());
