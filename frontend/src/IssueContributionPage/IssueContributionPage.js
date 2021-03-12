@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
     text: {
         textAlign: 'center'
     },
+    dateText: {
+        textAlign: 'center', 
+        fontWeight: 'bold',
+    },
     table: {
         borderTopWidth: 1, 
         borderBottomWidth: 1,
@@ -83,7 +87,7 @@ const useRowStyles = makeStyles({
         borderBottom: 'unset',
       },
     },
-  });
+});
 
 function Row(props) {
     const {row} = props;
@@ -117,19 +121,19 @@ function Row(props) {
     );
 }
 
-export default function IssueContributionPage() {
+export default function IssueContributionPage(props) {
     const styles = useStyles(); 
+    const dateVar = props.date
+
     return (
-        <Grid container justify='center' alignItems='center'>
+        <Grid container justify='center' alignItems='center' spacing={5}>
             <Grid item xs={12}>
                 <Header pageTitle="Issue Contribution"/>
                 <Banner></Banner>
             </Grid>
             <Grid item xs={12} className={styles.text}>
-                <h2>Issues created for *Insert date here*</h2>
-            </Grid>
-            <Grid item xs={12} className={styles.text}>
-                <h2>Insert issue bar chart here</h2>
+                <Typography variant="h5" className={styles.dateText}>Issues created for {dateVar}</Typography>
+                <h3>Insert issue bar chart here</h3>
             </Grid>
             <Grid item xs={8}>
                 <TableContainer className={styles.table}>
