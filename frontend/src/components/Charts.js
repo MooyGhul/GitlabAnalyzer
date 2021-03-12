@@ -1,8 +1,8 @@
 import React,{useState} from "react";
-import BarChart from "./CommentContribution";
-import StackedBarChart from "./CodeContribution";
-import StackedBarChartPanel from "./StackedBarChartPanel";
+import CommentContributionBarChart from "./CommentContribution";
+import CodeContributionStackedBarChart from "./CodeContribution";
 import IssueBarChart from "./IssueContribution"; 
+import StackedBarChartPanel from "./StackedBarChartPanel";
 import {Comments} from "../mockDataDir/mockCodeContri";
 import {Contributions} from "../mockDataDir/mockGraphContri";
 import {IssuesWordCount} from "../mockDataDir/MockIssues";
@@ -72,11 +72,11 @@ const Charts = () => {
         </Grid>
         <Grid container spacing={5} >
           <Grid item xs={5} >
-            <StackedBarChart startDate={startDate} endDate={endDate} contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
+            <CodeContributionStackedBarChart startDate={startDate} endDate={endDate} contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
 
           </Grid>
           <Grid item xs={5} >
-            <BarChart className="charts" commentsDataProp={commentsDataProp}/>
+            <CommentContributionBarChart className="charts" commentsDataProp={commentsDataProp}/>
           </Grid>
         </Grid>
         <Grid item xs={6} >
