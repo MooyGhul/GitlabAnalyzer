@@ -1,15 +1,11 @@
 import React,{useState} from "react";
 import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
-<<<<<<< HEAD
 import StackedBarChartPanel from "./StackedBarChartPanel";
-import {Comments} from "../mockDataDir/mockCodeContri";
-import {Contributions} from "../mockDataDir/mockGraphContri";
-=======
 import IssueBarChart from "./IssueContribution"; 
 import {Comments} from "../mockDataDir/mockCodeContri";
+import {Contributions} from "../mockDataDir/mockGraphContri";
 import {IssuesWordCount} from "../mockDataDir/MockIssues";
->>>>>>> 26d7802759fec0f3a1356a5f27110300da750032
 import Grid from '@material-ui/core/Grid';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "./Calendar";
