@@ -1,9 +1,15 @@
 import React,{useState} from "react";
 import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
+<<<<<<< HEAD
 import StackedBarChartPanel from "./StackedBarChartPanel";
 import {Comments} from "../mockDataDir/mockCodeContri";
 import {Contributions} from "../mockDataDir/mockGraphContri";
+=======
+import IssueBarChart from "./IssueContribution"; 
+import {Comments} from "../mockDataDir/mockCodeContri";
+import {IssuesWordCount} from "../mockDataDir/MockIssues";
+>>>>>>> 26d7802759fec0f3a1356a5f27110300da750032
 import Grid from '@material-ui/core/Grid';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "./Calendar";
@@ -45,6 +51,7 @@ const Charts = () => {
     const [keys, setKeys] = useState(allKeys);
     const [commentsData] = useState(Comments);
     const [contributionsData] = useState(contributions);
+    const [issuesData] = useState(IssuesWordCount); 
     
     const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
     const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
@@ -55,9 +62,11 @@ const Charts = () => {
 
     let contributionsDataProp = contributionsData;
     let commentsDataProp = commentsData;
+    let issuesDataProp = issuesData; 
     if(endDate && startDate){
       contributionsDataProp = filterData(contributionsData,startDate,endDate);
       commentsDataProp = filterData(commentsData,startDate,endDate);
+      issuesDataProp = filterData(issuesData, startDate, endDate); 
     }
   
     return (
@@ -78,6 +87,12 @@ const Charts = () => {
           <div className="fields">
             <StackedBarChartPanel colors={colors} keys={keys} allKeys={allKeys} onKeyChange={handleKeys} />
           </div>
+        </Grid>
+
+        <Grid container spacing={5}>
+          <Grid item xs={6}> 
+            <IssueBarChart classname="charts" issuesDataProp={issuesDataProp}/>
+          </Grid>
         </Grid>
       </Grid>
     );
