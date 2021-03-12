@@ -4,11 +4,6 @@ import React from 'react';
 
 export default function StackedBarChartPanel(props){
   const handleFile = (event,key)=>{
-    console.log("event ===>");
-    console.log(event);
-    console.log("end of event");
-    console.log(key);
-    console.log("end of key");
     if (event.target.checked) {
       props.onKeyChange(Array.from(new Set([...props.keys, key])));
     } else {
