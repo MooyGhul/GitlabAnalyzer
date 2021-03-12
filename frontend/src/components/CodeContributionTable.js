@@ -14,7 +14,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
-import {TableFooter, TablePagination} from "@material-ui/core";
+import {Avatar, TableFooter, TablePagination} from "@material-ui/core";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
 import * as PropTypes from "prop-types";
 import {CodeContributionData} from "../mockDataDir/mockCodeContributionData";
@@ -36,6 +36,9 @@ const useRowStyles = makeStyles({
       borderBottom: 'unset',
     },
   },
+  cell: {
+    width: 300,
+  }
 });
 
 function Row(props) {
@@ -45,18 +48,18 @@ function Row(props) {
 
   return (
     <React.Fragment>
-      <TableRow className={classes.root}>
+      <TableRow hover role ="checkbox" tabIndex={-1} className={classes.root}>
         <TableCell>
           <IconButton size='small' onClick={() => setOpen(!open)}>
             {open || openAll ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </TableCell>
-        <TableCell component='th' scope='row'>
-          {row.type}
+        <TableCell className={classes.cell} align="left" component='th' scope='row'>
+          {row.type === "MR" ? <Avatar>M</Avatar> : <Avatar>C</Avatar> }
         </TableCell>
-        <TableCell>{row.date}</TableCell>
-        <TableCell>{row.name}</TableCell>
-        <TableCell>{row.score}</TableCell>
+        <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
+        <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
+        <TableCell className={classes.cell} align="left">{row.score}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -71,6 +74,10 @@ function Row(props) {
     </React.Fragment>
   );
 }
+
+Row.propTypes = {
+  openAll: PropTypes.bool.isRequired,
+};
 
 const usePaginationStyle = makeStyles((theme) => ({
   root: {
