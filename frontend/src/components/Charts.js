@@ -1,7 +1,9 @@
 import React,{useState} from "react";
 import BarChart from "./CommentContribution";
 import StackedBarChart from "./CodeContribution";
+import IssueBarChart from "./IssueContribution"; 
 import {Comments} from "../mockDataDir/mockCodeContri";
+import {IssuesWordCount} from "../mockDataDir/MockIssues";
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { 
@@ -108,15 +110,18 @@ export default function Charts () {
     const [keys, setKeys] = useState(allKeys);
     const [commentsData] = useState(Comments);
     const [contributionsData] = useState(contributions);
+    const [issuesData] = useState(IssuesWordCount); 
     
     const [startDate, setStartDate] = useState(new Date('January 1, 2020 00:00:00'));
     const [endDate, setEndDate] = useState(new Date('Dec 31, 2025 00:00:00'));
 
     let contributionsDataProp = contributionsData;
     let commentsDataProp = commentsData;
+    let issuesDataProp = issuesData; 
     if(endDate && startDate){
       contributionsDataProp = filterData(contributionsData,startDate,endDate);
       commentsDataProp = filterData(commentsData,startDate,endDate);
+      issuesDataProp = filterData(issuesData, startDate, endDate); 
     }
   
     return (
@@ -195,6 +200,11 @@ export default function Charts () {
             ))}
           </div>
         </Grid>
+        </Grid>
+        <Grid container spacing={5}>
+          <Grid item xs={6}> 
+            <IssueBarChart classname="charts" issuesDataProp={issuesDataProp}/>
+          </Grid>
         </Grid>
       </div>
     );
