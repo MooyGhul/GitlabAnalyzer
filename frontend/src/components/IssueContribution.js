@@ -72,7 +72,7 @@ export default function IssueBarChart({ issuesDataProp }) {
       .append("text")             
       .attr("transform",
             "translate(" + (-40) + " ," + (-dimensions.height*0.05) + ")")
-      .text("# of Comments");
+      .text("Word Count");
     
     svg.append("text")
       .attr("x", (width *0.44))             
