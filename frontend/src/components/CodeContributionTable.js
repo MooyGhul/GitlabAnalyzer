@@ -39,7 +39,7 @@ const useRowStyles = makeStyles({
 });
 
 function Row(props) {
-  const { row } = props;
+  const { row, openAll } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
 
@@ -48,7 +48,7 @@ function Row(props) {
       <TableRow className={classes.root}>
         <TableCell>
           <IconButton size='small' onClick={() => setOpen(!open)}>
-            {open ? <ExpandLess /> : <ExpandMore />}
+            {open || openAll ? <ExpandLess /> : <ExpandMore />}
           </IconButton>
         </TableCell>
         <TableCell component='th' scope='row'>
@@ -60,7 +60,7 @@ function Row(props) {
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={open || openAll} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <h2>Code Diff</h2>
               <div>To be Added...</div>
@@ -144,6 +144,7 @@ function CodeContributionTable () {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [openAll, setOpenAll] = useState(false);
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -162,7 +163,11 @@ function CodeContributionTable () {
         <Table stickyHeader className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell />
+               <TableCell>
+                  <IconButton size='small' onClick={() => setOpenAll(!openAll)}>
+                    {openAll ? <ExpandLess /> : <ExpandMore />}
+                  </IconButton>
+                </TableCell>
                 {columns.map((column) => (
                 <TableCell key={column.id}>
                   {column.label}
@@ -175,7 +180,7 @@ function CodeContributionTable () {
                 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : rows
             ).map((row) => (
-              <Row key ={row.id} row={row} />
+              <Row key ={row.id} row={row} openAll={openAll} />
             ))}
 
             {emptyRows > 0 && (
