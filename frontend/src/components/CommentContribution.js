@@ -24,7 +24,7 @@ const useResizeObserver = (ref) => {
 };
 
 
-export default function BarChart({ commentsDataProp }) {
+export default function CommentContributionBarChart({ commentsDataProp }) {
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
