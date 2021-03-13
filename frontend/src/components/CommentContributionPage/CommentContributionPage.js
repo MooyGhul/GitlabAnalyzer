@@ -41,6 +41,10 @@ const CommentContributionPage = (props) => {
         });
     }, [project_id, member_id, setGraphData]);
 
+    const handleExpand = () => {
+        setExpandAll(!expandAll)
+    }
+
     return (
         <Grid container className={classes.root}>
             <Grid item>
@@ -51,7 +55,7 @@ const CommentContributionPage = (props) => {
                 <CommentContributionBarChart commentsDataProp={graphData}/>
             </Grid>
             <Grid item className={classes.accordian} >
-                <Button variant="contained" onClick={() => setExpandAll(!expandAll)} className={classes.expandBtn}>
+                <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>
                     {expandAll ? "Collapse All" : "Expand All"}
                 </Button>
             </Grid>
