@@ -1,6 +1,7 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import com.cmpt373sedna.gitlabanalyzer.repository.*;
@@ -84,4 +85,8 @@ public class ProjectRESTController {
     }
 
 
+    @GetMapping("/{projectId}/issues")
+    Iterable<IssueEntity> getProjectIssues(@PathVariable(value="projectId") int projectId) {
+        return this.issueRepository.findAllByProjectId(projectId);
+    }
 }
