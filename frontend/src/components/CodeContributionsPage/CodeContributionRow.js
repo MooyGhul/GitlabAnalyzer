@@ -27,7 +27,8 @@ function CodeContributionRow(props) {
           </IconButton>
         </TableCell>
         <TableCell className={classes.cell} align="left" component='th' scope='row'>
-          {row.type === "MR" ? <Avatar>M</Avatar> : <Avatar>C</Avatar> }
+          {row.type === "MR" ? <Avatar className={classes.mrIcon}>M</Avatar>
+                            : <Avatar className={classes.cIcon}>C </Avatar> }
         </TableCell>
         <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
         <TableCell style={{width: 600}} align="left">{row.details}</TableCell>

@@ -21,7 +21,7 @@ function App() {
             <PrivateRoute path='/projectList' component={ProjectListPage} />
             <PrivateRoute path='/projectInfo/:project_id' component={ProjectInfoPage} />
             <PrivateRoute path='/overview/:project_id/:member_id' component={OverviewPage} />
-            <Route exact path='/codecontributions' component={CodeContributionPage} />
+            <Route exact path='/project/:project_id/:member_id/codecontributions' component={CodeContributionPage} />
           <Route component={NotFound} />
         </Switch>
     </BrowserRouter>

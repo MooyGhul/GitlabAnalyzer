@@ -43,7 +43,7 @@ function CodeContributionTable (props) {
       <TableContainer>
         <Table stickyHeader className={classes.table}>
           <TableHead>
-            <TableRow>
+            <TableRow className={classes.banner}>
               <TableCell>
                 <IconButton size='small' onClick={() => setOpenAll(!openAll)}>
                   {openAll ? <ExpandLess /> : <ExpandMore />}
