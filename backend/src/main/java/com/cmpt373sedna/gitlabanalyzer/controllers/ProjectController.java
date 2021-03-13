@@ -113,7 +113,7 @@ public class ProjectController {
         for(MergeRequestEntity mr: this.mergeRequestEntities) {
             for(MergeRequestDiffVersionsEntity mrDiff: this.MRDiffVersions) {
                 String MRUrl = this.url + mr.getIid() + "/versions/" + mrDiff.getId();
-                List<JSONObject> list = e.getMergeRequestsDiffChanges(MRUrl, this.projectToken);
+                List<JSONObject> list = e.getMergeRequestsDiffVersions(MRUrl, this.projectToken);
                 list.forEach(mrDiffs -> mrDiffs.put("project_id", this.projectId));
                 list.forEach(mrDiffs -> mrDiffs.put("merge_request_iid", mr.getIid()));
                 mergeRequestsDiffs.addAll(list);

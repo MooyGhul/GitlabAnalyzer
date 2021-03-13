@@ -82,7 +82,7 @@ public class Extractor {
         return MRDiffVersions;
     }
 
-    public List<JSONObject> getMergeRequestsDiffChanges(String url, String projectToken) {
+    public List<JSONObject> getMergeRequestsDiffVersions(String url, String projectToken) {
         String MRVersionsURL = url + "&access_token=" + projectToken;
         List<JSONObject> MRDiffs = getJsonObjects(MRVersionsURL);
         return MRDiffs;
