@@ -32,6 +32,8 @@ public class MergeRequestEntity {
 
     private String author;
 
+    private String description;
+
     private @ElementCollection List<String> commitIds;
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
@@ -44,6 +46,7 @@ public class MergeRequestEntity {
                     .author(json.getJSONObject("author").getString("username"))
                     .projectId(json.getInt("project_id"))
                     .status(json.getString("state"))
+                    .description(json.getString("description"))
                     .createdAt(Instant.parse(json.getString("created_at")))
                     .mergedAt(isNotBlank(mergedAt) ? sdf.parse(mergedAt).toInstant() : null)
                     .build();
