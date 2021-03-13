@@ -7,6 +7,6 @@ import java.util.List;
 
 @Repository
 public interface IssueEntityRepository extends CrudRepository<IssueEntity, Integer> {
-
     List<IssueEntity> findAllByAssignee(String assignee);
+    List<IssueEntity> findAllByProjectId(int projectId);
 }
