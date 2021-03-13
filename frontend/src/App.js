@@ -19,10 +19,9 @@ function App() {
             <Route exact path='/login'> <Login /> </Route>
             <Route exact path='/token'> <UrlToken /> </Route>
             <PrivateRoute path='/projectList' component={ProjectListPage} />
-            <PrivateRoute path='/projectInfo' component={ProjectInfoPage} />
-            <PrivateRoute path='/overview' component={OverviewPage} />
+            <PrivateRoute path='/projectInfo/:project_id' component={ProjectInfoPage} />
+            <PrivateRoute path='/overview/:project_id/:member_id' component={OverviewPage} />
             <Route exact path='/codeContributions' component={CodeContributionPage} />
-
           <Route component={NotFound} />
         </Switch>
     </BrowserRouter>

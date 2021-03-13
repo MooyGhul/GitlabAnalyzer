@@ -1,23 +1,24 @@
+import React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';  
 import { useHistory } from 'react-router-dom';
+import {rows} from "../../mockDataDir/mockMembers"
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 100},
   { field: 'studentID', headerName: 'Student ID', width: 200},
 ];
 
-const rows = [
-  {id: 1, studentID: 'katelynk'},
-  {id: 2, studentID: 'gss'},
-  {id: 3, studentID: 'olehs'},
-  {id: 4, studentID: 'dular'},
-  {id: 5, studentID: 'mmeet'},
-  {id: 6, studentID: 'naufals'},
-  {id: 7, studentID: 'wangp'},
-  {id: 8, studentID: 'richardp'},
-]
+// const rows = [
+//   {id: 1, studentID: 'katelynk'},
+//   {id: 2, studentID: 'gss33'},
+//   {id: 3, studentID: 'olehs'},
+//   {id: 4, studentID: 'dular'},
+//   {id: 5, studentID: 'mmeet'},
+//   {id: 6, studentID: 'naufals'},
+//   {id: 7, studentID: 'wangp'},
+//   {id: 8, studentID: 'richardp'},
+// ]
 
 const useStyles = makeStyles({
   memberList:{ 
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
 function MemberList(props) { 
  
   const buttonClickHandler = event => {
-    history.push('/overview');
+    history.push("/overview/" + 2 + "/" + event.row.studentID);
 }
 
   const classes = useStyles();

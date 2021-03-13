@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import ProjectList from './components/ProjectList';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from 'react-router-dom';
+import {Grid} from "@material-ui/core";
 
 const useStyles = makeStyles({
 
@@ -19,20 +20,19 @@ const useStyles = makeStyles({
     },
   });
 
-  function ProjectListPage(props) {
+  function ProjectListPage() {
     const history = useHistory();
     const classes = useStyles();
 
-    const buttonClickHandler = event => {
+    const buttonClickHandler = () => {
             history.push({
-              pathname:'/projectInfo',
+              pathname:'/projectInfo/' + 2,
               state: {id:2},
-              
             });
     }
 
     return ( 
-        <div>    
+        <Grid container>
 
           <Header
             pageTitle="Project List"
@@ -48,7 +48,7 @@ const useStyles = makeStyles({
             Batch Process
           </Button>    
 
-        </div> 
+        </Grid>
     );
   }
   
