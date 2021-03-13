@@ -14,11 +14,12 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
-import {Avatar, TableFooter, TablePagination} from "@material-ui/core";
-import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
+import {Avatar, TableFooter, TablePagination} from '@material-ui/core';
+import {KeyboardArrowLeft, KeyboardArrowRight} from '@material-ui/icons';
+import * as PropTypes from 'prop-types';
+import axios from 'axios';
 import moment from 'moment';
-import * as PropTypes from "prop-types";
-import axios from "axios";
+
 
 const columns = [
   {id: 'type', label: 'Type'},
@@ -182,26 +183,31 @@ function CodeContributionTable () {
   const codeContributionData = () => {
     let ccArray = [];
     for(let i = 0; i < commitData.length; i++) {
+      let createdDate = new Date(commitData[i].commitDate);
       ccArray.push(createData(commitData[i].commitId,
                         'commit',
-                              commitData[i].commitDate,
+                              '' + moment(createdDate).format('LLL'),
                               commitData[i].commitName,
                               14));
     }
 
     for(let i = 0; i < mrData.length; i++) {
-      if(mrData[i].status === 'merged')
-      ccArray.push(createData(mrData[i].id,
-                              "MR",
-                              mrData[i].createdAt,
-                              "Merge Request merged at " + mrData[i].mergedAt,
-                              24));
+      if (mrData[i].status === 'merged') {
+        let createdDate = new Date(mrData[i].createdAt);
+        let mergedDate = new Date(mrData[i].mergedAt);
+        ccArray.push(createData(mrData[i].id,
+                          'MR',
+                                '' + moment(createdDate).format('LLL'),
+                        'Merge Request merged at ' + moment(mergedDate).format('LLL'),
+                          24));
+      }
     }
 
-    setCodeContributionRows(ccArray);
-    codeContributionRows.sort((a,b) => {
-      return a.date - b.date
-    })
+    setCodeContributionRows(ccArray.sort((a,b) => {
+      let dateA = new Date(a.date);
+      let dateB = new Date(b.date);
+      return dateA - dateB;
+    }).reverse());
   };
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, codeContributionRows.length - page * rowsPerPage);
