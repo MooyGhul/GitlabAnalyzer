@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Box from '@material-ui/core/Box';
 import Collapse from '@material-ui/core/Collapse';
 import FirstPageIcon from '@material-ui/icons/FirstPage';
@@ -16,10 +16,9 @@ import TableRow from '@material-ui/core/TableRow';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {Avatar, TableFooter, TablePagination} from "@material-ui/core";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
+import moment from 'moment';
 import * as PropTypes from "prop-types";
-import {CodeContributionData} from "../mockDataDir/mockCodeContributionData";
-
-const rows = CodeContributionData;
+import axios from "axios";
 
 const columns = [
   {id: 'type', label: 'Type'},
@@ -27,8 +26,6 @@ const columns = [
   {id: 'details', label: 'Details'},
   {id: 'score', label: 'Score'},
 ]
-
-console.log(rows);
 
 const useRowStyles = makeStyles({
   root: {
@@ -45,7 +42,6 @@ function Row(props) {
   const { row, openAll } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
-
   return (
     <React.Fragment>
       <TableRow hover role ="checkbox" tabIndex={-1} className={classes.root}>
@@ -58,7 +54,7 @@ function Row(props) {
           {row.type === "MR" ? <Avatar>M</Avatar> : <Avatar>C</Avatar> }
         </TableCell>
         <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
-        <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
+        <TableCell style={{width: 600}} align="left">{row.details}</TableCell>
         <TableCell className={classes.cell} align="left">{row.score}</TableCell>
       </TableRow>
       <TableRow>
@@ -152,8 +148,63 @@ function CodeContributionTable () {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [openAll, setOpenAll] = useState(false);
+  const [commitData, setCommitData] = useState([]);
+  const [mrData, setMRData] = useState([]);
+  const [codeContributionRows, setCodeContributionRows] = useState([]);
 
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  useEffect(() => {
+    const fetchData = async () => {
+      const resultCommit = await axios.get('http://localhost:8080/project/2/commits');
+      setCommitData(resultCommit.data);
+
+      const resultMR = await axios.get('http://localhost:8080/project/2/merge_requests');
+      setMRData(resultMR.data);
+    }
+    fetchData().then(() => {
+      console.log("Successful data retrieval");
+
+    }).catch(() => {
+      console.log("Failed retrieve data ");
+    });
+    codeContributionData();
+
+  },[]);
+
+  // console.log(commitData);
+  // console.log(mrData);
+  console.log("Rows: ");
+  console.log(codeContributionRows);
+
+  const createData = (id, type, date, details, score) => {
+    return {id, type, date, details, score};
+  }
+
+  const codeContributionData = () => {
+    let ccArray = [];
+    for(let i = 0; i < commitData.length; i++) {
+      ccArray.push(createData(commitData[i].commitId,
+                        'commit',
+                              commitData[i].commitDate,
+                              commitData[i].commitName,
+                              14));
+    }
+
+    for(let i = 0; i < mrData.length; i++) {
+      if(mrData[i].status === 'merged')
+      ccArray.push(createData(mrData[i].id,
+                              "MR",
+                              mrData[i].createdAt,
+                              "Merge Request merged at " + mrData[i].mergedAt,
+                              24));
+    }
+
+    setCodeContributionRows(ccArray);
+    codeContributionRows.sort((a,b) => {
+      return a.date - b.date
+    })
+  };
+
+  const emptyRows = rowsPerPage - Math.min(rowsPerPage, codeContributionRows.length - page * rowsPerPage);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -184,8 +235,8 @@ function CodeContributionTable () {
           </TableHead>
           <TableBody>
             {(rowsPerPage > 0
-                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : rows
+                ? codeContributionRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : codeContributionRows
             ).map((row) => (
               <Row key ={row.id} row={row} openAll={openAll} />
             ))}
@@ -201,7 +252,7 @@ function CodeContributionTable () {
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={3}
-                count={rows.length}
+                count={codeContributionRows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
