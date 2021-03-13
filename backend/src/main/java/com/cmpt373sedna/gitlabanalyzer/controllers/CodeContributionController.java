@@ -1,17 +1,21 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.repository.CodeContributionRepository;
+import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class CodeContributionController {
+    final private ConfigEntity config;
+
+    final private ProjectEntity projectEntity;
+
     final private int contributionID;
 
     private int[] weights;
 
-    final private Extractor e;
+    final private Extractor extractor;
 
     private List<JSONObject> mergeRequests;
 
@@ -21,15 +25,15 @@ public class CodeContributionController {
 
     private List<String> members;
 
-    public CodeContributionController(String url, String token) {
-        this.e = new Extractor();
-        String[] links = this.e.getBasicRepoLinks(url, token);
+    public CodeContributionController(ConfigEntity config, ProjectEntity projectEntity) {
+        this.config = config;
+        this.projectEntity = projectEntity;
+        this.extractor = new Extractor();
 
-        // 0: id.toString(), 1:mergeRequestLink, 2:issuesLink, 3:repoBranchesLink
-        this.contributionID = Integer.parseInt(links[0]);
-        this.mergeRequests =  this.e.getMergeRequests(links[0], token);
-        this.issues = this.e.getIssues(links[0], token);
-        this.commits = this.e.getCommits(url + this.contributionID, token);
+        this.contributionID = projectEntity.getRepoId();
+        this.mergeRequests =  this.extractor.getMergeRequests(config, projectEntity.getRepoId());
+        this.issues = this.extractor.getIssues(config, projectEntity.getRepoId());
+        this.commits = this.extractor.getCommits(config, projectEntity.getRepoId());
 
         this.weights = new int[]{1, 1, 1};
     }
@@ -41,19 +45,17 @@ public class CodeContributionController {
         return this.mergeRequests.size();
     }
 
-    public int getNumComments(String token) {
+    public int getNumComments() {
         int sum = 0;
 
-        for(JSONObject issue: this.issues) {
-            JSONObject links = (JSONObject) issue.get("_links");
-            String issueNotesLink = (String) links.get("notes");
-            List<JSONObject> issueComments = this.e.getIssueComments(issueNotesLink, token);
+        for(JSONObject issue : this.issues) {
+            List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectEntity.getRepoId(), issue.getInt("id"));
             sum += issueComments.size();
         }
 
-        for(JSONObject mr: this.mergeRequests) {
+        for(JSONObject mr : this.mergeRequests) {
             int mrId = (Integer) mr.get("iid");
-            List<JSONObject> mrComments = this.e.getMergeRequestComments(Integer.toString(mrId), token);
+            List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectEntity.getRepoId(), mrId);
             sum += mrComments.size();
         }
 
