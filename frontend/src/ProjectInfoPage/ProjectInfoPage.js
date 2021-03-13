@@ -15,29 +15,46 @@ import {Bar} from "react-chartjs-2";
     const classes = useStyles();
      
     const [commits, setCommits] = useState([]);
- 
+    const [MRs, setMRs] = useState([])
+
     useEffect(() => {
       const fetchData = async () => {
-        const result = await axios.get(
+        const commitData = await axios.get(
           `http://localhost:8080/project/${projectID}/commits`
+          
         );
   
-        setCommits(result.data);
+        setCommits(commitData.data);
+      };
+      fetchData();
+    }, [projectID]);
+
+    useEffect(() => {
+      const fetchData = async () => {
+        const mrData = await axios.get(
+          `http://localhost:8080/project/${projectID}/merge_requests`
+          
+        );
+  
+        setMRs(mrData.data);
       };
       fetchData();
     }, [projectID]);
 
     // eslint-disable-next-line
-    let result = commits.reduce( (acc, o) => (acc[o.author] = (acc[o.author] || 0)+1, acc), {} );
+    let resultMR = MRs.reduce( (acc, o) => (acc[o.author] = (acc[o.author] || 0)+1, acc), {} );
+    let MRCount = Object.values(resultMR)
+
+
+    // eslint-disable-next-line
+    let resultCommit = commits.reduce( (acc, o) => (acc[o.author] = (acc[o.author] || 0)+1, acc), {} );
 
     let memberList = [];
-    
-    for (var member in result){
-      console.log(member)
+    for (var member in resultCommit){ 
       memberList.push(member)      
     } 
-    let commitCount = Object.values(result)
-
+    let commitCount = Object.values(resultCommit)
+   
     const rows = [];  
     for (var i = 0; i < memberList.length; i++) {
       var obj = {};
@@ -54,15 +71,23 @@ import {Bar} from "react-chartjs-2";
     const buttonClickHandler = (event) => {
       history.push("/overview");
     };
+    
+    let colorListCommit = []
+    for (i=0; i<memberList.length; i++){
+      colorListCommit.push('rgba(252, 36, 131, 0.9');
+    }
 
+    let colorListMR = []
+    for (i=0; i<memberList.length; i++){
+      colorListMR.push('rgba(53,63,196,0.9)');
+    }
+
+    
     return ( 
       <div>
         <Header/>
         <WideHeader/>
-        
-        {console.log(location.state.id)}
-
-         
+                 
         <DataGrid
           rows={rows}
           columns={columns}
@@ -78,10 +103,17 @@ import {Bar} from "react-chartjs-2";
             labels: memberList,
             datasets: [
               {
-                label: 'Contribution',
+                label: 'Commits',
                 data:  commitCount,
                 maintainAspectRatio:true,
-                backgroundColor: ['rgba(252, 36, 131, 0.9', 'rgba(53,63,196,0.9)'],
+                backgroundColor: colorListCommit,
+                borderWidth: 4,  
+              },
+              {
+                label: 'Merge requests',
+                data:  MRCount,
+                maintainAspectRatio:true,
+                backgroundColor: colorListMR,
                 borderWidth: 4,  
               }
             ]              
@@ -90,12 +122,13 @@ import {Bar} from "react-chartjs-2";
             { 
             responsive: true,
             scales: {
-              x: {
+              xAxes: [{
                   stacked: true
-              },
-              y: {
+              }],
+              yAxes: [{
+                  ticks: {beginAtZero: true},
                   stacked: true
-              }
+              }]
           }
             
           }}
