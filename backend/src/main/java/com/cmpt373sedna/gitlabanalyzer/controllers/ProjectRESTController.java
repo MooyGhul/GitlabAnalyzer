@@ -35,6 +35,13 @@ public class ProjectRESTController {
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
+    @Autowired
+    private MergeRequestDiffsVersionsRepository mergeRequestDiffVersionRepository;
+
+    @Autowired
+    private MergeRequestDiffsRepository mergeRequestDiffRepository;
+
+
     @PostMapping("/create")
     @Deprecated
     void initializeUser(@RequestParam String token) {
@@ -51,6 +58,8 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(p.getIssuesEntities());
         this.commentEntityRepository.saveAll(p.getComments());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
+        this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
+        this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
     }
 
     @GetMapping("/all")
@@ -91,6 +100,7 @@ public class ProjectRESTController {
     Iterable<CommitEntity> getProjectCommits(@PathVariable(value="projectId") int projectId) {
         return this.commitRepository.findAllByProjectId(projectId);
     }
+
 
     @GetMapping("/{projectId}/issues")
     Iterable<IssueEntity> getProjectIssues(@PathVariable(value="projectId") int projectId) {
