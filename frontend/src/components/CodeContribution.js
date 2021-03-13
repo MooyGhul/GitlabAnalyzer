@@ -23,7 +23,7 @@ const useResizeObserver = (ref) => {
   return dimensions;
 };
 
-export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
+export default function CodeContributionStackedBarChart({ contributionsDataProp,keys,colors }) {
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
