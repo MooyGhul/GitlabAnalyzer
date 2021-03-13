@@ -2,13 +2,8 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.CommentEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-<<<<<<< HEAD
 import com.cmpt373sedna.gitlabanalyzer.repository.CommentEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-=======
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffVersionsEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffsEntity;
->>>>>>> master
 import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestDiffsRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestDiffsVersionsRepository;
