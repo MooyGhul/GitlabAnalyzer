@@ -19,11 +19,11 @@ function App() {
             <Redirect exact from='/' to='/login' />
             <Route exact path='/login'> <Login /> </Route>
             <Route exact path='/token'> <UrlToken /> </Route>
-            <PrivateRoute path='/projectList' component={ProjectListPage} />
-            <PrivateRoute path='/projectInfo/:projectId' component={ProjectInfoPage} />
-            <PrivateRoute path='/overview/:project_id/:member_id' component={OverviewPage} />
-            <PrivateRoute path='/project/:project_id/:member_id/comments' component={CommentContributionPage} />
-            <PrivateRoute path='/overview/:project_id/:member_id/issueContribution' component={IssueContributionPage} />
+            <PrivateRoute exact path='/projectList' component={ProjectListPage} />
+            <PrivateRoute exact path='/projectInfo/:projectId' component={ProjectInfoPage} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id' component={OverviewPage} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id/comments' component={CommentContributionPage} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id/issueContribution' component={IssueContributionPage} />
             <Route component={NotFound} />
         </Switch>
     </BrowserRouter>

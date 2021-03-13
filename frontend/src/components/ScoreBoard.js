@@ -16,15 +16,15 @@ const ScoreBoard = (props) => {
   const classes = useStyles(props);
   const [language, setLanguage] = useState("C++");
 
-  const { projectId, memberId } = useParams();
+  const { project_id, member_id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
       const mergeRequests = await axios.get(
-        `http://localhost:8080/project/${projectId}/member/${memberId}/merge_requests`
+        `http://localhost:8080/project/${project_id}/member/${member_id}/merge_requests`
       );
       const commits = await axios.get(
-        `http://localhost:8080/project/${projectId}/member/${memberId}/commits`
+        `http://localhost:8080/project/${project_id}/member/${member_id}/commits`
       );
       setMergeRequestCount(mergeRequests.data.length);
       setCommitCount(commits.data.length);
@@ -34,7 +34,7 @@ const ScoreBoard = (props) => {
     }).catch(() => {
       console.log("Failed to get counts");
     });
-  }, [projectId, memberId]);
+  }, [project_id, member_id]);
 
   const handleFile = (newLanguage) => {
     setLanguage(newLanguage);

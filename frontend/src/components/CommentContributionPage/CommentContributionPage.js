@@ -19,12 +19,12 @@ const CommentContributionPage = (props) => {
     const [expandAll, setExpandAll] = React.useState(false);
     const classes = useStyles(props);
 
-    const {projectId, memberId} = useParams();
+    const {project_id, member_id} = useParams();
 
     useEffect(() => {
         const fetchData = async () => {
             const commentResult = await axios.get(
-                `http://localhost:8080/project/25513/member/${memberId}/comments`
+                `http://localhost:8080/project/25513/member/${member_id}/comments`
             );
             setComments(commentResult.data);
         }
@@ -33,7 +33,7 @@ const CommentContributionPage = (props) => {
         }).catch(() => {
         console.log("Failed to obtain comments");
         });
-    }, [projectId, memberId]);
+    }, [project_id, member_id]);
 
     return (
         <Grid container className={classes.root}>
