@@ -1,35 +1,22 @@
 import React, {Fragment} from "react";
-import useStyles from "../../style/CommentContributionPageStyles";
 import {Avatar, Collapse, IconButton, TableCell, TableRow, Typography} from "@material-ui/core";
 import KeyboardArrowUpIcon from "@material-ui/icons/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import Box from "@material-ui/core/Box";
+import {formatTableDate} from "../../helper";
+import useStyles from "../../style/CommentContributionPageStyles";
 
 const CommentRow = (props) => {
     const {comment, expandAll} = props;
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
-    const monthNames = ["January", "February", "March",
-        "April", "May", "June", "July", "August", "September",
-        "October", "November", "December"];
-
-    const formatDate = (commentDate) => {
-        let date = new Date(commentDate);
-        let month = monthNames[date.getMonth()];
-        let day = date.getDate();
-        let year = date.getFullYear();
-        let time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-
-        return `${month} ${day}, ${year} @ ${time}`;
-    }
-
     return (
         <Fragment>
             <TableRow onClick={() => setOpen(!open)}>
                 <TableCell component="th" scope="row">
                     <Typography gutterBottom component="div">
-                        {formatDate(comment.commentDate)}
+                        {formatTableDate(comment.commentDate)}
                     </Typography>
                 </TableCell>
                 <TableCell align="left">

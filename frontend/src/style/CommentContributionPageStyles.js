@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.common.white,
     },
     table: {
-        margin: "4% auto 0 auto",
+        margin: "10% auto 0 auto",
         width: "90%"
     },
     wordCount: {
@@ -47,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
         color: "white",
         backgroundColor: "#f4a261",
         marginLeft: "2vw"
+    },
+    graph: {
+        margin: "0 auto 0 auto",
     }
 }));
 

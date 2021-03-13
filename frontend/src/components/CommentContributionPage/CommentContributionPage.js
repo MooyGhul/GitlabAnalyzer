@@ -12,10 +12,13 @@ import {useParams} from "react-router";
 import Header from "../Header";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
+import CommentContributionBarChart from "../CommentContribution";
+import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 
 const CommentContributionPage = (props) => {
     const [comments, setComments] = useState([]);
+    const [graphData, setGraphData] = useState([]);
     const [expandAll, setExpandAll] = React.useState(false);
     const classes = useStyles(props);
 
@@ -27,19 +30,25 @@ const CommentContributionPage = (props) => {
                 `http://localhost:8080/project/25513/member/${member_id}/comments`
             );
             setComments(commentResult.data);
+            const commentCounts = getGraphData(commentResult.data);
+            setGraphData(commentCounts);
         }
         fetchData().then(() => {
             console.log("Successfully obtained comments");
-        }).catch(() => {
-        console.log("Failed to obtain comments");
+        }).catch((e) => {
+            console.log("Failed to obtain comments");
+            console.log(e);
         });
-    }, [project_id, member_id]);
+    }, [project_id, member_id, setGraphData]);
 
     return (
         <Grid container className={classes.root}>
             <Grid item>
                 <Header pageTitle={"Comments"}/>
                 <Banner />
+            </Grid>
+            <Grid item className={classes.graph}>
+                <CommentContributionBarChart commentsDataProp={graphData}/>
             </Grid>
             <Grid item className={classes.accordian} >
                 <Button variant="contained" onClick={() => setExpandAll(!expandAll)} className={classes.expandBtn}>
