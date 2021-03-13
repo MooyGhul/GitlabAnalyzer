@@ -44,7 +44,7 @@ function Row(props) {
                 </TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6} className={styles.dropDownRow}>
+                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6} className={open ? styles.dropDownRow : styles.empty}>
                     <Collapse in={open} timeout="auto" unmountOnExit >
                         <Box margin={1}>
                             <Typography variant="h7" gutterBottom component="div">Full Note: {row.note}</Typography>

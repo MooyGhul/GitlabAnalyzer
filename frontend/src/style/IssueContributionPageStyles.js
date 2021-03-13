@@ -21,11 +21,6 @@ const useStyles = makeStyles((theme) => ({
         borderColor: '#eee',
         borderStyle: 'solid',
     },
-    tableCell: {
-        borderRightWidth: 1,
-        borderColor: 'red',
-        borderStyle: 'solid',
-    },
     header: {
         backgroundColor: "#e4e3ff"
     },
@@ -63,10 +58,10 @@ const useStyles = makeStyles((theme) => ({
     }, 
     dropDownRow: {
         backgroundColor: 'rgb(142,154,175, 0.15)',
+        borderBottom: "medium solid #7553ff",
     },
-    dropDownBorder: {
-        borderBottomWidth: 10,
-        borderColor: 'rgb(70, 12, 163)',
+    empty: {
+        
     }
   }));
 
