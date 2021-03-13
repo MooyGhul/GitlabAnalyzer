@@ -23,7 +23,6 @@ public class MergeRequestDiffVersionsEntity {
     private int MRIid;
     private int projectId;
     private Instant createdAt;
-    //private String authorName;
 
 
 
