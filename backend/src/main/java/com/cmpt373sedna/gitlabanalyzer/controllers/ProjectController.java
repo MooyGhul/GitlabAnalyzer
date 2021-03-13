@@ -1,10 +1,7 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.CommentEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
 import lombok.Getter;
 import org.json.JSONObject;
 
@@ -14,15 +11,13 @@ import java.util.stream.Collectors;
 
 public class ProjectController {
 
-    final private @Getter int projectId;
+    private @Getter int projectId;
 
     final private @Getter String projectName;
 
-    final private Extractor e;
+    private Extractor extractor;
 
-    final private String url;
-
-    final private String projectToken;
+    private ConfigEntity config;
 
     private int[] weights;
 
@@ -38,50 +33,50 @@ public class ProjectController {
 
     private @Getter List<String> members;
 
-    public ProjectController(Extractor e, String url, String projectToken) {
-        this.e = e;
-        this.projectToken = projectToken;
-        // 0: id.toString(), 1: name, 2:mergeRequestLink, 3:issuesLink, 4:repoBranchesLink, 5:membersLink
-        String[] links = this.e.getBasicRepoLinks(url, projectToken);
+    public ProjectController(Extractor extractor, ConfigEntity configEntity, ProjectEntity projectEntity) {
+        this.extractor = extractor;
+        this.config = configEntity;
 
-        this.projectId = Integer.parseInt(links[0]);
-        this.projectName = links[1];
-        this.url = links[2];
-        this.mergeRequestEntities = this.getAndParseMergeRequests(links[3]);
-        this.issuesEntities = this.getAndParseIssues(links[4]);
-        this.members = this.e.getRepoMembers(links[6], this.projectToken);
-        this.comments = this.getAndParseComments();
-        this.commitEntities = this.getAndParseCommits();
+        this.projectId = projectEntity.getRepoId();
+        this.projectName = projectEntity.getRepoName();
 
         this.weights = new int[]{1, 1, 1, 1};
     }
 
-    private List<IssueEntity> getAndParseIssues(String url) {
-        List<JSONObject> issues = this.e.getIssues(url, this.projectToken);
+    public ProjectController load() {
+        this.mergeRequestEntities = this.getAndParseMergeRequests();
+        this.issuesEntities = this.getAndParseIssues();
+        this.members = this.extractor.getRepoMembers(this.config, this.projectId);
+        this.comments = this.getAndParseComments();
+        this.commitEntities = this.getAndParseCommits();
+
+        return this;
+    }
+
+    private List<IssueEntity> getAndParseIssues() {
+        List<JSONObject> issues = this.extractor.getIssues(this.config, this.projectId);
         return issues.stream().map(IssueEntity::fromGitlabJSON).collect(Collectors.toList());
     }
     private List<CommitEntity> getAndParseCommits() {
-        List<JSONObject> commits = this.e.getCommits(this.url, this.projectToken);
+        List<JSONObject> commits = this.extractor.getCommits(this.config, this.projectId);
         commits.forEach(commit -> commit.put("project_id", this.projectId));
         return commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
-    private List<MergeRequestEntity> getAndParseMergeRequests(String url) {
-        List<JSONObject> mergeRequests = e.getMergeRequests(url, this.projectToken);
+    private List<MergeRequestEntity> getAndParseMergeRequests() {
+        List<JSONObject> mergeRequests = extractor.getMergeRequests(this.config, this.projectId);
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
     }
 
     private List<CommentEntity> getAndParseComments() {
         List<JSONObject> comments = new ArrayList<>();
-        for(IssueEntity issue: this.issuesEntities) {
-            String url = this.url + "/issues/" + issue.getIssueId() + "/notes";
-            List<JSONObject> issueComments = this.e.getIssueComments(url, this.projectToken);
+        for(IssueEntity issue : this.issuesEntities) {
+            List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectId, issue.getIssueIid());
             comments.addAll(issueComments);
         }
 
-        for(MergeRequestEntity mr: this.mergeRequestEntities) {
-            String url =  this.url + "/merge_requests/" + mr.getIid();
-            List<JSONObject> mrComments = this.e.getMergeRequestComments(url, this.projectToken);
+        for(MergeRequestEntity mr : this.mergeRequestEntities) {
+            List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectId, mr.getIid());
             comments.addAll(mrComments);
         }
         comments.forEach(comment -> comment.put("project_id", this.projectId));
