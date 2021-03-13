@@ -1,24 +1,14 @@
-import { Grid, TableContainer } from '@material-ui/core';
+import { Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, IconButton, Collapse, Box, Typography } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import Header from '../components/Header';
-import {makeStyles} from "@material-ui/core/styles";
-import Banner from "../components/Banner";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import IconButton from '@material-ui/core/IconButton'
+import Header from './components/Header';
+import Banner from "./components/Banner";
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import Collapse from '@material-ui/core/Collapse';
-import Typography from '@material-ui/core/Typography';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import IssueBarChart from '../components/IssueContribution';
+import IssueBarChart from './components/IssueContribution';
 import {useState} from 'react';
-import {IssuesWordCount} from "../mockDataDir/MockIssues";
-import useStyles from '../style/IssueContributionPageStyles'; 
+import {IssuesWordCount} from "./mockDataDir/MockIssues";
+import useStyles from './style/IssueContributionPageStyles'; 
 
 const rows = [
     {id: 1, date: 'Jan 30, 2020', issue: '#1 add a filter to main page', note: 'Sometimes I’ll start a sentence and I don’t even know where it’s going. I just hope I find it along the way - Michael Scott'},
