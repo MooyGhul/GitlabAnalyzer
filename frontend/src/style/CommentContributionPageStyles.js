@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "2vw"
     },
     graph: {
-        margin: "0 auto 0 auto",
+        margin: "1% auto 0 auto",
     }
 }));
 
