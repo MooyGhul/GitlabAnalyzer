@@ -3,11 +3,16 @@ import React from 'react';
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import useState from 'react';
 
 const Row = (props) => {
     const {row} = props;
     const [open, setOpen] = React.useState(false);
     const styles = useStyles(); 
+
+    const OnButtonClick = () => {
+        setOpen(!open); 
+    }
 
     return (
         <React.Fragment>
@@ -16,7 +21,7 @@ const Row = (props) => {
                 <TableCell>{row.issue}</TableCell>
                 <TableCell className={styles.noteText}>{row.note}</TableCell>
                 <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={()=>setOpen(!open)}>
+                    <IconButton aria-label="expand row" size="small" onClick={OnButtonClick}>
                         {open ? <KeyboardArrowUpIcon className={styles.icon}/> : <KeyboardArrowDownIcon className={styles.icon}/>}
                     </IconButton>
                 </TableCell>
