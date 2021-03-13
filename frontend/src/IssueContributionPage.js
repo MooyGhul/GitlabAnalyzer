@@ -54,11 +54,11 @@ export default function IssueContributionPage(props) {
         <Grid container justify='center' alignItems='center' spacing={5}>
             <Grid item xs={12}>
                 <Header pageTitle="Issue Contribution"/>
-                <Banner></Banner>
+                <Banner/>
             </Grid>
             <Grid item xs={8} className={styles.text}>
                 <Typography variant="h5" className={styles.dateText}>Issues created for {dateVar}</Typography>
-                <IssueBarChart className={styles.charts} issuesDataProp={issuesData}></IssueBarChart>
+                <IssueBarChart className={styles.charts} issuesDataProp={issuesData}/>
             </Grid>
             <Grid item xs={8}>
                 <TableContainer className={styles.table}>
@@ -68,7 +68,7 @@ export default function IssueContributionPage(props) {
                                     <TableCell className={styles.dateColumn} align='left'>Date</TableCell>
                                     <TableCell className={styles.issueColumn} align='left'>Issue</TableCell>
                                     <TableCell className={styles.noteColumn} align='left'>Note</TableCell>
-                                    <TableCell className={styles.dropDownColumn} align='left'></TableCell>
+                                    <TableCell className={styles.dropDownColumn} align='left'/>
                                 </TableRow>
                         </TableHead>
                         <TableBody>
