@@ -77,12 +77,12 @@ function AllProjectInfo(props) {
     { field: "wordCountIssue", headerName: "Issue (word count)", width: 200 },
   ];
 
-  const buttonClickHandler = (event) => {
-    history.push("/overview");
+  const buttonClickHandler = (e) => {
+    console.log(e.row.id);
+    history.push("/overview/" + projectID + "/" + e.row.id);
   };
 
   return (
-    
     <div className={classes.body}>
       <div className={classes.barChart}>
         <StackedBarChart
@@ -92,16 +92,14 @@ function AllProjectInfo(props) {
           MRsArray={MRsArray}
         />
       </div>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        onRowClick={buttonClickHandler}
-        className={classes.memberList}
-      />
-
-      
-      
+      <div className={classes.memberList}>
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          onRowClick={(e) => buttonClickHandler(e)}
+        />
+      </div>
     </div>
   );
 }

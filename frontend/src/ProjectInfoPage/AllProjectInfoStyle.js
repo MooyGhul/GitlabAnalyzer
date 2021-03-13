@@ -12,14 +12,14 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "60%",
     height: "30%",
-    top:'60%',
+    top:'55%',
     right: "10%",
   },
 
   barChart: {
     position: "absolute",
     bottom: "5%",
-    top: "15%",
+    top: "10%",
     width: "40%",
     height: "50%",
     left: "35%",
