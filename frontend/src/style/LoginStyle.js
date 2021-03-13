@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
 
     formBox:{ 
         width:'25%',
-        height:'55%', 
+        height:'60%',
         position: 'absolute', 
         left: '50%', 
         top: '50%',

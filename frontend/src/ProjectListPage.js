@@ -54,7 +54,6 @@ function ProjectListPage(props) {
     
       })
 
-
       history.push({
         pathname: "/projectInfo",
         state: { id: projectIdArray[0], projectName: projectName

@@ -10,9 +10,9 @@ const useStyles = makeStyles((theme) => ({
 
   memberList: {
     position: "absolute",
-    width: "20%",
-    height: "50%",
-    bottom: "5%",
+    width: "60%",
+    height: "30%",
+    top: "10%",
     right: "10%",
   },
 
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     bottom:"5%", 
     width:"40%",
     height: "50%",
-    left:"10%",
+    left:"30%",
   }
 }));
 export { useStyles };
