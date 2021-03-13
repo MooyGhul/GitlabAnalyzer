@@ -23,7 +23,7 @@ const useResizeObserver = (ref) => {
   return dimensions;
 };
 
-export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
+export default function CodeContributionStackedBarChart({ contributionsDataProp,keys,colors }) {
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
@@ -113,7 +113,7 @@ export default function StackedBarChart({ contributionsDataProp,keys,colors }) {
 
 
   return (
-    <div ref={wrapperRef} style={{marginbottom: "2rem"}}>
+    <div ref={wrapperRef} style={{marginBottom: "2rem"}}>
       <svg className="charts"  ref={svgRef}>
         <g className="x-axis" />
         <g className="y-axis" />

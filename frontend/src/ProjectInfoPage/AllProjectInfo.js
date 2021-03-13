@@ -82,15 +82,8 @@ function AllProjectInfo(props) {
   };
 
   return (
-    <div>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        onRowClick={buttonClickHandler}
-        className={classes.memberList}
-      />
-
+    
+    <div className={classes.body}>
       <div className={classes.barChart}>
         <StackedBarChart
           member={members}
@@ -99,6 +92,15 @@ function AllProjectInfo(props) {
           MRsArray={MRsArray}
         />
       </div>
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        pageSize={5}
+        onRowClick={buttonClickHandler}
+        className={classes.memberList}
+      />
+
+      
       
     </div>
   );

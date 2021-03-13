@@ -24,7 +24,7 @@ const useResizeObserver = (ref) => {
 };
 
 
-export default function BarChart({ commentsDataProp }) {
+export default function CommentContributionBarChart({ commentsDataProp }) {
   const svgRef = useRef();
   const wrapperRef = useRef();
   const dimensions = useResizeObserver(wrapperRef);
@@ -103,7 +103,7 @@ export default function BarChart({ commentsDataProp }) {
 
 
   return (
-    <div ref={wrapperRef} style={{marginbottom: "2rem"}}>
+    <div ref={wrapperRef} style={{marginBottom: "2rem"}}>
       <svg className="charts" ref={svgRef}>
         <g className="x-axis" />
         <g className="y-axis" />

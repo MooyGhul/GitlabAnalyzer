@@ -1,27 +1,61 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
+import {
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  List,
+  ListItem,
+  ListItemText,
+} from "@material-ui/core";
+import SettingsIcon from "@material-ui/icons/Settings";
 
-export default function LanguageType (props) {
+const LanguageType = (props) => {
+  const options = ["JS", "C++", "Java", "Python"];
 
-    // TO DO :
-    // When backend is ready, either GREY OUT "PLEASE CHOOSE LANGUAGE"
-    // or calculate overall submission when ppl choose "PLEASE CHOOSE LANGUAGE"
+  const [selectedIndex, setSelectedIndex] = React.useState(1);
 
-    const handleFile = (event)=>{
-        props.onChange(event.target.value);
-    };
-    return (
-        <div>
-            <select 
-                id="language"
-                onChange={handleFile}
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleListItemClick = (event, index) => {
+    props.onChange(options[index]);
+    setSelectedIndex(index);
+    handleClose();
+  };
+
+  return (
+    <div>
+      <SettingsIcon style={{ background: "none" }} onClick={handleClickOpen} />
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Select File Type</DialogTitle>
+        <List>
+          {options.map((option, index) => (
+            <ListItem
+              button
+              onClick={(event) => handleListItemClick(event, index)}
+              key={option}
+              selected={index === selectedIndex}
             >
-              <option value="Empty" >PLEASE CHOOSE LANGUAGE</option>
-              <option value="JS">JS</option>
-              <option value="C++">C++</option>
-              <option value="Java">Java</option>
-              <option value="Python">Python</option>
-              
-            </select>
-        </div>
-    );
-}
+              <ListItemText primary={option} />
+            </ListItem>
+          ))}
+        </List>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
+};
+
+export default LanguageType;
