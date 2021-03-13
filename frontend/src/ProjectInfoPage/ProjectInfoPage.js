@@ -17,6 +17,19 @@ import {Bar} from "react-chartjs-2";
     const [commits, setCommits] = useState([]);
     const [MRs, setMRs] = useState([])
 
+
+    const [members, setMembers] = useState([]);
+    useEffect(() => {
+      const fetchData = async () => {
+        const result = await axios.get(
+          `http://localhost:8080/project/${projectID}/members`
+        );
+  
+        setMembers(result.data);
+      };
+      fetchData();
+    }, [projectID]);
+    
     useEffect(() => {
       const fetchData = async () => {
         const commitData = await axios.get(
@@ -32,34 +45,52 @@ import {Bar} from "react-chartjs-2";
     useEffect(() => {
       const fetchData = async () => {
         const mrData = await axios.get(
-          `http://localhost:8080/project/${projectID}/merge_requests`
-          
+          `http://localhost:8080/project/${projectID}/merge_requests`        
         );
   
-        setMRs(mrData.data);
+        setMRs(mrData.data); 
+ 
       };
       fetchData();
-    }, [projectID]);
+    }, [projectID]);  
+    
 
-    // eslint-disable-next-line
-    let resultMR = MRs.reduce( (acc, o) => (acc[o.author] = (acc[o.author] || 0)+1, acc), {} );
-    let MRCount = Object.values(resultMR)
+    let commitsArray = []
 
+    members.forEach(member => {
+      let count = 0
+      commits.forEach(commit =>{ 
+        if (member===commit.author){
+          count ++
+        }        
+      }
+      )
+      commitsArray.push(count);
+    }
+    )
+    console.log(commitsArray)
 
-    // eslint-disable-next-line
-    let resultCommit = commits.reduce( (acc, o) => (acc[o.author] = (acc[o.author] || 0)+1, acc), {} );
+    let MRsArray = []
 
-    let memberList = [];
-    for (var member in resultCommit){ 
-      memberList.push(member)      
-    } 
-    let commitCount = Object.values(resultCommit)
-   
+    members.forEach(member => {
+      let count = 0
+      MRs.forEach(MR =>{ 
+        console.log(MR.author)
+        if (member===MR.author){
+          count ++
+        }        
+      }
+      )
+      MRsArray.push(count);
+    }
+    )
+    console.log(MRsArray)
+ 
     const rows = [];  
-    for (var i = 0; i < memberList.length; i++) {
+    for (var i = 0; i < members.length; i++) {
       var obj = {};
       obj["id"] = i;
-      obj["studentID"] = memberList[i];
+      obj["studentID"] = members[i];
       rows.push(obj);
     }
   
@@ -73,12 +104,12 @@ import {Bar} from "react-chartjs-2";
     };
     
     let colorListCommit = []
-    for (i=0; i<memberList.length; i++){
+    for (i=0; i<members.length; i++){
       colorListCommit.push('rgba(252, 36, 131, 0.9');
     }
 
     let colorListMR = []
-    for (i=0; i<memberList.length; i++){
+    for (i=0; i<members.length; i++){
       colorListMR.push('rgba(53,63,196,0.9)');
     }
 
@@ -100,18 +131,18 @@ import {Bar} from "react-chartjs-2";
         <div className={classes.barChart}>
         <Bar
           data={{
-            labels: memberList,
+            labels: members,
             datasets: [
               {
                 label: 'Commits',
-                data:  commitCount,
+                data:  commitsArray,
                 maintainAspectRatio:true,
                 backgroundColor: colorListCommit,
                 borderWidth: 4,  
               },
               {
                 label: 'Merge requests',
-                data:  MRCount,
+                data:  MRsArray,
                 maintainAspectRatio:true,
                 backgroundColor: colorListMR,
                 borderWidth: 4,  
