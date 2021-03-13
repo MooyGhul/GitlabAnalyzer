@@ -1,7 +1,9 @@
 import React from "react";
 import styles from "./WideHeader.module.css";
-
-function WideHeader() {
+ 
+function WideHeader(props) {
+  
+ 
   return (
     <div className={styles.body}>
       <img
@@ -11,8 +13,8 @@ function WideHeader() {
       />
 
       <div className={styles.basicInfo}>
-        <h1>Sudoku Solver</h1>
-        <h3> Project ID: 142132</h3>
+        <h1> {props.projectName} </h1>
+        <h3> Project ID: {props.id}</h3>
       </div>
 
       <div className={styles.memberAndDate}>

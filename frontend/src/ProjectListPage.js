@@ -41,18 +41,33 @@ function ProjectListPage(props) {
   };
 
   const buttonClickHandler = (event) => {
-    
+    let projectName; 
+
     if (projectIdArray.length === 0) {
       setErrorMsg('You have not selected any projects!.');  
     } else if (projectIdArray.length === 1) {
+      rows.forEach(project =>{
+        if (project.id === parseInt(projectIdArray[0])){
+          console.log(project.projectName)
+          projectName = project.projectName
+        }
+    
+      })
+
+
       history.push({
         pathname: "/projectInfo",
-        state: { id: projectIdArray[0] },
+        state: { id: projectIdArray[0], projectName: projectName
+            
+
+        },
       });
     } else { 
       console.log("multiple projects have been selected ");
     }
-  };
+  };   
+
+ 
 
   return (
     <div>
