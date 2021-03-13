@@ -29,5 +29,8 @@ public class ProjectEntity {
     public ProjectEntity() {
         this.repoId = -1;
         this.repoName = "";
+        this.numCommits = 0;
+        this.numMR = 0;
+        this.numComments = 0;
     }
 }
