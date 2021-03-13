@@ -23,37 +23,37 @@ class ExtractorTest {
             .build();
 
     @Test
-    void can_get_projects() {
+    void canGetProjects() {
         assertThat(this.extractor.getProjects(this.testConfig), hasItem(notNullValue(ProjectEntity.class)));
     }
 
     @Test
-    void can_get_merge_requests() {
+    void canGetMergeRequests() {
         assertThat(this.extractor.getMergeRequests(this.testConfig, 2), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
-    void can_get_merge_request_comments() {
+    void canGetMergeRequestComments() {
         assertThat(this.extractor.getMergeRequestComments(this.testConfig, 2, 1), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
-    void can_get_issues() {
+    void canGetIssues() {
         assertThat(this.extractor.getIssues(this.testConfig, 2), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
-    void can_get_commits() {
+    void canGetCommits() {
         assertThat(this.extractor.getCommits(this.testConfig, 2), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
-    void can_get_issue_comments() {
+    void canGetIssueCommits() {
         assertThat(this.extractor.getIssueComments(this.testConfig, 2, 1), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
-    void can_get_repo_members() {
+    void canGetRepoMembers() {
         assertThat(this.extractor.getRepoMembers(this.testConfig, 2), hasItem(notNullValue(String.class)));
     }
 }
