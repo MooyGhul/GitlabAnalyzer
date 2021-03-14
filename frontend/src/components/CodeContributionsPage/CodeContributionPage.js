@@ -20,7 +20,6 @@ function CodeContributionPage (props) {
   const codeContributionData = useCallback(() => {
     let ccArray = [];
     for(let i = 0; i < commitData.length; i++) {
-      console.log(i);
       let createdDate = new Date(commitData[i].commitDate);
       ccArray.push(createData(commitData[i].commitId,
         'commit',
@@ -81,7 +80,12 @@ function CodeContributionPage (props) {
         />
         <Banner />
       </Grid>
-      <Grid item xs={12} >
+      <Grid item xs={2} >
+      </Grid>
+      <Grid item xs={8} >
+        I am a graph
+      </Grid>
+      <Grid item xs={2} >
       </Grid>
       <Grid item xs={1} >
       </Grid>

@@ -6,13 +6,13 @@ import ProjectListPage from './ProjectListPage';
 import OverviewPage from './OverviewPage';
 import PrivateRoute from './PrivateRoute';
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
+import CodeContributionPage from "./components/CodeContributionsPage/CodeContributionPage";
 import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
 import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
 import NotFound from './components/NotFound';
 import './style/App.css'
 
 function App() {
-
   return (
     <BrowserRouter>
         <Switch>
@@ -24,8 +24,8 @@ function App() {
             <PrivateRoute exact path='/overview/:project_id/:member_id' component={OverviewPage} />
             <PrivateRoute exact path='/overview/:project_id/:member_id/commentContribution' component={CommentContributionPage} />
             <PrivateRoute exact path='/overview/:project_id/:member_id/issueContribution' component={IssueContributionPage} />
-            <Route exact path='/project/:project_id/:member_id/codecontributions' component={CodeContributionPage} />
-          <Route component={NotFound} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id/codecontributions' component={CodeContributionPage} />
+            <Route component={NotFound} />
         </Switch>
     </BrowserRouter>
   );

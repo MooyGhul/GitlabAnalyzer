@@ -40,7 +40,7 @@ function CodeContributionRow(props) {
           <Collapse in={open || openAll} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <h2>Code Diff</h2>
-              <div>To be Added...</div>
+              <div>This feature is coming soon.</div>
             </Box>
           </Collapse>
         </TableCell>

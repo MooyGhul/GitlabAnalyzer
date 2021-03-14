@@ -7,6 +7,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import {useParams} from "react-router-dom";
+import {useHistory} from "react-router";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -22,8 +23,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function OverviewPage() {
+  const history = useHistory();
   const classes = useStyles();
-  const {member_id} = useParams();
+  const {member_id, project_id} = useParams();
+  const codeContributionsURL = "/overview/" + project_id + "/" + member_id + "/codecontributions";
 
   return (
     <Grid container spacing={2} className={classes.grid}>
@@ -33,6 +36,7 @@ function OverviewPage() {
       </Grid>
 
       <Grid container>
+        <h3 onClick={() => (history.push(codeContributionsURL))}> Go to Code Contributions </h3>
         <Charts />
       </Grid>
       <DataFetching />
