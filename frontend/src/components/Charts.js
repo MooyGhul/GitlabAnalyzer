@@ -1,7 +1,6 @@
 import React,{useState} from "react";
 import CommentContributionBarChart from "./CommentContribution";
 import CodeContributionStackedBarChart from "./CodeContribution";
-import IssueBarChart from "./IssueContribution"; 
 import StackedBarChartPanel from "./StackedBarChartPanel";
 import {Comments} from "../mockDataDir/mockCodeContri";
 import {Contributions} from "../mockDataDir/mockGraphContri";
@@ -10,7 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "./Calendar";
 import StackedBarChart from './StackedBarChart'; 
-import BarChart from './BarChart';
+import CommentBarChart from './BarChart';
+import IssueBarChart from './IssueBarChart'
 import { Typography } from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 
@@ -89,11 +89,11 @@ const Charts = () => {
           </Grid>
           <Grid item xs={5} >
             <Typography variant="h5" className={styles.graphTitle}>Comment Contribution</Typography>
-            <BarChart data={commentsDataProp} comment={true}/>
+            <CommentBarChart data={commentsDataProp}/>
           </Grid>
           <Grid item xs={5} >
             <Typography variant="h5" className={styles.graphTitle}>Issue Contribution</Typography>
-            <BarChart data={issuesDataProp} issue={true}/>
+            <IssueBarChart data={issuesDataProp}/>
           </Grid>
         </Grid>
       </Grid>

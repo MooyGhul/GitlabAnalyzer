@@ -1,6 +1,13 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
+//TODO: insert page routing
+const graphClick = () => {
+  return(
+    <div>{console.log('test bar chart button click')}</div>
+  )
+}
+
 const options = {
     scales: {
         yAxes: [
@@ -16,7 +23,8 @@ const options = {
                 stacked: true,
             }
         ]
-    }
+    }, 
+    onClick: graphClick,
 }
 
 const StackedBarChart = ({data}) => {
@@ -32,12 +40,12 @@ const StackedBarChart = ({data}) => {
       {
         label: '# MRs Per Day',
         data: numMergeRequests,
-        backgroundColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgb(252, 128, 83)',
       },
       {
         label: '#Commits Per Day',
         data: numCommits,
-        backgroundColor: 'rgb(54, 162, 235)',
+        backgroundColor: 'rgb(97, 121, 255)',
       },
     ],
   }
