@@ -27,7 +27,7 @@ const CommentContributionPage = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const commentResult = await axios.get(
-                `/project/25513/member/${member_id}/comments`
+                `http://localhost:8080/project/${project_id}/member/${member_id}/comments`
             );
             setComments(commentResult.data);
             const commentCounts = getGraphData(commentResult.data);
@@ -51,7 +51,7 @@ const CommentContributionPage = (props) => {
                 <Header pageTitle={"Comments"}/>
                 <Banner memberName={member_id} />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={8} className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
                 <CommentBarChart data={graphData}/>
             </Grid>
