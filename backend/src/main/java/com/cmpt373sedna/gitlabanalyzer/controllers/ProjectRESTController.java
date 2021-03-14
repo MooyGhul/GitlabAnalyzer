@@ -58,8 +58,8 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(p.getIssuesEntities());
         this.commentEntityRepository.saveAll(p.getComments());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
-        this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
-        this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
+        //this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
+        //this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
     }
 
     @GetMapping("/all")
