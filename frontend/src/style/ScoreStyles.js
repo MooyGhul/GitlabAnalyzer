@@ -6,12 +6,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "2vh",
     [theme.breakpoints.up("lg")]: {
       width: "20vw",
-      height: "80%",
+      height: "30%",
       marginTop: "3vh",
     },
     [theme.breakpoints.down("md")]: {
       width: "35vw",
-      height: "80%",
+      height: "50%",
     },
     [theme.breakpoints.down("sm")]: {
       width: "30vw",

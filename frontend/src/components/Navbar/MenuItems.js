@@ -1,27 +1,27 @@
 export const MenuItems = [
   {
     title: 'Overall',
-    url: '#',
+    url: '/overview/:project_id/:member_id',
     cName: 'nav-links'
   },
   {
-    title: 'Code Contri',
-    url: '#',
+    title: 'Code Contribution',
+    url: '/overview/:project_id/:member_id/CodeContribution',
     cName: 'nav-links'
   },
   {
-    title: 'Issue Contri',
-    url: '#',
+    title: 'Issue Contribution',
+    url: '/overview/:project_id/:member_id/issueContribution',
     cName: 'nav-links'
   },
   {
-    title: 'Comment Contri',
-    url: '#',
+    title: 'Comment Contribution',
+    url: '/overview/:project_id/:member_id/CommentContribution',
     cName: 'nav-links'
   },
   {
     title: 'Sign Out',
-    url: '#',
+    url: '/overview/:project_id/:member_id/*',
     cName: 'nav-links-mobile'
   },
 ]
