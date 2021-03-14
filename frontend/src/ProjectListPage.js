@@ -6,7 +6,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./style/projectList.module.css";
 import { useStyles } from "./style/ProjectListPageStyle";
-import Grid from "@material-ui/core/Grid";
 
 function ProjectListPage(props) {
   const history = useHistory();
@@ -65,41 +64,39 @@ function ProjectListPage(props) {
 
   return (
     <div>
-      
-          <Header pageTitle="Project List" />
-      
-        <div className={styles.projectList}>
-          <div style={{ display: "flex", height: "100%", marginTop: "5%" }}>
-            <div style={{ flexGrow: 2 }}>
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={10}
-                checkboxSelection
-                onSelectionModelChange={(e) => getValue(e)}
-              />
-            </div>
+      <Header pageTitle="Project List" />
+
+      <div className={styles.projectList}>
+        <div style={{ display: "flex", height: "100%", marginTop: "5%" }}>
+          <div style={{ flexGrow: 2 }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              pageSize={10}
+              checkboxSelection
+              onSelectionModelChange={(e) => getValue(e)}
+            />
           </div>
         </div>
-        <h3 className={classes.errorMsg}>{errorMsg}</h3>
-         
-        <Button
-          variant="contained"
-          color="primary"
-          className={classes.analyzeButton}
-          onClick={buttonClickHandler}
-        >
-          Next
-        </Button>
+      </div>
+      <h3 className={classes.errorMsg}>{errorMsg}</h3>
 
-        <Button
-          variant="contained"
-          color="secondary"
-          className={classes.batchButton}
-        >
-          Batch Process
-        </Button>
-        
+      <Button
+        variant="contained"
+        color="primary"
+        className={classes.analyzeButton}
+        onClick={buttonClickHandler}
+      >
+        Next
+      </Button>
+
+      <Button
+        variant="contained"
+        color="secondary"
+        className={classes.batchButton}
+      >
+        Batch Process
+      </Button>
     </div>
   );
 }

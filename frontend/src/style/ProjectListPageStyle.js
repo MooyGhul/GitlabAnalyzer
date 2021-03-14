@@ -10,6 +10,7 @@ const useStyles = makeStyles({
       position: "absolute",
       bottom: "5%",
       left: "55%",
+      width: "9%"
     },
 
     errorMsg:{
