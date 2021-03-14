@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.lang.Nullable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.Instant;
@@ -20,6 +21,8 @@ public class IssueEntity {
     private int issueIid;
     private int projectId;
     private String issueName;
+    @Column(columnDefinition = "TEXT")
+    private String issueDescription;
     private @Nullable String assignee;
     private @Nullable Instant openedDate;
     private @Nullable Instant closedDate;
@@ -36,6 +39,7 @@ public class IssueEntity {
                 .issueIid(json.getInt("iid"))
                 .projectId(json.getInt("project_id"))
                 .issueName(json.getString("title"))
+                .issueDescription(json.getString("description"))
                 .assignee(!JSONObject.NULL.equals(assigneeObject) ? assigneeObject.getString("name") : null)
                 .openedDate(Instant.parse(json.getString("created_at")))
                 .closedDate(closedDateString == null ? null : Instant.parse(closedDateString))
