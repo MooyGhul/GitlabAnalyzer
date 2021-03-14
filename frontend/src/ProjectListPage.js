@@ -63,9 +63,7 @@ function ProjectListPage(props) {
     } else { 
       console.log("multiple projects have been selected ");
     }
-  };   
-
- 
+  };    
 
   return (
     <div>
