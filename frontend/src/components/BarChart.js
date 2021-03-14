@@ -37,20 +37,10 @@ const BarChart = ({data, issue, comment, codeContribution, barLabel1, barColour1
 
     if (issue) {
         yAxis1 = data.map(d => d.IssueWordCount);
-        /*
-        options.onClick = () => {
-            history.push(`/overview/${project_id}/${member_id}/issueContribution`);
-        }
-        */
     }
 
     if (comment) {
         yAxis1  = data.map(d => d.comments);
-        /*
-        options.onClick = () => {
-            history.push(`/overview/${project_id}/${member_id}/commentContribution`);
-        }
-        */
     }
 
     if (codeContribution) {
@@ -59,10 +49,7 @@ const BarChart = ({data, issue, comment, codeContribution, barLabel1, barColour1
 
         options.scales.yAxes[0]['stacked'] = true;
         options.scales['xAxes'] = [{'stacked': true}];
-        /*
-        options.onClick = () => {
-            history.push(`/overview/${project_id}/${member_id}/codeContribution`);
-        };*/
+        
         dataConfig.datasets.push({
             label: barLabel2, 
             data: yAxis2, 
