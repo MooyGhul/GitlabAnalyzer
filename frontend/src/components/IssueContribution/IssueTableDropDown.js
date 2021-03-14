@@ -3,11 +3,10 @@ import React from 'react';
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import useState from 'react';
 
 const Row = (props) => {
     const {row} = props;
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = React.useState(false);
     const styles = useStyles(); 
 
     const OnButtonClick = () => {
