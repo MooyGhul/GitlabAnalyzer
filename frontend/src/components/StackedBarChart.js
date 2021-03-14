@@ -27,23 +27,23 @@ const StackedBarChart = ({data}) => {
   }
 
   const dataConfig = {
-    labels: ['1', '2', '3', '4', '5', '6'],
+    labels: labels,
     datasets: [
       {
         label: '# MRs Per Day',
-        data: [12, 19, 3, 5, 2, 3],
+        data: numMergeRequests,
         backgroundColor: 'rgb(255, 99, 132)',
       },
       {
         label: '#Commits Per Day',
-        data: [2, 3, 20, 5, 1, 4],
+        data: numCommits,
         backgroundColor: 'rgb(54, 162, 235)',
       },
     ],
   }
   
   return(
-      <Bar data={dataConfig} options={options}/>
+      <Bar data={dataConfig} options={options}>{console.log(data)}</Bar>
   )
 }
 
