@@ -1,6 +1,7 @@
 {
   "id": "ed899a2f4b50b4370feeea94676502b42383c746",
   "short_id": "ed899a2f4b5",
+  "project_id": "3",
   "title": "Replace sanitize with escape once",
   "author_name": "Example User",
   "author_email": "user@example.com",
