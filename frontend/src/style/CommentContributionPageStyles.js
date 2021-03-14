@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
         bottom: "1vh",
         right: "1vw",
         backgroundColor: "#7553ff",
-        width: "8vw",
+        width: "8%",
         color: theme.palette.common.white
     },
     expandBody: {
