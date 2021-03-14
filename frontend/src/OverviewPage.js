@@ -6,6 +6,7 @@ import "./OverviewPage.css";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
+import Navbar from './components/Navbar/Navbar';
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -25,10 +26,15 @@ function OverviewPage() {
   return (
     <Grid container spacing={2} className={classes.grid}>
       <Grid container>
+        <Grid item xs={12} >
+          <Navbar />
+        </ Grid>
+      </Grid>
+      {/*<Grid container>
         <Header pageTitle="Overview Test" />
         <Banner />
       </Grid>
-
+      */}
       <Grid container>
         <Charts />
       </Grid>

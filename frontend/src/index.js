@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import Navbar from './components/Navbar/Navbar';
 import reportWebVitals from './reportWebVitals';
+import Grid from '@material-ui/core/Grid';
+import OverviewPage from './OverviewPage';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Navbar />
+    <OverviewPage />
   </React.StrictMode>,
   document.getElementById('root')
 );
