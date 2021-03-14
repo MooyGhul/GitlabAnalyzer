@@ -5,12 +5,9 @@ import {IssuesWordCount} from "../mockDataDir/MockIssues";
 import Grid from '@material-ui/core/Grid';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "./Calendar";
-import CodeContributionBarChart from './Charts/CodeContributionBarChart'; 
-import CommentBarChart from './Charts/CommentBarChart';
-import IssueBarChart from './Charts/IssueBarChart'
 import { Typography } from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
-import BarChart from './Charts/BarChart';
+import BarChart from './BarChart';
 import BarChartStyles from '../style/BarChartStyles';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
