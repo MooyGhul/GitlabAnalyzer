@@ -54,8 +54,8 @@ public class ProjectController {
         this.members = this.extractor.getRepoMembers(this.config, this.projectId);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
-        this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
-        this.MRDiffs = this.getAndParseMergeRequestsDiffs();
+        // this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
+        // this.MRDiffs = this.getAndParseMergeRequestsDiffs();
 
         return this;
     }
