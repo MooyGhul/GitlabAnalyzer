@@ -22,8 +22,8 @@ const options = {
 }
 
 const CommentBarChart = ({data}) => {
-    var labels = data.map(d => d.year); 
-    var yAxis = data.map(d => d.comments);
+  var labels = data.map(d => d.year); 
+  var yAxis  = data.map(d => d.comments);
 
     const dataConfig = {
         labels: labels,
@@ -37,7 +37,7 @@ const CommentBarChart = ({data}) => {
       }
 
     return (
-        <Bar data={dataConfig} options={options}/>
+        <Bar data={dataConfig} options={options}>{console.log(data)}</Bar>
     )
 }
 

@@ -55,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
     },
     graph: {
         margin: "1% auto 0 auto",
+    }, 
+    graphTitle: {
+        textAlign: 'center', 
+        fontWeight: 'bold',
     }
 }));
 

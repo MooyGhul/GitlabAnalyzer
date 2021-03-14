@@ -11,7 +11,6 @@ import IssueBarChart from '../Charts/IssueBarChart'
 
 const IssueContributionPage = (props) => {
     const styles = useStyles(); 
-    const dateVar = props.date;
     const [issuesData] = useState(IssuesWordCount); 
 
     return (
@@ -21,7 +20,7 @@ const IssueContributionPage = (props) => {
                 <Banner/>
             </Grid>
             <Grid item xs={8} className={styles.text}>
-                <Typography variant="h5" className={styles.dateText}>Issues created for {dateVar}</Typography>
+                <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
                 <IssueBarChart data={issuesData}/>
             </Grid>
             <Grid item xs={8}>

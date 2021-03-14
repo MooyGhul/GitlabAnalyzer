@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
     text: {
         textAlign: 'center'
     },
-    dateText: {
+    graphTitle: {
         textAlign: 'center', 
         fontWeight: 'bold',
     },

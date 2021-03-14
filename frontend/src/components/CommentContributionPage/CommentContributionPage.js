@@ -3,7 +3,7 @@ import {
     Paper, Table, TableBody,
     TableCell, TableContainer,
     TableHead,
-    TableRow,
+    TableRow, Typography,
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -12,7 +12,7 @@ import {useParams} from "react-router";
 import Header from "../Header";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
-import CommentContributionBarChart from "../CommentContribution";
+import CommentBarChart from "../Charts/CommentBarChart";
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 
@@ -51,8 +51,9 @@ const CommentContributionPage = (props) => {
                 <Header pageTitle={"Comments"}/>
                 <Banner memberName={member_id} />
             </Grid>
-            <Grid item className={classes.graph}>
-                <CommentContributionBarChart commentsDataProp={graphData}/>
+            <Grid item xs={8}>
+                <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
+                <CommentBarChart data={graphData}/>
             </Grid>
             <Grid item className={classes.accordian} >
                 <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>
