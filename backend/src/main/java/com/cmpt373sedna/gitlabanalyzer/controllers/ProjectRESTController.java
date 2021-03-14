@@ -30,6 +30,9 @@ public class ProjectRESTController {
     private CommitEntityRepository commitRepository;
 
     @Autowired
+    private CommentEntityRepository commentEntityRepository;
+
+    @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
     @Autowired
@@ -53,6 +56,7 @@ public class ProjectRESTController {
         this.projectRepository.save(new ProjectEntity(p.getProjectId(), p.getProjectName(), p.getNumCommits(), p.getNumMR(), p.getNumComments()));
         this.commitRepository.saveAll(p.getCommitEntities());
         this.issueRepository.saveAll(p.getIssuesEntities());
+        this.commentEntityRepository.saveAll(p.getComments());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
         //this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
         //this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
