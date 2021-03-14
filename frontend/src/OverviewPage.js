@@ -7,6 +7,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import Navbar from './components/Navbar/Navbar';
+import {useParams} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -23,12 +24,14 @@ const useStyles = makeStyles((theme) => ({
 
 function OverviewPage() {
   const classes = useStyles();
+  const {member_id} = useParams();
+
   return (
     <Grid container spacing={2} className={classes.grid}>
       <Grid container>
         <Header pageTitle="Overview Test" />
         {/* <Navbar /> */}
-        <Banner />
+        <Banner memberName={member_id}/>
       </Grid>
       <Grid container>
         <Charts />
