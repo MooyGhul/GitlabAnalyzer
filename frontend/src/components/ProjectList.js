@@ -15,7 +15,9 @@ const ProjectList = (props) => {
     useEffect(() => {    
         
           const fetchData = async () => {
-            const result = await axios.get('http://localhost:8080/project/all')
+            const result = await axios.get(
+                process.env.NODE_ENV === 'development' ? `${process.env.REACT_APP_DEVHOST}/project/all` :
+                'http://localhost:8080/project/all')
             
             setData(result.data);
           };

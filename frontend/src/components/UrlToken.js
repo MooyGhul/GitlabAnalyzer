@@ -18,8 +18,16 @@ function UrlToken() {
     const [loginToken, setLoginToken] = useState('');
 
     const authenticateToken  = async () => {
-        await axios.post('http://localhost:8080/project/create?token='+ urlToken.token);
-        await axios.post('http://localhost:8080/project/add?url='+ urlToken.url)
+        let tokenUrl = `http://localhost:8080/project/create?token=${urlToken.token}`;
+        let addUrl = `http://localhost:8080/project/add?url=${urlToken.url}`;
+
+        if(process.env.NODE_ENV === 'development') {
+            tokenUrl = `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}`
+            addUrl = `${process.env.REACT_APP_DEVHOST}/project/add?url=${urlToken.url}`
+        }
+
+        await axios.post(tokenUrl);
+        await axios.post(addUrl)
         .then(function(response){
             console.log(response.status);
             if (response.status === 200){
