@@ -8,10 +8,10 @@ const useStyles = makeStyles((theme) => ({
 
   memberList: {
     position: "absolute",
-    width: "60%",
+    width: "65%",
     height: "30%",
-    top: "58%",
-    right: "10%",
+    top: "60%",
+    left: "30%",
   },
 
   barChart: {

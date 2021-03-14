@@ -35,7 +35,6 @@ function ProjectListPage(props) {
   let projectIdArray = [];
 
   const getValue = (e) => {
-    console.log(e.selectionModel);
     projectIdArray = e.selectionModel;
     return projectIdArray;
   };
