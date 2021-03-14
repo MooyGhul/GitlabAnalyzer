@@ -5,8 +5,6 @@ import {useParams} from "react-router";
 
 
 const BarChart = ({data, issue, comment, codeContribution, barLabel1, barColour1, barLabel2, barColour2}) => {
-    const history = useHistory();
-    const {project_id, member_id} = useParams();
     var xAxis = data.map(d => d.year); 
     var yAxis1;
     var yAxis2; 
@@ -49,7 +47,7 @@ const BarChart = ({data, issue, comment, codeContribution, barLabel1, barColour1
 
         options.scales.yAxes[0]['stacked'] = true;
         options.scales['xAxes'] = [{'stacked': true}];
-        
+
         dataConfig.datasets.push({
             label: barLabel2, 
             data: yAxis2, 
