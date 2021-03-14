@@ -29,7 +29,11 @@ const ScoreBoard = (props) => {
       setMergeRequestCount(mergeRequests.data.length);
       setCommitCount(commits.data.length);
     };
-    fetchData();
+    fetchData().then(() => {
+      console.log("Obtained MR and Issue Counts");
+    }).catch(() => {
+      console.log("Failed to get counts");
+    });
   }, [project_id, member_id]);
 
   const handleFile = (newLanguage) => {
