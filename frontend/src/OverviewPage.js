@@ -26,15 +26,14 @@ function OverviewPage() {
   return (
     <Grid container spacing={2} className={classes.grid}>
       <Grid container>
-        <Grid item xs={12} >
           <Navbar />
-        </ Grid>
-      </Grid>
-      {/*<Grid container>
+          <Banner />
+      </Grid> 
+      {/* <Grid container>
         <Header pageTitle="Overview Test" />
         <Banner />
-      </Grid>
-      */}
+      </Grid> */}
+     
       <Grid container>
         <Charts />
       </Grid>
