@@ -12,9 +12,10 @@ import {useParams} from "react-router";
 import Header from "../Header";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
-import CommentBarChart from "../Charts/CommentBarChart";
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
+import BarChart from '../BarChart';
+import BarChartStyles from '../../style/BarChartStyles';
 
 const CommentContributionPage = (props) => {
     const [comments, setComments] = useState([]);
@@ -53,7 +54,7 @@ const CommentContributionPage = (props) => {
             </Grid>
             <Grid item xs={8} className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
-                <CommentBarChart data={graphData}/>
+                <BarChart data={graphData} comment={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.comments.barColour}/>
             </Grid>
             <Grid item className={classes.accordian} >
                 <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>

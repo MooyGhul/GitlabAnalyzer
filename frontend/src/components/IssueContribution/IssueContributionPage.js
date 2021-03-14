@@ -7,7 +7,8 @@ import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
 import {rows} from '../../mockDataDir/MockIssueTable'
-import IssueBarChart from '../Charts/IssueBarChart'
+import BarChart from '../BarChart';
+import BarChartStyles from '../../style/BarChartStyles';
 
 const IssueContributionPage = (props) => {
     const styles = useStyles(); 
@@ -21,7 +22,7 @@ const IssueContributionPage = (props) => {
             </Grid>
             <Grid item xs={8} className={styles.text}>
                 <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
-                <IssueBarChart data={issuesData}/>
+                <BarChart data={issuesData} issue={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.issues.barColour}/>
             </Grid>
             <Grid item xs={8}>
                 <TableContainer className={styles.table}>
