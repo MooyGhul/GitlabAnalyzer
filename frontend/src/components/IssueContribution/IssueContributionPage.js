@@ -2,15 +2,12 @@ import { Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody,
 import Header from '../Header';
 import Banner from "../Banner";
 import React from 'react';
-import IssueBarChart from '../IssueContribution';
 import {useState} from 'react';
 import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
 import {rows} from '../../mockDataDir/MockIssueTable'
-import StackedBarChart from '../StackedBarChart';
-import BarChart from '../BarChart'
-import {Contributions} from "../../mockDataDir/mockGraphContri";
+import IssueBarChart from '../Charts/IssueBarChart'
 
 const IssueContributionPage = (props) => {
     const styles = useStyles(); 
@@ -25,7 +22,7 @@ const IssueContributionPage = (props) => {
             </Grid>
             <Grid item xs={8} className={styles.text}>
                 <Typography variant="h5" className={styles.dateText}>Issues created for {dateVar}</Typography>
-                <BarChart data={issuesData} issue={true}/>
+                <IssueBarChart data={issuesData}/>
             </Grid>
             <Grid item xs={8}>
                 <TableContainer className={styles.table}>

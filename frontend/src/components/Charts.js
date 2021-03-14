@@ -1,27 +1,17 @@
 import React,{useState} from "react";
-import CommentContributionBarChart from "./CommentContribution";
-import CodeContributionStackedBarChart from "./CodeContribution";
-import StackedBarChartPanel from "./StackedBarChartPanel";
 import {Comments} from "../mockDataDir/mockCodeContri";
 import {Contributions} from "../mockDataDir/mockGraphContri";
 import {IssuesWordCount} from "../mockDataDir/MockIssues";
 import Grid from '@material-ui/core/Grid';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "./Calendar";
-import StackedBarChart from './StackedBarChart'; 
-import CommentBarChart from './BarChart';
-import IssueBarChart from './IssueBarChart'
+import CodeContributionBarChart from './Charts/CodeContributionBarChart'; 
+import CommentBarChart from './Charts/CommentBarChart';
+import IssueBarChart from './Charts/IssueBarChart'
 import { Typography } from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 
 let contributions = Contributions;
-
-const allKeys = ["MRDaily", "CommitDaily"];
-
-const colors = {
-  "MRDaily": "#66c2a5",
-  "CommitDaily": "#a6d854"
-};
 
 const useStyles = makeStyles((theme) => ({
   graphTitle: {
@@ -55,7 +45,6 @@ const filterData = (data,startDate,endDate) => {
 };
 
 const Charts = () => {
-    const [keys, setKeys] = useState(allKeys);
     const [commentsData] = useState(Comments);
     const [contributionsData] = useState(contributions);
     const [issuesData] = useState(IssuesWordCount); 
@@ -65,7 +54,6 @@ const Charts = () => {
 
     const handleStartDate = (newDate) => {setStartDate(newDate)};
     const handleEndDate = (newDate) => {setEndDate(newDate)};
-    const handleKeys = (newKey) => {setKeys(newKey)};
     const styles = useStyles(); 
 
     let contributionsDataProp = contributionsData;
@@ -85,7 +73,7 @@ const Charts = () => {
         <Grid container spacing={5} justify='center'>
           <Grid item xs={5}>
             <Typography variant="h5" className={styles.graphTitle}>Code Contribution</Typography>
-            <StackedBarChart data={contributionsDataProp}/>
+            <CodeContributionBarChart data={contributionsDataProp}/>
           </Grid>
           <Grid item xs={5} >
             <Typography variant="h5" className={styles.graphTitle}>Comment Contribution</Typography>
