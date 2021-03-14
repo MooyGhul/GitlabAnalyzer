@@ -34,12 +34,15 @@ public class IssueEntity {
         o = json.get("closed_at");
         String closedDateString = !JSONObject.NULL.equals(o) ? json.getString("created_at") : null;
 
+        o = json.get("description");
+        String descriptionString = !JSONObject.NULL.equals(o) ? json.getString("description") : null;
+
         return IssueEntity.builder()
                 .issueId(json.getInt("id"))
                 .issueIid(json.getInt("iid"))
                 .projectId(json.getInt("project_id"))
                 .issueName(json.getString("title"))
-                .issueDescription(json.getString("description"))
+                .issueDescription(!JSONObject.NULL.equals(o) ? json.getString("description") : null)
                 .assignee(!JSONObject.NULL.equals(assigneeObject) ? assigneeObject.getString("name") : null)
                 .openedDate(Instant.parse(json.getString("created_at")))
                 .closedDate(closedDateString == null ? null : Instant.parse(closedDateString))
