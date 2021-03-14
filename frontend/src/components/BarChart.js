@@ -17,8 +17,10 @@ const BarChart = ({data, comment, issue}) => {
     var labels = data.map(d => d.year); 
     var yAxis; 
     var dataTitle; 
+    
     if (comment) {
         dataTitle = '# of Comments';
+        yAxis = data.map(d => d.comments);
     }
 
     if (issue) {
