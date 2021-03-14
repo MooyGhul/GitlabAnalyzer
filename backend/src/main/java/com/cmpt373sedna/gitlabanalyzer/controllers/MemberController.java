@@ -1,13 +1,7 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffVersionsEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffsEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestDiffsRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestDiffsVersionsRepository;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
+import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +14,9 @@ public class MemberController {
 
     @Autowired
     private CommitEntityRepository commitRepository;
+
+    @Autowired
+    private IssueEntityRepository issueRepository;
 
     @Autowired
     private MergeRequestDiffsVersionsRepository mergeRequestDiffVersionRepository;
@@ -49,5 +46,10 @@ public class MemberController {
     @GetMapping("/merge_requests/{merge_request_iid}/diffId/{versionId}")
     Iterable<MergeRequestDiffsEntity> getMergeRequestDiffs(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "versionId") int versionId) {
         return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndVersionId(projectId, MRIid, versionId);
+    }
+
+    @GetMapping("/{memberName}/issues")
+    Iterable<IssueEntity> getMemberIssues(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "memberName") String assignee) {
+        return this.issueRepository.findAllByProjectIdAndAssignee(projectId, assignee);
     }
 }
