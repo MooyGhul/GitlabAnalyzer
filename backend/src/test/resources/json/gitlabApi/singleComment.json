@@ -2,6 +2,8 @@
   "id": 302,
   "body": "closed",
   "attachment": null,
+  "project_id": 2,
+  "wordCount": 1,
   "author": {
     "id": 1,
     "username": "pipin",
