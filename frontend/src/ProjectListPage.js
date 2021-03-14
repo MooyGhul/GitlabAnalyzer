@@ -21,7 +21,6 @@ function ProjectListPage(props) {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get("http://localhost:8080/project/all");
-
       setData(result.data);
     };
     fetchData();
