@@ -49,13 +49,9 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-<<<<<<< HEAD
-    "css-loader": "^5.0.1",
-    "prettier": "2.2.1"
-=======
+  "devDependencies": { 
+    "prettier": "2.2.1",
     "@material-ui/icons": "^4.11.2",
     "css-loader": "^5.0.1"
->>>>>>> origin/master
   }
 }
