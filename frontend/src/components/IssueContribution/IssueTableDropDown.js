@@ -1,12 +1,12 @@
 import {TableCell, TableRow, IconButton, Collapse, Box, Typography } from '@material-ui/core';
-import React from 'react';
+import React, {useState} from "react";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 const Row = (props) => {
     const {row} = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const styles = useStyles(); 
 
     const OnButtonClick = () => {
