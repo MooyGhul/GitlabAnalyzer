@@ -64,16 +64,16 @@ const CommentContributionPage = (props) => {
                     <Table>
                         <TableHead>
                             <TableRow className={classes.head}>
-                                <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Date</TableCell>
-                                <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Author</TableCell>
-                                <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Word Count</TableCell>
-                                <TableCell align="left" style={{fontWeight: "bold", fontSize: "1.2rem"}}>Comment Type</TableCell>
+                                <TableCell align="left" className={classes.headCell}>Date</TableCell>
+                                <TableCell align="left" className={classes.headCell}>Author</TableCell>
+                                <TableCell align="left" className={classes.headCell}>Word Count</TableCell>
+                                <TableCell align="left" className={classes.headCell}>Comment Type</TableCell>
                                 <TableCell />
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {comments.map(comment => (
-                                <CommentRow key={comment.commentId} comment={comment} expandAll={expandAll} setExpandall={setExpandAll}/>
+                                <CommentRow key={comment.commentId} comment={comment} expandAll={expandAll} />
                             ))}
                         </TableBody>
                     </Table>

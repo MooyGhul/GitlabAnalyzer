@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#d1d0ff",
         color: theme.palette.common.white,
     },
+    headCell: {
+        fontWeight: "bold",
+        fontSize: "1.2rem"
+    },
     table: {
         margin: "10% auto 0 auto",
         width: "90%"
@@ -29,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
         bottom: "1vh",
         right: "1vw",
         backgroundColor: "#7553ff",
+        width: "8vw",
         color: theme.palette.common.white
     },
     expandBody: {

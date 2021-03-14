@@ -11,9 +11,13 @@ const CommentRow = (props) => {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
+    const handleDropDown = () => {
+        setOpen(!open)
+    };
+
     return (
         <Fragment>
-            <TableRow onClick={() => setOpen(!open)}>
+            <TableRow onClick={handleDropDown}>
                 <TableCell component="th" scope="row">
                     <Typography gutterBottom component="div">
                         {formatTableDate(comment.commentDate)}
