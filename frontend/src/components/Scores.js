@@ -39,15 +39,15 @@ const Scores = (props) => {
       <Grid item lg={6} md={12} sm={12}>
         <Card className={classes.card1}>
           <CardContent>
-            <section className={classes.titles}>
+            {/* <section className={classes.titles}>
               <p className={classes.title}>Total Commit</p>
               <p className={classes.title}>Total MR</p>
             </section>
-            <Divider />
-            <section className={classes.values}>
+            <Divider /> */}
+            {/* <section className={classes.values}>
               <p>{commitCount ? commitCount : "N/A"}</p>
               <p>{mergeRequestCount ? mergeRequestCount : "N/A"}</p>
-            </section>
+            </section> */}
           </CardContent>
         </Card>
       </Grid>

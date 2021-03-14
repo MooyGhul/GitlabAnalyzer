@@ -3,15 +3,15 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   card1: {
     backgroundColor: "#e4e3ff",
-    marginTop: "2vh",
+    // marginTop: "2vh",
     [theme.breakpoints.up("lg")]: {
       width: "20vw",
-      height: "30%",
+      height: "100%",
       marginTop: "3vh",
     },
     [theme.breakpoints.down("md")]: {
       width: "35vw",
-      height: "50%",
+      height: "80%",
     },
     [theme.breakpoints.down("sm")]: {
       width: "30vw",
