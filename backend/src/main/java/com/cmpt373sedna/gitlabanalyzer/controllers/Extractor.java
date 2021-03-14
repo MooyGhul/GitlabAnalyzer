@@ -52,6 +52,16 @@ public class Extractor {
         return mergeRequests;
     }
 
+    public List<JSONObject> getMergeRequestsDiff(ConfigEntity config, int projectId, int mergeRequestId, int mergeRequestVersionId) {
+        List<JSONObject> MRDiffVersions = getJsonObjectsList(buildUri(config,projectId,mergeRequestId + "/versions/" + mergeRequestVersionId));
+        return MRDiffVersions;
+    }
+
+    public List<JSONObject> getMergeRequestsDiffVersions(ConfigEntity config, int projectId, int mergeRequestId) {
+        List<JSONObject> MRDiffs = getJsonObjectsList(buildUri(config,projectId,mergeRequestId + "/versions/"));
+        return MRDiffs;
+    }
+
     public List<JSONObject> getIssues(ConfigEntity config, int projectId) {
         return getJsonObjectsList(buildUri(config, projectId, "issues"));
     }
