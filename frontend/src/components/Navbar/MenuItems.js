@@ -1,7 +1,7 @@
 export const MenuItems = [
   {
     title: 'Overall',
-    url: '/overview/:project_id/:member_id',
+    url: '/overview/2/katelynk',
     cName: 'nav-links'
   },
   {
