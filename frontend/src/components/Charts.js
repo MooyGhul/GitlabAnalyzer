@@ -10,6 +10,8 @@ import CommentBarChart from './Charts/CommentBarChart';
 import IssueBarChart from './Charts/IssueBarChart'
 import { Typography } from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
+import BarChart from './Charts/BarChart';
+import BarChartStyles from '../style/BarChartStyles';
 
 let contributions = Contributions;
 
@@ -73,15 +75,17 @@ const Charts = () => {
         <Grid container spacing={5} justify='center'>
           <Grid item xs={5}>
             <Typography variant="h5" className={styles.graphTitle}>Code Contribution</Typography>
-            <CodeContributionBarChart data={contributionsDataProp}/>
+            <BarChart data={contributionsDataProp} codeContribution={true} barLabel1={BarChartStyles.codeContribution.labelMRs} 
+                barColour1={BarChartStyles.codeContribution.barColourMRs} barLabel2={BarChartStyles.codeContribution.labelCommits} 
+                barColour2={BarChartStyles.codeContribution.barColourCommits}/>
           </Grid>
           <Grid item xs={5} >
             <Typography variant="h5" className={styles.graphTitle}>Comment Contribution</Typography>
-            <CommentBarChart data={commentsDataProp}/>
+            <BarChart data={commentsDataProp} comment={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.comments.barColour}/>
           </Grid>
           <Grid item xs={5} >
             <Typography variant="h5" className={styles.graphTitle}>Issue Contribution</Typography>
-            <IssueBarChart data={issuesDataProp}/>
+            <BarChart data={issuesDataProp} issue={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.issues.barColour}/>
           </Grid>
         </Grid>
       </Grid>
