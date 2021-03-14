@@ -25,15 +25,14 @@ function OverviewPage() {
   const classes = useStyles();
   return (
     <Grid container spacing={2} className={classes.grid}>
-      <Grid container>
+      {/* <Grid container>
           <Navbar />
           <Banner />
-      </Grid> 
-      {/* <Grid container>
+      </Grid>  */}
+      <Grid container>
         <Header pageTitle="Overview Test" />
         <Banner />
-      </Grid> */}
-     
+      </Grid>
       <Grid container>
         <Charts />
       </Grid>
