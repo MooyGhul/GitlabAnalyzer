@@ -54,13 +54,8 @@ public class ProjectRESTController {
         this.commitRepository.saveAll(p.getCommitEntities());
         this.issueRepository.saveAll(p.getIssuesEntities());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
-<<<<<<< HEAD
-        // this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
-        // this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
-=======
         //this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
         //this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
->>>>>>> origin/master
     }
 
     @GetMapping("/all")
