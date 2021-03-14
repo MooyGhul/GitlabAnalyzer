@@ -9,6 +9,10 @@ import {IssuesWordCount} from "../mockDataDir/MockIssues";
 import Grid from '@material-ui/core/Grid';
 import "react-datepicker/dist/react-datepicker.css";
 import Calendar from "./Calendar";
+import StackedBarChart from './StackedBarChart'; 
+import BarChart from './BarChart';
+import { Typography } from '@material-ui/core';
+import {makeStyles} from "@material-ui/core/styles";
 
 let contributions = Contributions;
 
@@ -18,6 +22,13 @@ const colors = {
   "MRDaily": "#66c2a5",
   "CommitDaily": "#a6d854"
 };
+
+const useStyles = makeStyles((theme) => ({
+  graphTitle: {
+      textAlign: 'center', 
+      fontWeight: 'bold',
+  },
+}))
 
 // This part will be replaced when backend data is retrieved.
 // Now I dont know what type of data will provided. 
@@ -55,6 +66,7 @@ const Charts = () => {
     const handleStartDate = (newDate) => {setStartDate(newDate)};
     const handleEndDate = (newDate) => {setEndDate(newDate)};
     const handleKeys = (newKey) => {setKeys(newKey)};
+    const styles = useStyles(); 
 
     let contributionsDataProp = contributionsData;
     let commentsDataProp = commentsData;
@@ -70,24 +82,18 @@ const Charts = () => {
         <Grid item xs={6} >
           <Calendar startDate={startDate} endDate={endDate} onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
         </Grid>
-        <Grid container spacing={5} >
-          <Grid item xs={5} >
-            <CodeContributionStackedBarChart startDate={startDate} endDate={endDate} contributionsDataProp={contributionsDataProp} keys={keys} colors={colors} />
-
+        <Grid container spacing={5} justify='center'>
+          <Grid item xs={5}>
+            <Typography variant="h5" className={styles.graphTitle}>Code Contribution</Typography>
+            <StackedBarChart data={contributionsDataProp}/>
           </Grid>
           <Grid item xs={5} >
-            <CommentContributionBarChart className="charts" commentsDataProp={commentsDataProp}/>
+            <Typography variant="h5" className={styles.graphTitle}>Comment Contribution</Typography>
+            <BarChart data={commentsDataProp} comment={true}/>
           </Grid>
-        </Grid>
-        <Grid item xs={6} >
-          <div className="fields">
-            <StackedBarChartPanel colors={colors} keys={keys} allKeys={allKeys} onKeyChange={handleKeys} />
-          </div>
-        </Grid>
-
-        <Grid container spacing={5}>
-          <Grid item xs={6}> 
-            <IssueBarChart classname="charts" issuesDataProp={issuesDataProp}/>
+          <Grid item xs={5} >
+            <Typography variant="h5" className={styles.graphTitle}>Issue Contribution</Typography>
+            <BarChart data={issuesDataProp} issue={true}/>
           </Grid>
         </Grid>
       </Grid>

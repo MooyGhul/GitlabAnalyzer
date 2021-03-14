@@ -43,7 +43,7 @@ const StackedBarChart = ({data}) => {
   }
   
   return(
-      <Bar data={dataConfig} options={options}>{console.log(data)}</Bar>
+      <Bar data={dataConfig} options={options}/>
   )
 }
 

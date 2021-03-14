@@ -41,7 +41,7 @@ const BarChart = ({data, comment, issue}) => {
       }
 
     return (
-        <Bar data={dataConfig} options={options}>{console.log(issue)}</Bar>
+        <Bar data={dataConfig} options={options}/>
     )
 }
 
