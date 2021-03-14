@@ -7,7 +7,7 @@ import moment from "moment";
 import Banner from "../Banner";
 import {useParams} from "react-router-dom";
 
-function CodeContributionPage (props) {
+function CodeContributionPage () {
   const [commitData, setCommitData] = useState([]);
   const [mrData, setMRData] = useState([]);
   const [codeContributionRows, setCodeContributionRows] = useState([]);
@@ -60,17 +60,12 @@ function CodeContributionPage (props) {
 
     };
     fetchData()
-      .then(res => {
+      .then(()=> {
         console.log('Successful data retrieval');
       }).catch(() => {
       console.log('Failed retrieve data');
     });
   },[projectId, memberId, codeContributionRows, codeContributionData]);
-
-  // console.log(commitData);
-  // console.log(mrData);
-  // console.log('Rows: ');
-  // console.log(codeContributionRows);
 
   return(
     <Grid container spacing={4}>
@@ -83,7 +78,7 @@ function CodeContributionPage (props) {
       <Grid item xs={2} >
       </Grid>
       <Grid item xs={8} >
-        I am a graph
+        **I am a graph**
       </Grid>
       <Grid item xs={2} >
       </Grid>

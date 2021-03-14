@@ -22,9 +22,12 @@ function App() {
             <PrivateRoute exact path='/projectList' component={ProjectListPage} />
             <PrivateRoute exact path='/projectInfo/:projectId' component={ProjectInfoPage} />
             <PrivateRoute exact path='/overview/:project_id/:member_id' component={OverviewPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id/commentContribution' component={CommentContributionPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id/issueContribution' component={IssueContributionPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id/codecontributions' component={CodeContributionPage} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id/commentContribution'
+                          component={CommentContributionPage} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id/issueContribution'
+                          component={IssueContributionPage} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id/codecontributions'
+                          component={CodeContributionPage} />
             <Route component={NotFound} />
         </Switch>
     </BrowserRouter>
