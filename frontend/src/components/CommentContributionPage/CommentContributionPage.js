@@ -27,7 +27,7 @@ const CommentContributionPage = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const commentResult = await axios.get(
-                `http://localhost:8080/project/25513/member/${member_id}/comments`
+                `/project/25513/member/${member_id}/comments`
             );
             setComments(commentResult.data);
             const commentCounts = getGraphData(commentResult.data);
