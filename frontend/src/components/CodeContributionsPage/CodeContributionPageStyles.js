@@ -6,6 +6,8 @@ export const useTableStyles = makeStyles({
   },
   banner:{
     background: '#d1d0ff',
+    font: 'bold',
+    fontSize: '1.2rem'
   },
 });
 
@@ -14,6 +16,9 @@ export const usePaginationStyle = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+  icons: {
+    background: 'white',
+  }
 }));
 
 export const useRowStyles = makeStyles({
@@ -32,6 +37,9 @@ export const useRowStyles = makeStyles({
   cIcon: {
     color: 'white',
     background: '#E7AC3A',
+  },
+  dropDownIcon: {
+    background: 'white',
   }
 });
 

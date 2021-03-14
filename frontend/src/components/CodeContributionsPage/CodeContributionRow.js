@@ -23,7 +23,8 @@ function CodeContributionRow(props) {
       <TableRow hover role ="checkbox" tabIndex={-1} className={classes.root}>
         <TableCell>
           <IconButton size='small' onClick={() => setOpen(!open)}>
-            {open || openAll ? <ExpandLess /> : <ExpandMore />}
+            {open || openAll ? <ExpandLess className={classes.dropDownIcon} />
+                              : <ExpandMore className={classes.dropDownIcon} />}
           </IconButton>
         </TableCell>
         <TableCell className={classes.cell} align="left" component='th' scope='row'>
@@ -35,7 +36,7 @@ function CodeContributionRow(props) {
         <TableCell className={classes.cell} align="left">{row.score}</TableCell>
       </TableRow>
       <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0, background: '#f1f0fc' }} colSpan={6}>
           <Collapse in={open || openAll} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <h2>Code Diff</h2>

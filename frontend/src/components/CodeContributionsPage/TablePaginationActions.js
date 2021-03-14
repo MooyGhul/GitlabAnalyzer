@@ -41,22 +41,26 @@ function TablePaginationActions(props) {
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
       >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+        {theme.direction === 'rtl' ? <LastPageIcon className={classes.icons} />
+                                  : <FirstPageIcon className={classes.icons}/>}
       </IconButton>
       <IconButton onClick={handleBackButtonClick} disabled={page === 0} >
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+        {theme.direction === 'rtl' ? <KeyboardArrowRight className={classes.icons}/>
+                                  : <KeyboardArrowLeft className={classes.icons} />}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
       >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+        {theme.direction === 'rtl' ? <KeyboardArrowLeft className={classes.icons}/>
+                                  : <KeyboardArrowRight className={classes.icons}/>}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
       >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === 'rtl' ? <FirstPageIcon className={classes.icons} />
+                                  : <LastPageIcon className={classes.icons} />}
       </IconButton>
     </div>
   );

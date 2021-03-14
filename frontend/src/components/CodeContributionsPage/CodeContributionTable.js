@@ -43,14 +43,15 @@ function CodeContributionTable (props) {
       <TableContainer>
         <Table stickyHeader className={classes.table}>
           <TableHead>
-            <TableRow className={classes.banner}>
-              <TableCell>
+            <TableRow>
+              <TableCell className={classes.banner}>
                 <IconButton size='small' onClick={() => setOpenAll(!openAll)}>
-                  {openAll ? <ExpandLess /> : <ExpandMore />}
+                  {openAll ? <ExpandLess className={classes.banner} />
+                          : <ExpandMore className={classes.banner} />}
                 </IconButton>
-              </TableCell>
+              </TableCell >
               {columns.map((column) => (
-                <TableCell key={column.id}>
+                <TableCell className={classes.banner} key={column.id}>
                   {column.label}
                 </TableCell>
               ))}

@@ -57,23 +57,23 @@ function CodeContributionPage (props) {
 
       const resultMR = await axios.get('http://localhost:8080/project/2/merge_requests');
       setMRData(resultMR.data);
+      setCodeContributionRows(codeContributionData);
+
     };
     fetchData()
       .then(res => {
-        setCodeContributionRows(codeContributionData());
         console.log('Successful data retrieval');
       }).catch(() => {
       console.log('Failed retrieve data');
     });
   },[projectId, memberId, codeContributionRows, codeContributionData]);
 
-  console.log(commitData);
-  console.log(mrData);
-  console.log('Rows: ');
-  console.log(codeContributionRows);
+  // console.log(commitData);
+  // console.log(mrData);
+  // console.log('Rows: ');
+  // console.log(codeContributionRows);
 
   return(
-
     <Grid container spacing={4}>
       <Grid item xs={12} >
         <Header
@@ -83,8 +83,12 @@ function CodeContributionPage (props) {
       </Grid>
       <Grid item xs={12} >
       </Grid>
-      <Grid item xs={11}>
+      <Grid item xs={1} >
+      </Grid>
+      <Grid item xs={10}>
         <CodeContributionTable codeContributionRows={codeContributionRows}/>
+      </Grid>
+      <Grid item xs={1} >
       </Grid>
     </Grid>
  );
