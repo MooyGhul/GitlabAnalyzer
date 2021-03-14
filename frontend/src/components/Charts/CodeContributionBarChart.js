@@ -1,12 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-
-//TODO: insert page routing
-const graphClick = () => {
-  return(
-    <div>{console.log('test bar chart button click')}</div>
-  )
-}
+import { useHistory } from 'react-router-dom';
+import {useParams} from "react-router";
 
 const options = {
     scales: {
@@ -24,15 +19,21 @@ const options = {
             }
         ]
     }, 
-    onClick: graphClick,
+    onClick: '',
 }
 
 const CodeContributionBarChart = ({data}) => {
-  if (data) {
-    var labels = data.map(d => d.year);
-    var numMergeRequests = data.map(d => d.MRDaily);
-    var numCommits = data.map(d => d.CommitDaily);
+  var labels = data.map(d => d.year);
+  var numMergeRequests = data.map(d => d.MRDaily);
+  var numCommits = data.map(d => d.CommitDaily);
+  const history = useHistory();
+  const {project_id, member_id} = useParams();
+
+  const graphClick = () => {
+    history.push(`/overview/${project_id}/${member_id}/codeContribution`);
   }
+
+  options.onClick = graphClick;
 
   const dataConfig = {
     labels: labels,

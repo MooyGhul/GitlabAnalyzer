@@ -1,12 +1,7 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-
-//TODO: insert page routing
-const issueGraphClick = () => {
-    return(
-        <div>{console.log('issue graph click')}</div>
-    )
-}
+import { useHistory } from 'react-router-dom';
+import {useParams} from "react-router";
 
 const options = {
     scales: {
@@ -18,12 +13,20 @@ const options = {
         },
       ],
     },
-    onClick: issueGraphClick,
+    onClick: '',
 }
 
 const IssueBarChart = ({data}) => {
     var labels = data.map(d => d.year); 
     var yAxis = data.map(d => d.IssueWordCount);
+    const history = useHistory();
+    const {project_id, member_id} = useParams();
+
+    const issueGraphClick = () => {
+      history.push(`/overview/${project_id}/${member_id}/issueContribution`);
+    }
+
+    options.onClick = issueGraphClick;
 
     const dataConfig = {
         labels: labels,
