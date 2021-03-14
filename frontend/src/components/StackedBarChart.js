@@ -21,7 +21,7 @@ const options = {
 
 const StackedBarChart = ({data}) => {
   if (data) {
-    var labels = data.map(d => {return d.year});
+    var labels = data.map(d => d.year);
     var numMergeRequests = data.map(d => d.MRDaily);
     var numCommits = data.map(d => d.CommitDaily);
   }
