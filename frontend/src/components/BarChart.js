@@ -17,15 +17,18 @@ const BarChart = ({data, comment, issue}) => {
     var labels = data.map(d => d.year); 
     var yAxis; 
     var dataTitle; 
+    var backgroundColour;
     
     if (comment) {
         dataTitle = '# of Comments';
         yAxis = data.map(d => d.comments);
+        backgroundColour = 'rgba(52, 225, 235)';
     }
 
     if (issue) {
         dataTitle = 'Issue Word Count';
         yAxis = data.map(d => d.IssueWordCount);
+        backgroundColour = 'rgba(174, 118, 219)';
     }
 
 
@@ -35,7 +38,7 @@ const BarChart = ({data, comment, issue}) => {
           {
             label: dataTitle,
             data: yAxis,
-            backgroundColor: 'rgba(255, 99, 132)',
+            backgroundColor: backgroundColour,
           },
         ],
       }
