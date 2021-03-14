@@ -12,6 +12,7 @@ import { Typography } from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 import BarChart from './Charts/BarChart';
 import BarChartStyles from '../style/BarChartStyles';
+import Button from '@material-ui/core/Button';
 
 let contributions = Contributions;
 
@@ -74,17 +75,24 @@ const Charts = () => {
         </Grid>
         <Grid container spacing={5} justify='center'>
           <Grid item xs={5}>
-            <Typography variant="h5" className={styles.graphTitle}>Code Contribution</Typography>
+            <Button className={styles.graphTitle} fullWidth>
+              <Typography variant="h5" className={styles.graphTitle}>Code Contribution</Typography>
+            </Button>
             <BarChart data={contributionsDataProp} codeContribution={true} barLabel1={BarChartStyles.codeContribution.labelMRs} 
                 barColour1={BarChartStyles.codeContribution.barColourMRs} barLabel2={BarChartStyles.codeContribution.labelCommits} 
                 barColour2={BarChartStyles.codeContribution.barColourCommits}/>
+
           </Grid>
           <Grid item xs={5} >
-            <Typography variant="h5" className={styles.graphTitle}>Comment Contribution</Typography>
+            <Button className={styles.graphTitle} fullWidth>
+              <Typography variant="h5" className={styles.graphTitle}>Comment Contribution</Typography>
+            </Button>
             <BarChart data={commentsDataProp} comment={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.comments.barColour}/>
           </Grid>
           <Grid item xs={5} >
-            <Typography variant="h5" className={styles.graphTitle}>Issue Contribution</Typography>
+            <Button className={styles.graphTitle} fullWidth>
+              <Typography variant="h5" className={styles.graphTitle}>Issue Contribution</Typography>
+            </Button>
             <BarChart data={issuesDataProp} issue={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.issues.barColour}/>
           </Grid>
         </Grid>
