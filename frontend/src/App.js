@@ -7,9 +7,9 @@ import OverviewPage from './OverviewPage';
 import PrivateRoute from './PrivateRoute';
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
 import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
+import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
 import NotFound from './components/NotFound';
 import './style/App.css'
-import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
 
 function App() {
 
@@ -22,7 +22,7 @@ function App() {
             <PrivateRoute exact path='/projectList' component={ProjectListPage} />
             <PrivateRoute exact path='/projectInfo/:projectId' component={ProjectInfoPage} />
             <PrivateRoute exact path='/overview/:project_id/:member_id' component={OverviewPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id/comments' component={CommentContributionPage} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id/commentContribution' component={CommentContributionPage} />
             <PrivateRoute exact path='/overview/:project_id/:member_id/issueContribution' component={IssueContributionPage} />
             <Route component={NotFound} />
         </Switch>

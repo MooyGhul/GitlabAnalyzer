@@ -49,7 +49,7 @@ const CommentContributionPage = (props) => {
         <Grid container className={classes.root}>
             <Grid item>
                 <Header pageTitle={"Comments"}/>
-                <Banner />
+                <Banner memberName={member_id} />
             </Grid>
             <Grid item className={classes.graph}>
                 <CommentContributionBarChart commentsDataProp={graphData}/>
