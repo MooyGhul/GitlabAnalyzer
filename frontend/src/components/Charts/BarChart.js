@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import {useParams} from "react-router";
 
 
-const BarChart = ({data, issue, comment, barLabel1, barColour1, barLabel2, barColour2}) => {
+const BarChart = ({data, issue, comment, codeContribution, barLabel1, barColour1, barLabel2, barColour2}) => {
     const history = useHistory();
     const {project_id, member_id} = useParams();
     var labels = data.map(d => d.year); 
@@ -37,28 +37,32 @@ const BarChart = ({data, issue, comment, barLabel1, barColour1, barLabel2, barCo
 
     if (issue) {
         yAxis1 = data.map(d => d.IssueWordCount);
+        /*
         options.onClick = () => {
             history.push(`/overview/${project_id}/${member_id}/issueContribution`);
         }
+        */
     }
 
     if (comment) {
         yAxis1  = data.map(d => d.comments);
+        /*
         options.onClick = () => {
             history.push(`/overview/${project_id}/${member_id}/commentContribution`);
         }
+        */
     }
 
-    if (barLabel2 && barColour2) {
+    if (codeContribution) {
         yAxis1 = data.map(d => d.MRDaily);
         yAxis2 = data.map(d => d.CommitDaily);
 
-        options.scales.yAxes['stacked'] = true;
-        options.scales['xAxes'] = {'stacked': true};
+        options.scales.yAxes[0]['stacked'] = true;
+        options.scales['xAxes'] = [{'stacked': true}];
+        /*
         options.onClick = () => {
             history.push(`/overview/${project_id}/${member_id}/codeContribution`);
-        };
-
+        };*/
         dataConfig.datasets.push({
             label: barLabel2, 
             data: yAxis2, 
