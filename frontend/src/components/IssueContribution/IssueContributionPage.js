@@ -30,9 +30,10 @@ const IssueContributionPage = (props) => {
                 <Banner memberName={member_id}/>
               </Grid>
             </Grid>
-            <Grid item xs={8} className={styles.text}>
-                <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
-                <BarChart data={issuesData} issue={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.issues.barColour}/>
+            <Grid container justify='center' alignItems='center' spacing={5}>
+              <Grid item xs={8} className={styles.text}>
+                  <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
+                  <BarChart data={issuesData} issue={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.issues.barColour}/>
               </Grid>
               <Grid item xs={8}>
                   <TableContainer className={styles.table}>
@@ -53,6 +54,7 @@ const IssueContributionPage = (props) => {
                       </Table>
                   </TableContainer>
               </Grid>
+            </Grid>
         </Grid>
     )
 }
