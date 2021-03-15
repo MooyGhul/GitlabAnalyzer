@@ -1,6 +1,6 @@
-import { DataGrid } from "@material-ui/data-grid";
-import { useHistory } from "react-router-dom"; 
-import { useStyles } from "./AllProjectInfoStyle";
+import {DataGrid} from "@material-ui/data-grid";
+import {useHistory} from "react-router-dom"; 
+import {useStyles} from "./AllProjectInfoStyle";
 
 function MemberList(props){
     let members = props.members
@@ -31,7 +31,7 @@ function MemberList(props){
     
       const buttonClickHandler = (e) => {
         console.log(e.row.id);
-        history.push("/overview/" + projectID + "/" + e.row.id);
+        history.push("/overview/" + projectID + "/" + e.row.studentID);
       };
       
     return(
