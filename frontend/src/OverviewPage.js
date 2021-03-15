@@ -22,11 +22,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function OverviewPage() {
+const OverviewPage = () => {
   const history = useHistory();
   const classes = useStyles();
-  const {member_id, project_id} = useParams();
-  const codeContributionsURL = "/overview/" + project_id + "/" + member_id + "/codecontributions";
+  const {project_id, member_id} = useParams();
+
+  const onClickHandler = () => {
+    history.push(`/overview/${project_id}/${member_id}/codecontributions`);
+  };
 
   return (
     <Grid container spacing={2} className={classes.grid}>
@@ -36,7 +39,7 @@ function OverviewPage() {
       </Grid>
 
       <Grid container>
-        <h3 onClick={() => (history.push(codeContributionsURL))}> Go to Code Contributions </h3>
+        <h3 onClick={onClickHandler}> Go to Code Contributions </h3>
         <Charts />
       </Grid>
       <DataFetching />

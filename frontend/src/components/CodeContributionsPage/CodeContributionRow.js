@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, Fragment} from "react";
 import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
 import IconButton from "@material-ui/core/IconButton";
@@ -10,16 +10,12 @@ import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
 import {useRowStyles} from "./CodeContributionPageStyles";
 
-CodeContributionRow.propTypes = {
-  openAll: PropTypes.bool.isRequired,
-};
-
-function CodeContributionRow(props) {
+const CodeContributionRow = (props) => {
   const { row, openAll } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
   return (
-    <React.Fragment>
+    <Fragment>
       <TableRow hover role ="checkbox" tabIndex={-1} className={classes.root}>
         <TableCell>
           <IconButton size='small' onClick={() => setOpen(!open)}>
@@ -45,8 +41,12 @@ function CodeContributionRow(props) {
           </Collapse>
         </TableCell>
       </TableRow>
-    </React.Fragment>
+    </Fragment>
   );
 }
+
+CodeContributionRow.propTypes = {
+  openAll: PropTypes.bool.isRequired,
+};
 
 export default CodeContributionRow;

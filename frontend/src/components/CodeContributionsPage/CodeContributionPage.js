@@ -7,11 +7,11 @@ import moment from "moment";
 import Banner from "../Banner";
 import {useParams} from "react-router-dom";
 
-function CodeContributionPage () {
+const CodeContributionPage = () => {
   const [commitData, setCommitData] = useState([]);
   const [mrData, setMRData] = useState([]);
   const [codeContributionRows, setCodeContributionRows] = useState([]);
-  const {projectId, memberId} = useParams();
+  const {project_id, member_id} = useParams();
 
   const createData = (id, type, date, details, score) => {
     return {id, type, date, details, score};
@@ -50,10 +50,10 @@ function CodeContributionPage () {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resultCommit = await axios.get('http://localhost:8080/project/2/commits');
+      const resultCommit = await axios.get(`http://localhost:8080/project/${project_id}/commits`);
       setCommitData(resultCommit.data);
 
-      const resultMR = await axios.get('http://localhost:8080/project/2/merge_requests');
+      const resultMR = await axios.get(`http://localhost:8080/project/${project_id}/merge_requests`);
       setMRData(resultMR.data);
       setCodeContributionRows(codeContributionData);
 
@@ -64,7 +64,7 @@ function CodeContributionPage () {
       }).catch(() => {
       console.log('Failed retrieve data');
     });
-  },[projectId, memberId, codeContributionRows, codeContributionData]);
+  },[project_id, member_id, codeContributionRows, codeContributionData]);
 
   return(
     <Grid container spacing={4}>

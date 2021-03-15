@@ -21,7 +21,7 @@ const columns = [
   {id: 'score', label: 'Score'},
 ]
 
-function CodeContributionTable (props) {
+const CodeContributionTable = (props) => {
   const classes = useTableStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
