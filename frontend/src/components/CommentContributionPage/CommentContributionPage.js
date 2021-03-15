@@ -9,11 +9,11 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import axios from 'axios';
 import {useParams} from "react-router";
-import Header from "../Header";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
 import CommentContributionBarChart from "../CommentContribution";
 import {getGraphData} from "../../helper";
+import Navbar from '../Navbar/Navbar';
 import useStyles from "../../style/CommentContributionPageStyles";
 
 const CommentContributionPage = (props) => {
@@ -47,9 +47,14 @@ const CommentContributionPage = (props) => {
 
     return (
         <Grid container className={classes.root}>
-            <Grid item>
-                <Header pageTitle={"Comments"}/>
-                <Banner memberName={member_id} />
+            <Grid container spacing={0}>
+              <Grid item xs={12} >
+                {/*<Header pageTitle="Overview Test" />*/}
+                <Navbar />
+              </Grid>
+              <Grid item xs={12} >
+                <Banner memberName={member_id}/>
+              </Grid>
             </Grid>
             <Grid item className={classes.graph}>
                 <CommentContributionBarChart commentsDataProp={graphData}/>

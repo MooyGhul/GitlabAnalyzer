@@ -1,5 +1,4 @@
 import React from 'react';
-//import { MenuItems } from "./MenuItems";
 import './Navbar.css';
 import { Button } from './Button';
 import {useParams} from 'react-router';
@@ -9,13 +8,13 @@ const buildItems = (project_id,member_id) =>{
   return (
     [
       {
-        title: 'Overall',
-        url: `/overview/${project_id}/${member_id}`,
+        title: 'Project Info Page',
+        url: `/projectInfo/${project_id}`,
         cName: 'nav-links'
       },
       {
-        title: 'Code Contribution',
-        url: `/overview/${project_id}/${member_id}/CodeContribution`,
+        title: 'Overall Contribution',
+        url: `/overview/${project_id}/${member_id}`,
         cName: 'nav-links'
       },
       {
@@ -30,7 +29,7 @@ const buildItems = (project_id,member_id) =>{
       },
       {
         title: 'Sign Out',
-        url: `/overview/${project_id}/${member_id}/*`,
+        url: `NOT YET COMPLETED`,
         cName: 'nav-links-mobile'
       },
     ]
