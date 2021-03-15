@@ -36,7 +36,7 @@ const IssueContributionPage = (props) => {
     }, [project_id, member_id, setGraphData]);
 
     return (
-        <Grid container justify='center' alignItems='center' spacing={5}>
+        <Grid container spacing={5}>
             <Grid container spacing={0}>
               <Grid item xs={12} >
                 <Navbar />
@@ -45,28 +45,30 @@ const IssueContributionPage = (props) => {
                 <Banner memberName={member_id}/>
               </Grid>
             </Grid>
-            <Grid item xs={8} className={styles.text}>
-                <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
-                <BarChart data={graphData} issue={true} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
-            </Grid>
-            <Grid item xs={8}>
-                <TableContainer className={styles.table}>
-                    <Table aria-label="collapsible table">
-                        <TableHead className={styles.header}>
-                                <TableRow>
-                                    <TableCell className={styles.dateColumn} align='left'>Date</TableCell>
-                                    <TableCell className={styles.issueColumn} align='left'>Issue</TableCell>
-                                    <TableCell className={styles.noteColumn} align='left'>Note</TableCell>
-                                    <TableCell className={styles.dropDownColumn} align='left'/>
-                                </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {issues.map((issue) => (
-                                <Row key={issue.issueId} row={issue}/>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+            <Grid container justify='center' alignItems='center' spacing={5}>
+              <Grid item xs={8} className={styles.text}>
+                  <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
+                  <BarChart data={graphData} issue={true} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
+              </Grid>
+              <Grid item xs={8}>
+                  <TableContainer className={styles.table}>
+                      <Table aria-label="collapsible table">
+                          <TableHead className={styles.header}>
+                                  <TableRow>
+                                      <TableCell className={styles.dateColumn} align='left'>Date</TableCell>
+                                      <TableCell className={styles.issueColumn} align='left'>Issue</TableCell>
+                                      <TableCell className={styles.noteColumn} align='left'>Note</TableCell>
+                                      <TableCell className={styles.dropDownColumn} align='left'/>
+                                  </TableRow>
+                          </TableHead>
+                          <TableBody>
+                              {issues.map((issue) => (
+                                  <Row key={issue.issueId} row={issue}/>
+                              ))}
+                          </TableBody>
+                      </Table>
+                  </TableContainer>
+              </Grid>
             </Grid>
         </Grid>
     )
