@@ -1,11 +1,11 @@
 import Banner from "./components/Banner";
-import Charts from "./components/Charts";
+import Navbar from './components/Navbar/Navbar';
+import Charts from "./components/Charts/Charts";
 import DataFetching from "./components/DataFetching";
 import "./OverviewPage.css";
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
-import Navbar from './components/Navbar/Navbar';
+import {makeStyles} from "@material-ui/core/styles";
+import {Grid} from "@material-ui/core";
 import {useParams} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function OverviewPage() {
+const OverviewPage = () => {
   const classes = useStyles();
   const {member_id} = useParams();
 
@@ -41,6 +41,7 @@ function OverviewPage() {
       </Grid>
       <DataFetching />
     </Grid>
+
   );
 }
 

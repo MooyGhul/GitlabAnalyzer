@@ -3,7 +3,7 @@ import {
     Paper, Table, TableBody,
     TableCell, TableContainer,
     TableHead,
-    TableRow,
+    TableRow, Typography,
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -11,10 +11,11 @@ import axios from 'axios';
 import {useParams} from "react-router";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
-import CommentContributionBarChart from "../CommentContribution";
 import {getGraphData} from "../../helper";
 import Navbar from '../Navbar/Navbar';
 import useStyles from "../../style/CommentContributionPageStyles";
+import BarChart from '../Charts/BarChart';
+import BarChartProperties from '../Charts/BarChartProperties';
 
 const CommentContributionPage = (props) => {
     const [comments, setComments] = useState([]);
@@ -27,7 +28,7 @@ const CommentContributionPage = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const commentResult = await axios.get(
-                `/project/25513/member/${member_id}/comments`
+                `http://localhost:8080/project/${project_id}/member/${member_id}/comments`
             );
             setComments(commentResult.data);
             const commentCounts = getGraphData(commentResult.data);
@@ -56,8 +57,9 @@ const CommentContributionPage = (props) => {
                 <Banner memberName={member_id}/>
               </Grid>
             </Grid>
-            <Grid item className={classes.graph}>
-                <CommentContributionBarChart commentsDataProp={graphData}/>
+            <Grid item xs={8} className={classes.graph}>
+                <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
+                <BarChart data={graphData} comment={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour}/>
             </Grid>
             <Grid item className={classes.accordian} >
                 <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>
