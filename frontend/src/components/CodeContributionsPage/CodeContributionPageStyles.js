@@ -1,4 +1,11 @@
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
+
+export const usePageStyles = makeStyles({
+  root: {
+    margin: "10% auto 0 auto",
+    width: "90%",
+  },
+});
 
 export const useTableStyles = makeStyles({
   table:{

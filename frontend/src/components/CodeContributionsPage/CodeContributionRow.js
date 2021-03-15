@@ -9,6 +9,7 @@ import Collapse from "@material-ui/core/Collapse";
 import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
 import {useRowStyles} from "./CodeContributionPageStyles";
+import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 
 const CodeContributionRow = (props) => {
   const { row, openAll } = props;
@@ -36,7 +37,7 @@ const CodeContributionRow = (props) => {
           <Collapse in={open || openAll} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <h2>Code Diff</h2>
-              <div>This feature is coming soon.</div>
+              <div>{ComingSoonMsg.msg}</div>
             </Box>
           </Collapse>
         </TableCell>

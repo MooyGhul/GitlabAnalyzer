@@ -7,14 +7,7 @@ import * as PropTypes from "prop-types";
 import React from "react";
 import {usePaginationStyle} from "./CodeContributionPageStyles";
 
-TablePaginationActions.propTypes = {
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-};
-
-function TablePaginationActions(props) {
+const TablePaginationActions = (props) => {
   const classes = usePaginationStyle();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
@@ -65,5 +58,12 @@ function TablePaginationActions(props) {
     </div>
   );
 }
+
+TablePaginationActions.propTypes = {
+  count: PropTypes.number.isRequired,
+  onChangePage: PropTypes.func.isRequired,
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
+};
 
 export default TablePaginationActions;

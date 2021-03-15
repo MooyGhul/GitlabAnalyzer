@@ -6,6 +6,7 @@ import axios from "axios";
 import moment from "moment";
 import Banner from "../Banner";
 import {useParams} from "react-router-dom";
+import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 
 const CodeContributionPage = () => {
   const [commitData, setCommitData] = useState([]);
@@ -25,7 +26,7 @@ const CodeContributionPage = () => {
         'commit',
         '' + moment(createdDate).format('LLL'),
         commitData[i].commitName,
-        14));
+        ComingSoonMsg.msg));
     }
 
     for(let i = 0; i < mrData.length; i++) {
@@ -35,7 +36,7 @@ const CodeContributionPage = () => {
           'MR',
           '' + moment(mergedDate).format('LLL'),
           mrData[i].description,
-          24));
+          ComingSoonMsg.msg));
       }
     }
 
