@@ -1,12 +1,9 @@
 import {makeStyles} from '@material-ui/core/styles';
 
 export const useGraphStyles = makeStyles({
-  title : {
+  text: {
     textAlign: 'center',
     fontWeight: 'bold',
-  },
-  text: {
-    textAlign: 'center'
   },
 });
 

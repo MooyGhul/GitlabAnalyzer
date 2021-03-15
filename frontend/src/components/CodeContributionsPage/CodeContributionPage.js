@@ -82,7 +82,7 @@ const CodeContributionPage = () => {
         <Banner />
       </Grid>
       <Grid item xs={8} className={classes.text}>
-        <Typography variant="h5" className={classes.graphTitle} >Code Contributions</Typography>
+        <Typography variant="h5">Code Contributions</Typography>
         <BarChart data={graphData} codeContribution={true}
                   barLabel1={BarChartProperties.codeContribution.labelMRs}
                   barColour1={BarChartProperties.codeContribution.barColourMRs}

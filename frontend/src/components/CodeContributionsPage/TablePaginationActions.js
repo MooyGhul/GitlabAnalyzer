@@ -21,6 +21,7 @@ const TablePaginationActions = (props) => {
   };
 
   const handleNextButtonClick = (event) => {
+    console.log("Clicked!");
     onChangePage(event, page + 1);
   };
 
@@ -28,32 +29,35 @@ const TablePaginationActions = (props) => {
     onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
+  const themeDirection = (icon1, icon2) =>{
+    return theme.direction ==='rtl' ? icon1 : icon2;
+  };
+
   return (
     <div className={classes.root}>
+
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
       >
-        {theme.direction === 'rtl' ? <LastPageIcon className={classes.icons} />
-                                  : <FirstPageIcon className={classes.icons}/>}
+        {themeDirection(<LastPageIcon className={classes.icons} />, <FirstPageIcon className={classes.icons}/>)}
       </IconButton>
+
       <IconButton onClick={handleBackButtonClick} disabled={page === 0} >
-        {theme.direction === 'rtl' ? <KeyboardArrowRight className={classes.icons}/>
-                                  : <KeyboardArrowLeft className={classes.icons} />}
+        {themeDirection(<KeyboardArrowRight className={classes.icons}/>, <KeyboardArrowLeft className={classes.icons} />)}
       </IconButton>
+
       <IconButton
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
       >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft className={classes.icons}/>
-                                  : <KeyboardArrowRight className={classes.icons}/>}
-      </IconButton>
+        {themeDirection(<KeyboardArrowLeft className={classes.icons}/>, <KeyboardArrowRight className={classes.icons}/>)}
+        </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
       >
-        {theme.direction === 'rtl' ? <FirstPageIcon className={classes.icons} />
-                                  : <LastPageIcon className={classes.icons} />}
+        {themeDirection(<FirstPageIcon className={classes.icons} />, <LastPageIcon className={classes.icons} />)}
       </IconButton>
     </div>
   );
