@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     @Autowired
+    private CommentEntityRepository commentEntityRepository;
+
+    @Autowired
     private CommitEntityRepository commitRepository;
 
     @Autowired
@@ -38,6 +41,10 @@ public class MemberController {
         return this.mergeRequestRepository.findAllByProjectIdAndAuthor(projectId, author);
     }
 
+    @GetMapping("/{memberName}/comments")
+    Iterable<CommentEntity> getMemberComments(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "memberName") String author) {
+        return this.commentEntityRepository.findAllByProjectIdAndCommenter(projectId, author);
+    }
     @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/versions")
     Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "authorName") String authorName) {
         return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndAuthorName(projectId, MRIid, authorName);
