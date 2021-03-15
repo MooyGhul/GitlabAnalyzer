@@ -15,8 +15,8 @@ const AllProjectInfo = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let mrUrl = `/project/${project_id}/member/${member_id}/merge_requests`;
-      let commitUrl = `/project/${project_id}/member/${member_id}/commits`;
+      let mrUrl = `/project/${projectID}/merge_requests`;
+      let commitUrl = `/project/${projectID}/commits`;
 
       if(process.env.NODE_ENV === 'development') {
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectID}/commits`
