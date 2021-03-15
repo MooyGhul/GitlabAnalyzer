@@ -31,7 +31,7 @@ public class MergeRequestEntity {
     private @Nullable Instant mergedAt;
 
     private String author;
-    @Column(length = 250)
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private @ElementCollection List<String> commitIds;

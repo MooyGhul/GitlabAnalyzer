@@ -1,28 +1,47 @@
 import {Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, Typography} from '@material-ui/core';
 import Header from '../Header';
 import Banner from "../Banner";
-import React from 'react';
-import {useState} from 'react';
-import {IssuesWordCount} from "../../mockDataDir/MockIssues";
+import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
-import {rows} from '../../mockDataDir/MockIssueTable'
+import axios from 'axios';
+import {getIssueGraphData} from '../../helper';
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
+import {useParams} from "react-router";
 
 const IssueContributionPage = (props) => {
     const styles = useStyles(); 
-    const [issuesData] = useState(IssuesWordCount); 
+    const [issues, setIssues] = useState([]); 
+    const [graphData, setGraphData] = useState([]);
+    const {project_id, member_id} = useParams();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const issueResult = await axios.get(
+                `/project/${project_id}/member/${member_id}/issues`
+            );
+            setIssues(issueResult.data); 
+            const issueCounts = getIssueGraphData(issueResult.data);
+            setGraphData(issueCounts);
+        }
+        fetchData().then(() => {
+            console.log("Successfully obtained issues");
+        }).catch((e) => {
+            console.log("Failed to obtain issues");
+            console.log(e);
+        });
+    }, [project_id, member_id, setGraphData]);
 
     return (
         <Grid container justify='center' alignItems='center' spacing={5}>
             <Grid item xs={12}>
                 <Header pageTitle="Issue Contribution"/>
-                <Banner/>
+                <Banner memberName={member_id}/>
             </Grid>
             <Grid item xs={8} className={styles.text}>
                 <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
-                <BarChart data={issuesData} issue={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.issues.barColour}/>
+                <BarChart data={graphData} issue={true} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
             </Grid>
             <Grid item xs={8}>
                 <TableContainer className={styles.table}>
@@ -36,8 +55,8 @@ const IssueContributionPage = (props) => {
                                 </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <Row key={Row.id} row={row}/>
+                            {issues.map((issue) => (
+                                <Row key={issue.issueId} row={issue}/>
                             ))}
                         </TableBody>
                     </Table>
