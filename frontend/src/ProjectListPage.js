@@ -7,7 +7,7 @@ import axios from "axios";
 import styles from "./style/projectList.module.css";
 import { useStyles } from "./style/ProjectListPageStyle";
 
-function ProjectListPage(props) {
+const ProjectListPage = (props) => {
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
   const classes = useStyles();

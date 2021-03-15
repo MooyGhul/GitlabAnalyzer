@@ -1,8 +1,7 @@
 import React from "react";
 import styles from "./WideHeader.module.css";
  
-function WideHeader(props) {
-  
+const WideHeader = (props) => { 
  
   return (
     <div className={styles.body}>

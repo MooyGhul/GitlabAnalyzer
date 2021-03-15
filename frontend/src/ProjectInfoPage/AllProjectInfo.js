@@ -4,7 +4,7 @@ import StackedBarChart from "./StackedBarChart";
 import { useStyles } from "./AllProjectInfoStyle";
 import MemberList from "./MemberList";
 
-function AllProjectInfo(props) {
+const AllProjectInfo = (props) => {
   const classes = useStyles();
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
@@ -16,23 +16,19 @@ function AllProjectInfo(props) {
   useEffect(() => {
     const fetchData = async () => {
       const commitData = await axios.get(
-        `http://localhost:8080/project/${projectID}/commits`
+        `http://localhost:8080/project/${projectID}/commits`      
       );
 
-      setCommits(commitData.data);
-    };
-    fetchData();
-  }, [projectID]);
-
-  useEffect(() => {
-    const fetchData = async () => {
       const mrData = await axios.get(
         `http://localhost:8080/project/${projectID}/merge_requests`
       );
+
+      setCommits(commitData.data);
       setMRs(mrData.data);
     };
     fetchData();
   }, [projectID]);
+
 
   members.forEach((member) => {
     let count = 0;
