@@ -61,7 +61,7 @@ function Login() {
                     <h4 className={classes.h4}>{errorMsg}</h4>
                     <TextField id='username' classes={{root: classes.customTextField}} label='Username' value={user.name} fullWidth onChange={e=> setUser({...user, name: e.target.value})}/>
                     <TextField id='password' classes={{root: classes.customTextField}} label='Password' value={user.password} fullWidth onChange={e=> setUser({...user, password: e.target.value})}/>                
-                    <Button classes={{root: classes.customButton}} variant='contained'  onClick={() => (state.loginMethod = 1)} type ='submit' color='secondary'> Log in</Button>
+                    <Button classes={{root: classes.customButton}} variant='contained' onClick={() => (state.loginMethod = 1)} type ='submit' color='secondary'> Log in</Button>
                     <Button classes={{root: classes.customButton}} variant='contained' onClick={() => (state.loginMethod = 2)} type ='submit' color='secondary'> Login with SSO </Button>
                 </form>  
             </Box>             

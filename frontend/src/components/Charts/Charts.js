@@ -62,7 +62,7 @@ const Charts = () => {
     }
 
     const codeContributionOnClick = () => {
-      history.push(`/overview/${project_id}/${member_id}/codeContribution`);
+      history.push(`/overview/${project_id}/${member_id}/codecontribution`);
     }
     
     const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
