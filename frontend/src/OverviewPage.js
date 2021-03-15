@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function OverviewPage() {
+const OverviewPage = () => {
   const classes = useStyles();
   const {member_id} = useParams();
 
@@ -36,7 +36,9 @@ function OverviewPage() {
         <Charts />
       </Grid>
       <DataFetching />
+
     </Grid>
+
   );
 }
 

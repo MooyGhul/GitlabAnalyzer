@@ -9,4 +9,5 @@ import java.util.List;
 public interface IssueEntityRepository extends CrudRepository<IssueEntity, Integer> {
     List<IssueEntity> findAllByAssignee(String assignee);
     List<IssueEntity> findAllByProjectId(int projectId);
+    List<IssueEntity> findAllByProjectIdAndAssignee(int projectId, String assignee);
 }
