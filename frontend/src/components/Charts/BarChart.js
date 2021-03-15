@@ -1,5 +1,5 @@
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import {Bar} from 'react-chartjs-2';
 
 const BarChart = ({data, issue, comment, codeContribution, barLabel1, barColour1, barLabel2, barColour2}) => {
     var xAxis = data.map(d => d.year); 

@@ -1,4 +1,4 @@
-import { Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, Typography } from '@material-ui/core';
+import {Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, Typography} from '@material-ui/core';
 import Header from '../Header';
 import Banner from "../Banner";
 import React from 'react';
