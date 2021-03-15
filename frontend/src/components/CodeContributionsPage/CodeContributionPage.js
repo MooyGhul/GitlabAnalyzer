@@ -30,12 +30,11 @@ function CodeContributionPage () {
 
     for(let i = 0; i < mrData.length; i++) {
       if (mrData[i].status === 'merged') {
-        let createdDate = new Date(mrData[i].createdAt);
         let mergedDate = new Date(mrData[i].mergedAt);
         ccArray.push(createData(mrData[i].id,
           'MR',
-          '' + moment(createdDate).format('LLL'),
-          'Merge Request merged at ' + moment(mergedDate).format('LLL'),
+          '' + moment(mergedDate).format('LLL'),
+          mrData[i].description,
           24));
       }
     }
