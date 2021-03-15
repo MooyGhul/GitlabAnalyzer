@@ -11,6 +11,7 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "./CodeContributionPageStyles";
+import Navbar from '../Navbar/Navbar';
 
 const CodeContributionPage = () => {
   const [commitData, setCommitData] = useState([]);
@@ -74,13 +75,17 @@ const CodeContributionPage = () => {
   },[project_id, member_id, codeContributionRows, codeContributionData]);
 
   return(
-    <Grid container justify='center' alignItems='center' spacing={5}>
-      <Grid item xs={12} >
-        <Header
-          pageTitle='Code Contribution Page'
-        />
-        <Banner />
+    <Grid container>
+      <Grid container spacing={0}>
+        <Grid item xs={12} >
+          <Navbar />
+        </Grid>
+        <Grid item xs={12} >
+          <Banner memberName={member_id}/>
+        </Grid>
       </Grid>
+
+      <Grid container justify='center' alignItems='center' spacing={5}>
       <Grid item xs={8} className={classes.text}>
         <Typography variant="h5">Code Contributions</Typography>
         <BarChart data={graphData} codeContribution={true}
@@ -91,6 +96,7 @@ const CodeContributionPage = () => {
       </Grid>
       <Grid item xs={10}>
         <CodeContributionTable codeContributionRows={codeContributionRows}/>
+      </Grid>
       </Grid>
     </Grid>
  );

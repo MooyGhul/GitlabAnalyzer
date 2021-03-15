@@ -18,6 +18,11 @@ const buildItems = (project_id,member_id) =>{
         cName: 'nav-links'
       },
       {
+        title: 'Code Contribution',
+        url: `/overview/${project_id}/${member_id}/codeContribution`,
+        cName: 'nav-links'
+      },
+      {
         title: 'Issue Contribution',
         url: `/overview/${project_id}/${member_id}/issueContribution`,
         cName: 'nav-links'

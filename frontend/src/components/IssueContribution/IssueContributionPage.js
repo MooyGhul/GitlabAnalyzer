@@ -36,7 +36,7 @@ const IssueContributionPage = (props) => {
     }, [project_id, member_id, setGraphData]);
 
     return (
-        <Grid container spacing={5}>
+        <Grid container>
             <Grid container spacing={0}>
               <Grid item xs={12} >
                 <Navbar />
@@ -44,6 +44,9 @@ const IssueContributionPage = (props) => {
               <Grid item xs={12} >
                 <Banner memberName={member_id}/>
               </Grid>
+            </Grid>
+            <Grid container spacing={5}>
+            <Grid item>
             </Grid>
             <Grid container justify='center' alignItems='center' spacing={5}>
               <Grid item xs={8} className={styles.text}>
@@ -68,6 +71,7 @@ const IssueContributionPage = (props) => {
                           </TableBody>
                       </Table>
                   </TableContainer>
+              </Grid>
               </Grid>
             </Grid>
         </Grid>
