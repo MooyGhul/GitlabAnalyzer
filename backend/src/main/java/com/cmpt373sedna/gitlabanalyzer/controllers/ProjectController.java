@@ -54,8 +54,8 @@ public class ProjectController {
         this.members = this.extractor.getRepoMembers(this.config, this.projectId);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
-        this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
-        this.MRDiffs = this.getAndParseMergeRequestsDiffs();
+        //this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
+        //this.MRDiffs = this.getAndParseMergeRequestsDiffs();
 
         return this;
     }
@@ -79,11 +79,15 @@ public class ProjectController {
         List<JSONObject> comments = new ArrayList<>();
         for(IssueEntity issue : this.issuesEntities) {
             List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectId, issue.getIssueIid());
+            issueComments.forEach(comment -> comment.put("project_id", this.projectId));
+            issueComments.forEach(comment -> comment.put("comment_type_id", issue.getIssueIid()));
             comments.addAll(issueComments);
         }
 
         for(MergeRequestEntity mr : this.mergeRequestEntities) {
             List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectId, mr.getIid());
+            mrComments.forEach(comment -> comment.put("project_id", this.projectId));
+            mrComments.forEach(comment -> comment.put("comment_type_id", mr.getIid()));
             comments.addAll(mrComments);
         }
 

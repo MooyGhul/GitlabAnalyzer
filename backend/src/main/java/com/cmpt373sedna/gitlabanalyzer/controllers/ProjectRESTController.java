@@ -1,9 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
 import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +27,9 @@ public class ProjectRESTController {
     private CommitEntityRepository commitRepository;
 
     @Autowired
+    private  CommentEntityRepository commentRepository;
+
+    @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
     @Autowired
@@ -54,8 +54,9 @@ public class ProjectRESTController {
         this.commitRepository.saveAll(p.getCommitEntities());
         this.issueRepository.saveAll(p.getIssuesEntities());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
-        this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
-        this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
+        this.commentRepository.saveAll(p.getComments());
+        //this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
+        //this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
     }
 
     @GetMapping("/all")
@@ -101,5 +102,10 @@ public class ProjectRESTController {
     @GetMapping("/{projectId}/issues")
     Iterable<IssueEntity> getProjectIssues(@PathVariable(value="projectId") int projectId) {
         return this.issueRepository.findAllByProjectId(projectId);
+    }
+
+    @GetMapping("/{projectId}/comments")
+    Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId) {
+        return this.commentRepository.findAllByProjectId(projectId);
     }
 }
