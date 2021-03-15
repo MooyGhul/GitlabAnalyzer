@@ -20,8 +20,8 @@ const ScoreBoard = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      let mrUrl = `http://localhost:8080/project/${project_id}/member/${member_id}/merge_requests`;
-      let commitUrl = `http://localhost:8080/project/${project_id}/member/${member_id}/commits`;
+      let mrUrl = `/project/${project_id}/member/${member_id}/merge_requests`;
+      let commitUrl = `/project/${project_id}/member/${member_id}/commits`;
 
       if(process.env.NODE_ENV === 'development') {
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/merge_requests`

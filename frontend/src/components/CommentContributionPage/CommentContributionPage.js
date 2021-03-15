@@ -28,12 +28,14 @@ const CommentContributionPage = (props) => {
     useEffect(() => {
         const fetchData = async () => {
             const commentResult = await axios.get(
-                `http://localhost:8080/project/${project_id}/member/${member_id}/comments`
+                process.env.NODE_ENV === 'development' ?
+                    `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/comments` :
+                    `/project/${project_id}/member/${member_id}/comments`
             );
             setComments(commentResult.data);
             const commentCounts = getGraphData(commentResult.data);
             setGraphData(commentCounts);
-        }
+        };
         fetchData().then(() => {
             console.log("Successfully obtained comments");
         }).catch((e) => {

@@ -15,13 +15,16 @@ const AllProjectInfo = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const commitData = await axios.get(
-        `http://localhost:8080/project/${projectID}/commits`      
-      );
+      let mrUrl = `/project/${project_id}/member/${member_id}/merge_requests`;
+      let commitUrl = `/project/${project_id}/member/${member_id}/commits`;
 
-      const mrData = await axios.get(
-        `http://localhost:8080/project/${projectID}/merge_requests`
-      );
+      if(process.env.NODE_ENV === 'development') {
+        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectID}/commits`
+        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectID}/merge_requests`
+      }
+
+      const mrData = await axios.get(mrUrl);
+      const commitData = await axios.get(commitUrl);
 
       setCommits(commitData.data);
       setMRs(mrData.data);
@@ -65,7 +68,7 @@ const AllProjectInfo = (props) => {
         commitsArray={commitsArray}
         MRsArray={MRsArray}
         projectID={projectID}
-      ></MemberList>
+      />
     </div>
   );
 }
