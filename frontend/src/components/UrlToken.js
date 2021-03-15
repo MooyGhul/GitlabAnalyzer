@@ -15,60 +15,54 @@ function UrlToken() {
   const [urlToken, setUrlToken] = useState({ url: "", token: "" });
   const [errorMsg, setErrorMsg] = useState("");
   const [loginToken, setLoginToken] = useState("");
-  const [configID, setConfigID] = useState("");
 
-  const createConfigID = async () => {
-    return await axios
-      .post("http://localhost:8080/api/config/", {
-        url: urlToken.url,
-        token: urlToken.token,
-      })
-      .then((response) => {
-        return response;
-      })
-      .then((data) => {
-        setConfigID(data.data.id);
-      });
+  const createConfigID = async (url, token) => {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/api/config/",
+      data: { url, token },
+    }).then((res) => res.data.id);
   };
 
-  const loadAllProjects = async () => {
-    await createConfigID();
-    return await axios
-      .post("http://localhost:8080/api/config/" + configID + "/load")
+  const loadAllProjects = async (configID) => {
+    return axios({
+      method: "post",
+      url: "http://localhost:8080/api/config/" + configID + "/load",
+    })
       .then((response) => {
-        console.log(response);
-        return response;
-      })
-      .then((data) => {
-        if (data.status === 200) {
+        if (response.status === 200) {
           Authentication.onValidToken();
-          Authentication.onAuthentication();
-          console.log(data.status);
+          Authentication.onAuthentication(); 
           history.push({
             pathname: "projectList",
-            state: { id: data.data.id },
           });
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         setUrlToken({ url: urlToken.url, token: urlToken.token });
         setErrorMsg("Incorrect url or token. Please try again.");
       });
   };
 
+  const test = async (req, res) => {
+    const configID = await createConfigID(urlToken.url, urlToken.token);
+    //   console.log(configuration)
+    const response = await loadAllProjects(configID);
+    console.log(response);
+  };
+
   const addLoginToken = () => {
     console.log(window.location.href);
     const data = new URLSearchParams(window.location.search);
-    console.log(data.get('ticket'))
+    console.log(data.get("ticket"));
     setLoginToken(data.get("ticket"));
-    console.log(loginToken)
+    console.log(loginToken);
   };
 
   const nextHandler = (event) => {
     event.preventDefault();
     addLoginToken();
-    createConfigID();
-    loadAllProjects();
+    test();
   };
 
   const classes = useStyles();

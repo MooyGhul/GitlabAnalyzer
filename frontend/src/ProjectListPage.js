@@ -11,10 +11,7 @@ import { useLocation } from "react-router-dom";
 const ProjectListPage = (props) =>{
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
-  const classes = useStyles();
-  const location = useLocation();
-  const configID = location.state.id;
-  console.log(configID)
+  const classes = useStyles(); 
 
 
   const columns = [
