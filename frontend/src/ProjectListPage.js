@@ -5,8 +5,7 @@ import {DataGrid} from "@material-ui/data-grid";
 import React, {useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./style/projectList.module.css";
-import {useStyles} from "./style/ProjectListPageStyle";
-import { useLocation } from "react-router-dom";
+import {useStyles} from "./style/ProjectListPageStyle"; 
 
 const ProjectListPage = (props) =>{
   const history = useHistory();

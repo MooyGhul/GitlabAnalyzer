@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, {useState} from "react";
+import {useHistory} from "react-router-dom";
 import Authentication from "../Authentication";
 import Header from "./Header";
 import axios from "axios";
@@ -7,8 +7,8 @@ import Box from "@material-ui/core/Box";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import logo from "../logo/gitlab_analyzer.png";
-import { useStyles } from "../style/UrlTokenStyle";
-import { Grid } from "@material-ui/core";
+import {useStyles} from "../style/UrlTokenStyle";
+import {Grid} from "@material-ui/core";
 
 function UrlToken() {
   const history = useHistory();
@@ -32,7 +32,7 @@ function UrlToken() {
       .then((response) => {
         if (response.status === 200) {
           Authentication.onValidToken();
-          Authentication.onAuthentication(); 
+          Authentication.onAuthentication();
           history.push({
             pathname: "projectList",
           });
@@ -44,9 +44,8 @@ function UrlToken() {
       });
   };
 
-  const test = async (req, res) => {
+  const test = async () => {
     const configID = await createConfigID(urlToken.url, urlToken.token);
-    //   console.log(configuration)
     const response = await loadAllProjects(configID);
     console.log(response);
   };
