@@ -22,8 +22,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-evenly",
   },
+  cards: {
+    marginTop: "4vh",
+  },
   icon: {
-    backgroundColor: "#3f51b5",
+    background: "none",
   },
 }));
 

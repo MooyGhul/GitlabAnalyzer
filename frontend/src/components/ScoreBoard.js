@@ -42,7 +42,7 @@ const ScoreBoard = (props) => {
 
   return (
     <Grid container spacing={2}>
-      <Grid item lg={8} md={8} sm={8}>
+      <Grid item lg={8} md={8} sm={8} className={classes.cards}>
         <Scores
           mergeRequestCount={mergeRequestCount}
           commitCount={commitCount}
