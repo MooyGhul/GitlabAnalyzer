@@ -8,8 +8,8 @@ const buildItems = (project_id,member_id) =>{
   return (
     [
       {
-        title: 'Project Info Page',
-        url: `/projectInfo/${project_id}`,
+        title: 'Project Info Page(TODO)',
+        url: `/projectInfo/${project_id}, state: { ${project_id}, projectName: gitlabanalyzer },`,
         cName: 'nav-links'
       },
       {
