@@ -40,7 +40,6 @@ const buildItems = (project_id,member_id) =>{
 function Navbar() {
   const [clicked, setclicked] = React.useState(false);
   const {project_id, member_id} = useParams();
-  //state = { clicked: false}
   const history = useHistory();
 
   const MenuItems = buildItems(project_id,member_id);
@@ -54,9 +53,9 @@ function Navbar() {
     setclicked(!clicked);
   }
 
-  // const handleRedirect = () => {
-  //   history.push('/overview/2/katelynk')
-  // }
+  const handleRedirect = (event,url) => {
+    history.push(url);
+  }
 
   return (
     <nav className="NavbarItems">
@@ -68,8 +67,7 @@ function Navbar() {
         {MenuItems.map((item, index) => {
           return (
             <li key={index}>
-              {/* onClick={() => history.push(item.url)} */}
-              <h3 className={item.cName} onClick={() => history.push(item.url)}>
+              <h3 className={item.cName} onClick={(event) => handleRedirect(event,item.url)}>
                 {item.title}
               </h3>
             </li>
