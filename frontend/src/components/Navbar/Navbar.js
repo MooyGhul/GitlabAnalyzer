@@ -43,11 +43,6 @@ function Navbar() {
 
   const MenuItems = buildItems(project_id,member_id);
 
-  console.log("START of NAVBAR");
-  console.log("project_id is :"+project_id);
-  console.log("member_id is :"+member_id);
-  console.log("END of NAVBAR");
-
   const handleMenuClick = () => {
     setclicked(!clicked);
   }
