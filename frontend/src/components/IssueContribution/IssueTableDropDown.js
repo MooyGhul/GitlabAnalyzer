@@ -3,6 +3,7 @@ import React, {useState} from "react";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import {formatTableDate} from '../../helper';
 
 const Row = (props) => {
     const {row} = props;
@@ -16,7 +17,7 @@ const Row = (props) => {
     return (
         <React.Fragment>
             <TableRow className={styles.root}>
-                <TableCell component="th" scope="row">{row.openedDate}</TableCell>
+                <TableCell component="th" scope="row">{formatTableDate(row.openedDate)}</TableCell>
                 <TableCell>{row.issueName}</TableCell>  
                 <TableCell className={styles.noteText}>{row.issueDescription}</TableCell>
                 <TableCell>
