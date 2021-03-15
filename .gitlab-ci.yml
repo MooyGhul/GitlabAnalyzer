@@ -113,7 +113,7 @@ deploy:staging:
   tags:
     - shell
   only:
-    - develop
+    - master
 
 deploy:prod:
   stage: deploy
@@ -127,3 +127,4 @@ deploy:prod:
     - shell
   only:
     - master
+  when: manual
