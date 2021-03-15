@@ -1,4 +1,4 @@
-import {HorizontalBar} from "react-chartjs-2";
+import { HorizontalBar } from "react-chartjs-2";
 
 function StackedBarChart(props) {
   let colorListCommit = [];
