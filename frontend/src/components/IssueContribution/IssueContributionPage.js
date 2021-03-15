@@ -8,11 +8,33 @@ import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
 import {rows} from '../../mockDataDir/MockIssueTable'
+import axios from 'axios';
+import { getIssueGraphData } from '../../helper';
 
 const IssueContributionPage = (props) => {
     const styles = useStyles(); 
     const dateVar = props.date;
     const [issuesData] = useState(IssuesWordCount); 
+    const [issues, setIssues] = useState([]); 
+    const [graphData, setGraphData] = useState([]);
+    const {project_id, member_id} = useParams();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const issueResult = await axios.get(
+                `/project/${project_id}/member/${member_id}/issues`
+            );
+            setIssues(issueResult.data); 
+            const issueCounts = getIssueGraphData(issueResult.data);
+            setGraphData(issueCounts);
+        }
+        fetchData().then(() => {
+            console.log("Successfully obtained comments");
+        }).catch((e) => {
+            console.log("Failed to obtain comments");
+            console.log(e);
+        });
+    }, [project_id, member_id, setGraphData]);
 
     return (
         <Grid container justify='center' alignItems='center' spacing={5}>
