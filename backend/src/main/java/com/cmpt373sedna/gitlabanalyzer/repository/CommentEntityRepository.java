@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface CommentEntityRepository extends CrudRepository<CommentEntity, Integer> {
-    List<CommentEntity> findAllByProjectId(int projectId);
+
+public interface CommentEntityRepository extends CrudRepository<CommentEntity, Long> {
+
+    List<CommentEntity> findAllByProjectIdAndCommenter(int id, String commenter);
 }

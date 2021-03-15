@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.json.JSONObject;
 import org.springframework.lang.Nullable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.Instant;
@@ -23,6 +24,7 @@ public class IssueEntity {
     private @Nullable String assignee;
     private @Nullable Instant openedDate;
     private @Nullable Instant closedDate;
+
 
     public static IssueEntity fromGitlabJSON(JSONObject json) {
         Object o = json.get("assignee");

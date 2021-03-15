@@ -27,7 +27,7 @@ public class ProjectRESTController {
     private CommitEntityRepository commitRepository;
 
     @Autowired
-    private  CommentEntityRepository commentRepository;
+    private CommentEntityRepository commentEntityRepository;
 
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
@@ -53,8 +53,8 @@ public class ProjectRESTController {
         this.projectRepository.save(new ProjectEntity(p.getProjectId(), p.getProjectName(), p.getNumCommits(), p.getNumMR(), p.getNumComments()));
         this.commitRepository.saveAll(p.getCommitEntities());
         this.issueRepository.saveAll(p.getIssuesEntities());
+        this.commentEntityRepository.saveAll(p.getComments());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
-        this.commentRepository.saveAll(p.getComments());
         //this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
         //this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
     }
@@ -104,8 +104,9 @@ public class ProjectRESTController {
         return this.issueRepository.findAllByProjectId(projectId);
     }
 
+    /*
     @GetMapping("/{projectId}/comments")
     Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId) {
         return this.commentRepository.findAllByProjectId(projectId);
-    }
+    }*/
 }

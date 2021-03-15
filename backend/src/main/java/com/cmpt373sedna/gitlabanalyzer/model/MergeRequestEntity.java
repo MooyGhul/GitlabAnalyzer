@@ -31,6 +31,8 @@ public class MergeRequestEntity {
     private @Nullable Instant mergedAt;
 
     private String author;
+    @Column(length = 250)
+    private String description;
 
     private @ElementCollection List<String> commitIds;
 
@@ -44,6 +46,7 @@ public class MergeRequestEntity {
                     .author(json.getJSONObject("author").getString("username"))
                     .projectId(json.getInt("project_id"))
                     .status(json.getString("state"))
+                    .description(json.getString("description"))
                     .createdAt(Instant.parse(json.getString("created_at")))
                     .mergedAt(isNotBlank(mergedAt) ? sdf.parse(mergedAt).toInstant() : null)
                     .build();

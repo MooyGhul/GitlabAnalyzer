@@ -1,11 +1,12 @@
 import Banner from "./components/Banner";
 import Header from "./components/Header";
-import Charts from "./components/Charts";
+import Charts from "./components/Charts/Charts";
 import DataFetching from "./components/DataFetching";
 import "./OverviewPage.css";
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Grid } from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import {Grid} from "@material-ui/core";
+import {useParams} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -22,11 +23,13 @@ const useStyles = makeStyles((theme) => ({
 
 function OverviewPage() {
   const classes = useStyles();
+  const {member_id} = useParams();
+
   return (
     <Grid container spacing={2} className={classes.grid}>
       <Grid container>
         <Header pageTitle="Overview Test" />
-        <Banner />
+        <Banner memberName={member_id}/>
       </Grid>
 
       <Grid container>
