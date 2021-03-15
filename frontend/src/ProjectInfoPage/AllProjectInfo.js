@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import StackedBarChart from "./StackedBarChart";
-import {useStyles} from "./AllProjectInfoStyle";
+import { useStyles } from "./AllProjectInfoStyle";
 import MemberList from "./MemberList";
 
 const AllProjectInfo = (props) => {
