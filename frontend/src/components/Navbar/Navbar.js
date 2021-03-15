@@ -10,7 +10,7 @@ const buildItems = (project_id,member_id) =>{
     [
       {
         title: 'Overall',
-        url: '/overview/2/katelynk',
+        url: `/overview/${project_id}/${member_id}`,
         cName: 'nav-links'
       },
       {
@@ -39,12 +39,16 @@ const buildItems = (project_id,member_id) =>{
 
 function Navbar() {
   const [clicked, setclicked] = React.useState(false);
-  const [project_id, member_id] = useParams();
+  const {project_id, member_id} = useParams();
   //state = { clicked: false}
   const history = useHistory();
 
   const MenuItems = buildItems(project_id,member_id);
 
+  console.log("START of NAVBAR");
+  console.log("project_id is :"+project_id);
+  console.log("member_id is :"+member_id);
+  console.log("END of NAVBAR");
 
   const handleMenuClick = () => {
     setclicked(!clicked);
@@ -64,6 +68,7 @@ function Navbar() {
         {MenuItems.map((item, index) => {
           return (
             <li key={index}>
+              {/* onClick={() => history.push(item.url)} */}
               <h3 className={item.cName} onClick={() => history.push(item.url)}>
                 {item.title}
               </h3>
