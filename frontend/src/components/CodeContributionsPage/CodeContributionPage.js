@@ -57,10 +57,10 @@ const CodeContributionPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const resultCommit = await axios.get(`http://localhost:8080/project/${project_id}/commits`);
+      const resultCommit = await axios.get(`/project/${project_id}/commits`);
       setCommitData(resultCommit.data);
 
-      const resultMR = await axios.get(`http://localhost:8080/project/${project_id}/merge_requests`);
+      const resultMR = await axios.get(`/project/${project_id}/merge_requests`);
       setMRData(resultMR.data);
       setCodeContributionRows(codeContributionData);
 
