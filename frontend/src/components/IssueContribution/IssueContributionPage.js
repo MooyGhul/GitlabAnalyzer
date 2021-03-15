@@ -5,7 +5,6 @@ import React, { useEffect, useState} from 'react';
 import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
-import {rows} from '../../mockDataDir/MockIssueTable'
 import axios from 'axios';
 import {getIssueGraphData} from '../../helper';
 import BarChart from '../Charts/BarChart';
@@ -14,7 +13,6 @@ import {useParams} from "react-router";
 
 const IssueContributionPage = (props) => {
     const styles = useStyles(); 
-    const [issuesData] = useState(IssuesWordCount); 
     const [issues, setIssues] = useState([]); 
     const [graphData, setGraphData] = useState([]);
     const {project_id, member_id} = useParams();
