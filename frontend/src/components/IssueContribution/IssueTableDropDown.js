@@ -1,9 +1,8 @@
 import {TableCell, TableRow, IconButton, Collapse, Box, Typography } from '@material-ui/core';
-import React from 'react';
+import React, {useState} from "react";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import useState from 'react';
 
 const Row = (props) => {
     const {row} = props;
