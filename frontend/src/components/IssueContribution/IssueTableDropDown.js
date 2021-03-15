@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import {formatTableDate} from '../../helper';
 
 const Row = (props) => {
     const {row} = props;
@@ -16,9 +17,9 @@ const Row = (props) => {
     return (
         <React.Fragment>
             <TableRow className={styles.root}>
-                <TableCell component="th" scope="row">{row.date}</TableCell>
-                <TableCell>{row.issue}</TableCell>
-                <TableCell className={styles.noteText}>{row.note}</TableCell>
+                <TableCell component="th" scope="row">{formatTableDate(row.openedDate)}</TableCell>
+                <TableCell>{row.issueName}</TableCell>  
+                <TableCell className={styles.noteText}>{row.issueDescription}</TableCell>
                 <TableCell>
                     <IconButton aria-label="expand row" size="small" onClick={OnButtonClick}>
                         {open ? <KeyboardArrowUpIcon className={styles.icon}/> : <KeyboardArrowDownIcon className={styles.icon}/>}
@@ -29,7 +30,7 @@ const Row = (props) => {
                 <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6} className={open ? styles.dropDownRow : styles.empty}>
                     <Collapse in={open} timeout="auto" unmountOnExit >
                         <Box margin={1}>
-                            <Typography variant="h7" gutterBottom component="div">Full Note: {row.note}</Typography>
+                            <Typography variant="h7" gutterBottom component="div">Full Note: {row.issueDescription}</Typography>
                         </Box>
                     </Collapse>
                 </TableCell>

@@ -30,6 +30,19 @@ export const getGraphData = (arr) => {
     return result
 };
 
+export const getIssueGraphData = (arr) => {
+    let result = []; 
+    const groupedData = groupBy(arr, 'openedDate');
+    for(const obj in groupedData) {
+        if(groupedData.hasOwnProperty(obj)) {
+            let year = obj;
+            let issues = groupedData[year].length;
+            result.push({'year': year, 'IssueWordCount': issues});
+        }
+    }
+    return result;
+};
+
 export const formatGraphDate = (commentDate) => {
     let date = new Date(commentDate);
     let month = date.getMonth();
