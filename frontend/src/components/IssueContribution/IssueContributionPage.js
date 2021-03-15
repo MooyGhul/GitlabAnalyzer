@@ -58,8 +58,8 @@ const IssueContributionPage = (props) => {
                                 </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <Row key={Row.id} row={row}/>
+                            {issues.map((issue) => (
+                                <Row key={issue.issueId} row={issue}/>
                             ))}
                         </TableBody>
                     </Table>
