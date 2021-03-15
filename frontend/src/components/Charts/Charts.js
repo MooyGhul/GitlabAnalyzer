@@ -1,14 +1,14 @@
 import React,{useState} from "react";
-import {Comments} from "../mockDataDir/mockCodeContri";
-import {Contributions} from "../mockDataDir/mockGraphContri";
-import {IssuesWordCount} from "../mockDataDir/MockIssues";
+import {Comments} from "../../mockDataDir/mockCodeContri";
+import {Contributions} from "../../mockDataDir/mockGraphContri";
+import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import Grid from '@material-ui/core/Grid';
 import "react-datepicker/dist/react-datepicker.css";
-import Calendar from "./Calendar";
+import Calendar from "../Calendar";
 import { Typography } from '@material-ui/core';
 import {makeStyles} from "@material-ui/core/styles";
 import BarChart from './BarChart';
-import BarChartStyles from '../style/BarChartStyles';
+import BarChartProperties from './BarChartProperties';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import {useParams} from "react-router";
@@ -91,22 +91,22 @@ const Charts = () => {
             <Button className={styles.graphTitle} fullWidth onClick={codeContributionOnClick}>
               <Typography variant="h5" className={styles.graphTitle}>Code Contribution</Typography>
             </Button>
-            <BarChart data={contributionsDataProp} codeContribution={true} barLabel1={BarChartStyles.codeContribution.labelMRs} 
-                barColour1={BarChartStyles.codeContribution.barColourMRs} barLabel2={BarChartStyles.codeContribution.labelCommits} 
-                barColour2={BarChartStyles.codeContribution.barColourCommits}/>
+            <BarChart data={contributionsDataProp} codeContribution={true} barLabel1={BarChartProperties.codeContribution.labelMRs} 
+                barColour1={BarChartProperties.codeContribution.barColourMRs} barLabel2={BarChartProperties.codeContribution.labelCommits} 
+                barColour2={BarChartProperties.codeContribution.barColourCommits}/>
 
           </Grid>
           <Grid item xs={5} >
             <Button className={styles.graphTitle} fullWidth onClick={commentContributionOnClick}>
               <Typography variant="h5" className={styles.graphTitle}>Comment Contribution</Typography>
             </Button>
-            <BarChart data={commentsDataProp} comment={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.comments.barColour}/>
+            <BarChart data={commentsDataProp} comment={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour}/>
           </Grid>
           <Grid item xs={5} >
             <Button className={styles.graphTitle} fullWidth onClick={issueContributionOnClick}>
               <Typography variant="h5" className={styles.graphTitle}>Issue Contribution</Typography>
             </Button>
-            <BarChart data={issuesDataProp} issue={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.issues.barColour}/>
+            <BarChart data={issuesDataProp} issue={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.issues.barColour}/>
           </Grid>
         </Grid>
       </Grid>

@@ -1,6 +1,6 @@
 import Banner from "./components/Banner";
 import Header from "./components/Header";
-import Charts from "./components/Charts";
+import Charts from "./components/Charts/Charts";
 import DataFetching from "./components/DataFetching";
 import "./OverviewPage.css";
 import React from "react";

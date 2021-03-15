@@ -14,8 +14,8 @@ import Banner from "../Banner";
 import CommentRow from "./CommentRow";
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
-import BarChart from '../BarChart';
-import BarChartStyles from '../../style/BarChartStyles';
+import BarChart from '../Charts/BarChart';
+import BarChartProperties from '../Charts/BarChartProperties';
 
 const CommentContributionPage = (props) => {
     const [comments, setComments] = useState([]);
@@ -54,7 +54,7 @@ const CommentContributionPage = (props) => {
             </Grid>
             <Grid item xs={8} className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
-                <BarChart data={graphData} comment={true} barLabel1={BarChartStyles.comments.label} barColour1={BarChartStyles.comments.barColour}/>
+                <BarChart data={graphData} comment={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour}/>
             </Grid>
             <Grid item className={classes.accordian} >
                 <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>

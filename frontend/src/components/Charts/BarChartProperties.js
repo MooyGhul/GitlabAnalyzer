@@ -1,4 +1,4 @@
-const BarChartStyles = {
+const BarChartProperties = {
     issues: {
         label: 'Issue Word Count',
         barColour: 'rgba(174, 118, 219)',
@@ -15,4 +15,4 @@ const BarChartStyles = {
     }
 }
 
-export default BarChartStyles;
+export default BarChartProperties;
