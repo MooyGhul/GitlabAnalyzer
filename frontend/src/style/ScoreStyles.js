@@ -3,15 +3,12 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   card1: {
     backgroundColor: "#e4e3ff",
-    marginTop: "2vh",
+    height: "90%",
     [theme.breakpoints.up("lg")]: {
       width: "20vw",
-      height: "80%",
-      marginTop: "3vh",
     },
     [theme.breakpoints.down("md")]: {
       width: "35vw",
-      height: "80%",
     },
     [theme.breakpoints.down("sm")]: {
       width: "30vw",
@@ -20,31 +17,28 @@ const useStyles = makeStyles((theme) => ({
   },
   card2: {
     backgroundColor: "#e4e3ff",
-    marginTop: "2vh",
+    height: "90%",
     [theme.breakpoints.up("lg")]: {
-      width: "20vw",
-      height: "80%",
-      marginTop: "3vh",
+      width: "17vw",
     },
     [theme.breakpoints.down("md")]: {
       width: "35vw",
-      height: "80%",
     },
     [theme.breakpoints.down("sm")]: {
       width: "30vw",
       height: "80%",
     },
-    '& section p:first-of-type': {
-    }
   },
   titles: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-evenly",
-    marginBottom: "-2vh",
   },
   title: {
     fontWeight: "bold",
+    [theme.breakpoints.up("lg")]: {
+      margin: "2vh 0 2vh 0",
+    },
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.2rem",
     },
@@ -52,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   values: {
     display: "flex",
+    margin: "3vh 0 3vh 0",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.2rem",
     },
