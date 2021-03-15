@@ -2,7 +2,6 @@ import {Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, 
 import Header from '../Header';
 import Banner from "../Banner";
 import React, { useEffect, useState} from 'react';
-import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
 import axios from 'axios';
