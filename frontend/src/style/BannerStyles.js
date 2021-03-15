@@ -4,9 +4,11 @@ const useStyles = makeStyles((theme) => ({
   container: {
     [theme.breakpoints.up("lg")]: {
       height: "25vh",
+      marginTop: "8vh",
     },
     [theme.breakpoints.down("md")]: {
       height: "42vh",
+      marginTop: "9vh",
     },
     [theme.breakpoints.down("sm")]: {
       height: "36vh",
