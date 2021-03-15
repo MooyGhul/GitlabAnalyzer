@@ -26,7 +26,7 @@ function App() {
                           component={CommentContributionPage} />
             <PrivateRoute exact path='/overview/:project_id/:member_id/issueContribution'
                           component={IssueContributionPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id/codecontributions'
+            <PrivateRoute exact path='/overview/:project_id/:member_id/codecontribution'
                           component={CodeContributionPage} />
             <Route component={NotFound} />
         </Switch>
