@@ -1,8 +1,7 @@
 import {Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, Typography} from '@material-ui/core';
 import Header from '../Header';
 import Banner from "../Banner";
-import React from 'react';
-import {useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
@@ -11,6 +10,7 @@ import axios from 'axios';
 import {getIssueGraphData} from '../../helper';
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
+import {useParams} from "react-router";
 
 const IssueContributionPage = (props) => {
     const styles = useStyles(); 
@@ -29,9 +29,9 @@ const IssueContributionPage = (props) => {
             setGraphData(issueCounts);
         }
         fetchData().then(() => {
-            console.log("Successfully obtained comments");
+            console.log("Successfully obtained issues");
         }).catch((e) => {
-            console.log("Failed to obtain comments");
+            console.log("Failed to obtain issues");
             console.log(e);
         });
     }, [project_id, member_id, setGraphData]);
@@ -40,11 +40,11 @@ const IssueContributionPage = (props) => {
         <Grid container justify='center' alignItems='center' spacing={5}>
             <Grid item xs={12}>
                 <Header pageTitle="Issue Contribution"/>
-                <Banner/>
+                <Banner memberName={member_id}/>
             </Grid>
             <Grid item xs={8} className={styles.text}>
                 <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
-                <BarChart data={issuesData} issue={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.issues.barColour}/>
+                <BarChart data={graphData} issue={true} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
             </Grid>
             <Grid item xs={8}>
                 <TableContainer className={styles.table}>
