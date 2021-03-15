@@ -56,7 +56,7 @@ public class ConfigRESTController {
 
         return this.extractor.getProjects(config).stream()
                 .map(project -> this.projectEntityRepository.save(project))
-                .peek(project -> this.projectManager.loadProject(config, project))
+                .peek(project -> this.projectManager.getOrAddProject(config, project))
                 .collect(Collectors.toList());
     }
 }
