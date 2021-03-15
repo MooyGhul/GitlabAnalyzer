@@ -20,12 +20,15 @@ const ScoreBoard = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const mergeRequests = await axios.get(
-        `http://localhost:8080/project/${project_id}/member/${member_id}/merge_requests`
-      );
-      const commits = await axios.get(
-        `http://localhost:8080/project/${project_id}/member/${member_id}/commits`
-      );
+      let mrUrl = `/project/${project_id}/member/${member_id}/merge_requests`;
+      let commitUrl = `/project/${project_id}/member/${member_id}/commits`;
+
+      if(process.env.NODE_ENV === 'development') {
+        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/merge_requests`
+        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/commits`
+      }
+      const mergeRequests = await axios.get(mrUrl);
+      const commits = await axios.get(commitUrl);
       setMergeRequestCount(mergeRequests.data.length);
       setCommitCount(commits.data.length);
     };

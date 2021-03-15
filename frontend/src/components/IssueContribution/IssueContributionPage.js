@@ -10,7 +10,7 @@ import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
 import {useParams} from "react-router";
 
-const IssueContributionPage = (props) => {
+const IssueContributionPage = () => {
     const styles = useStyles(); 
 
     const [issues, setIssues] = useState([]); 
@@ -19,13 +19,14 @@ const IssueContributionPage = (props) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const issueResult = await axios.get(
+            const issueResult = await axios.get(process.env.NODE_ENV === 'development' ?
+                `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/issues` :
                 `/project/${project_id}/member/${member_id}/issues`
             );
             setIssues(issueResult.data); 
             const issueCounts = getIssueGraphData(issueResult.data);
             setGraphData(issueCounts);
-        }
+        };
         fetchData().then(() => {
             console.log("Successfully obtained issues");
         }).catch((e) => {
