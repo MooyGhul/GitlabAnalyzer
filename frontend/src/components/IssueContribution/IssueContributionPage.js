@@ -1,19 +1,19 @@
-import { Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, Typography } from '@material-ui/core';
+import {Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, Typography} from '@material-ui/core';
 import Header from '../Header';
 import Banner from "../Banner";
 import React from 'react';
-import IssueBarChart from '../IssueContribution';
 import {useState} from 'react';
 import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
 import {rows} from '../../mockDataDir/MockIssueTable'
 import axios from 'axios';
-import { getIssueGraphData } from '../../helper';
+import {getIssueGraphData} from '../../helper';
+import BarChart from '../Charts/BarChart';
+import BarChartProperties from '../Charts/BarChartProperties';
 
 const IssueContributionPage = (props) => {
     const styles = useStyles(); 
-    const dateVar = props.date;
     const [issuesData] = useState(IssuesWordCount); 
     const [issues, setIssues] = useState([]); 
     const [graphData, setGraphData] = useState([]);
@@ -43,8 +43,8 @@ const IssueContributionPage = (props) => {
                 <Banner/>
             </Grid>
             <Grid item xs={8} className={styles.text}>
-                <Typography variant="h5" className={styles.dateText}>Issues created for {dateVar}</Typography>
-                <IssueBarChart className={styles.charts} issuesDataProp={issuesData}/>
+                <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
+                <BarChart data={issuesData} issue={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.issues.barColour}/>
             </Grid>
             <Grid item xs={8}>
                 <TableContainer className={styles.table}>
