@@ -80,7 +80,7 @@ public class ProjectController {
         for(IssueEntity issue : this.issuesEntities) {
             List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectId, issue.getIssueIid());
             issueComments.forEach(comment -> comment.put("comment_type_id", issue.getIssueIid()));
-            //issueComments.forEach(comment -> comment.put("description", issue.getDescription()));
+            issueComments.forEach(comment -> comment.put("description", issue.getIssueDescription()));
             comments.addAll(issueComments);
         }
 
