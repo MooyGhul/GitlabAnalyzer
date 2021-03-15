@@ -18,7 +18,7 @@ public class IndexErrorController implements ErrorController {
     private static final String PATH = "/error";
 
     @RequestMapping(value = PATH, method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.PATCH})
-    public Object error(WebRequest webRequest) throws Throwable {
+    public Object error(WebRequest webRequest) {
         Throwable exception = new DefaultErrorAttributes().getError(webRequest);
         if (exception != null) {
             log.error("", exception);
