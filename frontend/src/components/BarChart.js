@@ -1,8 +1,5 @@
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
-import { useHistory } from 'react-router-dom';
-import {useParams} from "react-router";
-
 
 const BarChart = ({data, issue, comment, codeContribution, barLabel1, barColour1, barLabel2, barColour2}) => {
     var xAxis = data.map(d => d.year); 
