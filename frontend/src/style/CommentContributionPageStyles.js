@@ -1,14 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        width: '100%',
-        display: "flex",
-        flexDirection: "column",
-        '& > *': {
-            borderBottom: 'unset',
-        },
-    },
     head: {
         backgroundColor: "#d1d0ff",
         color: theme.palette.common.white,
@@ -18,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "1.2rem"
     },
     table: {
-        margin: "5% auto 0 auto",
+        margin: "0 auto 0 auto",
         width: "90%"
     },
     wordCount: {
@@ -54,7 +46,13 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "2vw"
     },
     graph: {
-        margin: "3% auto 0 auto",
+        margin: "0 auto 0 auto",
+        paddingTop: '100px',
+        paddingRight: '200px',
+        paddingBottom: '100px',
+        paddingLeft: '200px',
+        overflow: "visible",
+        display: "block",
     }, 
     graphTitle: {
         textAlign: 'center', 

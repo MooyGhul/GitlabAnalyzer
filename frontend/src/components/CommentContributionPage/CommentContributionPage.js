@@ -47,14 +47,13 @@ const CommentContributionPage = (props) => {
     }
 
     return (
-        <Grid container className={classes.root}>
-            <Grid container spacing={0}>
-              <Grid item xs={12} >
-                <Navbar />
-              </Grid>
-              <Grid item xs={12} >
-                <Banner memberName={member_id}/>
-              </Grid>
+
+        <Grid container justify='center' alignItems='center' spacing={5} >
+            <Grid item xs={12}>
+                <Grid item xs={12} >
+                    <Navbar />
+                </Grid>
+                <Banner memberName={member_id} />
             </Grid>
             <Grid item xs={8} className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
