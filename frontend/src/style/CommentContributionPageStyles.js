@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "1.2rem"
     },
     table: {
-        margin: "10% auto 0 auto",
+        margin: "5% auto 0 auto",
         width: "90%"
     },
     wordCount: {
@@ -54,7 +54,11 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "2vw"
     },
     graph: {
-        margin: "1% auto 0 auto",
+        margin: "3% auto 0 auto",
+    }, 
+    graphTitle: {
+        textAlign: 'center', 
+        fontWeight: 'bold',
     }
 }));
 
