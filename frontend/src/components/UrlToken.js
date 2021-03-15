@@ -38,7 +38,7 @@ function UrlToken() {
         })
         .catch(function(error){
             console.log(error.response.status);
-            if (error.response.status === 500){
+            if (error.response.status !== 200){
                 setUrlToken({url: urlToken.url, token:urlToken.token});
                 setErrorMsg('Incorrect url or token. Please try again.');
             }
