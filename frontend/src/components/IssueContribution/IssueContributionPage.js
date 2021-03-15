@@ -1,6 +1,5 @@
 import {Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, Typography} from '@material-ui/core';
 import Banner from "../Banner";
-import {IssuesWordCount} from "../../mockDataDir/MockIssues";
 import Navbar from '../Navbar/Navbar';
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/IssueContributionPageStyles'; 

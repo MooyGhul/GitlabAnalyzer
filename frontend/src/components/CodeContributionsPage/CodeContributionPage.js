@@ -1,5 +1,4 @@
 import CodeContributionTable from "./CodeContributionTable";
-import Header from "../Header";
 import {Grid, Typography} from "@material-ui/core";
 import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
