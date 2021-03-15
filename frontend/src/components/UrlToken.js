@@ -18,8 +18,8 @@ function UrlToken() {
     const [loginToken, setLoginToken] = useState('');
 
     const authenticateToken  = async () => {
-        let tokenUrl = `http://localhost:8080/project/create?token=${urlToken.token}`;
-        let addUrl = `http://localhost:8080/project/add?url=${urlToken.url}`;
+        let tokenUrl = `/project/create?token=${urlToken.token}`;
+        let addUrl = `/project/add?url=${urlToken.url}`;
 
         if(process.env.NODE_ENV === 'development') {
             tokenUrl = `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}`
