@@ -1,9 +1,12 @@
 import {makeStyles} from '@material-ui/core/styles';
 
-export const usePageStyles = makeStyles({
-  root: {
-    margin: "10% auto 0 auto",
-    width: "90%",
+export const useGraphStyles = makeStyles({
+  title : {
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  text: {
+    textAlign: 'center'
   },
 });
 
@@ -39,11 +42,11 @@ export const useRowStyles = makeStyles({
   },
   mrIcon:{
     color: 'white',
-    background: '#3AD2E7',
+    background: '#fc8053',
   },
   cIcon: {
     color: 'white',
-    background: '#E7AC3A',
+    background: '#6179ff',
   },
   dropDownIcon: {
     background: 'white',

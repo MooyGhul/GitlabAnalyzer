@@ -1,18 +1,24 @@
 import CodeContributionTable from "./CodeContributionTable";
 import Header from "../Header";
-import {Grid} from "@material-ui/core";
+import {Grid, Typography} from "@material-ui/core";
 import React, {useCallback, useEffect, useState} from "react";
 import axios from "axios";
 import moment from "moment";
 import Banner from "../Banner";
 import {useParams} from "react-router-dom";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
+import BarChart from "../Charts/BarChart";
+import BarChartProperties from "../Charts/BarChartProperties";
+import {Contributions} from "../../mockDataDir/mockGraphContri";
+import {useGraphStyles} from "./CodeContributionPageStyles";
 
 const CodeContributionPage = () => {
   const [commitData, setCommitData] = useState([]);
   const [mrData, setMRData] = useState([]);
   const [codeContributionRows, setCodeContributionRows] = useState([]);
   const {project_id, member_id} = useParams();
+  const [graphData] = useState(Contributions);
+  const classes = useGraphStyles();
 
   const createData = (id, type, date, details, score) => {
     return {id, type, date, details, score};
@@ -68,26 +74,23 @@ const CodeContributionPage = () => {
   },[project_id, member_id, codeContributionRows, codeContributionData]);
 
   return(
-    <Grid container spacing={4}>
+    <Grid container justify='center' alignItems='center' spacing={5}>
       <Grid item xs={12} >
         <Header
           pageTitle='Code Contribution Page'
         />
         <Banner />
       </Grid>
-      <Grid item xs={2} >
-      </Grid>
-      <Grid item xs={8} >
-        **I am a graph**
-      </Grid>
-      <Grid item xs={2} >
-      </Grid>
-      <Grid item xs={1} >
+      <Grid item xs={8} className={classes.text}>
+        <Typography variant="h5" className={classes.graphTitle} >Code Contributions</Typography>
+        <BarChart data={graphData} codeContribution={true}
+                  barLabel1={BarChartProperties.codeContribution.labelMRs}
+                  barColour1={BarChartProperties.codeContribution.barColourMRs}
+                  barLabel2={BarChartProperties.codeContribution.labelCommits}
+                  barColour2={BarChartProperties.codeContribution.barColourCommits}/>
       </Grid>
       <Grid item xs={10}>
         <CodeContributionTable codeContributionRows={codeContributionRows}/>
-      </Grid>
-      <Grid item xs={1} >
       </Grid>
     </Grid>
  );
