@@ -17,16 +17,23 @@ const groupBy = (arr, key) => {
     }, {});
 };
 
-export const getGraphData = (arr) => {
+export const getGraphData = (arr, key) => {
     let result = [];
-    const groupedData = groupBy(arr, "commentDate");
+    const groupedData = groupBy(arr, key);
     for(const obj in groupedData) {
         if(groupedData.hasOwnProperty(obj)) {
             let year = obj;
             let comments = groupedData[year].length;
-            result.push({"year": year, "comments": comments});
+            result.push({"year": year, "data": comments});
         }
     }
+    result = result.sort((obj1, obj2) => {
+        if(obj1.year > obj2.year) {
+            return 1;
+        } else {
+            return -1;
+        }
+    });
     return result
 };
 
