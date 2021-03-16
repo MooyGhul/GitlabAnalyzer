@@ -33,7 +33,7 @@ const CommentContributionPage = (props) => {
                     `/project/${project_id}/member/${member_id}/comments`
             );
             setComments(commentResult.data);
-            const commentCounts = getGraphData(commentResult.data);
+            const commentCounts = getGraphData(commentResult.data, "commentDate");
             setGraphData(commentCounts);
         };
         fetchData().then(() => {

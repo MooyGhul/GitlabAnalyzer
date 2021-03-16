@@ -5,7 +5,7 @@ import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
 import axios from 'axios';
-import {getIssueGraphData} from '../../helper';
+import {getGraphData} from '../../helper';
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
 import {useParams} from "react-router";
@@ -24,7 +24,7 @@ const IssueContributionPage = () => {
                 `/project/${project_id}/member/${member_id}/issues`
             );
             setIssues(issueResult.data); 
-            const issueCounts = getIssueGraphData(issueResult.data);
+            const issueCounts = getGraphData(issueResult.data, "openedDate");
             setGraphData(issueCounts);
         };
         fetchData().then(() => {
