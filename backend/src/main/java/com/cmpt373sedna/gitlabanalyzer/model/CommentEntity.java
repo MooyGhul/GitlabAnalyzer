@@ -25,7 +25,7 @@ public class CommentEntity {
     private @Nullable String commentText;
     private @Nullable String commenter;
     private @Nullable Instant commentDate;
-    private @Nullable String description;
+    private @Nullable String commentTypeName;
 
 
     public static CommentEntity fromGitlabJSON(JSONObject json) {
@@ -34,7 +34,7 @@ public class CommentEntity {
                 .commentId(json.getInt("noteable_id"))
                 .commentTypeId(json.getInt("comment_type_id"))
                 .projectId(json.getInt("project_id"))
-                .description(json.getString("description"))
+                .commentTypeName(json.getString("comment_type_name"))
                 .commenter(json.getJSONObject("author").getString("username"))
                 .commentType(json.getString("noteable_type"))
                 .wordCount(getWordCount(json.getString("body")))

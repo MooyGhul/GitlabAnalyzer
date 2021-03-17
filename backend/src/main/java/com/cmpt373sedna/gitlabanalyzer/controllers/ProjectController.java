@@ -80,14 +80,14 @@ public class ProjectController {
         for(IssueEntity issue : this.issuesEntities) {
             List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectId, issue.getIssueIid());
             issueComments.forEach(comment -> comment.put("comment_type_id", issue.getIssueIid()));
-            issueComments.forEach(comment -> comment.put("description", issue.getIssueDescription()));
+            issueComments.forEach(comment -> comment.put("comment_type_name", issue.getIssueName()));
             comments.addAll(issueComments);
         }
 
         for(MergeRequestEntity mr : this.mergeRequestEntities) {
             List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectId, mr.getIid());
             mrComments.forEach(comment -> comment.put("comment_type_id", mr.getIid()));
-            mrComments.forEach(comment -> comment.put("description", mr.getDescription()));
+            mrComments.forEach(comment -> comment.put("comment_type_name", mr.getMergeRequestName()));
             comments.addAll(mrComments);
         }
         comments.forEach(comment -> comment.put("project_id", this.projectId));

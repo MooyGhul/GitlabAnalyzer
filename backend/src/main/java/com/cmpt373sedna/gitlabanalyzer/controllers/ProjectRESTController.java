@@ -104,9 +104,15 @@ public class ProjectRESTController {
         return this.issueRepository.findAllByProjectId(projectId);
     }
 
-    /*
+
     @GetMapping("/{projectId}/comments")
     Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId) {
-        return this.commentRepository.findAllByProjectId(projectId);
-    }*/
+        return this.commentEntityRepository.findAllByProjectId(projectId);
+    }
+
+    //here commentTypeId is MRIid or IssueId
+    @GetMapping("/{projectId}/{commentTypeId}/comments")
+    Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId, @PathVariable(value="commentTypeId") int commentTypeId) {
+        return this.commentEntityRepository.findAllByProjectIdAndCommentTypeId(projectId,commentTypeId);
+    }
 }
