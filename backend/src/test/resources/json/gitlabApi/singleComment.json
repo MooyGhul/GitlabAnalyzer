@@ -18,6 +18,8 @@
   "noteable_id": 377,
   "noteable_type": "Issue",
   "noteable_iid": 377,
+  "comment_type_id": 92,
   "resolvable": false,
-  "confidential": false
+  "confidential": false,
+  "comment_type_name": "test1"
 }
