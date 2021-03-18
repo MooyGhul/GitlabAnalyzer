@@ -46,17 +46,21 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "2vw"
     },
     graph: {
-        margin: "0 auto 0 auto",
-        paddingTop: '100px',
-        paddingRight: '200px',
-        paddingBottom: '100px',
-        paddingLeft: '200px',
-        overflow: "visible",
-        display: "block",
+        // margin: "0 auto 0 auto",
+        // paddingTop: '100px',
+        // paddingRight: '200px',
+        // paddingBottom: '100px',
+        // paddingLeft: '200px',
+        // overflow: "visible",
+        // display: "block",
     }, 
     graphTitle: {
         textAlign: 'center', 
         fontWeight: 'bold',
+    },
+    pagination: {
+        flexShrink: '0',
+        paddingRight: theme.spacing(65)
     }
 }));
 
