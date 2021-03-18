@@ -73,7 +73,7 @@ const CommentContributionPage = (props) => {
                 </Grid>
             <Grid className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
-                <BarChart data={graphData} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour}/>
+                <BarChart data={graphData} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour} maintainRatio={false}/>
             </Grid>
             <Grid item >
                 <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>

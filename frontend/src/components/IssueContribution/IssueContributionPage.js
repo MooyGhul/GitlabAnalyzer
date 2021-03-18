@@ -51,7 +51,7 @@ const IssueContributionPage = () => {
             <Grid container justify='center' alignItems='center' spacing={5}>
               <Grid item xs={8} className={styles.text}>
                   <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
-                  <BarChart data={graphData} issue={true} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
+                  <BarChart data={graphData} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
               </Grid>
               <Grid item xs={8}>
                   <TableContainer className={styles.table}>

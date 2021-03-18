@@ -1,12 +1,12 @@
 import React from 'react';
 import {Bar} from 'react-chartjs-2';
 
-const BarChart = ({data,codeContribution, barLabel1, barColour1, barLabel2, barColour2}) => {
-    var xAxis = data.map(d => d.year); 
-    var yAxis1;
-    var yAxis2; 
+const BarChart = ({data,codeContribution, barLabel1, barColour1, barLabel2, barColour2, maintainRatio=true}) => {
+    let xAxis = data.map(d => d.year);
+    let yAxis1;
+    let yAxis2;
 
-    var options = {
+    let options = {
         scales: {
           yAxes: [
             {
@@ -17,9 +17,10 @@ const BarChart = ({data,codeContribution, barLabel1, barColour1, barLabel2, barC
           ],
         },
         onClick: '',
+        maintainAspectRatio: maintainRatio
     };
 
-    var dataConfig = {
+    let dataConfig = {
         labels: xAxis,
         datasets: [
           {

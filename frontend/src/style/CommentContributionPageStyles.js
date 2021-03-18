@@ -46,13 +46,9 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "2vw"
     },
     graph: {
-        // margin: "0 auto 0 auto",
-        // paddingTop: '100px',
-        // paddingRight: '200px',
-        // paddingBottom: '100px',
-        // paddingLeft: '200px',
-        // overflow: "visible",
-        // display: "block",
+        width: "60vw",
+        height: '30vh',
+        margin: "20px 0 20px 0"
     }, 
     graphTitle: {
         textAlign: 'center', 
