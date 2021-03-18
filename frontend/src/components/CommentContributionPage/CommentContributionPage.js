@@ -61,7 +61,7 @@ const CommentContributionPage = (props) => {
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
                 <BarChart data={graphData} comment={true} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour}/>
             </Grid>
-            <Grid item className={classes.accordian} >
+            <Grid item>
                 <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>
                     {expandAll ? "Collapse All" : "Expand All"}
                 </Button>

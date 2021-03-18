@@ -12,7 +12,7 @@ import {useRowStyles} from "./CodeContributionPageStyles";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 
 const CodeContributionRow = (props) => {
-  const { row, openAll } = props;
+  const { row, expandAll } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
   return (
@@ -20,7 +20,7 @@ const CodeContributionRow = (props) => {
       <TableRow hover role ="checkbox" tabIndex={-1} className={classes.root}>
         <TableCell>
           <IconButton size='small' onClick={() => setOpen(!open)}>
-            {open || openAll ? <ExpandLess className={classes.dropDownIcon} />
+            {open || expandAll ? <ExpandLess className={classes.dropDownIcon} />
                               : <ExpandMore className={classes.dropDownIcon} />}
           </IconButton>
         </TableCell>
@@ -34,7 +34,7 @@ const CodeContributionRow = (props) => {
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0, background: '#f1f0fc' }} colSpan={6}>
-          <Collapse in={open || openAll} timeout="auto" unmountOnExit>
+          <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <h2>Code Diff</h2>
               <div>{ComingSoonMsg.msg}</div>
@@ -47,7 +47,7 @@ const CodeContributionRow = (props) => {
 }
 
 CodeContributionRow.propTypes = {
-  openAll: PropTypes.bool.isRequired,
+  expandAll: PropTypes.bool.isRequired,
 };
 
 export default CodeContributionRow;
