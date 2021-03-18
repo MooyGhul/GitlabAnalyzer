@@ -60,9 +60,14 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'rgb(142,154,175, 0.15)',
         borderBottom: "medium solid #7553ff",
     },
-    empty: {
-        
-    }
+    expandBtn: {
+        position: "fixed",
+        bottom: "1vh",
+        right: "1vw",
+        backgroundColor: "#7553ff",
+        width: "8%",
+        color: theme.palette.common.white
+    },
   }));
 
   export default useStyles;

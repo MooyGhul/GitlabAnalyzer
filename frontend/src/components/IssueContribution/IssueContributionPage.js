@@ -9,10 +9,11 @@ import {getIssueGraphData} from '../../helper';
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
 import {useParams} from "react-router";
+import Button from "@material-ui/core/Button";
 
 const IssueContributionPage = () => {
-    const styles = useStyles(); 
-
+    const classes = useStyles();
+    const [expandAll, setExpandAll] = React.useState(false);
     const [issues, setIssues] = useState([]); 
     const [graphData, setGraphData] = useState([]);
     const {project_id, member_id} = useParams();
@@ -35,6 +36,10 @@ const IssueContributionPage = () => {
         });
     }, [project_id, member_id, setGraphData]);
 
+    const handleExpand = () => {
+        setExpandAll(!expandAll)
+    }
+
     return (
         <Grid container>
             <Grid container spacing={0}>
@@ -49,24 +54,29 @@ const IssueContributionPage = () => {
             <Grid item>
             </Grid>
             <Grid container justify='center' alignItems='center' spacing={5}>
-              <Grid item xs={8} className={styles.text}>
-                  <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
+              <Grid item xs={8} className={classes.text}>
+                  <Typography variant="h5" className={classes.graphTitle}>Issue Word Count Per Day</Typography>
                   <BarChart data={graphData} issue={true} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
               </Grid>
+                <Grid item>
+                    <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>
+                        {expandAll ? "Collapse All" : "Expand All"}
+                    </Button>
+                </Grid>
               <Grid item xs={8}>
-                  <TableContainer className={styles.table}>
+                  <TableContainer className={classes.table}>
                       <Table aria-label="collapsible table">
-                          <TableHead className={styles.header}>
+                          <TableHead className={classes.header}>
                                   <TableRow>
-                                      <TableCell className={styles.dateColumn} align='left'>Date</TableCell>
-                                      <TableCell className={styles.issueColumn} align='left'>Issue</TableCell>
-                                      <TableCell className={styles.noteColumn} align='left'>Note</TableCell>
-                                      <TableCell className={styles.dropDownColumn} align='left'/>
+                                      <TableCell className={classes.dateColumn} align='left'>Date</TableCell>
+                                      <TableCell className={classes.issueColumn} align='left'>Issue</TableCell>
+                                      <TableCell className={classes.noteColumn} align='left'>Note</TableCell>
+                                      <TableCell className={classes.dropDownColumn} align='left'/>
                                   </TableRow>
                           </TableHead>
                           <TableBody>
                               {issues.map((issue) => (
-                                  <Row key={issue.issueId} row={issue}/>
+                                  <Row key={issue.issueId} row={issue} expandAll={expandAll}/>
                               ))}
                           </TableBody>
                       </Table>
