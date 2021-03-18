@@ -11,19 +11,19 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
-import CommentContributionPagination from "./CommentContributionPagination";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
 import Navbar from '../Navbar/Navbar';
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
+import TablePaginationActions from "../TablePaginationActions";
 
 const CommentContributionPage = (props) => {
     const [comments, setComments] = useState([]);
     const [graphData, setGraphData] = useState([]);
-    const [expandAll, setExpandAll] = React.useState(false);
+    const [expandAll, setExpandAll] = useState(false);
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(100);
+    const [rowsPerPage, setRowsPerPage] = useState(100);
 
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, comments.length - page * rowsPerPage);
     const {project_id, member_id} = useParams();
@@ -120,7 +120,7 @@ const CommentContributionPage = (props) => {
                                     }}
                                     onChangePage={handleChangePage}
                                     onChangeRowsPerPage={handleChangeRowsPerPage}
-                                    ActionsComponent={CommentContributionPagination}
+                                    ActionsComponent={TablePaginationActions}
                                 />
                             </TableRow>
                         </TableFooter>

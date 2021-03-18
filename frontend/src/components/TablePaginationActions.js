@@ -5,7 +5,7 @@ import FirstPageIcon from "@material-ui/icons/FirstPage";
 import {KeyboardArrowLeft, KeyboardArrowRight} from "@material-ui/icons";
 import * as PropTypes from "prop-types";
 import React from "react";
-import {usePaginationStyle} from "./CodeContributionPageStyles";
+import {usePaginationStyle} from "../style/CodeContributionPageStyles";
 
 const TablePaginationActions = (props) => {
   const classes = usePaginationStyle();

@@ -53,10 +53,6 @@ const useStyles = makeStyles((theme) => ({
     graphTitle: {
         textAlign: 'center', 
         fontWeight: 'bold',
-    },
-    pagination: {
-        flexShrink: '0',
-        paddingRight: theme.spacing(65)
     }
 }));
 
