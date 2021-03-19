@@ -66,6 +66,11 @@ public class ProjectRESTController {
     Iterable<ProjectEntity> all() {
         return this.projectRepository.findAll();
     }
+    
+    @GetMapping("/{projectId}")
+    String getProjectName(@PathVariable(value="projectId") int projectId) {
+        return this.projectRepository.findProjectName(projectId);
+    }
 
     @PostMapping("/{projectId}/load")
     void load(@PathVariable() int projectId) {
@@ -101,9 +106,9 @@ public class ProjectRESTController {
         return this.commitRepository.findAllByProjectId(projectId);
     }
 
-
     @GetMapping("/{projectId}/issues")
     Iterable<IssueEntity> getProjectIssues(@PathVariable(value="projectId") int projectId) {
         return this.issueRepository.findAllByProjectId(projectId);
     }
+
 }
