@@ -1,8 +1,9 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import './Navbar.css';
-import { Button } from './Button';
+import axios from "axios";
+import {Button} from './Button';
 import {useParams} from 'react-router';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 
 const buildItems = (project_id,member_id) =>{
   return (
@@ -42,7 +43,8 @@ const buildItems = (project_id,member_id) =>{
 } 
 
 function Navbar() {
-  const [clicked, setclicked] = React.useState(false);
+  const [clicked, setclicked] = useState(false);
+  const [projectName, setProjectName] = useState([]);
   const {project_id, member_id} = useParams();
   const history = useHistory();
 
@@ -56,9 +58,29 @@ function Navbar() {
     history.push(url);
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      let getProjectNameUrl = `/project/${project_id}`;
+
+      if(process.env.NODE_ENV === 'development') {
+        getProjectNameUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}`
+      }
+
+      const resultCommit = await axios.get(getProjectNameUrl);
+      setProjectName(resultCommit.data);
+
+    };
+    fetchData()
+      .then(()=> {
+        console.log('Successful data retrieval');
+      }).catch(() => {
+      console.log('Failed retrieve data');
+    });
+  },[project_id, projectName]);
+
   return (
     <nav className="NavbarItems">
-      <h1 className="navbar-logo">gitanalyzer  <i className="fab fa-gitlab"></i></h1>
+      <h1 className="navbar-logo">{projectName}  <i className="fab fa-gitlab"></i></h1>
       <div className="menu-icon" onClick={handleMenuClick}>
         <i className={clicked ? 'fas fa-times' : 'fas fa-bars'}></i>
       </div>
