@@ -25,7 +25,6 @@ const CommentContributionPage = (props) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(100);
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, comments.length - page * rowsPerPage);
     const {project_id, member_id} = useParams();
 
     const classes = useStyles(props);
@@ -99,11 +98,6 @@ const CommentContributionPage = (props) => {
                                 comments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : comments
                                 ).map(comment =>
                                 <CommentRow key={comment.commentId} comment={comment} expandAll={expandAll} />
-                            )}
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: 53 * emptyRows }}>
-                                    <TableCell colSpan={6} />
-                                </TableRow>
                             )}
                         </TableBody>
 

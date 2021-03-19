@@ -39,7 +39,7 @@ export const getGraphData = (arr, key) => {
 
 export const formatGraphDate = (commentDate) => {
     let date = new Date(commentDate);
-    let month = date.getMonth();
+    let month = date.getMonth() + 1;
     let day = date.getDate();
     let year = date.getFullYear();
 
