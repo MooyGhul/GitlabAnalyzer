@@ -21,7 +21,7 @@ public class CommentEntity {
     private int projectId;
     private int commentTypeId;
     private int wordCount;
-    private String createdBy;
+    private @Nullable String createdBy;
     @Column(columnDefinition="text")
     private @Nullable String commentText;
     private @Nullable String commenter;

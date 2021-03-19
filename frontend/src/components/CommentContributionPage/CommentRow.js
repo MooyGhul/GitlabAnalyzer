@@ -25,7 +25,7 @@ const CommentRow = (props) => {
                 </TableCell>
                 <TableCell align="left">
                     <Typography gutterBottom component="div">
-                        {comment.commenter}
+                        {comment.createdBy}
                     </Typography>
                 </TableCell>
                 <TableCell align="left" className={classes.wordCount}>{comment.wordCount}</TableCell>
