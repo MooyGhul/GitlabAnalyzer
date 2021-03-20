@@ -55,7 +55,10 @@ function Navbar() {
   }
 
   const handleRedirect = (event,url) => {
-    history.push(url);
+    history.push({
+      pathname: url,
+      state: { id: project_id, projectName: projectName },
+    });
   }
 
   useEffect(() => {
@@ -69,12 +72,15 @@ function Navbar() {
       const resultCommit = await axios.get(getProjectNameUrl);
       setProjectName(resultCommit.data);
 
+      console.log("Navbar PAGE => ");
+      console.log(projectName);
+      console.log("END OF Navbar PAGE!");
     };
     fetchData()
       .then(()=> {
-        console.log('Successful data retrieval');
+        console.log('Successful data retrieval (project_id, projectName)');
       }).catch(() => {
-      console.log('Failed retrieve data');
+      console.log('Failed retrieve data (project_id, projectName)');
     });
   },[project_id, projectName]);
 

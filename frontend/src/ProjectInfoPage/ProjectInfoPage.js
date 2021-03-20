@@ -8,26 +8,18 @@ import {useParams} from "react-router-dom";
 
 function ProjectInfoPage(props) {
   const location = useLocation();
-
-  const {projectId} = useParams();
-  const [projectName, setProjectName] = useState([]);
-
-  console.log("-----LOCATION-----");
-  console.log("projectId : " + projectId + "; END OF IT.");
-  console.log("-----END-----");
-
-  //const projectName = location.state.projectName;
-
-  //const projectID = location.state.id;
-  // console.log("useParams() : " + useParams());
-  // console.log("projectId : " + projectId + "!!!!!");
-  // console.log("location.state.id : " + location.state.id);
+  const projectId = location.state.id;
+  const [projectName, setProjectName] = useState(location.state.projectName);
 
   const [members, setMembers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       let getProjectNameUrl = `/project/${projectId}`;
+
+      console.log("-----getProjectNameUrl-----");
+      console.log("getProjectNameUrl :" + getProjectNameUrl + "; END OF IT.");
+      console.log("-----END-----");
 
       const result = await axios.get(
           process.env.NODE_ENV === 'development' ?
@@ -40,12 +32,18 @@ function ProjectInfoPage(props) {
       }
 
       setMembers(result.data);
-      
-      const resultCommit = await axios.get(getProjectNameUrl);
-      setProjectName(resultCommit.data);
+
+      console.log("-----resultMembers-----");
+      console.log("resultMembers : " + members + "; END OF IT.");
+      console.log("-----END-----");
     };
-    fetchData();
-  }, [projectId]);
+    fetchData()
+      .then(()=> {
+        console.log('Successful data retrieval (project_id, projectName)');
+      }).catch(() => {
+      console.log('Failed retrieve data (project_id, projectName)');
+    });
+  }, [projectId, members]);
 
   return (
     <div>
