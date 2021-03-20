@@ -35,7 +35,7 @@ const buildItems = (project_id,member_id) =>{
       },
       {
         title: 'Sign Out',
-        url: `NOT YET COMPLETED`,
+        url: `https://cas.sfu.ca/cas/logout`,
         cName: 'nav-links-mobile'
       },
     ]
@@ -54,11 +54,16 @@ function Navbar() {
     setclicked(!clicked);
   }
 
-  const handleRedirect = (event,url) => {
-    history.push({
-      pathname: url,
-      state: { id: project_id, projectName: projectName },
-    });
+  const handleRedirect = (event,item) => {
+    if(item.title==='Sign Out'){
+      window.location = 'https://cas.sfu.ca/cas/logout';
+    }
+    else{
+      history.push({
+        pathname: item.url,
+        state: { id: project_id, projectName: projectName },
+      });
+    }
   }
 
   useEffect(() => {
@@ -94,7 +99,7 @@ function Navbar() {
         {MenuItems.map((item, index) => {
           return (
             <li key={index}>
-              <h3 className={item.cName} onClick={(event) => handleRedirect(event,item.url)}>
+              <h3 className={item.cName} onClick={(event) => handleRedirect(event,item)}>
                 {item.title}
               </h3>
             </li>

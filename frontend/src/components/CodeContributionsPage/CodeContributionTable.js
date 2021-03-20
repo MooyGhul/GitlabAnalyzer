@@ -11,8 +11,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {TableFooter, TablePagination} from '@material-ui/core';
 import CodeContributionRow from "./CodeContributionRow";
-import TablePaginationActions from "./TablePaginationActions";
-import {useTableStyles} from './CodeContributionPageStyles';
+import TablePaginationActions from "../TablePaginationActions";
+import {useTableStyles} from '../../style/CodeContributionPageStyles';
 
 const columns = [
   {id: 'type', label: 'Type'},
