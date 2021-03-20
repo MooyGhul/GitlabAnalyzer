@@ -21,11 +21,6 @@ public class MemberController {
     @Autowired
     private IssueEntityRepository issueRepository;
 
-    @Autowired
-    private MergeRequestDiffsVersionsRepository mergeRequestDiffVersionRepository;
-
-    @Autowired
-    private MergeRequestDiffsRepository mergeRequestDiffRepository;
 
     @Autowired
     private MergeRequestEntityRepository mergeRequestRepository;
@@ -44,15 +39,6 @@ public class MemberController {
     @GetMapping("/{memberName}/comments")
     Iterable<CommentEntity> getMemberComments(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "memberName") String author) {
         return this.commentEntityRepository.findAllByProjectIdAndCommenter(projectId, author);
-    }
-    @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/versions")
-    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "authorName") String authorName) {
-        return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndAuthorName(projectId, MRIid, authorName);
-    }
-
-    @GetMapping("/merge_requests/{merge_request_iid}/diffId/{versionId}")
-    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffs(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "versionId") int versionId) {
-        return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndVersionId(projectId, MRIid, versionId);
     }
 
     @GetMapping("/{memberName}/issues")

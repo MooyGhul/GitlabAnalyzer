@@ -31,9 +31,9 @@ public class MergeRequestDiffVersionsEntity {
                 .id(json.getInt("id"))
                 .MRIid(json.getInt("merge_request_iid"))
                 .projectId(json.getInt("project_id"))
-                .headCommitSHA(json.getString("head_commit_sh"))
-                .baseCommitSHA(json.getString("base_commit_sh"))
-                .startCommitSHA(json.getString("start_commit_sh"))
+                .headCommitSHA(json.getString("head_commit_sha"))
+                .baseCommitSHA(json.getString("base_commit_sha"))
+                .startCommitSHA(json.getString("start_commit_sha"))
                 .createdAt(Instant.parse(json.getString("created_at")))
                 .build();
     }
