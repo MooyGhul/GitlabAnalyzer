@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -132,15 +131,7 @@ public class Extractor {
 
 
     private JSONObject getJsonObject(URI url) {
-        try{
-            String response = restTemplate.getForObject(url, String.class);
-            return new JSONObject(response);
-        }
-        catch (Exception e){
-            System.out.println("Start");
-        }
-
-
-        return null;
+        String response = restTemplate.getForObject(url, String.class);
+        return new JSONObject(response);
     }
 }
