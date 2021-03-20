@@ -34,7 +34,7 @@ class ExtractorTest {
 
     @Test
     void canGetMergeRequestComments() {
-        assertThat(this.extractor.getMergeRequestComments(this.testConfig, 2, 1), hasItem(notNullValue(JSONObject.class)));
+        assertThat(this.extractor.getMergeRequestComments(this.testConfig, 2, 9), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
@@ -48,8 +48,8 @@ class ExtractorTest {
     }
 
     @Test
-    void canGetIssueCommits() {
-        assertThat(this.extractor.getIssueComments(this.testConfig, 2, 1), hasItem(notNullValue(JSONObject.class)));
+    void canGetIssueComments() {
+        assertThat(this.extractor.getIssueComments(this.testConfig, 2, 20), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
