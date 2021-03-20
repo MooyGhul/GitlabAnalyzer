@@ -31,13 +31,10 @@ public class IssueEntity {
     public static IssueEntity fromGitlabJSON(JSONObject json) {
         Object o = json.get("assignee");
         JSONObject assigneeObject = !JSONObject.NULL.equals(o) ? (JSONObject) o : null;
-
         o = json.get("closed_at");
         String closedDateString = !JSONObject.NULL.equals(o) ? json.getString("created_at") : null;
-
         o = json.get("description");
         String descriptionString = !JSONObject.NULL.equals(o) ? json.getString("description") : null;
-
         return IssueEntity.builder()
                 .issueId(json.getInt("id"))
                 .issueIid(json.getInt("iid"))
@@ -48,6 +45,5 @@ public class IssueEntity {
                 .openedDate(Instant.parse(json.getString("created_at")))
                 .closedDate(closedDateString == null ? null : Instant.parse(closedDateString))
                 .build();
-
     }
 }
