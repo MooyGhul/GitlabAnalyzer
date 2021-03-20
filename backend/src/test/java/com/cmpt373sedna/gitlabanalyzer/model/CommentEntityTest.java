@@ -13,9 +13,9 @@ public class CommentEntityTest {
     void fromGitlabJSON_parses_open_Comment_correctly() throws IOException {
         CommentEntity expected = CommentEntity.builder()
                 .commentId(377)
-                .commentTypeId(92)
+                .MRorIssueId(92)
                 .projectId(2)
-                .commentTypeName("test1")
+                .MRorIssueName("test1")
                 .commenter("pipin")
                 .commentType("Issue")
                 .wordCount(1)
