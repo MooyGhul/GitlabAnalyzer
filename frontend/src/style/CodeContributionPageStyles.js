@@ -21,10 +21,10 @@ export const useTableStyles = makeStyles({
 export const usePaginationStyle = makeStyles((theme) => ({
   root: {
     flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
+    marginRight: theme.spacing(65),
   },
   icons: {
-    background: 'white',
+    backgroundColor: 'none',
   }
 }));
 

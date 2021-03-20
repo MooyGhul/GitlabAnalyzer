@@ -8,7 +8,7 @@ import {Avatar} from "@material-ui/core";
 import Collapse from "@material-ui/core/Collapse";
 import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
-import {useRowStyles} from "./CodeContributionPageStyles";
+import {useRowStyles} from "../../style/CodeContributionPageStyles";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 
 const CodeContributionRow = (props) => {
