@@ -116,8 +116,13 @@ public class Extractor {
         JSONArray jsonResponse = new JSONArray(response);
 
         List<JSONObject> jsonList = new ArrayList<>();
-        jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
-
+        for(Object obj: jsonResponse) {
+            JSONObject o = (JSONObject) obj;
+            if(o.has("system") && o.getBoolean("system")) {
+                continue;
+            }
+            jsonList.add(o);
+        }
         return jsonList;
     }
 
