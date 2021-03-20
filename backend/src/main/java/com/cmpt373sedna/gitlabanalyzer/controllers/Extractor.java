@@ -45,9 +45,9 @@ public class Extractor {
         return getJsonObjectsList(buildUri(config, projectId, "merge_requests"));
     }
 
-    public List<JSONObject> getMergeRequestComments(ConfigEntity config, int projectId, int mergeRequestId) {
-        List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, "merge_requests/" + mergeRequestId + "/notes"));
-        return filterJSONComments(comments, "merge_request");
+    public List<JSONObject> getComments(ConfigEntity config, int projectId, String path) {
+        List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, path + "/notes"));
+        return filterJSONComments(comments);
     }
 
     public List<JSONObject> getMergeRequestsDiff(ConfigEntity config, int projectId, int mergeRequestId, int mergeRequestVersionId) {
@@ -75,11 +75,6 @@ public class Extractor {
             newCommits = getJsonObjectsList(buildUri(config, projectId, "repository/commits?per_page=100&page=" + page));
         }
         return commits;
-    }
-
-    public List<JSONObject> getIssueComments(ConfigEntity config, int projectId, int issueId) {
-        List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, "issues/" + issueId + "/notes"));
-        return filterJSONComments(comments, "issue");
     }
 
     public List<String> getRepoMembers(ConfigEntity config, int projectId) {
@@ -121,10 +116,9 @@ public class Extractor {
         return new JSONObject(response);
     }
 
-    private List<JSONObject> filterJSONComments(List<JSONObject> comments, String commentType) {
+    private List<JSONObject> filterJSONComments(List<JSONObject> comments) {
         return comments.stream()
                 .filter(comment -> !comment.getBoolean("system"))
-                .peek(comment -> comment.put("commentType", commentType))
                 .collect(toList());
     }
 }
