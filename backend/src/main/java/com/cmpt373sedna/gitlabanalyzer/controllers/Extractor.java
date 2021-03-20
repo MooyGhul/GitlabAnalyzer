@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,8 +47,14 @@ public class Extractor {
 
     public List<JSONObject> getMergeRequestComments(ConfigEntity config, int projectId, int mergeRequestId) {
         List<JSONObject> mergeRequests = getJsonObjectsList(buildUri(config, projectId, "merge_requests/" + mergeRequestId + "/notes"));
-        for(JSONObject mr : mergeRequests) {
-            mr.put("commentType", "merge_request");
+        Iterator<JSONObject> mrItr = mergeRequests.iterator();
+        while(mrItr.hasNext()) {
+            JSONObject mr = mrItr.next();
+            if(mr.getBoolean("system")) {
+                mrItr.remove();
+            } else {
+                mr.put("commentType", "merge_request");
+            }
         }
         return mergeRequests;
     }
@@ -81,8 +88,14 @@ public class Extractor {
 
     public List<JSONObject> getIssueComments(ConfigEntity config, int projectId, int issueId) {
         List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, "issues/" + issueId + "/notes"));
-        for(JSONObject comment : comments) {
-            comment.put("commentType", "issue");
+        Iterator<JSONObject> commentItr = comments.iterator();
+        while(commentItr.hasNext()){
+            JSONObject comment = commentItr.next();
+            if(comment.getBoolean("system")) {
+                commentItr.remove();
+            } else {
+                comment.put("commentType", "issue");
+            }
         }
         return comments;
     }
@@ -116,13 +129,7 @@ public class Extractor {
         JSONArray jsonResponse = new JSONArray(response);
 
         List<JSONObject> jsonList = new ArrayList<>();
-        for(Object obj: jsonResponse) {
-            JSONObject o = (JSONObject) obj;
-            if(o.has("system") && o.getBoolean("system")) {
-                continue;
-            }
-            jsonList.add(o);
-        }
+        jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
         return jsonList;
     }
 
