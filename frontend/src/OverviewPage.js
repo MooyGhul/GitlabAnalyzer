@@ -1,5 +1,5 @@
 import Banner from "./components/Banner";
-import Header from "./components/Header";
+import Navbar from './components/Navbar/Navbar';
 import Charts from "./components/Charts/Charts";
 import DataFetching from "./components/DataFetching";
 import "./OverviewPage.css";
@@ -27,16 +27,18 @@ const OverviewPage = () => {
 
   return (
     <Grid container spacing={2} className={classes.grid}>
-      <Grid container>
-        <Header pageTitle="Overview Test" />
-        <Banner memberName={member_id}/>
+      <Grid container spacing={0}>
+        <Grid item xs={12} >
+          <Navbar />
+        </Grid>
+        <Grid item xs={12} >
+          <Banner memberName={member_id}/>
+        </Grid>
       </Grid>
-
       <Grid container>
         <Charts />
       </Grid>
       <DataFetching />
-
     </Grid>
 
   );

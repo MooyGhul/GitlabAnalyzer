@@ -17,9 +17,15 @@ function UrlToken() {
     const [errorMsg, setErrorMsg] = useState('');
     const [loginToken, setLoginToken] = useState('');
 
+
     const authenticateToken  = async () => {
-        await axios.post('http://localhost:8080/project/create?token='+ urlToken.token);
-        await axios.post('http://localhost:8080/project/add?url='+ urlToken.url)
+        await axios.post(process.env.NODE_ENV === 'development' ?
+            `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
+            `/project/create?token=${urlToken.token}`);
+
+        await axios.post(process.env.NODE_ENV === 'development' ?
+            `${process.env.REACT_APP_DEVHOST}/project/add?url=${urlToken.url}`:
+            `/project/add?url=${urlToken.url}`)
         .then(function(response){
             console.log(response.status);
             if (response.status === 200){
@@ -35,7 +41,7 @@ function UrlToken() {
                 setErrorMsg('Incorrect url or token. Please try again.');
             }
         }) 
-    }          
+    }
 
 
     const addLoginToken = () => {
