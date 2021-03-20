@@ -22,6 +22,7 @@ public class MergeRequestDiffsEntity {
     private String baseCommitSHA;
     private String startCommitSHA;
     private Instant createdAt;
+    @Column(columnDefinition = "TEXT")
     private String diff;
     private int MRIid;
     private int projectId;
@@ -35,9 +36,17 @@ public class MergeRequestDiffsEntity {
                 .baseCommitSHA(json.getString("base_commit_sha"))
                 .startCommitSHA(json.getString("start_commit_sha"))
                 .createdAt(Instant.parse(json.getString("created_at")))
-                //.diff(json.getJSONArray("diffs").getJSONObject(0).getString("diff"))
-                .diff(json.getJSONObject("diffs").getString("diff"))
+                .diff(getDiffs(json))
                 .build();
+    }
+    public static String getDiffs(JSONObject json){
+        JSONArray j = json.getJSONArray("diffs");
+        if(j.length()==0){
+            return "";
+        }
+        else{
+            return j.getJSONObject(0).getString("diff");
+        }
     }
 
 }

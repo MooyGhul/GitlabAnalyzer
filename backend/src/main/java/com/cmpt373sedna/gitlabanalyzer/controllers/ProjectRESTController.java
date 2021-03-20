@@ -109,10 +109,6 @@ public class ProjectRESTController {
         return this.mergeRequestDiffVersionRepository.findAllByProjectIdAndMRIid(projectId, MRIid);
     }
 
-    @GetMapping("/{projectId}/merge_requests/versions")
-    Iterable<MergeRequestDiffVersionsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId) {
-        return this.mergeRequestDiffVersionRepository.findAllByProjectId(projectId);
-    }
 
     @GetMapping("/{projectId}/merge_requests/{merge_request_iid}/versions/{version_id}")
     Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "version_id") int versionId) {
