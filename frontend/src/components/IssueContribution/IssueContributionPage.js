@@ -5,7 +5,7 @@ import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
 import axios from 'axios';
-import {getIssueGraphData} from '../../helper';
+import {getGraphData} from '../../helper';
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
 import {useParams} from "react-router";
@@ -25,7 +25,7 @@ const IssueContributionPage = () => {
                 `/project/${project_id}/member/${member_id}/issues`
             );
             setIssues(issueResult.data); 
-            const issueCounts = getIssueGraphData(issueResult.data);
+            const issueCounts = getGraphData(issueResult.data, "openedDate");
             setGraphData(issueCounts);
         };
         fetchData().then(() => {
@@ -54,9 +54,9 @@ const IssueContributionPage = () => {
             <Grid item>
             </Grid>
             <Grid container justify='center' alignItems='center' spacing={5}>
-              <Grid item xs={8} className={classes.text}>
-                  <Typography variant="h5" className={classes.graphTitle}>Issue Word Count Per Day</Typography>
-                  <BarChart data={graphData} issue={true} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
+              <Grid item xs={8} className={styles.text}>
+                  <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
+                  <BarChart data={graphData} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
               </Grid>
                 <Grid item>
                     <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>

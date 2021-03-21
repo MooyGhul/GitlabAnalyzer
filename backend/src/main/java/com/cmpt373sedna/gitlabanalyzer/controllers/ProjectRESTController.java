@@ -1,9 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
 import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,8 +55,8 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(p.getIssuesEntities());
         this.commentEntityRepository.saveAll(p.getComments());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
-        //this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
-        //this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
+        this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
+        this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
     }
 
     @GetMapping("/all")
@@ -105,5 +102,20 @@ public class ProjectRESTController {
     @GetMapping("/{projectId}/issues")
     Iterable<IssueEntity> getProjectIssues(@PathVariable(value="projectId") int projectId) {
         return this.issueRepository.findAllByProjectId(projectId);
+    }
+
+    @GetMapping("/{projectId}/merge_requests/{merge_request_iid}/versions")
+    Iterable<MergeRequestDiffVersionsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid) {
+        return this.mergeRequestDiffVersionRepository.findAllByProjectIdAndMRIid(projectId, MRIid);
+    }
+
+    @GetMapping("/{projectId}/merge_requests/{merge_request_iid}/versions/{version_id}")
+    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "version_id") int versionId) {
+        return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndVersionId(projectId, MRIid, versionId);
+    }
+
+    @GetMapping("/{projectId}/{MRorIssueId}/comments")
+    Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId, @PathVariable(value="MRorIssueId") int MRorIssueId) {
+        return this.commentEntityRepository.findAllByProjectIdAndMRorIssueId(projectId,MRorIssueId);
     }
 }

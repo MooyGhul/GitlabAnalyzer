@@ -54,8 +54,8 @@ public class ProjectController {
         this.members = this.extractor.getRepoMembers(this.config, this.projectId);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
-        //this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
-        //this.MRDiffs = this.getAndParseMergeRequestsDiffs();
+        this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
+        this.MRDiffs = this.getAndParseMergeRequestsDiffs();
 
         return this;
     }
@@ -78,12 +78,16 @@ public class ProjectController {
     private List<CommentEntity> getAndParseComments() {
         List<JSONObject> comments = new ArrayList<>();
         for(IssueEntity issue : this.issuesEntities) {
-            List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectId, issue.getIssueIid());
+            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectId, "issues/" + issue.getIssueIid());
+            issueComments.forEach(comment -> comment.put("MRorIssueId", issue.getIssueIid()));
+            issueComments.forEach(comment -> comment.put("MRorIssueName", issue.getIssueName()));
             comments.addAll(issueComments);
         }
 
         for(MergeRequestEntity mr : this.mergeRequestEntities) {
-            List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectId, mr.getIid());
+            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectId, "merge_requests/" + mr.getIid());
+            mrComments.forEach(comment -> comment.put("MRorIssueId", mr.getIid()));
+            mrComments.forEach(comment -> comment.put("MRorIssueName", mr.getMergeRequestName()));
             comments.addAll(mrComments);
         }
         comments.forEach(comment -> comment.put("project_id", this.projectId));
@@ -94,8 +98,6 @@ public class ProjectController {
         List<JSONObject> mergeRequestsDiffVersions =  new ArrayList<>();
         for(MergeRequestEntity mr: this.mergeRequestEntities) {
             List<JSONObject> list = extractor.getMergeRequestsDiffVersions(this.config, this.projectId, mr.getIid());
-            list.forEach(mrDiffs -> mrDiffs.put("project_id", this.projectId));
-            list.forEach(mrDiffs -> mrDiffs.put("merge_request_iid", mr.getIid()));
             mergeRequestsDiffVersions.addAll(list);
         }
         return mergeRequestsDiffVersions.stream().map(MergeRequestDiffVersionsEntity::fromGitlabJSON).collect(Collectors.toList());
@@ -103,13 +105,9 @@ public class ProjectController {
 
     private List<MergeRequestDiffsEntity> getAndParseMergeRequestsDiffs() {
         List<JSONObject> mergeRequestsDiffs = new ArrayList<>();
-        for(MergeRequestEntity mr: this.mergeRequestEntities) {
-            for(MergeRequestDiffVersionsEntity mrDiff: this.MRDiffVersions) {
-                List<JSONObject> list = extractor.getMergeRequestsDiff(this.config, this.projectId, mr.getIid(), mrDiff.getId());
-                list.forEach(mrDiffs -> mrDiffs.put("project_id", this.projectId));
-                list.forEach(mrDiffs -> mrDiffs.put("merge_request_iid", mr.getIid()));
-                mergeRequestsDiffs.addAll(list);
-            }
+        for(MergeRequestDiffVersionsEntity mrDiffs: this.MRDiffVersions) {
+            JSONObject mrDiff = extractor.getMergeRequestsDiff(this.config, this.projectId, mrDiffs.getMRIid(), mrDiffs.getId());
+            mergeRequestsDiffs.add(mrDiff);
         }
         return mergeRequestsDiffs.stream().map(MergeRequestDiffsEntity::fromGitlabJSON).collect(Collectors.toList());
     }

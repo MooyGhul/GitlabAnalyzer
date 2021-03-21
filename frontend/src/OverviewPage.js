@@ -29,7 +29,6 @@ const OverviewPage = () => {
     <Grid container spacing={2} className={classes.grid}>
       <Grid container spacing={0}>
         <Grid item xs={12} >
-          {/*<Header pageTitle="Overview Test" />*/}
           <Navbar />
         </Grid>
         <Grid item xs={12} >

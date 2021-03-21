@@ -11,14 +11,13 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import {Grid, TableFooter, TablePagination} from '@material-ui/core';
 import CodeContributionRow from "./CodeContributionRow";
-import TablePaginationActions from "./TablePaginationActions";
-import {useTableStyles} from './CodeContributionPageStyles';
-import Button from "@material-ui/core/Button";
+import TablePaginationActions from "../TablePaginationActions";
+import {useTableStyles} from '../../style/CodeContributionPageStyles';
 
 const columns = [
   {id: 'type', label: 'Type'},
   {id: 'date', label: 'Date'},
-  {id: 'details', label: 'Details'},
+  {id: 'name', label: 'Name'},
   {id: 'score', label: 'Score'},
 ]
 
