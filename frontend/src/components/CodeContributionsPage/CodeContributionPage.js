@@ -23,7 +23,6 @@ const CodeContributionPage = () => {
   }
 
   useEffect(() => {
-
     const codeContributionData = (commitData, mrData) => {
       let ccArray = [];
       for(let i = 0; i < commitData.length; i++) {
