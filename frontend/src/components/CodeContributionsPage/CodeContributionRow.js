@@ -10,7 +10,6 @@ import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
 import {useRowStyles} from "../../style/CodeContributionPageStyles";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
-import Row from "../IssueContribution/IssueTableDropDown";
 
 const CodeContributionRow = (props) => {
   const { row, openAll } = props;
