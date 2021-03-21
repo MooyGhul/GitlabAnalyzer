@@ -18,8 +18,8 @@ const CodeContributionPage = () => {
   const [graphData] = useState(Contributions);
   const classes = useGraphStyles();
 
-  const createData = (id, type, date, details, score) => {
-    return {id, type, date, details, score};
+  const createData = (id, type, date, name, score) => {
+    return {id, type, date, name, score};
   }
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const CodeContributionPage = () => {
           ccArray.push(createData(mrData[i].id,
             'MR',
             '' + moment(mergedDate).format('LLL'),
-            mrData[i].description,
+            mrData[i].mergeRequestName,
             ComingSoonMsg.msg));
         }
       }
