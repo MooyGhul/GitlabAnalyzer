@@ -43,7 +43,7 @@ public class MemberController {
 
     @GetMapping("/{memberName}/comments")
     Iterable<CommentEntity> getMemberComments(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "memberName") String author) {
-        return this.commentEntityRepository.findAllByProjectIdAndCommenter(projectId, author);
+        return this.commentEntityRepository.findAllByProjectIdAndCommenterOrderByCommentDateDesc(projectId, author);
     }
     @GetMapping("/{authorName}/merge_requests/{merge_request_iid}/versions")
     Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "authorName") String authorName) {

@@ -9,7 +9,7 @@ import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import {Contributions} from "../../mockDataDir/mockGraphContri";
-import {useGraphStyles} from "./CodeContributionPageStyles";
+import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import Navbar from '../Navbar/Navbar';
 
 const CodeContributionPage = () => {

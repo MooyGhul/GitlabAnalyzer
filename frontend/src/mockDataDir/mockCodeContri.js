@@ -1,50 +1,50 @@
 export const Comments = [
   {
     year: "2021-1-25",
-    comments: 12
+    data: 12
   },
   {
     year: "2021-1-26",
-    comments: 20
+    data: 20
   },
   {
     year: "2021-1-27",
-    comments: 0
+    data: 0
   },
   {
     year: "2021-1-28",
-    comments: 16
+    data: 16
   },
   {
     year: "2021-1-29",
-    comments: 0
+    data: 0
   },
   {
     year: "2021-1-30",
-    comments: 0
+    data: 0
   },
   {
     year: "2021-1-31",
-    comments: 7
+    data: 7
   },
   {
     year: "2021-2-1",
-    comments: 0
+    data: 0
   },
   {
     year: "2021-2-2",
-    comments: 35
+    data: 35
   },
   {
     year: "2021-2-3",
-    comments: 2
+    data: 2
   },
   {
     year: "2021-2-4",
-    comments: 0
+    data: 0
   },
   {
     year: "2021-2-5",
-    comments: 1
+    data: 1
   }
 ];
