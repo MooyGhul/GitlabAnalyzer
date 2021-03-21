@@ -2,9 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
+import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +29,12 @@ public class ProjectManager {
 
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
+
+    @Autowired
+    private MergeRequestDiffsVersionsRepository mergeRequestDiffVersionRepository;
+
+    @Autowired
+    private MergeRequestDiffsRepository mergeRequestDiffRepository;
 
     public ProjectManager() {
         this.extractor = new Extractor();
@@ -86,6 +90,8 @@ public class ProjectManager {
         this.commitRepository.saveAll(projectController.getCommitEntities());
         this.issueRepository.saveAll(projectController.getIssuesEntities());
         this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
+        this.mergeRequestDiffVersionRepository.saveAll(projectController.getMRDiffVersions());
+        this.mergeRequestDiffRepository.saveAll(projectController.getMRDiffs());
 
         return projectController;
     }

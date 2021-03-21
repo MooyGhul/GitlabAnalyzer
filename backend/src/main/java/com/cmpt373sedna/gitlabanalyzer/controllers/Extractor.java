@@ -2,6 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffsEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -50,14 +51,21 @@ public class Extractor {
         return filterJSONComments(comments);
     }
 
-    public List<JSONObject> getMergeRequestsDiff(ConfigEntity config, int projectId, int mergeRequestId, int mergeRequestVersionId) {
-        List<JSONObject> MRDiffVersions = getJsonObjectsList(buildUri(config,projectId,mergeRequestId + "/versions/" + mergeRequestVersionId));
-        return MRDiffVersions;
+    public JSONObject getMergeRequestsDiff(ConfigEntity config, int projectId, int mergeRequestId, int mergeRequestVersionId) {
+        JSONObject j = getJsonObject(buildUri(config,projectId,"merge_requests/" + mergeRequestId + "/versions/"+mergeRequestVersionId));
+        j.put("project_id",projectId);
+        j.put("merge_request_iid",mergeRequestId);
+        return j;
+
     }
 
     public List<JSONObject> getMergeRequestsDiffVersions(ConfigEntity config, int projectId, int mergeRequestId) {
-        List<JSONObject> MRDiffs = getJsonObjectsList(buildUri(config,projectId,mergeRequestId + "/versions/"));
-        return MRDiffs;
+        List<JSONObject> MRDiffVersions = getJsonObjectsList(buildUri(config,projectId,"merge_requests/" + mergeRequestId + "/versions"));
+        for(JSONObject mrDiffs : MRDiffVersions) {
+            mrDiffs.put("project_id", projectId);
+            mrDiffs.put("merge_request_iid", mergeRequestId);
+        }
+        return MRDiffVersions;
     }
 
     public List<JSONObject> getIssues(ConfigEntity config, int projectId) {
@@ -119,9 +127,9 @@ public class Extractor {
         return jsonList;
     }
 
+
     private JSONObject getJsonObject(URI url) {
         String response = restTemplate.getForObject(url, String.class);
-
         return new JSONObject(response);
     }
 
