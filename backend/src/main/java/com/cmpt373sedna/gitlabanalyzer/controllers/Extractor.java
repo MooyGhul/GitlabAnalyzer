@@ -42,7 +42,16 @@ public class Extractor {
     }
 
     public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId) {
-        return getJsonObjectsList(buildUri(config, projectId, "merge_requests"));
+        int page = 1;
+        List<JSONObject> mr = new ArrayList<>();
+        List<JSONObject> newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page));
+        while(newMr.size() > 0) {
+            mr.addAll(newMr);
+
+            page += 1;
+            newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page));
+        }
+        return mr;
     }
 
     public List<JSONObject> getComments(ConfigEntity config, int projectId, String path) {
