@@ -32,10 +32,11 @@ const BarChart = ({data,codeContribution, barLabel1, barColour1, barLabel2, barC
 
     if (codeContribution) {
         yAxis1 = data.map(d => d.MRDaily);
-        yAxis2 = data.map(d => d.CommitDaily);
+        yAxis2 = data.map(d => -d.CommitDaily);
 
         options.scales.yAxes[0]['stacked'] = true;
         options.scales['xAxes'] = [{'stacked': true}];
+        options['animation'] = {'duration': 300};
 
         dataConfig.datasets.push({
             label: barLabel2, 

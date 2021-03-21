@@ -22,6 +22,7 @@ class MergeRequestEntityTest {
                 .status("opened")
                 .author("admin")
                 .description("fixed login page css paddings")
+                .mergeRequestName("test1")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
                 .mergedAt(null)
                 .build();
@@ -42,6 +43,7 @@ class MergeRequestEntityTest {
                 .status("merged")
                 .description("fixed login page css paddings")
                 .author("admin")
+                .mergeRequestName("test1")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
                 .mergedAt(sdf.parse("2018-09-07T11:16:17.520Z").toInstant())
                 .build();
