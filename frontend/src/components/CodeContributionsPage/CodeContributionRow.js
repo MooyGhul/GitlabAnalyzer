@@ -29,7 +29,7 @@ const CodeContributionRow = (props) => {
                             : <Avatar className={classes.cIcon}>C </Avatar> }
         </TableCell>
         <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
-        <TableCell style={{width: 600}} align="left">{row.details}</TableCell>
+        <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
         <TableCell className={classes.cell} align="left">{row.score}</TableCell>
       </TableRow>
       <TableRow>
