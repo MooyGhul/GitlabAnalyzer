@@ -21,7 +21,6 @@ const TablePaginationActions = (props) => {
   };
 
   const handleNextButtonClick = (event) => {
-    console.log("Clicked!");
     onChangePage(event, page + 1);
   };
 
