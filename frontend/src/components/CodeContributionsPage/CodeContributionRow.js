@@ -25,7 +25,7 @@ const CodeContributionRow = (props) => {
           </IconButton>
         </TableCell>
         <TableCell className={classes.cell} align="left" component='th' scope='row'>
-          <a href={row.url} target="_blank">
+          <a href={row.url} target="_blank" rel="noreferrer noopener">
           {row.type === "MR" ? <Avatar className={classes.mrIcon}>M</Avatar>
                             : <Avatar className={classes.cIcon}>C </Avatar> }
           </a>
