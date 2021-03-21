@@ -7,7 +7,7 @@ import {formatTableDate} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 
 const CommentRow = (props) => {
-    const {comment, expandAll} = props;
+    const {comment, expandAll, member_id} = props;
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
@@ -25,6 +25,12 @@ const CommentRow = (props) => {
                 </TableCell>
                 <TableCell align="left">
                     <Typography gutterBottom component="div">
+                        {comment.mrorIssueName}
+                    </Typography>
+                </TableCell>
+                <TableCell align="left">
+                    <Typography gutterBottom component="div"
+                                style={comment.createdBy === member_id ? { fontWeight: "bold"}: {}}>
                         {comment.createdBy}
                     </Typography>
                 </TableCell>
@@ -45,7 +51,7 @@ const CommentRow = (props) => {
                     <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <Typography gutterBottom component="div" className={classes.rowBody}>
-                                {comment.commentText}
+                                <span className={classes.rowBodyHeader} >Comment:</span> {comment.commentText}
                             </Typography>
                         </Box>
                     </Collapse>

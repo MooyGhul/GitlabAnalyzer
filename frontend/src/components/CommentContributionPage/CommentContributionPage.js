@@ -37,6 +37,7 @@ const CommentContributionPage = (props) => {
                     `/project/${project_id}/member/${member_id}/comments`
             );
             setComments(commentResult.data);
+            console.log(commentResult.data);
             const commentCounts = getGraphData(commentResult.data, "commentDate");
             setGraphData(commentCounts);
         };
@@ -83,9 +84,17 @@ const CommentContributionPage = (props) => {
             <Grid item className={classes.table}>
                 <TableContainer>
                     <Table>
+                        <colgroup>
+                            <col style={{width:'20%'}}/>
+                            <col style={{width:'50%'}}/>
+                            <col style={{width:'10%'}}/>
+                            <col style={{width:'10%'}}/>
+                            <col style={{width:'10%'}}/>
+                        </colgroup>
                         <TableHead>
                             <TableRow className={classes.head}>
                                 <TableCell align="left" className={classes.headCell}>Date</TableCell>
+                                <TableCell align="left" className={classes.headCell}>Title</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Author</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Word Count</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Comment Type</TableCell>
@@ -97,7 +106,7 @@ const CommentContributionPage = (props) => {
                                 rowsPerPage > 0 ?
                                 comments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : comments
                                 ).map(comment =>
-                                <CommentRow key={comment.commentId} comment={comment} expandAll={expandAll} />
+                                <CommentRow key={comment.commentId} comment={comment} expandAll={expandAll} member_id={member_id}/>
                             )}
                         </TableBody>
 
