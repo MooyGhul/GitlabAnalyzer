@@ -14,6 +14,10 @@ const Row = (props) => {
         setOpen(!open); 
     }
 
+    const isOpen = () => {
+        return open || expandAll;
+    }
+
     return (
         <React.Fragment>
             <TableRow className={styles.root}>
@@ -22,13 +26,13 @@ const Row = (props) => {
                 <TableCell className={styles.noteText}>{row.issueDescription}</TableCell>
                 <TableCell>
                     <IconButton aria-label="expand row" size="small" onClick={OnButtonClick}>
-                        {open || expandAll ? <KeyboardArrowUpIcon className={styles.icon}/> : <KeyboardArrowDownIcon className={styles.icon}/>}
+                        {isOpen() ? <KeyboardArrowUpIcon className={styles.icon}/> : <KeyboardArrowDownIcon className={styles.icon}/>}
                     </IconButton>
                 </TableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6} className={open || expandAll ? styles.dropDownRow : styles.empty}>
-                    <Collapse in={open || expandAll} timeout="auto" unmountOnExit >
+                <TableCell style={{paddingBottom: 0, paddingTop: 0}} colSpan={6} className={isOpen() ? styles.dropDownRow : styles.empty}>
+                    <Collapse in={isOpen()} timeout="auto" unmountOnExit >
                         <Box margin={1}>
                             <Typography gutterBottom component="div">Full Note: {row.issueDescription}</Typography>
                         </Box>

@@ -15,12 +15,17 @@ const CodeContributionRow = (props) => {
   const { row, expandAll } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
+
+  const isOpen = () => {
+    return open || expandAll;
+  }
+
   return (
     <Fragment>
       <TableRow hover role ="checkbox" tabIndex={-1} className={classes.root}>
         <TableCell>
           <IconButton size='small' onClick={() => setOpen(!open)}>
-            {open || expandAll ? <ExpandLess className={classes.dropDownIcon} />
+            {isOpen() ? <ExpandLess className={classes.dropDownIcon} />
                               : <ExpandMore className={classes.dropDownIcon} />}
           </IconButton>
         </TableCell>
@@ -34,7 +39,7 @@ const CodeContributionRow = (props) => {
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0, background: '#f1f0fc' }} colSpan={6}>
-          <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
+          <Collapse in={isOpen()} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <h2>Code Diff</h2>
               <div>{ComingSoonMsg.msg}</div>
