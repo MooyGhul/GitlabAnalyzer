@@ -61,7 +61,16 @@ public class Extractor {
     }
 
     public List<JSONObject> getIssues(ConfigEntity config, int projectId) {
-        return getJsonObjectsList(buildUri(config, projectId, "issues"));
+        int page = 1;
+        List<JSONObject> issues = new ArrayList<>();
+        List<JSONObject> newIssues = getJsonObjectsList(buildUri(config, projectId, "issues?per_page=100&page=" + page));
+        while(newIssues.size() > 0) {
+            issues.addAll(newIssues);
+
+            page += 1;
+            newIssues = getJsonObjectsList(buildUri(config, projectId, "issues?per_page=100&page=" + page));
+        }
+        return issues;
     }
 
     public List<JSONObject> getCommits(ConfigEntity config, int projectId) {

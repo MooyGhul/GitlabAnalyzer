@@ -79,11 +79,15 @@ public class ProjectController {
         List<JSONObject> comments = new ArrayList<>();
         for(IssueEntity issue : this.issuesEntities) {
             List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectId, "issues/" + issue.getIssueIid());
+            issueComments.forEach(comment -> comment.put("MRorIssueId", issue.getIssueIid()));
+            issueComments.forEach(comment -> comment.put("MRorIssueName", issue.getIssueName()));
             comments.addAll(issueComments);
         }
 
         for(MergeRequestEntity mr : this.mergeRequestEntities) {
             List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectId, "merge_requests/" + mr.getIid());
+            mrComments.forEach(comment -> comment.put("MRorIssueId", mr.getIid()));
+            mrComments.forEach(comment -> comment.put("MRorIssueName", mr.getMergeRequestName()));
             comments.addAll(mrComments);
         }
         comments.forEach(comment -> comment.put("project_id", this.projectId));
