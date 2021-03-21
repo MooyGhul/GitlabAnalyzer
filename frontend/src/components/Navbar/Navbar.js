@@ -87,7 +87,7 @@ function Navbar() {
       }).catch(() => {
       console.log('Failed retrieve data (project_id, projectName)');
     });
-  },[project_id, projectName]);
+  },[project_id]);
 
   return (
     <nav className="NavbarItems">
