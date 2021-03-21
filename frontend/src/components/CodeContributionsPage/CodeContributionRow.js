@@ -10,6 +10,7 @@ import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
 import {useRowStyles} from "../../style/CodeContributionPageStyles";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
+import Row from "../IssueContribution/IssueTableDropDown";
 
 const CodeContributionRow = (props) => {
   const { row, openAll } = props;
@@ -25,8 +26,10 @@ const CodeContributionRow = (props) => {
           </IconButton>
         </TableCell>
         <TableCell className={classes.cell} align="left" component='th' scope='row'>
+          <a href={row.url} target="_blank">
           {row.type === "MR" ? <Avatar className={classes.mrIcon}>M</Avatar>
                             : <Avatar className={classes.cIcon}>C </Avatar> }
+          </a>
         </TableCell>
         <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
         <TableCell style={{width: 600}} align="left">{row.details}</TableCell>

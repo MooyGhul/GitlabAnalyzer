@@ -20,8 +20,8 @@ const CodeContributionPage = () => {
   const [graphData] = useState(Contributions);
   const classes = useGraphStyles();
 
-  const createData = (id, type, date, details, score) => {
-    return {id, type, date, details, score};
+  const createData = (id, type, date, details, url, score) => {
+    return {id, type, date, details, url, score};
   }
 
   const codeContributionData = useCallback(() => {
@@ -32,6 +32,7 @@ const CodeContributionPage = () => {
         'commit',
         '' + moment(createdDate).format('LLL'),
         commitData[i].commitName,
+        commitData[i].url,
         ComingSoonMsg.msg));
     }
 
@@ -42,6 +43,7 @@ const CodeContributionPage = () => {
           'MR',
           '' + moment(mergedDate).format('LLL'),
           mrData[i].description,
+          mrData[i].url,
           ComingSoonMsg.msg));
       }
     }
@@ -51,7 +53,6 @@ const CodeContributionPage = () => {
       let dateB = new Date(b.date);
       return dateA - dateB;
     }).reverse();
-
     return ccArray;
   },[commitData, mrData]);
 
