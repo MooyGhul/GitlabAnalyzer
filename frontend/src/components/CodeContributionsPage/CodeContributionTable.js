@@ -17,7 +17,7 @@ import {useTableStyles} from '../../style/CodeContributionPageStyles';
 const columns = [
   {id: 'type', label: 'Type'},
   {id: 'date', label: 'Date'},
-  {id: 'details', label: 'Details'},
+  {id: 'name', label: 'Name'},
   {id: 'score', label: 'Score'},
 ]
 

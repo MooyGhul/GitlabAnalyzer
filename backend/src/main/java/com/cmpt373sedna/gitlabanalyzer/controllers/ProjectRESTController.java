@@ -55,8 +55,8 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(p.getIssuesEntities());
         this.commentEntityRepository.saveAll(p.getComments());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
-        //this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
-        //this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
+        this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
+        this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
     }
 
     @GetMapping("/all")
@@ -102,6 +102,16 @@ public class ProjectRESTController {
     @GetMapping("/{projectId}/issues")
     Iterable<IssueEntity> getProjectIssues(@PathVariable(value="projectId") int projectId) {
         return this.issueRepository.findAllByProjectId(projectId);
+    }
+
+    @GetMapping("/{projectId}/merge_requests/{merge_request_iid}/versions")
+    Iterable<MergeRequestDiffVersionsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid) {
+        return this.mergeRequestDiffVersionRepository.findAllByProjectIdAndMRIid(projectId, MRIid);
+    }
+
+    @GetMapping("/{projectId}/merge_requests/{merge_request_iid}/versions/{version_id}")
+    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "version_id") int versionId) {
+        return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndVersionId(projectId, MRIid, versionId);
     }
 
     @GetMapping("/{projectId}/{MRorIssueId}/comments")
