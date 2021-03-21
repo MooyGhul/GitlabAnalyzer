@@ -50,11 +50,6 @@ const useStyles = makeStyles((theme) => ({
     },
     charts: {
         paddingTop: '100px',
-        paddingRight: '200px',
-        paddingBottom: '100px',
-        paddingLeft: '200px',
-        overflow: "visible",
-        display: "block",
     }, 
     dropDownRow: {
         backgroundColor: 'rgb(142,154,175, 0.15)',

@@ -13,6 +13,7 @@ import {Grid, TableFooter, TablePagination} from '@material-ui/core';
 import CodeContributionRow from "./CodeContributionRow";
 import TablePaginationActions from "../TablePaginationActions";
 import {useTableStyles} from '../../style/CodeContributionPageStyles';
+import ExpandAllBtn from "../ExpandAllBtn";
 
 const columns = [
   {id: 'type', label: 'Type'},
@@ -38,16 +39,11 @@ const CodeContributionTable = (props) => {
     setPage(0);
   };
 
-  const handleExpand = () => {
-    setExpandAll(!expandAll)
-  }
 
   return (
     <Paper>
       <Grid item>
-        <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>
-          {expandAll ? "Collapse All" : "Expand All"}
-        </Button>
+        <ExpandAllBtn expandAll={expandAll} setExpandAll={setExpandAll}/>
       </Grid>
       <TableContainer>
         <Table stickyHeader className={classes.table}>

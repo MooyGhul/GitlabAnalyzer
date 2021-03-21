@@ -2,14 +2,14 @@ import {Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, 
 import Banner from "../Banner";
 import Navbar from '../Navbar/Navbar';
 import React, { useEffect, useState} from 'react';
-import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
 import axios from 'axios';
 import {getGraphData} from '../../helper';
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
 import {useParams} from "react-router";
-import Button from "@material-ui/core/Button";
+import ExpandAllBtn from "../ExpandAllBtn";
+import useStyles from '../../style/IssueContributionPageStyles';
 
 const IssueContributionPage = () => {
     const classes = useStyles();
@@ -36,10 +36,6 @@ const IssueContributionPage = () => {
         });
     }, [project_id, member_id, setGraphData]);
 
-    const handleExpand = () => {
-        setExpandAll(!expandAll)
-    }
-
     return (
         <Grid container>
             <Grid container spacing={0}>
@@ -51,17 +47,13 @@ const IssueContributionPage = () => {
               </Grid>
             </Grid>
             <Grid container spacing={5}>
-            <Grid item>
-            </Grid>
-            <Grid container justify='center' alignItems='center' spacing={5}>
-              <Grid item xs={8} className={styles.text}>
-                  <Typography variant="h5" className={styles.graphTitle}>Issue Word Count Per Day</Typography>
+            <Grid container justify='center' alignItems='center' spacing={5} className={classes.charts}>
+              <Grid item xs={8} className={classes.text}>
+                  <Typography variant="h5" className={classes.graphTitle}>Issue Word Count Per Day</Typography>
                   <BarChart data={graphData} barLabel1={BarChartProperties.issues.label} barColour1={BarChartProperties.issues.barColour}/>
               </Grid>
                 <Grid item>
-                    <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>
-                        {expandAll ? "Collapse All" : "Expand All"}
-                    </Button>
+                    <ExpandAllBtn expandAll={expandAll} setExpandAll={setExpandAll}/>
                 </Grid>
               <Grid item xs={8}>
                   <TableContainer className={classes.table}>
