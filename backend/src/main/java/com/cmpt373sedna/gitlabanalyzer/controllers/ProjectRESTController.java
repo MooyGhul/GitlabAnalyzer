@@ -1,9 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.*;
 import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -105,5 +102,10 @@ public class ProjectRESTController {
     @GetMapping("/{projectId}/issues")
     Iterable<IssueEntity> getProjectIssues(@PathVariable(value="projectId") int projectId) {
         return this.issueRepository.findAllByProjectId(projectId);
+    }
+
+    @GetMapping("/{projectId}/{MRorIssueId}/comments")
+    Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId, @PathVariable(value="MRorIssueId") int MRorIssueId) {
+        return this.commentEntityRepository.findAllByProjectIdAndMRorIssueId(projectId,MRorIssueId);
     }
 }

@@ -46,9 +46,6 @@ public class Extractor {
 
     public List<JSONObject> getMergeRequestComments(ConfigEntity config, int projectId, int mergeRequestId) {
         List<JSONObject> mergeRequests = getJsonObjectsList(buildUri(config, projectId, "merge_requests/" + mergeRequestId + "/notes"));
-        for(JSONObject mr : mergeRequests) {
-            mr.put("commentType", "merge_request");
-        }
         return mergeRequests;
     }
 
@@ -90,9 +87,6 @@ public class Extractor {
 
     public List<JSONObject> getIssueComments(ConfigEntity config, int projectId, int issueId) {
         List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, "issues/" + issueId + "/notes"));
-        for(JSONObject comment : comments) {
-            comment.put("commentType", "issue");
-        }
         return comments;
     }
 
