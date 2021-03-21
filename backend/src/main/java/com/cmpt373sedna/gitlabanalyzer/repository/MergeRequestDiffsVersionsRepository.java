@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface MergeRequestDiffsVersionsRepository extends CrudRepository<MergeRequestDiffVersionsEntity, Integer> {
 
+    List<MergeRequestDiffVersionsEntity> findAllByProjectIdAndMRIid(int projectId, int MRIid);
 }

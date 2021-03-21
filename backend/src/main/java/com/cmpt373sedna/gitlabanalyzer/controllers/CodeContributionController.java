@@ -49,13 +49,13 @@ public class CodeContributionController {
         int sum = 0;
 
         for(JSONObject issue : this.issues) {
-            List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectEntity.getRepoId(), issue.getInt("id"));
+            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectEntity.getRepoId(), "issues/" +  issue.getInt("id"));
             sum += issueComments.size();
         }
 
         for(JSONObject mr : this.mergeRequests) {
             int mrId = (Integer) mr.get("iid");
-            List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectEntity.getRepoId(), mrId);
+            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectEntity.getRepoId(), "merge_requests/" + mrId);
             sum += mrComments.size();
         }
 

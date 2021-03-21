@@ -8,7 +8,7 @@ import {Avatar} from "@material-ui/core";
 import Collapse from "@material-ui/core/Collapse";
 import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
-import {useRowStyles} from "./CodeContributionPageStyles";
+import {useRowStyles} from "../../style/CodeContributionPageStyles";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 
 const CodeContributionRow = (props) => {
@@ -29,7 +29,7 @@ const CodeContributionRow = (props) => {
                             : <Avatar className={classes.cIcon}>C </Avatar> }
         </TableCell>
         <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
-        <TableCell style={{width: 600}} align="left">{row.details}</TableCell>
+        <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
         <TableCell className={classes.cell} align="left">{row.score}</TableCell>
       </TableRow>
       <TableRow>
