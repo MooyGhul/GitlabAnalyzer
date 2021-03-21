@@ -94,7 +94,7 @@ const CommentContributionPage = (props) => {
                         <TableHead>
                             <TableRow className={classes.head}>
                                 <TableCell align="left" className={classes.headCell}>Date</TableCell>
-                                <TableCell align="left" className={classes.headCell}>Title</TableCell>
+                                <TableCell align="left" className={classes.headCell}>MR/Issue Title</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Author</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Word Count</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Comment Type</TableCell>
