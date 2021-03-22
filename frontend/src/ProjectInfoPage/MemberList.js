@@ -31,7 +31,7 @@ function MemberList(props){
     
       const buttonClickHandler = (e) => {
         console.log(e.row.id);
-        history.push("/overview/" + projectID + "/" + e.row.studentID);
+        history.push("/overview/" + projectID + "/" + e.row.studentID+"/codeContribution");
       };
       
     return(
