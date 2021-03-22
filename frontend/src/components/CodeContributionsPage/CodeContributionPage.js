@@ -11,6 +11,7 @@ import BarChartProperties from "../Charts/BarChartProperties";
 import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import Navbar from '../Navbar/Navbar';
+import InnerNavBar from '../InnerNavBar'
 
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
@@ -87,6 +88,7 @@ const CodeContributionPage = () => {
         </Grid>
         <Grid item xs={12} >
           <Banner memberName={member_id}/>
+          <InnerNavBar/>
         </Grid>
       </Grid>
 

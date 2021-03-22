@@ -11,19 +11,22 @@ function ProjectInfoPage(props) {
   const projectName = location.state.projectName;
 
   const [members, setMembers] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get(
-          process.env.NODE_ENV === 'development' ?
-              `${process.env.REACT_APP_DEVHOST}/project/${projectID}/members` :
-              `/project/${projectID}/members`
+      const load = await axios.post(
+        `http://localhost:8080/project/${projectID}/load`
       );
-
+      const result = await axios.get(
+          `http://localhost:8080/project/${projectID}/members`
+      );
       setMembers(result.data);
     };
     fetchData();
   }, [projectID]);
+
+  console.log("MEMBERS")
+  console.log(members)
 
   return (
     <div>

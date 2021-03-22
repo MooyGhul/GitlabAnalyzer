@@ -9,6 +9,7 @@ import {getGraphData} from '../../helper';
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
 import {useParams} from "react-router";
+import InnerNavBar from '../InnerNavBar'
 
 const IssueContributionPage = () => {
     const styles = useStyles(); 
@@ -43,6 +44,7 @@ const IssueContributionPage = () => {
               </Grid>
               <Grid item xs={12} >
                 <Banner memberName={member_id}/>
+                <InnerNavBar/>
               </Grid>
             </Grid>
             <Grid container spacing={5}>

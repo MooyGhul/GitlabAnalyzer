@@ -17,6 +17,7 @@ import Navbar from '../Navbar/Navbar';
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 import TablePaginationActions from "../TablePaginationActions";
+import InnerNavBar from '../InnerNavBar'
 
 const CommentContributionPage = (props) => {
     const [comments, setComments] = useState([]);
@@ -69,6 +70,7 @@ const CommentContributionPage = (props) => {
                     <Navbar />
                 </Grid>
                     <Banner memberName={member_id} />
+                    <InnerNavBar/>
                 </Grid>
             <Grid className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
