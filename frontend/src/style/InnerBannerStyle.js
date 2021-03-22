@@ -2,13 +2,13 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   ul: {  
-    listStyleType: "none",
-    color: "red",
+    listStyleType: "none", 
     fontSize: "20px", 
     display: "flex",   
     width:"30%",
     borderBottom: "2px solid rgb(195,195,195)",
     justifyContent:"center",
+    
   },
 
   li: { 
@@ -17,16 +17,17 @@ const useStyles = makeStyles((theme) => ({
     paddingRight:"7%",
     paddingBottom:"1%",
     listStyle: "none", 
+    fontWeight: 'bolded',
   },
 
-  link:{
-      textDecoration:"none",
-
+  link:{ 
+      textDecoration:"none",     
+      
       '&:visited':{
         color:"black"
       },
       '&:hover':{
-          color:"red",
+        color: "red",
       },      
   },  
  
