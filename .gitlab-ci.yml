@@ -3,6 +3,7 @@ stages:
   - docker-build
   - unit-test
   - dev-deploy
+  - frontend-test
   - deploy
 
 before_script:
@@ -76,6 +77,9 @@ deploy:dev:
   tags:
     - shell
   when: manual
+  environment:
+    name: dev
+    url: http://cmpt373-1211-14.cmpt.sfu.ca:9000/
 
 deploy:dev-wipe-db:
   stage: dev-deploy
@@ -89,6 +93,9 @@ deploy:dev-wipe-db:
   tags:
     - shell
   when: manual
+  environment:
+    name: dev
+    url: http://cmpt373-1211-14.cmpt.sfu.ca:9000/
 
 deploy:ci:
   stage: dev-deploy
@@ -101,6 +108,29 @@ deploy:ci:
   cache: {}
   tags:
     - shell
+  environment:
+    name: ci
+    url: http://cmpt373-1211-14.cmpt.sfu.ca:7000/
+
+frontend-test:
+  stage: frontend-test
+  dependencies:
+    - deploy:ci
+  script:
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci down --volumes # in case some other branch deployed to CI due to delay
+    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci up -d
+    - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:7000" >> /dev/null
+    - cd frontend
+    - npm test -- --ci --reporters=default --reporters=jest-junit
+  allow_failure: true
+  cache: {}
+  tags:
+    - shell
+  artifacts:
+    reports:
+      junit: frontend/junit.xml
+  variables:
+    TEST_PORT: 7000
 
 deploy:staging:
   stage: deploy
@@ -114,6 +144,9 @@ deploy:staging:
     - shell
   only:
     - master
+  environment:
+    name: staging
+    url: http://cmpt373-1211-14.cmpt.sfu.ca:8080/
 
 deploy:prod:
   stage: deploy
@@ -128,3 +161,6 @@ deploy:prod:
   only:
     - master
   when: manual
+  environment:
+    name: prod
+    url: http://cmpt373-1211-14.cmpt.sfu.ca/
