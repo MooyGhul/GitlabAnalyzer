@@ -117,20 +117,16 @@ frontend-test:
   dependencies:
     - deploy:ci
   script:
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci down --volumes # in case some other branch deployed to CI due to delay
-    - docker-compose -f docker-compose.yml -f docker-compose.ci.yml -p gitlabanalyzer_ci up -d
-    - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:7000" >> /dev/null
     - cd frontend
     - npm ci --cache .npm --prefer-offline
     - npm test -- --ci --reporters=default --reporters=jest-junit
   allow_failure: true
-  tags:
-    - shell
+  image: buildkite/puppeteer
   artifacts:
     reports:
       junit: frontend/junit.xml
   variables:
-    REACT_APP_DEVHOST: http://localhost:7000/
+    REACT_APP_DEVHOST: http://host.docker.internal:7000/
     GITLAB_HOST: http://host.docker.internal:8929/
 
 deploy:staging:
