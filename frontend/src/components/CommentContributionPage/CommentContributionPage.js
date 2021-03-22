@@ -21,7 +21,8 @@ import Navbar from "../Navbar/Navbar";
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 import TablePaginationActions from "../TablePaginationActions";
-import InnerNavBar from "../InnerNavBar";
+import InnerNavBar from "../InnerNavBar"; 
+import {useInnerNavStyle} from '../../style/InnerNavStyle'
 
 const CommentContributionPage = (props) => {
   const [comments, setComments] = useState([]);
@@ -33,6 +34,7 @@ const CommentContributionPage = (props) => {
   const { project_id, member_id } = useParams();
 
   const classes = useStyles(props);
+  const innerNavStyle = useInnerNavStyle();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,7 +81,7 @@ const CommentContributionPage = (props) => {
         </Grid>
       </Grid>
       <Grid item xs={12} align="center">
-        <InnerNavBar project_id={project_id} member_id={member_id} />
+        <InnerNavBar commentStyle={innerNavStyle.actionItemComment} />
       </Grid>
 
       <Grid className={classes.graph}> 

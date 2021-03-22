@@ -12,12 +12,14 @@ import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import Navbar from "../Navbar/Navbar";
 import InnerNavBar from "../InnerNavBar";
+import {useInnerNavStyle} from "../../style/InnerNavStyle"
 
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
   const { project_id, member_id } = useParams();
   const [graphData] = useState(Contributions);
-  const classes = useGraphStyles();
+  const classes = useGraphStyles(); 
+  const innerNavStyle = useInnerNavStyle();
 
   const createData = (id, type, date, name, score) => {
     return { id, type, date, name, score };
@@ -101,7 +103,7 @@ const CodeContributionPage = () => {
         </Grid>
       </Grid>
       <Grid item xs={12} align="center">
-        <InnerNavBar project_id={project_id} member_id={member_id} />
+        <InnerNavBar codeStyle={innerNavStyle.actionItemCode}/>
       </Grid>
 
       <Grid className={classes.graph}>

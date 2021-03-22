@@ -18,9 +18,11 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import {useParams} from "react-router";
 import InnerNavBar from "../InnerNavBar";
+import {useInnerNavStyle} from "../../style/InnerNavStyle"
 
 const IssueContributionPage = () => {
   const classes = useStyles();
+  const innerNavStyle = useInnerNavStyle();
 
   const [issues, setIssues] = useState([]);
   const [graphData, setGraphData] = useState([]);
@@ -59,7 +61,7 @@ const IssueContributionPage = () => {
       </Grid>
 
       <Grid item xs={12} align="center">
-        <InnerNavBar project_id={project_id} member_id={member_id} />
+        <InnerNavBar issueStyle={innerNavStyle.actionItemIssue} />
       </Grid>
 
       <Grid className={classes.graph}>
