@@ -1,7 +1,5 @@
 const Authentication = {
     isLoggedIn: window.localStorage.getItem('isLoggedIn') === 'true',
-    isValidUser: false,
-    isValidToken: false,
 
     onAuthentication() {
         this.isLoggedIn = true;
