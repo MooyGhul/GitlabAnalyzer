@@ -1,26 +1,26 @@
-import React from 'react';  
-import {Link} from "react-router-dom"; 
-function MiniNavBar() {
-  
-    let project_id = 2
-    let member_id = 2
-    return (
+import React from "react";
+import {Link} from "react-router-dom";
+import {useParams} from "react-router-dom";
+
+const MiniNavBar = () => {
+  const {project_id, member_id} = useParams();
+  return (
     <div>
       <p>
         <Link to={`/overview/${project_id}/${member_id}/codecontribution`}>
-          Code 
+          Code
         </Link>
       </p>
 
       <p>
         <Link to={`/overview/${project_id}/${member_id}/commentcontribution`}>
-          Comment 
+          Comment
         </Link>
       </p>
 
       <p>
         <Link to={`/overview/${project_id}/${member_id}/issuecontribution`}>
-          Issue 
+          Issue
         </Link>
       </p>
     </div>

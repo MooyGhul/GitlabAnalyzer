@@ -23,6 +23,9 @@ const CodeContributionPage = () => {
     return {id, type, date, name, score};
   }
 
+  console.log(project_id)
+  console.log(member_id)
+
   useEffect(() => {
     const codeContributionData = (commitData, mrData) => {
       let ccArray = [];

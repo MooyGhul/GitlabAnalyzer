@@ -70,7 +70,7 @@ const CommentContributionPage = (props) => {
                     <Navbar />
                 </Grid>
                     <Banner memberName={member_id} />
-                    <InnerNavBar/>
+                    <InnerNavBar project_id={project_id} member_id={member_id}/>
                 </Grid>
             <Grid className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
