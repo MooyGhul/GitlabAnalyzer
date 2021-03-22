@@ -47,7 +47,7 @@ function ProjectInfoPage(props) {
 
   return (
     <div>
-      <Header pageTitle="Project Overview"/>
+      {/* <Header pageTitle="Project Overview"/> */}
       <WideHeader id={projectId} projectName={projectName} />
       <AllProjectInfo member={members} projectID={projectId} />
     </div>

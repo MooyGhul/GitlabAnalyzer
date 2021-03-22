@@ -5,7 +5,8 @@ import {getDisplayDate} from '@material-ui/pickers/_helpers/text-field-helper';
 import {
   Drawer, List, ListItem, 
   ListItemIcon, ListItemText,
-  Container, Typography
+  Container, Typography,
+  Grid
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home"
 import InfoIcon from "@material-ui/icons/Info";
@@ -33,8 +34,10 @@ const NavbarSide = () => {
   const classes = useStyles();
   return (
     <Router>
+      <Grid container>
       <div style={{display: 'flex'}}>
-        <Drawer
+        <Grid item>
+          <Drawer
           style={{width:'240px'}}
           variant="persistent"
           anchor="left"
@@ -51,7 +54,7 @@ const NavbarSide = () => {
             </ListItem>
             </Link>
 
-            <Link to="/about" className={classes.link}>
+            <Link to="/projectList" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <InfoIcon />
@@ -70,7 +73,7 @@ const NavbarSide = () => {
             </ListItem>
             </Link>
 
-          <Link to="/about" className={classes.link}>
+          <Link to="/overview/:project_id/:member_id" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <InfoIcon />
@@ -79,7 +82,7 @@ const NavbarSide = () => {
             </ListItem>
             </Link>
 
-          <Link to="/about" className={classes.link}>
+          <Link to="/Configurations" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <InfoIcon />
@@ -89,8 +92,10 @@ const NavbarSide = () => {
             </Link>
           </List>
         </Drawer>
+        </Grid>
 
-        <Switch>
+        <Container fixed>
+          <Switch>
           <Route exact path="/">
             <Container>
               {/* Server */}
@@ -98,32 +103,35 @@ const NavbarSide = () => {
             </Container>
           </Route>
 
-          <Route exact path="/about">
+          <Route exact path="/projectList">
             <Container>
-              Project List
+              <ProjectListPage />
             </Container>
           </Route>
 
           <Route exact path="/projectInfo/:projectId">
+            <Grid container>
+                <ProjectInfoPage />
+            </Grid>
+          </Route>
+
+          <Route exact path="/overview/:project_id/:member_id">
             <Container>
-              <ProjectInfoPage />
+              <OverviewPage />
+              {/* Member Overview */}
             </Container>
           </Route>
 
-          <Route exact path="/Member_Overview">
-            <Container>
-              Member Overview
-            </Container>
-          </Route>
-
-          <Route exact path="/about">
+          <Route exact path="/Configurations">
             <Container>
               Configurations
             </Container>
           </Route>
 
         </Switch>
+        </Container>
       </div>
+      </Grid>
     </Router>
   );
 }
