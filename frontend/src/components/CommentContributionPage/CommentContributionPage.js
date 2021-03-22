@@ -64,14 +64,17 @@ const CommentContributionPage = (props) => {
 
     return (
 
-        <Grid container justify='center' alignItems='center' spacing={5} >
+        <Grid container justify='center' alignItems='center' spacing={5}>
             <Grid item xs={12}>
                 <Grid item xs={12} >
                     <Navbar />
                 </Grid>
                     <Banner memberName={member_id} />
-                    <InnerNavBar project_id={project_id} member_id={member_id}/>
                 </Grid>
+                <Grid item xs={12} align="center">
+                    <InnerNavBar project_id={project_id} member_id={member_id}/>    
+                </Grid>
+
             <Grid className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
                 <BarChart data={graphData} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour} maintainRatio={false}/>
@@ -81,6 +84,8 @@ const CommentContributionPage = (props) => {
                     {expandAll ? "Collapse All" : "Expand All"}
                 </Button>
             </Grid>
+
+            
 
             <Grid item className={classes.table}>
                 <TableContainer>

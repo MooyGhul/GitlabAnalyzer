@@ -21,10 +21,7 @@ const CodeContributionPage = () => {
 
   const createData = (id, type, date, name, score) => {
     return {id, type, date, name, score};
-  }
-
-  console.log(project_id)
-  console.log(member_id)
+  } 
 
   useEffect(() => {
     const codeContributionData = (commitData, mrData) => {
@@ -83,32 +80,34 @@ const CodeContributionPage = () => {
 
   },[project_id]);
 
-  return(
-    <Grid container>
-      <Grid container spacing={0}>
+  return( 
+      <Grid container spacing={0} justify='center' alignItems='center' >
         <Grid item xs={12} >
           <Navbar />
         </Grid>
-        <Grid item xs={12} >
-          <Banner memberName={member_id}/>
-          <InnerNavBar/>
-        </Grid>
-      </Grid>
 
-      <Grid container justify='center' alignItems='center' spacing={5}>
-      <Grid item xs={8} className={classes.text}>
-        <Typography variant="h5">Code Contributions</Typography>
-        <BarChart data={graphData} codeContribution={true}
-                  barLabel1={BarChartProperties.codeContribution.labelMRs}
-                  barColour1={BarChartProperties.codeContribution.barColourMRs}
-                  barLabel2={BarChartProperties.codeContribution.labelCommits}
-                  barColour2={BarChartProperties.codeContribution.barColourCommits}/>
-      </Grid>
-      <Grid item xs={10}>
-        <CodeContributionTable codeContributionRows={codeContributionRows}/>
-      </Grid>
-      </Grid>
-    </Grid>
+        <Grid item xs={12} >
+          <Banner memberName={member_id}/>      
+        </Grid>
+         
+        <Grid item xs={12} align="center">
+        <InnerNavBar project_id={project_id} member_id={member_id}/>    
+        </Grid> 
+
+ 
+        <Grid item xs={12}>
+          <Typography variant="h5">Code Contributions</Typography>
+          <BarChart data={graphData} codeContribution={true}
+                    barLabel1={BarChartProperties.codeContribution.labelMRs}
+                    barColour1={BarChartProperties.codeContribution.barColourMRs}
+                    barLabel2={BarChartProperties.codeContribution.labelCommits}
+                    barColour2={BarChartProperties.codeContribution.barColourCommits}/>
+         </Grid>
+
+        <Grid item xs={10}>
+          <CodeContributionTable codeContributionRows={codeContributionRows}/>
+        </Grid> 
+    </Grid> 
  );
 }
 

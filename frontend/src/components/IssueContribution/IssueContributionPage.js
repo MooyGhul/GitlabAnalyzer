@@ -44,8 +44,14 @@ const IssueContributionPage = () => {
               </Grid>
               <Grid item xs={12} >
                 <Banner memberName={member_id}/>
-                <InnerNavBar/>
               </Grid>
+              
+                <Grid item xs={12} align="center">
+                    <InnerNavBar project_id={project_id} member_id={member_id}/>    
+                </Grid>
+
+
+
             </Grid>
             <Grid container spacing={5}>
             <Grid item>
