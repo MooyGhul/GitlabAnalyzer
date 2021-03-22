@@ -29,8 +29,6 @@ function UrlToken() {
         .then(function(response){
             console.log(response.status);
             if (response.status === 200){
-                Authentication.onValidToken();
-                Authentication.onAuthentication();
                 history.push('/projectList');
             }
         })

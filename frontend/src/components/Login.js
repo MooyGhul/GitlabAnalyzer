@@ -21,7 +21,7 @@ function Login() {
 
     const authenticateUser  = () => {
         if(user.name === AdminUser.username && user.password === AdminUser.password) {
-            Authentication.onValidUser();
+            Authentication.onAuthentication();
             return true;
         } else {
             return false;
