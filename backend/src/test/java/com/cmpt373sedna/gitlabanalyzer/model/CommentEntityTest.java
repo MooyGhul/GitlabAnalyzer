@@ -16,6 +16,7 @@ public class CommentEntityTest {
                 .MRorIssueId(92)
                 .projectId(2)
                 .MRorIssueName("test1")
+                .createdBy("admin")
                 .commenter("pipin")
                 .commentType("Issue")
                 .wordCount(1)
