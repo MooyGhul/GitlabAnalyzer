@@ -1,10 +1,11 @@
 jest.setTimeout(120000);
 
-const port = +(process.env.TEST_PORT || 8080);
+const REACT_APP_DEVHOST = process.env.REACT_APP_DEVHOST || 'http://localhost:8080';
+const GITLAB_HOST = process.env.GITLAB_HOST || 'http://cmpt373-1211-14.cmpt.sfu.ca:8929/';
 
 describe('Simple Browser Tests', () => {
    beforeAll(async () => {
-      await page.goto(`http://localhost:${port}`);
+      await page.goto(REACT_APP_DEVHOST);
    });
 
    it('can open project', async () => {
@@ -13,7 +14,7 @@ describe('Simple Browser Tests', () => {
       await expect(page).toClick('#login');
       await expect(page).toMatch('Server information');
 
-      await expect(page).toFill('#url', 'http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/naufal-276');
+      await expect(page).toFill('#url', `${GITLAB_HOST}root/naufal-276`);
       await expect(page).toFill('#token', 'XQUSyUSDiQUxsy6CoP8_');
       await expect(page).toClick('#create-config');
       await expect(page).toMatch('Project List', { timeout: 60000 });

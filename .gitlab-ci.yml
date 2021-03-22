@@ -130,7 +130,8 @@ frontend-test:
     reports:
       junit: frontend/junit.xml
   variables:
-    TEST_PORT: 7000
+    REACT_APP_DEVHOST: http://localhost:7000/
+    GITLAB_HOST: http://host.docker.internal:8929/
 
 deploy:staging:
   stage: deploy
