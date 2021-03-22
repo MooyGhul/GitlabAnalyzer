@@ -16,7 +16,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentEntity {
-    private @Id @GeneratedValue int commentId;
+    private @Id int commentId;
     private String commentType;
     private int projectId;
     private int MRorIssueId;
