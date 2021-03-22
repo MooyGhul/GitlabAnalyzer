@@ -5,12 +5,21 @@ export const useGraphStyles = makeStyles({
     textAlign: 'center',
     fontWeight: 'bold',
   },
+
+  graph: {
+    width: "60vw",
+    height: '30vh',
+    margin: "20px 0 20px 0"
+},   
+
+table: {
+  margin: "0 auto 0 auto",
+  width: "90%"
+},
 });
 
 export const useTableStyles = makeStyles({
-  table:{
-    minWidth: 500,
-  },
+  
   banner:{
     background: '#d1d0ff',
     font: 'bold',

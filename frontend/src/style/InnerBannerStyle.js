@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
 
   li: { 
     display: "inline-block",  
-    paddingLeft: "5%",
+    paddingLeft: "7%",
+    paddingRight:"7%",
     paddingBottom:"1%",
     listStyle: "none", 
   },
