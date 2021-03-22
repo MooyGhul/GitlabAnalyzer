@@ -21,12 +21,11 @@ function ProjectInfoPage(props) {
           `http://localhost:8080/project/${projectID}/members`
       );
       setMembers(result.data);
+      console.log(load)
     };
-    fetchData();
+    fetchData(); 
   }, [projectID]);
-
-  console.log("MEMBERS")
-  console.log(members)
+  
 
   return (
     <div>
