@@ -15,7 +15,7 @@ import Navbar from '../Navbar/Navbar';
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
   const {project_id, member_id} = useParams();
-  const [graphData] = useState(Contributions);
+  const [graphData, setGraphData] = useState([]);
   const classes = useGraphStyles();
 
   const createData = (id, type, date, name, score) => {
@@ -55,13 +55,14 @@ const CodeContributionPage = () => {
     };
 
     const fetchData = async () => {
-      let mrUrl = `/project/${project_id}/merge_requests`;
-      let commitUrl = `/project/${project_id}/commits`;
+      let mrUrl = `/project/${project_id}/member/${member_id}/merge_requests`;
+      let commitUrl = `/project/${project_id}/member/${member_id}/commits`;
 
       if(process.env.NODE_ENV === 'development') {
-        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/merge_requests`
-        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/commits`
+        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/merge_requests`;
+        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/commits`;
       }
+
       const resultCommit = await axios.get(commitUrl);
       const resultMR = await axios.get(mrUrl);
       const commitData = resultCommit.data;
@@ -76,8 +77,7 @@ const CodeContributionPage = () => {
       }).catch(() => {
       console.log('Failed retrieve data');
     });
-
-  },[project_id]);
+  },[project_id, member_id]);
 
   return(
     <Grid container>
