@@ -5,8 +5,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  TableBody,
-  Typography,
+  TableBody, 
 } from "@material-ui/core";
 import Banner from "../Banner";
 import Navbar from "../Navbar/Navbar";
@@ -25,7 +24,7 @@ const IssueContributionPage = () => {
 
   const [issues, setIssues] = useState([]);
   const [graphData, setGraphData] = useState([]);
-  const { project_id, member_id } = useParams();
+  const {project_id, member_id} = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,9 +63,6 @@ const IssueContributionPage = () => {
       </Grid>
 
       <Grid className={classes.graph}>
-        <Typography variant="h5" className={classes.graphTitle}>
-          Issue Word Count Per Day
-        </Typography>
         <BarChart
           data={graphData}
           barLabel1={BarChartProperties.issues.label}

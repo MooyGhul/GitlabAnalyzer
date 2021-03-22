@@ -10,7 +10,6 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  Typography,
 } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -83,10 +82,7 @@ const CommentContributionPage = (props) => {
         <InnerNavBar project_id={project_id} member_id={member_id} />
       </Grid>
 
-      <Grid className={classes.graph}>
-        <Typography variant="h5" className={classes.graphTitle}>
-          Comment Word Count Per Day
-        </Typography>
+      <Grid className={classes.graph}> 
         <BarChart
           data={graphData}
           barLabel1={BarChartProperties.comments.label}

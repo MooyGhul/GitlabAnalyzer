@@ -1,5 +1,5 @@
 import CodeContributionTable from "./CodeContributionTable";
-import {Grid, Typography} from "@material-ui/core";
+import {Grid} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import moment from "moment";
@@ -105,9 +105,6 @@ const CodeContributionPage = () => {
       </Grid>
 
       <Grid className={classes.graph}>
-        <Typography variant="h5" className={classes.text}>
-          Code Contributions
-        </Typography>
         <BarChart
           data={graphData}
           codeContribution={true}

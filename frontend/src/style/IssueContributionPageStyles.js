@@ -15,11 +15,7 @@ const useStyles = makeStyles((theme) => ({
         height: '30vh',
         margin: "20px 0 20px 0"
     }, 
-
-    graphTitle: {
-        textAlign: 'center', 
-        fontWeight: 'bold',
-    },
+ 
     table: {
         margin: "0 auto 0 auto",
         width: "90%"
