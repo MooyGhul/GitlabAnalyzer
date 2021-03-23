@@ -34,7 +34,7 @@ const AllProjectInfo = (props) => {
       setMRs(mrData.data);
     };
     
-    fetchData().then(res=>{hideLoader()});
+    fetchData().then(hideLoader());
   // eslint-disable-next-line
   }, [])
 

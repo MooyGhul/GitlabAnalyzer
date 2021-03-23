@@ -6,11 +6,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./style/projectList.module.css";
 import { useStyles } from "./style/ProjectListPageStyle"; 
+import useFullPageLoader from "./components/useFullPageLoader";
 
 const ProjectListPage = (props) => {
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
   const classes = useStyles();
+  const [loader, showLoader, hideLoader] = useFullPageLoader();
 
   const columns = [
     { field: "id", headerName: "ID", width: 200 },
@@ -19,13 +21,15 @@ const ProjectListPage = (props) => {
 
   const [data, setData] = useState([]);
   useEffect(() => {
+    showLoader();
     const fetchData = async () => {
       const result = await axios.get( process.env.NODE_ENV === 'development' ?
           `${process.env.REACT_APP_DEVHOST}/project/all`:
           "/project/all");
       setData(result.data);
     };
-    fetchData();
+    fetchData().then(hideLoader());
+    // eslint-disable-next-line
   }, [])
   
 
@@ -98,6 +102,7 @@ const ProjectListPage = (props) => {
       >
         Batch Process
       </Button> 
+      {loader}
     </div>
   
   );

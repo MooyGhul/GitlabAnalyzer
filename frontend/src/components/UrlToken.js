@@ -16,9 +16,7 @@ function UrlToken() {
     const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: '', token:''});
     const [errorMsg, setErrorMsg] = useState('');
-    const [loginToken, setLoginToken] = useState('');
-    // const [isLoading, setLoading] = useState(false)
-
+    const [loginToken, setLoginToken] = useState(''); 
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
 
