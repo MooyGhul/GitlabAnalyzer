@@ -5,7 +5,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./style/projectList.module.css";
-import { useStyles } from "./style/ProjectListPageStyle";
+import { useStyles } from "./style/ProjectListPageStyle"; 
 
 const ProjectListPage = (props) => {
   const history = useHistory();
@@ -26,7 +26,8 @@ const ProjectListPage = (props) => {
       setData(result.data);
     };
     fetchData();
-  }, []);
+  }, [])
+  
 
   const rows = data.map((project) => ({
     id: project.repoId,
@@ -96,8 +97,9 @@ const ProjectListPage = (props) => {
         className={classes.batchButton}
       >
         Batch Process
-      </Button>
+      </Button> 
     </div>
+  
   );
 }
 
