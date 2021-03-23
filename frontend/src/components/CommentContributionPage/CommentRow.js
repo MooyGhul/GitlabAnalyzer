@@ -15,6 +15,10 @@ const CommentRow = (props) => {
         setOpen(!open)
     };
 
+    const isOpen = () => {
+        return open || expandAll;
+    }
+
     return (
         <Fragment>
             <TableRow onClick={handleDropDown}>
@@ -35,14 +39,14 @@ const CommentRow = (props) => {
                 </TableCell>
                 <TableCell>
                     <IconButton size="small">
-                        {open || expandAll ? <KeyboardArrowUpIcon className={classes.icon}/> :
+                        {isOpen() ? <KeyboardArrowUpIcon className={classes.icon}/> :
                             <KeyboardArrowDownIcon className={classes.icon}  />}
                     </IconButton>
                 </TableCell>
             </TableRow>
-            <TableRow className={classes.expandBody} style={open || expandAll ? {borderBottom: "medium solid #7553ff"} : {}}>
+            <TableRow className={classes.expandBody} style={isOpen() ? {borderBottom: "medium solid #7553ff"} : {}}>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
+                    <Collapse in={isOpen()} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <Typography gutterBottom component="div" className={classes.rowBody}>
                                 {comment.commentText}
