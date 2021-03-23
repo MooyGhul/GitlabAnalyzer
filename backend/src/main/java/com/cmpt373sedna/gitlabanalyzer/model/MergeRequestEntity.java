@@ -30,7 +30,7 @@ public class MergeRequestEntity {
     private Instant createdAt;
     private @Nullable Instant mergedAt;
 
-    private String author;
+    private @Nullable String author;
     @Column(columnDefinition = "TEXT")
     private String description;
 

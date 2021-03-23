@@ -7,16 +7,16 @@ import {
     TableHead, TablePagination,
     TableRow, Typography,
 } from "@material-ui/core";
-import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
 import Navbar from '../Navbar/Navbar';
+import TablePaginationActions from "../TablePaginationActions";
+import ExpandAllBtn from "../ExpandAllBtn";
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
-import TablePaginationActions from "../TablePaginationActions";
 
 const CommentContributionPage = (props) => {
     const [comments, setComments] = useState([]);
@@ -37,6 +37,7 @@ const CommentContributionPage = (props) => {
                     `/project/${project_id}/member/${member_id}/comments`
             );
             setComments(commentResult.data);
+            console.log(commentResult.data);
             const commentCounts = getGraphData(commentResult.data, "commentDate");
             setGraphData(commentCounts);
         };
@@ -47,10 +48,6 @@ const CommentContributionPage = (props) => {
             console.log(e);
         });
     }, [project_id, member_id, setGraphData]);
-
-    const handleExpand = () => {
-        setExpandAll(!expandAll)
-    }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -74,18 +71,24 @@ const CommentContributionPage = (props) => {
                 <BarChart data={graphData} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour} maintainRatio={false}/>
             </Grid>
             <Grid item >
-                <Button variant="contained" onClick={handleExpand} className={classes.expandBtn}>
-                    {expandAll ? "Collapse All" : "Expand All"}
-                </Button>
+                <ExpandAllBtn expandAll={expandAll} setExpandAll={setExpandAll}/>
             </Grid>
 
             <Grid item className={classes.table}>
                 <TableContainer>
                     <Table>
+                        <colgroup>
+                            <col style={{width:'20%'}}/>
+                            <col style={{width:'40%'}}/>
+                            <col style={{width:'20%'}}/>
+                            <col style={{width:'10%'}}/>
+                            <col style={{width:'10%'}}/>
+                        </colgroup>
                         <TableHead>
                             <TableRow className={classes.head}>
                                 <TableCell align="left" className={classes.headCell}>Date</TableCell>
-                                <TableCell align="left" className={classes.headCell}>Author</TableCell>
+                                <TableCell align="left" className={classes.headCell}>MR/Issue Title</TableCell>
+                                <TableCell align="left" className={classes.headCell}>MR/Issue Author</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Word Count</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Comment Type</TableCell>
                                 <TableCell />
@@ -96,7 +99,7 @@ const CommentContributionPage = (props) => {
                                 rowsPerPage > 0 ?
                                 comments.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : comments
                                 ).map(comment =>
-                                <CommentRow key={comment.commentId} comment={comment} expandAll={expandAll} />
+                                <CommentRow key={comment.commentId} comment={comment} expandAll={expandAll} member_id={member_id}/>
                             )}
                         </TableBody>
 
