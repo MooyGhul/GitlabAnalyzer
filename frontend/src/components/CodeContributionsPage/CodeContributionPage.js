@@ -8,9 +8,9 @@ import {useParams} from "react-router-dom";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
-import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import Navbar from '../Navbar/Navbar';
+import {getGraphData} from "../../helper";
 
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
@@ -22,28 +22,53 @@ const CodeContributionPage = () => {
     return {id, type, date, name, score};
   }
 
+  const createGraphData = (year, MRDaily, CommitDaily) => {
+    return {year, MRDaily, CommitDaily};
+  }
+
   useEffect(() => {
     const codeContributionData = (commitData, mrData) => {
       let ccArray = [];
+      let commitArray = [];
+      let mrArray = [];
+      let commitCountsData = [];
+      let mrCountsData = [];
+
       for(let i = 0; i < commitData.length; i++) {
         let createdDate = new Date(commitData[i].commitDate);
-        ccArray.push(createData(commitData[i].commitId,
+        const newData = createData(commitData[i].commitId,
           'commit',
           '' + moment(createdDate).format('LLL'),
           commitData[i].commitName,
-          ComingSoonMsg.msg));
+          ComingSoonMsg.msg);
+        ccArray.push(newData);
+        commitArray.push(newData);
       }
 
       for(let i = 0; i < mrData.length; i++) {
         if (mrData[i].status === 'merged') {
           let mergedDate = new Date(mrData[i].mergedAt);
-          ccArray.push(createData(mrData[i].id,
+          let newData = createData(mrData[i].id,
             'MR',
             '' + moment(mergedDate).format('LLL'),
             mrData[i].mergeRequestName,
-            ComingSoonMsg.msg));
+            ComingSoonMsg.msg);
+          ccArray.push(newData);
+          mrArray.push(newData);
         }
       }
+
+      const ccCounts = getGraphData(ccArray, "date");
+      const mrCounts = getGraphData(mrArray, "date");
+      for(let i = 0; i < ccCounts.length; i++) {
+        commitCountsData.push(createGraphData(ccCounts[i].year, 0, ccCounts[i].data));
+      }
+      for(let i = 0; i < mrCounts.length; i++) {
+        mrCountsData.push(createGraphData(mrCounts[i].year, mrCounts[i].data, 0));
+      }
+
+      const ccGraphData = mergeCounts(commitCountsData, mrCountsData);
+      setGraphData(ccGraphData);
 
       ccArray.sort((a,b) => {
         let dateA = new Date(a.date);
@@ -52,6 +77,20 @@ const CodeContributionPage = () => {
       }).reverse();
 
       setCodeContributionRows(ccArray);
+    };
+
+    const mergeCounts = (commitCountsData, mrCountsData) => {
+      let merged = [];
+
+      for(let i = 0; i < commitCountsData.length; i++) {
+        for(let j = 0; j < mrCountsData.length; j++) {
+          if (commitCountsData[i].year === mrCountsData[j].year) {
+            commitCountsData[i].MRDaily = mrCountsData[j].MRDaily;
+          }
+        }
+        merged.push(commitCountsData[i]);
+      }
+    return merged;
     };
 
     const fetchData = async () => {
@@ -70,7 +109,6 @@ const CodeContributionPage = () => {
 
       codeContributionData(commitData, mrData);
     }
-
     fetchData()
       .then(()=> {
         console.log('Successful data retrieval');
@@ -78,6 +116,8 @@ const CodeContributionPage = () => {
       console.log('Failed retrieve data');
     });
   },[project_id, member_id]);
+  console.log(graphData);
+
 
   return(
     <Grid container>

@@ -60,7 +60,6 @@ const CommentContributionPage = (props) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
-
     return (
 
         <Grid container justify='center' alignItems='center' spacing={5} >
