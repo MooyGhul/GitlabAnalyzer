@@ -18,7 +18,10 @@ function ProjectInfoPage(props) {
         `http://localhost:8080/project/${projectID}/load`
       );
       const result = await axios.get(
-          `http://localhost:8080/project/${projectID}/members`
+        process.env.NODE_ENV === 'development' ?
+        `${process.env.REACT_APP_DEVHOST}/project/${projectID}/members` :
+        `/project/${projectID}/members`
+
       );
       setMembers(result.data);
       console.log(load)
