@@ -20,6 +20,14 @@ export const useTableStyles = makeStyles({
     fontWeight: "bold",
     fontSize: "1.2rem",
   },
+  expandBtn: {
+    position: "fixed",
+    bottom: "1vh",
+    right: "1vw",
+    backgroundColor: "#7553ff",
+    width: "8%",
+    color: "white"
+  }
 });
 
 export const usePaginationStyle = makeStyles((theme) => ({

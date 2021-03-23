@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: "bold",
         fontSize: "1.2rem"
     },
+    rowBodyHeader: {
+        fontWeight: "bold"
+    },
     table: {
         margin: "0 auto 0 auto",
         width: "90%"

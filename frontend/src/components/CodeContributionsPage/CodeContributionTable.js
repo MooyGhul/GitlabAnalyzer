@@ -9,10 +9,11 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import {TableFooter, TablePagination} from '@material-ui/core';
+import {Grid, TableFooter, TablePagination} from '@material-ui/core';
 import CodeContributionRow from "./CodeContributionRow";
 import TablePaginationActions from "../TablePaginationActions";
 import {useTableStyles} from '../../style/CodeContributionPageStyles';
+import ExpandAllBtn from "../ExpandAllBtn";
 
 const columns = [
   {id: 'type', label: 'Type'},
@@ -22,12 +23,12 @@ const columns = [
 ]
 
 const CodeContributionTable = (props) => {
-  const classes = useTableStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [openAll, setOpenAll] = useState(false);
+  const [expandAll, setExpandAll] = useState(false);
   const {codeContributionRows} = props;
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, codeContributionRows.length - page * rowsPerPage);
+  const classes = useTableStyles();
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -38,15 +39,19 @@ const CodeContributionTable = (props) => {
     setPage(0);
   };
 
+
   return (
     <Paper>
+      <Grid item>
+        <ExpandAllBtn expandAll={expandAll} setExpandAll={setExpandAll}/>
+      </Grid>
       <TableContainer>
         <Table stickyHeader className={classes.table}>
           <TableHead>
             <TableRow>
               <TableCell className={classes.banner}>
-                <IconButton size='small' onClick={() => setOpenAll(!openAll)}>
-                  {openAll ? <ExpandLess className={classes.banner} />
+                <IconButton size='small' onClick={() => setExpandAll(!expandAll)}>
+                  {expandAll ? <ExpandLess className={classes.banner} />
                           : <ExpandMore className={classes.banner} />}
                 </IconButton>
               </TableCell >
@@ -62,7 +67,7 @@ const CodeContributionTable = (props) => {
                 ? codeContributionRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : codeContributionRows
             ).map((row) => (
-              <CodeContributionRow key ={row.id} row={row} openAll={openAll} />
+              <CodeContributionRow key ={row.id} row={row} expandAll={expandAll}/>
             ))}
 
             {emptyRows > 0 && (

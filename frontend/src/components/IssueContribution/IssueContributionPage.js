@@ -19,14 +19,15 @@ import BarChartProperties from "../Charts/BarChartProperties";
 import {useParams} from "react-router";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"
+import ExpandAllBtn from "../ExpandAllBtn"; 
 
 const IssueContributionPage = () => {
-  const classes = useStyles();
-  const innerNavStyle = useInnerNavStyle();
-
-  const [issues, setIssues] = useState([]);
-  const [graphData, setGraphData] = useState([]);
-  const {project_id, member_id} = useParams();
+    const classes = useStyles();
+    const [expandAll, setExpandAll] = React.useState(false);
+    const [issues, setIssues] = useState([]); 
+    const [graphData, setGraphData] = useState([]);
+    const {project_id, member_id} = useParams();
+    const innerNavStyle = useInnerNavStyle();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,6 +73,9 @@ const IssueContributionPage = () => {
           maintainRatio={false}
         />
       </Grid>
+      <Grid item>
+        <ExpandAllBtn expandAll={expandAll} setExpandAll={setExpandAll}/>
+      </Grid>
 
       <Grid item className={classes.table}>
         <TableContainer>
@@ -92,7 +96,7 @@ const IssueContributionPage = () => {
             </TableHead>
             <TableBody>
               {issues.map((issue) => (
-                <Row key={issue.issueId} row={issue} />
+                <Row key={issue.issueId} row={issue} expandAll={expandAll} />
               ))}
             </TableBody>
           </Table>
