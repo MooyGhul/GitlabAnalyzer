@@ -41,7 +41,7 @@ public class IssueEntity {
                 .projectId(json.getInt("project_id"))
                 .issueName(json.getString("title"))
                 .issueDescription(!JSONObject.NULL.equals(o) ? json.getString("description") : null)
-                .assignee(!JSONObject.NULL.equals(assigneeObject) ? assigneeObject.getString("name") : null)
+                .assignee(!JSONObject.NULL.equals(assigneeObject) ? assigneeObject.getString("name") : "")
                 .openedDate(Instant.parse(json.getString("created_at")))
                 .closedDate(closedDateString == null ? null : Instant.parse(closedDateString))
                 .build();
