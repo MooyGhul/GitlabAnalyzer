@@ -86,8 +86,8 @@ const CommentContributionPage = (props) => {
                     <Table>
                         <colgroup>
                             <col style={{width:'20%'}}/>
-                            <col style={{width:'50%'}}/>
-                            <col style={{width:'10%'}}/>
+                            <col style={{width:'40%'}}/>
+                            <col style={{width:'20%'}}/>
                             <col style={{width:'10%'}}/>
                             <col style={{width:'10%'}}/>
                         </colgroup>
@@ -95,7 +95,7 @@ const CommentContributionPage = (props) => {
                             <TableRow className={classes.head}>
                                 <TableCell align="left" className={classes.headCell}>Date</TableCell>
                                 <TableCell align="left" className={classes.headCell}>MR/Issue Title</TableCell>
-                                <TableCell align="left" className={classes.headCell}>Author</TableCell>
+                                <TableCell align="left" className={classes.headCell}>MR/Issue Author</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Word Count</TableCell>
                                 <TableCell align="left" className={classes.headCell}>Comment Type</TableCell>
                                 <TableCell />
