@@ -1,11 +1,11 @@
 import Header from "./components/Header";
 import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
-import { DataGrid } from "@material-ui/data-grid";
-import React, { useState, useEffect } from "react";
+import {useHistory} from "react-router-dom";
+import {DataGrid} from "@material-ui/data-grid";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import styles from "./style/projectList.module.css";
-import { useStyles } from "./style/ProjectListPageStyle"; 
+import {useStyles} from "./style/ProjectListPageStyle"; 
 import useFullPageLoader from "./components/useFullPageLoader";
 
 const ProjectListPage = (props) => {
