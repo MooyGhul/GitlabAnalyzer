@@ -12,7 +12,7 @@ public class CommentEntityTest {
     @Test
     void fromGitlabJSON_parses_open_Comment_correctly() throws IOException {
         CommentEntity expected = CommentEntity.builder()
-                .commentId(377)
+                .commentId(302)
                 .MRorIssueId(92)
                 .projectId(2)
                 .MRorIssueName("test1")

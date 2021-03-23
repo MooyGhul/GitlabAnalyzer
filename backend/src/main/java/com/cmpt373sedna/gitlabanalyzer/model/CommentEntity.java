@@ -21,7 +21,7 @@ public class CommentEntity {
     private int projectId;
     private int MRorIssueId;
     private int wordCount;
-    private @Nullable String createdBy;
+    private String createdBy;
     @Column(columnDefinition="text")
     private @Nullable String commentText;
     private @Nullable String commenter;
@@ -35,6 +35,7 @@ public class CommentEntity {
                 .commentId(json.getInt("id"))
                 .MRorIssueId(json.getInt("MRorIssueId"))
                 .projectId(json.getInt("project_id"))
+                .createdBy(json.getString("created_by"))
                 .MRorIssueName(json.getString("MRorIssueName"))
                 .commenter(json.getJSONObject("author").getString("username"))
                 .commentType(json.getString("noteable_type"))
