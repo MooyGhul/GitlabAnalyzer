@@ -82,6 +82,7 @@ const ProjectListPage = (props) => {
       <h3 className={classes.errorMsg}>{errorMsg}</h3>
 
       <Button
+        id="select-project"
         variant="contained"
         color="primary"
         className={classes.analyzeButton}
