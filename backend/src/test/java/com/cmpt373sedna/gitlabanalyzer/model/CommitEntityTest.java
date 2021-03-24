@@ -22,6 +22,7 @@ public class CommitEntityTest {
                     .commitName("Replace sanitize with escape once")
                     .author("Example User")
                     .commitDate(sdf.parse("2012-09-20T11:50:22+03:00").toInstant())
+                    .url("https://gitlab.example.com/thedude/gitlab-foss/-/commit/ed899a2f4b50b4370feeea94676502b42383c746")
                     .build();
         } catch (ParseException e) {
             e.printStackTrace();

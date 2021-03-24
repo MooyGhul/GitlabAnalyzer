@@ -19,6 +19,7 @@ public class CommitEntity {
     private @Getter String commitName;
     private @Getter String author;
     private @Getter Instant commitDate;
+    private String url;
 
     public static CommitEntity fromGitlabJSON(JSONObject json) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -29,6 +30,7 @@ public class CommitEntity {
                     .commitName(json.getString("title"))
                     .author(json.getString("author_name"))
                     .commitDate(sdf.parse(json.getString("committed_date")).toInstant())
+                    .url(json.getString("web_url"))
                     .build();
         }catch (java.text.ParseException e) {
             e.printStackTrace();

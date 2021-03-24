@@ -18,8 +18,8 @@ const CodeContributionPage = () => {
   const [graphData, setGraphData] = useState([]);
   const classes = useGraphStyles();
 
-  const createData = (id, type, date, name, score) => {
-    return {id, type, date, name, score};
+  const createData = (id, type, date, name, url, score) => {
+    return {id, type, date, name, url, score};
   }
 
   const createGraphData = (year, MRDaily, CommitDaily) => {
@@ -40,6 +40,7 @@ const CodeContributionPage = () => {
           'commit',
           '' + moment(createdDate).format('LLL'),
           commitData[i].commitName,
+          commitData[i].url,
           ComingSoonMsg.msg);
         ccArray.push(newData);
         commitArray.push(newData);
@@ -52,6 +53,7 @@ const CodeContributionPage = () => {
             'MR',
             '' + moment(mergedDate).format('LLL'),
             mrData[i].mergeRequestName,
+            mrData[i].url,
             ComingSoonMsg.msg);
           ccArray.push(newData);
           mrArray.push(newData);
