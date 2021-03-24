@@ -2,7 +2,6 @@ import CodeContributionTable from "./CodeContributionTable";
 import {Grid, Typography} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import moment from "moment";
 import Banner from "../Banner";
 import {useParams} from "react-router-dom";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
@@ -10,7 +9,7 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import Navbar from '../Navbar/Navbar';
-import {getGraphData} from "../../helper";
+import {formatTableDate, getGraphData} from "../../helper";
 
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
@@ -28,42 +27,18 @@ const CodeContributionPage = () => {
 
   useEffect(() => {
     const codeContributionData = (commitData, mrData) => {
-      let ccArray = [];
       let commitArray = [];
       let mrArray = [];
       let commitCountsData = [];
       let mrCountsData = [];
 
-      for(let i = 0; i < commitData.length; i++) {
-        let createdDate = new Date(commitData[i].commitDate);
-        const newData = createData(commitData[i].commitId,
-          'commit',
-          '' + moment(createdDate).format('LLL'),
-          commitData[i].commitName,
-          commitData[i].url,
-          ComingSoonMsg.msg);
-        ccArray.push(newData);
-        commitArray.push(newData);
-      }
+      formatData(commitData, commitArray, mrArray);
+      formatData(mrData, commitArray, mrArray);
 
-      for(let i = 0; i < mrData.length; i++) {
-        if (mrData[i].status === 'merged') {
-          let mergedDate = new Date(mrData[i].mergedAt);
-          let newData = createData(mrData[i].id,
-            'MR',
-            '' + moment(mergedDate).format('LLL'),
-            mrData[i].mergeRequestName,
-            mrData[i].url,
-            ComingSoonMsg.msg);
-          ccArray.push(newData);
-          mrArray.push(newData);
-        }
-      }
-
-      const ccCounts = getGraphData(ccArray, "date");
+      const commitCounts = getGraphData(commitArray, "date");
       const mrCounts = getGraphData(mrArray, "date");
-      for(let i = 0; i < ccCounts.length; i++) {
-        commitCountsData.push(createGraphData(ccCounts[i].year, 0, ccCounts[i].data));
+      for(let i = 0; i < commitCounts.length; i++) {
+        commitCountsData.push(createGraphData(commitCounts[i].year, 0, commitCounts[i].data));
       }
       for(let i = 0; i < mrCounts.length; i++) {
         mrCountsData.push(createGraphData(mrCounts[i].year, mrCounts[i].data, 0));
@@ -72,6 +47,7 @@ const CodeContributionPage = () => {
       const ccGraphData = mergeCounts(commitCountsData, mrCountsData);
       setGraphData(ccGraphData);
 
+      let ccArray = [...commitArray, ...mrArray];
       ccArray.sort((a,b) => {
         let dateA = new Date(a.date);
         let dateB = new Date(b.date);
@@ -80,6 +56,47 @@ const CodeContributionPage = () => {
 
       setCodeContributionRows(ccArray);
     };
+
+    const formatData = (dataType, commitArray, mrArray) => {
+      for (let i = 0; i < dataType.length; i++) {
+        let dataTypeIndex = dataType[i];
+        const isCommitData = dataTypeIndex.hasOwnProperty('commitId');
+        const isMergedMRData = !isCommitData && (dataTypeIndex.status === 'merged');
+        console.log(isMergedMRData);
+
+        if (isCommitData || isMergedMRData) {
+          let id;
+          let date;
+          let name;
+          let type;
+
+          if (isCommitData) {
+            id = dataTypeIndex.commitId;
+            type = 'commit'
+            date = new Date(dataTypeIndex.commitDate);
+            name = dataTypeIndex.commitName;
+          } else if (isMergedMRData) {
+            id = dataTypeIndex.id;
+            type = 'MR'
+            date = new Date(dataTypeIndex.mergedAt);
+            name = dataTypeIndex.mergeRequestName;
+          }
+
+          const newData = createData(id,
+            type,
+            '' + formatTableDate(date),
+            name,
+            dataTypeIndex.url,
+            ComingSoonMsg.msg);
+
+          if (newData.type === 'commit') {
+            commitArray.push(newData);
+          } else if (newData.type === 'MR') {
+            mrArray.push(newData);
+          }
+        }
+      }
+    }
 
     const mergeCounts = (commitCountsData, mrCountsData) => {
       let merged = [];
