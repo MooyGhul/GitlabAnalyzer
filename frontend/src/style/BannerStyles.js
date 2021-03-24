@@ -10,13 +10,12 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("sm")]: {
       height: "36vh",
-    },
-    backgroundColor: "#d1d0ff",
+    }, 
   },
 
   large: {
     height: "18vh",
-    width: "18vh",
+    width: "18vw",
   },
 
   profile: {

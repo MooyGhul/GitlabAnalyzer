@@ -13,8 +13,7 @@ const ScoreBoard = (props) => {
   const [mergeRequestCount, setMergeRequestCount] = useState(0);
   const [commitCount, setCommitCount] = useState(0);
   const [weights, setWeights] = useState({ commitScore: 1, mrScore: 2, fileScore: 3 });
-  const classes = useStyles(props);
-  const [language, setLanguage] = useState("C++");
+  const classes = useStyles(props); 
 
   const { project_id, member_id } = useParams();
 
@@ -39,18 +38,12 @@ const ScoreBoard = (props) => {
     });
   }, [project_id, member_id]);
 
-  const handleFile = (newLanguage) => {
-    setLanguage(newLanguage);
-  };
-
   return (
     <Grid container spacing={2}>
       <Grid item lg={8} md={8} sm={8} className={classes.cards}>
         <Scores
           mergeRequestCount={mergeRequestCount}
-          commitCount={commitCount}
-          language={language}
-          onChange={handleFile}
+          commitCount={commitCount}  
         />
       </Grid>
 
@@ -64,9 +57,6 @@ const ScoreBoard = (props) => {
             >
               Score Breakdown <SearchIcon className={classes.icon} />
             </Button>
-          </Grid>
-          <Grid item>
-           <WeightDialog weights={weights} setWeights={setWeights}/>
           </Grid>
           <Grid item>
             <Button
