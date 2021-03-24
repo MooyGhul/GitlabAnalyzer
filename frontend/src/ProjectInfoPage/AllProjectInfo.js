@@ -15,6 +15,7 @@ const AllProjectInfo = (props) => {
   let projectID = props.projectID;
   let commitsArray = [];
   let MRsArray = [];
+  let projectName = props.projectName;
   
   useEffect(() => {
     const fetchData = async () => {
@@ -74,6 +75,7 @@ const AllProjectInfo = (props) => {
         commitsArray={commitsArray}
         MRsArray={MRsArray}
         projectID={projectID}
+        projectName={projectName}
       />
       {loader}
     </div>

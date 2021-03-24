@@ -13,13 +13,17 @@ import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import Navbar from "../Navbar/Navbar";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"
+import { useLocation } from "react-router-dom";
 
-const CodeContributionPage = () => {
+const CodeContributionPage = (props) => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
   const { project_id, member_id } = useParams();
   const [graphData] = useState(Contributions);
   const classes = useGraphStyles(); 
   const innerNavStyle = useInnerNavStyle();
+  const location = useLocation();
+  const projectName = location.state.projectName;
+  
 
   const createData = (id, type, date, name, url, score) => {
     return {id, type, date, name, url, score};
@@ -92,7 +96,7 @@ const CodeContributionPage = () => {
           <Navbar />
         </Grid>
         <Grid item xs={12}>
-          <Banner memberName={member_id} />
+          <Banner memberName={member_id} projectName={projectName} />
         </Grid>
       </Grid>
       <Grid item xs={12} align="center">

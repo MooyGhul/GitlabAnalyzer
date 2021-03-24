@@ -42,8 +42,7 @@ const ScoreBoard = (props) => {
         <Scores
           mergeRequestCount={mergeRequestCount}
           commitCount={commitCount}  
-        />
-         
+        />         
         </Grid>
 
         <Grid item lg={6} md={6} sm={6}>

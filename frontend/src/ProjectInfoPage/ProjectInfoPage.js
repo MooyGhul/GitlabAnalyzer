@@ -30,7 +30,7 @@ function ProjectInfoPage(props) {
     <div>
       <Header pageTitle="Project Overview"/>
       <WideHeader id={projectID} projectName={projectName} />
-      <AllProjectInfo member={members} projectID={projectID} />
+      <AllProjectInfo member={members} projectID={projectID} projectName={projectName} />
     </div>
   );
 }

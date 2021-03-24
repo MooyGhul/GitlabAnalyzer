@@ -28,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
   details: {
     fontSize: "35px",
+    position: "relative",
+    left: "20%",
+    marginBottom:"3vh",
+    fontWeight:"bold"
   },
 }));
 

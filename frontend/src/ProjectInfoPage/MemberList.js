@@ -7,6 +7,7 @@ function MemberList(props){
     let commitsArray = props.commitsArray
     let MRsArray = props.MRsArray
     let projectID = props.projectID
+    let projectName = props.projectName
     const history = useHistory();
     const classes = useStyles();
 
@@ -31,8 +32,11 @@ function MemberList(props){
     
       const buttonClickHandler = (e) => {
         console.log(e.row.id);
-        history.push( `/overview/${projectID}/${e.row.studentID}/codeContribution`);
-      };
+        history.push({
+          pathname: `/overview/${projectID}/${e.row.studentID}/codeContribution`,
+          state: { projectName: projectName }
+        });
+      }
       
     return(
         <div className={classes.memberList}>
