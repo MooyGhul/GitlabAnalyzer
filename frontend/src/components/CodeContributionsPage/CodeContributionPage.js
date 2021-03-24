@@ -92,6 +92,7 @@ const CodeContributionPage = () => {
         }
         merged.push(commitCountsData[i]);
       }
+
     return merged;
     };
 
@@ -119,7 +120,7 @@ const CodeContributionPage = () => {
     });
   },[project_id, member_id]);
   console.log(graphData);
-
+  console.log(codeContributionRows)
 
   return(
     <Grid container>
