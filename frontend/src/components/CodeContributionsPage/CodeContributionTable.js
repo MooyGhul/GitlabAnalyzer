@@ -17,6 +17,7 @@ import ExpandAllBtn from "../ExpandAllBtn";
 
 const columns = [
   {id: 'type', label: 'Type'},
+  {id: 'gitlabLink', label: 'Gitlab Link'},
   {id: 'date', label: 'Date'},
   {id: 'name', label: 'Name'},
   {id: 'score', label: 'Score'},
