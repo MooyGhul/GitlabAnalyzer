@@ -18,8 +18,8 @@ const CodeContributionPage = () => {
   const [graphData] = useState(Contributions);
   const classes = useGraphStyles();
 
-  const createData = (id, type, date, name, score) => {
-    return {id, type, date, name, score};
+  const createData = (id, type, date, name, url, score) => {
+    return {id, type, date, name, url, score};
   }
 
   useEffect(() => {
@@ -31,6 +31,7 @@ const CodeContributionPage = () => {
           'commit',
           '' + moment(createdDate).format('LLL'),
           commitData[i].commitName,
+          commitData[i].url,
           ComingSoonMsg.msg));
       }
 
@@ -41,6 +42,7 @@ const CodeContributionPage = () => {
             'MR',
             '' + moment(mergedDate).format('LLL'),
             mrData[i].mergeRequestName,
+            mrData[i].url,
             ComingSoonMsg.msg));
         }
       }

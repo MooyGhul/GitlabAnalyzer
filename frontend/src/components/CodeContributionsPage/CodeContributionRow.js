@@ -10,6 +10,8 @@ import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
 import {useRowStyles} from "../../style/CodeContributionPageStyles";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
+import Button from '@material-ui/core/Button';
+import LinkIcon from '@material-ui/icons/Link';
 
 const CodeContributionRow = (props) => {
   const { row, expandAll } = props;
@@ -32,6 +34,12 @@ const CodeContributionRow = (props) => {
         <TableCell className={classes.cell} align="left" component='th' scope='row'>
           {row.type === "MR" ? <Avatar className={classes.mrIcon}>M</Avatar>
                             : <Avatar className={classes.cIcon}>C </Avatar> }
+        </TableCell>
+        <TableCell className={classes.cell} align="left">
+          <Button variant="outlined" color="primary" href={row.url} target="_blank" rel="noreferrer noopener">
+             Link &nbsp;
+            <LinkIcon />
+          </Button>
         </TableCell>
         <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
         <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
