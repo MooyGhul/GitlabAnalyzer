@@ -74,10 +74,10 @@ function UrlToken() {
                 <TextField id='url' classes={{root: classes.customTextField}} label='Server URL' value={urlToken.url}
                         onChange={e=> setUrlToken({...urlToken, url: e.target.value})}/>
 
-                <TextField id='url' classes={{root: classes.customTextField}} label='Server Token'  value={urlToken.token}
+                <TextField id='token' classes={{root: classes.customTextField}} label='Server Token'  value={urlToken.token}
                         onChange={e=> setUrlToken({...urlToken, token: e.target.value})}/>
                  
-                <Button classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'>Next</Button>   
+                <Button id='create-config' classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'>Next</Button>
             </form>
             </Box>
         </Grid>

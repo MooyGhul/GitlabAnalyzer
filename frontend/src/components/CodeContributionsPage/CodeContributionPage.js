@@ -21,38 +21,32 @@ const CodeContributionPage = () => {
   const classes = useGraphStyles(); 
   const innerNavStyle = useInnerNavStyle();
 
-  const createData = (id, type, date, name, score) => {
-    return { id, type, date, name, score };
-  };
+  const createData = (id, type, date, name, url, score) => {
+    return {id, type, date, name, url, score};
+  }
 
   useEffect(() => {
     const codeContributionData = (commitData, mrData) => {
       let ccArray = [];
       for (let i = 0; i < commitData.length; i++) {
         let createdDate = new Date(commitData[i].commitDate);
-        ccArray.push(
-          createData(
-            commitData[i].commitId,
-            "commit",
-            "" + moment(createdDate).format("LLL"),
-            commitData[i].commitName,
-            ComingSoonMsg.msg
-          )
-        );
+        ccArray.push(createData(commitData[i].commitId,
+          'commit',
+          '' + moment(createdDate).format('LLL'),
+          commitData[i].commitName,
+          commitData[i].url,
+          ComingSoonMsg.msg));
       }
 
       for (let i = 0; i < mrData.length; i++) {
         if (mrData[i].status === "merged") {
           let mergedDate = new Date(mrData[i].mergedAt);
-          ccArray.push(
-            createData(
-              mrData[i].id,
-              "MR",
-              "" + moment(mergedDate).format("LLL"),
-              mrData[i].mergeRequestName,
-              ComingSoonMsg.msg
-            )
-          );
+          ccArray.push(createData(mrData[i].id,
+            'MR',
+            '' + moment(mergedDate).format('LLL'),
+            mrData[i].mergeRequestName,
+            mrData[i].url,
+            ComingSoonMsg.msg));
         }
       }
 
