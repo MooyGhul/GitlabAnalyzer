@@ -22,12 +22,18 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-evenly",
   },
-  cards: {
-    marginTop: "4vh",
+  cards: { 
   },
   icon: {
     background: "none",
   },
+  buttonContainer: { 
+    marginTop: "3vh",
+    marginLeft: "1vw",
+  },
+  scoreboardContainer:{ 
+    marginLeft:"12.5vw"
+  }
 }));
 
 export default useStyles;

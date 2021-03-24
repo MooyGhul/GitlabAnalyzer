@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   card1: { 
-    backgroundColor: "rgb(227,228,254)",
+    backgroundColor: "rgb(236,242,245)",
     height: "90%", 
     [theme.breakpoints.up("lg")]: {
       width: "35vw",  
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   titles: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-evenly",
+    justifyContent: "space-around",
   },
   title: {
     fontWeight: "bold",
@@ -30,16 +30,17 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.0rem",
     },
-    fontSize: "1.2rem",
+    fontSize: "1.0rem",
   },
   values: {
     display: "flex",
-    margin: "3vh 0 3vh 0",
+    margin: "3vh 0 3vh 1.5vw",
     [theme.breakpoints.down("sm")]: {
-      fontSize: "1.0rem",
+      fontSize: "1.2rem",
     },
-    fontSize: "1.4rem",
-    justifyContent: "space-evenly",
+    fontSize: "1.0rem",
+    justifyContent: "space-around",
+
   },
 }));
 

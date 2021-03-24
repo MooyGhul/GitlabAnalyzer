@@ -37,37 +37,37 @@ const ScoreBoard = (props) => {
   }, [project_id, member_id]);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item lg={8} md={8} sm={8} className={classes.cards}>
+    <Grid container spacing={10} className={classes.scoreboardContainer}>
+      <Grid item lg={6} md={6} sm={6} className={classes.cards}>
         <Scores
           mergeRequestCount={mergeRequestCount}
           commitCount={commitCount}  
         />
+         
+        </Grid>
+
+        <Grid item lg={6} md={6} sm={6}>
+          <Grid item className={classes.buttonContainer}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Score Breakdown <SearchIcon className={classes.icon} />
+              </Button>
+              
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Copy Scores <FileCopyIcon className={classes.icon} />
+              </Button>
+            </Grid>
+          </Grid>
       </Grid>
 
-      <Grid item lg={4} md={4} sm={4}>
-        <Grid item className={classes.buttons}>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-            >
-              Score Breakdown <SearchIcon className={classes.icon} />
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-            >
-              Copy Scores <FileCopyIcon className={classes.icon} />
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+ 
   );
 };
 
