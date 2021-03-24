@@ -6,13 +6,11 @@ import Button from "@material-ui/core/Button";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import SearchIcon from "@material-ui/icons/Search";
 import Scores from "../components/Scores";
-import useStyles from "../style/ScoreBoardStyles";
-import WeightDialog from "./WeightsDialog";
+import useStyles from "../style/ScoreBoardStyles"; 
 
 const ScoreBoard = (props) => {
   const [mergeRequestCount, setMergeRequestCount] = useState(0);
-  const [commitCount, setCommitCount] = useState(0);
-  const [weights, setWeights] = useState({ commitScore: 1, mrScore: 2, fileScore: 3 });
+  const [commitCount, setCommitCount] = useState(0); 
   const classes = useStyles(props); 
 
   const { project_id, member_id } = useParams();
