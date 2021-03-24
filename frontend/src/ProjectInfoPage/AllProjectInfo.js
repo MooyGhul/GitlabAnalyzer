@@ -12,7 +12,7 @@ const AllProjectInfo = (props) => {
   let projectID = props.projectID;
   let commitsArray = [];
   let MRsArray = [];
-
+  
   useEffect(() => {
     const fetchData = async () => {
       let mrUrl = `/project/${projectID}/merge_requests`;
