@@ -7,13 +7,17 @@ import {formatTableDate} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 
 const CommentRow = (props) => {
-    const {comment, expandAll} = props;
+    const {comment, expandAll, member_id} = props;
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
     const handleDropDown = () => {
         setOpen(!open)
     };
+
+    const isOpen = () => {
+        return open || expandAll;
+    }
 
     return (
         <Fragment>
@@ -25,7 +29,13 @@ const CommentRow = (props) => {
                 </TableCell>
                 <TableCell align="left">
                     <Typography gutterBottom component="div">
-                        {comment.commenter}
+                        {comment.mrorIssueName}
+                    </Typography>
+                </TableCell>
+                <TableCell align="left">
+                    <Typography gutterBottom component="div"
+                                style={comment.createdBy === member_id ? { fontWeight: "bold"}: {}}>
+                        {comment.createdBy}
                     </Typography>
                 </TableCell>
                 <TableCell align="left" className={classes.wordCount}>{comment.wordCount}</TableCell>
@@ -35,17 +45,17 @@ const CommentRow = (props) => {
                 </TableCell>
                 <TableCell>
                     <IconButton size="small">
-                        {open || expandAll ? <KeyboardArrowUpIcon className={classes.icon}/> :
+                        {isOpen() ? <KeyboardArrowUpIcon className={classes.icon}/> :
                             <KeyboardArrowDownIcon className={classes.icon}  />}
                     </IconButton>
                 </TableCell>
             </TableRow>
-            <TableRow className={classes.expandBody} style={open || expandAll ? {borderBottom: "medium solid #7553ff"} : {}}>
+            <TableRow className={classes.expandBody} style={isOpen() ? {borderBottom: "medium solid #7553ff"} : {}}>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open || expandAll} timeout="auto" unmountOnExit>
+                    <Collapse in={isOpen()} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             <Typography gutterBottom component="div" className={classes.rowBody}>
-                                {comment.commentText}
+                                <span className={classes.rowBodyHeader} >Comment:</span> {comment.commentText}
                             </Typography>
                         </Box>
                     </Collapse>

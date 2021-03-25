@@ -30,12 +30,13 @@ public class MergeRequestEntity {
     private Instant createdAt;
     private @Nullable Instant mergedAt;
 
-    private String author;
+    private @Nullable String author;
     @Column(columnDefinition = "TEXT")
     private String description;
 
     private String mergeRequestName;
     private @ElementCollection List<String> commitIds;
+    private String url;
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
         String mergedAt = json.optString("merged_at");
@@ -51,6 +52,7 @@ public class MergeRequestEntity {
                     .createdAt(Instant.parse(json.getString("created_at")))
                     .mergeRequestName(json.getString("title"))
                     .mergedAt(isNotBlank(mergedAt) ? sdf.parse(mergedAt).toInstant() : null)
+                    .url(json.getString("web_url"))
                     .build();
         } catch (java.text.ParseException e) {
             e.printStackTrace();

@@ -28,7 +28,9 @@ export const getGraphData = (arr, key) => {
         }
     }
     result = result.sort((obj1, obj2) => {
-        if(obj1.year > obj2.year) {
+        const date1 = new Date(obj1.year);
+        const date2 = new Date(obj2.year)
+        if(date1 > date2) {
             return 1;
         } else {
             return -1;
