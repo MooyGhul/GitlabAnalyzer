@@ -1,20 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import StackedBarChart from "./StackedBarChart";
 import { useStyles } from "./AllProjectInfoStyle";
 import MemberList from "./MemberList";
+import useFullPageLoader from "../components/useFullPageLoader"
 
 const AllProjectInfo = (props) => {
   const classes = useStyles();
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
+  const [loader, showLoader, hideLoader] = useFullPageLoader();
+  
   let members = props.member;
   let projectID = props.projectID;
   let commitsArray = [];
   let MRsArray = [];
-
+  
   useEffect(() => {
     const fetchData = async () => {
+      showLoader();
       let mrUrl = `/project/${projectID}/merge_requests`;
       let commitUrl = `/project/${projectID}/commits`;
 
@@ -24,13 +28,15 @@ const AllProjectInfo = (props) => {
       }
 
       const mrData = await axios.get(mrUrl);
-      const commitData = await axios.get(commitUrl);
-
+      const commitData = await axios.get(commitUrl)
+     
       setCommits(commitData.data);
       setMRs(mrData.data);
     };
-    fetchData();
-  }, [projectID]);
+    
+    fetchData().then(hideLoader());
+  // eslint-disable-next-line
+  }, [])
 
 
   members.forEach((member) => {
@@ -69,6 +75,7 @@ const AllProjectInfo = (props) => {
         MRsArray={MRsArray}
         projectID={projectID}
       />
+      {loader}
     </div>
   );
 }

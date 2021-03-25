@@ -3,6 +3,7 @@ stages:
   - docker-build
   - unit-test
   - dev-deploy
+  - frontend-test
   - deploy
 
 before_script:
@@ -77,6 +78,9 @@ deploy:dev:
   tags:
     - shell
   when: manual
+  environment:
+    name: dev
+    url: http://cmpt373-1211-14.cmpt.sfu.ca:9000/
 
 deploy:ci:
   stage: dev-deploy
@@ -89,6 +93,26 @@ deploy:ci:
   cache: {}
   tags:
     - shell
+  environment:
+    name: ci
+    url: http://cmpt373-1211-14.cmpt.sfu.ca:7000/
+
+frontend-test:
+  stage: frontend-test
+  dependencies:
+    - deploy:ci
+  script:
+    - cd frontend
+    - npm ci --cache .npm --prefer-offline
+    - npm test -- --ci --reporters=default --reporters=jest-junit
+  allow_failure: true
+  image: buildkite/puppeteer
+  artifacts:
+    reports:
+      junit: frontend/junit.xml
+  variables:
+    REACT_APP_DEVHOST: http://host.docker.internal:7000/
+    GITLAB_HOST: http://host.docker.internal:8929/
 
 deploy:staging:
   stage: deploy
@@ -103,6 +127,9 @@ deploy:staging:
     - shell
   only:
     - master
+  environment:
+    name: staging
+    url: http://cmpt373-1211-14.cmpt.sfu.ca:8080/
 
 deploy:prod:
   stage: deploy
@@ -117,3 +144,6 @@ deploy:prod:
   only:
     - master
   when: manual
+  environment:
+    name: prod
+    url: http://cmpt373-1211-14.cmpt.sfu.ca/

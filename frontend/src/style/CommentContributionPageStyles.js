@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     head: {
@@ -8,6 +8,9 @@ const useStyles = makeStyles((theme) => ({
     headCell: {
         fontWeight: "bold",
         fontSize: "1.2rem"
+    },
+    rowBodyHeader: {
+        fontWeight: "bold"
     },
     table: {
         margin: "0 auto 0 auto",
