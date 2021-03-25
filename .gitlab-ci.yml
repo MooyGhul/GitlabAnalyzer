@@ -70,18 +70,6 @@ deploy:dev:
   needs:
     - docker-build
   script:
-    - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev up -d
-    - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:9000" >> /dev/null
-  cache: {}
-  tags:
-    - shell
-  when: manual
-
-deploy:dev-wipe-db:
-  stage: dev-deploy
-  needs:
-    - docker-build
-  script:
     - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev down --volumes
     - docker-compose -f docker-compose.yml -f docker-compose.dev.yml -p gitlabanalyzer_dev up -d
     - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:9000" >> /dev/null
@@ -107,6 +95,7 @@ deploy:staging:
   needs:
     - deploy:ci
   script:
+    - docker-compose -f docker-compose.yml -f docker-compose.staging.yml -p gitlabanalyzer_staging down --volumes
     - docker-compose -f docker-compose.yml -f docker-compose.staging.yml -p gitlabanalyzer_staging up -d
     - curl --retry 30 --retry-delay 2 --retry-all-errors --connect-timeout 5 "http://localhost:8080" >> /dev/null
   cache: {}
