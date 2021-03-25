@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import { useHistory } from 'react-router-dom';  
-import Authentication from "../Authentication";
+import { useHistory } from 'react-router-dom'; 
 import Header from "./Header";
 import axios from 'axios';
 import Box from '@material-ui/core/Box';  
