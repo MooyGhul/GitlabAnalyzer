@@ -38,7 +38,7 @@ const AllProjectInfo = (props) => {
   // eslint-disable-next-line
   }, [])
 
-
+  
   members.forEach((member) => {
     let count = 0;
     commits.forEach((commit) => {

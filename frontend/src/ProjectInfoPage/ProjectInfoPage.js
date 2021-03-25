@@ -19,8 +19,13 @@ function ProjectInfoPage(props) {
               `${process.env.REACT_APP_DEVHOST}/project/${projectID}/members` :
               `/project/${projectID}/members`
       );
-
-      setMembers(result.data);
+      
+      if (result.data===""){
+        setMembers([])
+      }
+      else{
+        setMembers(result.data);
+      }
     };
     fetchData();
   }, [projectID]);

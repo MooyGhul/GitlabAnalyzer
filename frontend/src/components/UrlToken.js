@@ -20,47 +20,93 @@ function UrlToken() {
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
 
-    const authenticateToken  = async () => {
+    const createConfigID = async (url, token) => {
+        return axios({
+          method: "post",
+          url: (process.env.NODE_ENV === 'development' ?           
+          `${process.env.REACT_APP_DEVHOST}/api/config/` :
+          `/api/config/`),
+          data: { url, token },
+        }).then((res) => res.data.id);
+      };
+
+      
+      const loadAllProjects = async (configID) => {
         showLoader()
-        await axios.post(process.env.NODE_ENV === 'development' ?
-           
-            `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
-            `/project/create?token=${urlToken.token}`);
-
-        await axios.post(process.env.NODE_ENV === 'development' ?
-            `${process.env.REACT_APP_DEVHOST}/project/add?url=${urlToken.url}`:
-            `/project/add?url=${urlToken.url}`) 
-        .then(function(response){
-            hideLoader();
-            if (response.status === 200){
-                Authentication.onValidToken();
-                Authentication.onAuthentication();
-                history.push('/projectList');
-            }
+        return axios({
+          method: "post",
+          url: (process.env.NODE_ENV === 'development' ?
+                  `${process.env.REACT_APP_DEVHOST}/api/config/${configID}/load`:
+                  `/api/config/${configID}/load`) 
         })
-        .catch(function(error){
-            console.log(error.response.status);
-            if (error.response.status !== 200){
-                setUrlToken({url: urlToken.url, token:urlToken.token});
-                setErrorMsg('Incorrect url or token. Please try again.');
+          .then((response) => {
+            if (response.status === 200) {
+              hideLoader();
+              Authentication.onValidToken();
+              Authentication.onAuthentication();
+              history.push({
+                pathname: "projectList",
+              });
             }
-        }) 
-    }
+          })
+          .catch((error) => {
+            hideLoader();
+            setUrlToken({ url: urlToken.url, token: urlToken.token });
+            setErrorMsg("Incorrect url or token. Please try again.");
+          });
+      };
+    
 
+    // const authenticateToken  = async () => {
+    //     showLoader()
+    //     await axios.post(process.env.NODE_ENV === 'development' ?
+           
+    //         `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
+    //         `/project/create?token=${urlToken.token}`);
 
-    const addLoginToken = () => {
+    //     await axios.post(process.env.NODE_ENV === 'development' ?
+    //         `${process.env.REACT_APP_DEVHOST}/project/add?url=${urlToken.url}`:
+    //         `/project/add?url=${urlToken.url}`) 
+    //     .then(function(response){
+    //         hideLoader();
+    //         if (response.status === 200){
+    //             Authentication.onValidToken();
+    //             Authentication.onAuthentication();
+    //             history.push('/projectList');
+    //         }
+    //     })
+    //     .catch(function(error){
+    //         console.log(error.response.status);
+    //         if (error.response.status !== 200){
+    //             setUrlToken({url: urlToken.url, token:urlToken.token});
+    //             setErrorMsg('Incorrect url or token. Please try again.');
+    //         }
+    //     }) 
+    // }
+
+    const test = async () => {
+        const configID = await createConfigID(urlToken.url, urlToken.token);
+        console.log(configID)
+        const response = await loadAllProjects(configID);
+        console.log(response);
+      };   
+    
+
+      const addLoginToken = () => {
         console.log(window.location.href);
-        const data = new URLSearchParams(window.location.search)
-        console.log(data.get('ticket'))
-        setLoginToken(data.get('ticket'))
-        console.log(loginToken)
-    }
+        const data = new URLSearchParams(window.location.search);
+        console.log(data.get("ticket"));
+        setLoginToken(data.get("ticket"));
+        console.log(loginToken);
+      };
+    
 
-    const nextHandler = event => {
+      const nextHandler = (event) => {
         event.preventDefault();
         addLoginToken();
-        authenticateToken();
-    }        
+        test();
+      };
+          
      
     const classes = useStyles();
 
