@@ -20,7 +20,6 @@ const CodeContributionPage = () => {
   const innerNavStyle = useInnerNavStyle();
   const [graphData, setGraphData] = useState([]);
 
-
   const createData = (id, type, date, name, url, score) => {
     return {id, type, date, name, url, score};
   }
