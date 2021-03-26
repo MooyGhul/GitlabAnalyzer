@@ -15,7 +15,7 @@ import {formatTableDate, getGraphData} from "../../helper";
 
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
-  const { project_id, member_id } = useParams();
+  const {project_id, member_id} = useParams();
   const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
   const [graphData, setGraphData] = useState([]);
@@ -38,8 +38,6 @@ const CodeContributionPage = () => {
 
       formatData(commitData, commitArray, mrArray);
       formatData(mrData, commitArray, mrArray);
-      console.log(commitArray);
-      console.log(mrArray);
 
       const commitCounts = getGraphData(commitArray, 'date');
       const mrCounts = getGraphData(mrArray, 'date');
@@ -68,7 +66,6 @@ const CodeContributionPage = () => {
         let dataTypeIndex = dataType[i];
         const isCommitData = dataTypeIndex.hasOwnProperty('commitId');
         const isMergedMRData = !isCommitData && (dataTypeIndex.status === 'merged');
-        console.log(isMergedMRData);
 
         if (isCommitData || isMergedMRData) {
           let id;
@@ -147,7 +144,7 @@ const CodeContributionPage = () => {
     });
   },[project_id, member_id]);
   console.log(graphData);
-  console.log(codeContributionRows)
+  console.log(codeContributionRows);
 
   return (
     <Grid container spacing={5} justify="center" alignItems="center">
