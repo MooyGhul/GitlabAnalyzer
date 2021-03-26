@@ -11,6 +11,8 @@ import {
 import HomeIcon from "@material-ui/icons/Home"
 import InfoIcon from "@material-ui/icons/Info";
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
+import {useState} from 'react';
+import { useParams } from "react-router-dom";
 
 import Login from './components/Login';
 import UrlToken from './components/UrlToken';
@@ -32,6 +34,10 @@ const useStyles = makeStyles((theme) => ({
 
 const NavbarSide = () => {
   const classes = useStyles();
+  // const [projectID, setProjectID] = useState();
+  console.log("1234");
+  //useParams();
+
   return (
     <Router>
       <Grid container>

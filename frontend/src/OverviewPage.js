@@ -25,6 +25,14 @@ const OverviewPage = () => {
   const classes = useStyles();
   const {member_id} = useParams();
 
+  // history.push({
+  //   pathname: "/projectInfo/" + projectIdArray[0],
+  //   state: { id: projectIdArray[0], projectName: projectName },
+  // });
+  // } else {
+  // console.log("multiple projects have been selected ");
+  // }
+
   return (
     <Grid container spacing={2} className={classes.grid}>
       <Grid container spacing={0}>
