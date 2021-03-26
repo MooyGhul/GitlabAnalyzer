@@ -39,8 +39,8 @@ const CodeContributionPage = () => {
       formatData(commitData, commitArray, mrArray);
       formatData(mrData, commitArray, mrArray);
 
-      const commitCounts = getGraphData(commitArray, 'date');
-      const mrCounts = getGraphData(mrArray, 'date');
+      const commitCounts = getGraphData(commitArray, "date");
+      const mrCounts = getGraphData(mrArray, "date");
       for(let i = 0; i < commitCounts.length; i++) {
         commitCountsData.push(createGraphData(commitCounts[i].year, 0, commitCounts[i].data));
       }
