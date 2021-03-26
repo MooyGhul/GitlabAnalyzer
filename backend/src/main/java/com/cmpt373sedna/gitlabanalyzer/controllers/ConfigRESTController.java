@@ -4,6 +4,7 @@ import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import com.cmpt373sedna.gitlabanalyzer.repository.ConfigEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -58,5 +59,11 @@ public class ConfigRESTController {
                 .map(project -> this.projectEntityRepository.save(project))
                 .peek(project -> this.projectManager.getOrAddProject(config, project))
                 .collect(Collectors.toList());
+    }
+
+    @PutMapping("/{configId}/weights")
+    public void putWeights(@PathVariable String configId, @RequestBody JSONObject body) {
+        ConfigEntity config = this.configEntityRepository.findById(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        config.getWeights().add(body.toString());
     }
 }
