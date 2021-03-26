@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import { useHistory } from 'react-router-dom';  
-import Authentication from "../Authentication";
+import { useHistory } from 'react-router-dom'; 
 import Header from "./Header";
 import axios from 'axios';
 import Box from '@material-ui/core/Box';  
@@ -33,8 +32,6 @@ function UrlToken() {
         .then(function(response){
             hideLoader();
             if (response.status === 200){
-                Authentication.onValidToken();
-                Authentication.onAuthentication();
                 history.push('/projectList');
             }
         })
