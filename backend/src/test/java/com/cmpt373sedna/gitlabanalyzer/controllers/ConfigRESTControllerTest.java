@@ -88,4 +88,21 @@ class ConfigRESTControllerTest {
         assertEquals(Collections.singletonList(projectEntity), result);
         verify(projectManager, times(1)).getOrAddProject(configEntity, projectEntity);
     }
+
+    @Test
+    void canAddWeightConfig() {
+        ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
+        ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).build();
+
+        when(configEntityRepository.findById("configId")).thenReturn(Optional.of(configEntity));
+        List<String> weights = Collections.singletonList("{\"JavaScript\": 57.04,\n" +
+                                                            "\"Java\": 38.67,\n" +
+                                                            "\"CSS\": 2.44,\n" +
+                                                            "\"HTML\": 1.42,\n" +
+                                                            "\"Shell\": 0.25}");
+
+        configEntity.setWeights(weights);
+
+        assertEquals(configEntity.getWeights(), weights);
+    }
 }
