@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const NavbarSide = () => {
+const NavbarSide = (props) => {
   const classes = useStyles();
   // const [projectID, setProjectID] = useState();
   console.log("1234");
@@ -105,7 +105,7 @@ const NavbarSide = () => {
           <Route exact path="/">
             <Container>
               {/* Server */}
-              <UrlToken />
+              <UrlToken test={props.test}/>
             </Container>
           </Route>
 

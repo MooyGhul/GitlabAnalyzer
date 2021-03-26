@@ -10,14 +10,14 @@ import logo from '../logo/gitlab_analyzer.png';
 import {useStyles} from '../style/UrlTokenStyle'
 import {Grid} from "@material-ui/core";
 
-function UrlToken() {
+function UrlToken(props) {
     
     const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: '', token:''});
     const [errorMsg, setErrorMsg] = useState('');
     const [loginToken, setLoginToken] = useState('');
 
-
+    console.log(props);
     const authenticateToken  = async () => {
         await axios.post(process.env.NODE_ENV === 'development' ?
             `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
