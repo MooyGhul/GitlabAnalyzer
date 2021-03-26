@@ -7,7 +7,6 @@ import {useParams} from "react-router-dom";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
-import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import Navbar from "../Navbar/Navbar";
 import InnerNavBar from "../InnerNavBar";
@@ -39,9 +38,11 @@ const CodeContributionPage = () => {
 
       formatData(commitData, commitArray, mrArray);
       formatData(mrData, commitArray, mrArray);
+      console.log(commitArray);
+      console.log(mrArray);
 
-      const commitCounts = getGraphData(commitArray, "date");
-      const mrCounts = getGraphData(mrArray, "date");
+      const commitCounts = getGraphData(commitArray, 'date');
+      const mrCounts = getGraphData(mrArray, 'date');
       for(let i = 0; i < commitCounts.length; i++) {
         commitCountsData.push(createGraphData(commitCounts[i].year, 0, commitCounts[i].data));
       }
@@ -104,8 +105,7 @@ const CodeContributionPage = () => {
     }
 
     const mergeCounts = (commitCountsData, mrCountsData) => {
-      let merged = [];
-
+      let merged = [...commitCountsData, ...mrCountsData];
       for(let i = 0; i < commitCountsData.length; i++) {
         for(let j = 0; j < mrCountsData.length; j++) {
           if (commitCountsData[i].year === mrCountsData[j].year) {
@@ -115,7 +115,11 @@ const CodeContributionPage = () => {
         merged.push(commitCountsData[i]);
       }
 
-    return merged;
+      const noDuplicatesMerged = merged.filter((data, index) =>{
+        return merged.indexOf(data) === index;
+      })
+
+    return noDuplicatesMerged;
     };
 
     const fetchData = async () => {
