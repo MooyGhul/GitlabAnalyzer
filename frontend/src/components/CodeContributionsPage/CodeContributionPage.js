@@ -102,21 +102,24 @@ const CodeContributionPage = () => {
     }
 
     const mergeCounts = (commitCountsData, mrCountsData) => {
-      let merged = [...commitCountsData, ...mrCountsData];
+      let merged;
       for(let i = 0; i < commitCountsData.length; i++) {
         for(let j = 0; j < mrCountsData.length; j++) {
           if (commitCountsData[i].year === mrCountsData[j].year) {
-            commitCountsData[i].MRDaily = mrCountsData[j].MRDaily;
+            commitCountsData[i].MRDaily += mrCountsData[j].MRDaily;
+            mrCountsData.splice(j, 1);
           }
         }
-        merged.push(commitCountsData[i]);
       }
 
-      const noDuplicatesMerged = merged.filter((data, index) =>{
-        return merged.indexOf(data) === index;
-      })
+      merged = [...commitCountsData, ...mrCountsData];
+      merged.sort((a,b) => {
+        let dateA = new Date(a.year);
+        let dateB = new Date(b.year);
+        return dateB - dateA;
+      });
 
-    return noDuplicatesMerged;
+      return merged;
     };
 
     const fetchData = async () => {

@@ -56,4 +56,3 @@ export const formatTableDate = (commentDate) => {
 
     return `${month} ${day}, ${year} @ ${time}`;
 }
-
