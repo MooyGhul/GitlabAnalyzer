@@ -60,4 +60,9 @@ export const useRowStyles = makeStyles({
   dropDownIcon: {
     background: "white",
   },
+  banner: {
+    background: "#d1d0ff",
+    fontWeight: "bold",
+    fontSize: "1.0rem",
+  },
 });

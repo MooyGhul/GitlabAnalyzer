@@ -20,7 +20,8 @@ const columns = [
   {id: 'gitlabLink', label: 'Gitlab Link'},
   {id: 'date', label: 'Date'},
   {id: 'name', label: 'Name'},
-  {id: 'score', label: 'Score'},
+  {id: 'mrScore', label: 'MR Score'},
+  {id: 'totalCommitScore', label: 'Total Commit Score'},
 ]
 
 const CodeContributionTable = (props) => {
