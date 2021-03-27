@@ -86,7 +86,7 @@ public class ProjectController {
         double score;
         for(String diff: diffs) {
             lines.addAll(Arrays.stream(diff.split("\n")).filter(line ->
-                    (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.contains("//"))
+                    (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches("[-+]\\s*//.*"))
             ).collect(toList()));
         }
 

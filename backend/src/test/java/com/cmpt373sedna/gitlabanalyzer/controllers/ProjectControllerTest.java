@@ -34,7 +34,7 @@ public class ProjectControllerTest {
 
         double score = projectController.calcScore(diffs);
 
-        assertEquals(1, score);
+        assertEquals(1.0, score);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class ProjectControllerTest {
 
         double score = projectController.calcScore(diffs);
 
-        assertEquals(0, score);
+        assertEquals(0.0, score);
     }
 
     @Test
@@ -129,7 +129,25 @@ public class ProjectControllerTest {
 
         double score = projectController.calcScore(diffs);
 
-        assertEquals(0, score);
+        assertEquals(0.0, score);
+    }
+
+    @Test
+    void calcValidLineWithComment() {
+        List<String> diffs = new ArrayList<>();
+        diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n"+
+                "     private int projectId;\n" +
+                "     private int MRorIssueId;\n" +
+                "     private int wordCount;\n" +
+                "-    private @Nullable String createdBy; // This is a comment \n" +
+                "+    private String createdBy; // This is a comment \n" +
+                "     @Column(columnDefinition=\"text\")\n" +
+                "     private @Nullable String commentText;\n" +
+                "     private @Nullable String commenter;\n");
+
+        double score = projectController.calcScore(diffs);
+
+        assertEquals(1.2, score);
     }
 
 }
