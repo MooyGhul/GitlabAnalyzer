@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -92,14 +93,16 @@ class ConfigRESTControllerTest {
     @Test
     void canAddWeightConfig() {
         ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
-        ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).build();
 
         when(configEntityRepository.findById("configId")).thenReturn(Optional.of(configEntity));
-        List<String> weights = Collections.singletonList("{\"JavaScript\": 57.04,\n" +
-                                                            "\"Java\": 38.67,\n" +
-                                                            "\"CSS\": 2.44,\n" +
-                                                            "\"HTML\": 1.42,\n" +
-                                                            "\"Shell\": 0.25}");
+        List<String> weights = new ArrayList<>();
+        weights.add("startDate: 2021-03-24T22:25:27.000-07:00" +
+                "endDate: 2021-06-24T22:25:27.000-07:00" +
+                "files:{\"JavaScript\": 1,\n" +
+                "\"Java\": 1,\n" +
+                "\"CSS\": 1,\n" +
+                "\"HTML\": 1,\n" +
+                "\"Shell\": 0.25}");
 
         configEntity.setWeights(weights);
 
