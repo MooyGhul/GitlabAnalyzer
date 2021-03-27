@@ -1,4 +1,4 @@
-docker-compose stop
+docker-compose down
 
 if [ "$1" != "backend" ]; then
   cd frontend || exit

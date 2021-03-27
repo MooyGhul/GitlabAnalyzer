@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/project")
@@ -79,13 +78,10 @@ public class ProjectRESTController {
 
     @GetMapping("/{projectId}/members")
     List<String> getProjectMembers(@PathVariable(value="projectId") int projectId) {
-        Optional<ProjectEntity> selectedProject = this.projectRepository.findById(projectId);
-        if(selectedProject.isPresent()) {
-            this.projectManager.selectProject(selectedProject.get().getRepoName());
-            ProjectController p = this.projectManager.getSelectedProjects().get(0);
-            return p.getMembers();
-        }
-        return null;
+        ProjectController projectController = this.projectManager.findProject(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return projectController.getMembers();
     }
 
     @GetMapping("/{projectId}/merge_requests")

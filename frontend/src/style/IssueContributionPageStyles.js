@@ -9,33 +9,25 @@ const useStyles = makeStyles((theme) => ({
     text: {
         textAlign: 'center'
     },
-    graphTitle: {
-        textAlign: 'center', 
-        fontWeight: 'bold',
-    },
+
+    graph: {
+        width: "60vw",
+        height: '30vh',
+        margin: "20px 0 20px 0"
+    }, 
+ 
     table: {
-        borderTopWidth: 1, 
-        borderBottomWidth: 1,
-        borderRightWidth: 1,
-        borderLeftWidth: 1,
-        borderColor: '#eee',
-        borderStyle: 'solid',
+        margin: "0 auto 0 auto",
+        width: "90%"
     },
     header: {
-        backgroundColor: "#e4e3ff"
+        backgroundColor: "#d1d0ff",
+        color: theme.palette.common.white,
     },
-    dateColumn: {
-        minWidth: 100,
-        fontWeight: 'bold',
-    }, 
-    issueColumn: {
-        minWidth: 300,
-        fontWeight: 'bold',
-    },
-    noteColumn: {
-        fontWeight: 'bold',
-        minWidth: 500,
-    },
+    headCell: {
+        fontWeight: "bold",
+        fontSize: "1.2rem"
+    },  
     dropDownColumn: {
         minWidth: 50
     },
