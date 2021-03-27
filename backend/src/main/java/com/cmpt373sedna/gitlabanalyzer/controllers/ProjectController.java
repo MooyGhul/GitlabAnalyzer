@@ -82,18 +82,17 @@ public class ProjectController {
     }
 
     public double calcScore(List<String> diffs) {
-        ArrayList<String> list = new ArrayList<>();
         List<String> lines = new ArrayList<>();
         double score;
         for(String diff: diffs) {
-            lines.addAll(Arrays.stream(diff.split("\\\\n")).filter(line ->
+            lines.addAll(Arrays.stream(diff.split("\n")).filter(line ->
                     (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.contains("//"))
             ).collect(toList()));
         }
 
         score = lines.stream().mapToDouble(line -> {
             if(line.startsWith("-")) {
-                return -0.2;
+                return 0.2;
             }
             if(line.startsWith("+")) {
                 return 1.0;
