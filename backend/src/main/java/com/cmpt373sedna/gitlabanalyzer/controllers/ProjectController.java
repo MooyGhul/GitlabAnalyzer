@@ -7,7 +7,11 @@ import lombok.Getter;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -75,6 +79,29 @@ public class ProjectController {
     private List<MergeRequestEntity> getAndParseMergeRequests() {
         List<JSONObject> mergeRequests = extractor.getMergeRequests(this.config, this.projectId);
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(toList());
+    }
+
+    public double calcScore(List<String> diffs) {
+        ArrayList<String> list = new ArrayList<>();
+        List<String> lines = new ArrayList<>();
+        double score;
+        for(String diff: diffs) {
+            lines.addAll(Arrays.stream(diff.split("\\\\n")).filter(line ->
+                    (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.contains("//"))
+            ).collect(toList()));
+        }
+
+        score = lines.stream().mapToDouble(line -> {
+            if(line.startsWith("-")) {
+                return -0.2;
+            }
+            if(line.startsWith("+")) {
+                return 1.0;
+            }
+            return 0;
+        }).sum();
+
+        return score;
     }
 
     private List<CommentEntity> getAndParseComments() {
