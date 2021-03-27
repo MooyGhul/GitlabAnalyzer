@@ -81,7 +81,7 @@ public class ProjectController {
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(toList());
     }
 
-    public double calcScore(List<String> diffs) {
+    protected double calcScore(List<String> diffs) {
         List<String> lines = new ArrayList<>();
         double score;
         for(String diff: diffs) {
