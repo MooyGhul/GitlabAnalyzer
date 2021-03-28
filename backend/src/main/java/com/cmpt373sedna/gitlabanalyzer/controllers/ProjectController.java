@@ -4,15 +4,10 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.*;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -83,22 +78,40 @@ public class ProjectController {
 
     protected double calcScore(List<String> diffs) {
         List<String> lines = new ArrayList<>();
-        double score;
         for(String diff: diffs) {
             lines.addAll(Arrays.stream(diff.split("\n")).filter(line ->
                     (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches("[-+]\\s*//.*"))
             ).collect(toList()));
         }
 
-        score = lines.stream().mapToDouble(line -> {
-            if(line.startsWith("-")) {
-                return 0.2;
+        return parseScore(lines);
+    }
+
+    private double parseScore(List<String> lines) {
+        double score = 0;
+        Iterator<String> itr = lines.iterator();
+        String prev = "";
+
+        if(itr.hasNext()) {
+            prev = itr.next();
+            score += prev.startsWith("-") ? 0.2 : 1;
+        }
+
+        while(itr.hasNext()) {
+            String current = itr.next();
+            int shortestString = Math.min(current.trim().length(), prev.trim().length());
+            if(current.startsWith("+")) {
+                if(prev.startsWith("+")) {
+                    score++;
+                } else if(StringUtils.getLevenshteinDistance(current.substring(1), prev.substring(1)) > shortestString){
+                    score++;
+                }
+            } else {
+                score += 0.2;
             }
-            if(line.startsWith("+")) {
-                return 1.0;
-            }
-            return 0;
-        }).sum();
+
+            prev = current;
+        }
 
         return score;
     }

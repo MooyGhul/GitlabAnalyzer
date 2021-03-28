@@ -65,19 +65,11 @@ public class ProjectControllerTest {
                 "-    private @Nullable String createdBy;\n" +
                 "     @Column(columnDefinition=\"text\")\n" +
                 "     private @Nullable String commentText;\n" +
-                "     private @Nullable String commenter;\n" +
-                "@@ -35,6 +35,7 @@ public class CommentEntity {\n" +
-                "                 .commentId(json.getInt(\"id\"))\n" +
-                "                 .MRorIssueId(json.getInt(\"MRorIssueId\"))\n" +
-                "                 .projectId(json.getInt(\"project_id\"))\n" +
-                "-                .createdBy(json.getString(\"created_by\"))\n" +
-                "                 .MRorIssueName(json.getString(\"MRorIssueName\"))\n" +
-                "                 .commenter(json.getJSONObject(\"author\").getString(\"username\"))\n" +
-                "                 .commentType(json.getString(\"noteable_type\"))");
+                "     private @Nullable String commenter;\n");
 
         double score = projectController.calcScore(diffs);
 
-        assertEquals(0.4, score);
+        assertEquals(0.2, score);
     }
 
     @Test
@@ -103,7 +95,7 @@ public class ProjectControllerTest {
 
         double score = projectController.calcScore(diffs);
 
-        assertEquals(2.2, score);
+        assertEquals(1.2, score);
     }
 
     @Test
@@ -117,15 +109,7 @@ public class ProjectControllerTest {
                 "+    //private String createdBy;\n" +
                 "     @Column(columnDefinition=\"text\")\n" +
                 "     private @Nullable String commentText;\n" +
-                "     private @Nullable String commenter;\n" +
-                "@@ -35,6 +35,7 @@ public class CommentEntity {\n" +
-                "                 .commentId(json.getInt(\"id\"))\n" +
-                "                 .MRorIssueId(json.getInt(\"MRorIssueId\"))\n" +
-                "                 .projectId(json.getInt(\"project_id\"))\n" +
-                "+                //.createdBy(json.getString(\"created_by\"))\n" +
-                "                 .MRorIssueName(json.getString(\"MRorIssueName\"))\n" +
-                "                 .commenter(json.getJSONObject(\"author\").getString(\"username\"))\n" +
-                "                 .commentType(json.getString(\"noteable_type\"))");
+                "     private @Nullable String commenter;\n");
 
         double score = projectController.calcScore(diffs);
 
@@ -147,7 +131,42 @@ public class ProjectControllerTest {
 
         double score = projectController.calcScore(diffs);
 
-        assertEquals(1.2, score);
+        assertEquals(0.2, score);
+    }
+
+    @Test
+    void stringDiffTest() {
+        List<String> diffs = new ArrayList<>();
+        diffs.add("@@ -28,7 +28,7 @@ const CommentContributionPage = (props) => {\n" +
+                "     useEffect(() => {\n" +
+                "         const fetchData = async () => {\n" +
+                "             const commentResult = await axios.get(\n" +
+                "-                `http://localhost:8080/project/${project_id}/member/${member_id}/comments`\n" +
+                "+                `/project/${project_id}/member/${member_id}/comments`\n" +
+                "             );\n" +
+                "             setComments(commentResult.data);\n" +
+                "             const commentCounts = getGraphData(commentResult.data);");
+
+        double score = projectController.calcScore(diffs);
+
+        assertEquals(0.2, score);
+    }
+
+    @Test
+    void twoDistinctChanges() {
+        List<String> diffs = new ArrayList<>();
+        diffs.add("\"@@ -1,38 +1,24 @@\n" +
+                "-import React from 'react';   \n" +
+                "+    <div className={styles.body}>\n" +
+                "+      <img\n" +
+                "+        src=\"https://img.icons8.com/dusk/64/000000/sudoku.png\"\n" +
+                "+        alt=\"avatar\"\n" +
+                "+        className={styles.avatar}\n" +
+                "+      />");
+
+        double score = projectController.calcScore(diffs);
+
+        assertEquals(6.2, score);
     }
 
 }
