@@ -10,7 +10,6 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
-import Navbar from '../Navbar/Navbar';
 
 const CodeContributionPage = () => {
   const [commitData, setCommitData] = useState([]);
@@ -84,9 +83,6 @@ const CodeContributionPage = () => {
   return(
     <Grid container>
       <Grid container spacing={0}>
-        <Grid item xs={12} >
-          <Navbar />
-        </Grid>
         <Grid item xs={12} >
           <Banner memberName={member_id}/>
         </Grid>

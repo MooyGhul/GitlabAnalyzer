@@ -1,5 +1,4 @@
 import Banner from "./components/Banner";
-import Navbar from './components/Navbar/Navbar';
 import Charts from "./components/Charts/Charts";
 import DataFetching from "./components/DataFetching";
 import "./OverviewPage.css";
@@ -7,7 +6,6 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 import {useParams} from "react-router-dom";
-import NavbarSide from "./NavbarSide";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -27,21 +25,9 @@ const OverviewPage = (props) => {
   // eslint-disable-next-line
   const {member_id} = props.member_id===-1? useParams():props.member_id;
 
-  console.log("props:");
-  console.log(props);
-
-  console.log(props.test + " OverviewPage ");
-
   return (
-    // <Grid container>
-    //   <Grid item xs={12} >
-    //       <NavbarSide />
-    //     </Grid>
     <Grid container spacing={2} className={classes.grid}>
       <Grid container spacing={0}>
-        {/* <Grid item xs={12} >
-          <Navbar />
-        </Grid> */}
         <Grid item xs={12} >
           <Banner memberName={member_id}/>
         </Grid>
@@ -51,7 +37,6 @@ const OverviewPage = (props) => {
       </Grid>
       <DataFetching />
     </Grid>
-    // </Grid> 
   );
 }
 

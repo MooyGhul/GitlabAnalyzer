@@ -1,6 +1,5 @@
 import {Grid, TableContainer, Table, TableCell, TableHead, TableRow, TableBody, Typography} from '@material-ui/core';
 import Banner from "../Banner";
-import Navbar from '../Navbar/Navbar';
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/IssueContributionPageStyles'; 
 import Row from './IssueTableDropDown'
@@ -38,9 +37,6 @@ const IssueContributionPage = () => {
     return (
         <Grid container>
             <Grid container spacing={0}>
-              <Grid item xs={12} >
-                <Navbar />
-              </Grid>
               <Grid item xs={12} >
                 <Banner memberName={member_id}/>
               </Grid>

@@ -1,27 +1,18 @@
 import React from 'react';
 import {makeStyles} from "@material-ui/core/styles";
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import {getDisplayDate} from '@material-ui/pickers/_helpers/text-field-helper';
 import {
   Drawer, List, ListItem, 
   ListItemIcon, ListItemText,
-  Container, Typography,
-  Grid
+  Container, Grid
 } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home"
 import InfoIcon from "@material-ui/icons/Info";
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
 import {useState} from 'react';
-
-import Login from './components/Login';
 import UrlToken from './components/UrlToken';
 import ProjectListPage from './ProjectListPage';
 import OverviewPage from './OverviewPage';
-import PrivateRoute from './PrivateRoute';
-import CodeContributionPage from "./components/CodeContributionsPage/CodeContributionPage";
-import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
-import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
-import NotFound from './components/NotFound';
 
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {width: 'inherit'},
@@ -59,7 +50,7 @@ const NavbarSide = (props) => {
           classes={{paper:classes.drawerPaper}}
         >
           <List>
-            <Link to="/" className={classes.link}>
+            <Link to="/token" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <HomeIcon />
@@ -110,7 +101,7 @@ const NavbarSide = (props) => {
 
         <Container fixed>
           <Switch>
-          <Route exact path="/">
+          <Route exact path="/token">
             <Container>
               <UrlToken test={test}/>
             </Container>

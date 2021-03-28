@@ -13,7 +13,6 @@ import BarChart from '../Charts/BarChart';
 import BarChartProperties from '../Charts/BarChartProperties';
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
-import Navbar from '../Navbar/Navbar';
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 import TablePaginationActions from "../TablePaginationActions";
@@ -65,11 +64,8 @@ const CommentContributionPage = (props) => {
 
         <Grid container justify='center' alignItems='center' spacing={5} >
             <Grid item xs={12}>
-                <Grid item xs={12} >
-                    <Navbar />
-                </Grid>
                     <Banner memberName={member_id} />
-                </Grid>
+            </Grid>
             <Grid className={classes.graph}>
                 <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
                 <BarChart data={graphData} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour} maintainRatio={false}/>

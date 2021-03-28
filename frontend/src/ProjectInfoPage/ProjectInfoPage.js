@@ -1,30 +1,19 @@
-import Header from "../components/Header";
 import WideHeader from "./WideHeader/WideHeader";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import AllProjectInfo from "./AllProjectInfo";
-import {useParams} from "react-router-dom";
 
 function ProjectInfoPage(props) {
   const location = useLocation();
   console.log(props);
   const projectId = props.project_id===-1 ? location.state.id : props.project_id;
-  //const projectId = location.state.id ;
-  const [projectName, setProjectName] = useState("");
-  //const [projectName, setProjectName] = useState(location.state.projectName);
-
+  const [projectName] = useState("");
   const [members, setMembers] = useState([]);
-
-  console.log(props.test +" ProjectInfoPage ");
 
   useEffect(() => {
     const fetchData = async () => {
-      let getProjectNameUrl = `/project/${projectId}`;
-
-      console.log("-----getProjectNameUrl-----");
-      console.log("getProjectNameUrl :" + getProjectNameUrl + "; END OF IT.");
-      console.log("-----END-----");
+      
 
       console.log("project id is : " + props.project_id);
 
@@ -34,15 +23,15 @@ function ProjectInfoPage(props) {
               `/project/${projectId}/members`
       );
 
-      if(process.env.NODE_ENV === 'development') {
-        getProjectNameUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}`
-      }
+      // TO DO : May need to put project name somewwhere
+      // let getProjectNameUrl = `/project/${projectId}`;
+
+      // if(process.env.NODE_ENV === 'development') {
+      //   getProjectNameUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}`
+      // }
 
       setMembers(result.data);
 
-      console.log("-----resultMembers-----");
-      console.log("resultMembers : " + members + "; END OF IT.");
-      console.log("-----END-----");
     };
     fetchData()
       .then(()=> {
@@ -50,11 +39,10 @@ function ProjectInfoPage(props) {
       }).catch(() => {
       console.log('Failed retrieve data (project_id, projectName)');
     });
-  }, [projectId, members]);
+  }, [projectId, members,props.project_id]);
 
   return (
     <div>
-      {/* <Header pageTitle="Project Overview"/> */}
       <WideHeader id={projectId} projectName={projectName} />
       <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>
     </div>

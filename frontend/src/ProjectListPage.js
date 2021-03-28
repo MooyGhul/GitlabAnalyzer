@@ -1,4 +1,3 @@
-import Header from "./components/Header";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import { DataGrid } from "@material-ui/data-grid";
@@ -11,9 +10,6 @@ const ProjectListPage = (props) => {
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
   const classes = useStyles();
-
-  console.log(props.test +" ProjectListPage ");
-  console.log(props);
 
   const columns = [
     { field: "id", headerName: "ID", width: 200 },

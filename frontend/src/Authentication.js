@@ -16,7 +16,7 @@ const Authentication = {
     },
 
     isAuthenticated(){
-       return this.isLoggedIn;
+      return this.isLoggedIn;
     }
 };
 

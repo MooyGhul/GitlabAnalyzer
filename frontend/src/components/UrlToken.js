@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';  
 import Authentication from "../Authentication";
-import Header from "./Header";
 import axios from 'axios';
 import Box from '@material-ui/core/Box';  
 import TextField from '@material-ui/core/TextField';
@@ -17,8 +16,6 @@ function UrlToken(props) {
     const [errorMsg, setErrorMsg] = useState('');
     const [loginToken, setLoginToken] = useState('');
 
-    console.log(props.test +" URLToken ");
-    
     const authenticateToken  = async () => {
         await axios.post(process.env.NODE_ENV === 'development' ?
             `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
