@@ -17,7 +17,8 @@ function UrlToken(props) {
     const [errorMsg, setErrorMsg] = useState('');
     const [loginToken, setLoginToken] = useState('');
 
-    console.log(props);
+    console.log(props.test +" URLToken ");
+    
     const authenticateToken  = async () => {
         await axios.post(process.env.NODE_ENV === 'development' ?
             `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :

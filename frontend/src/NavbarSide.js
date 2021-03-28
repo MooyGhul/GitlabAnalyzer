@@ -34,8 +34,9 @@ const useStyles = makeStyles((theme) => ({
 
 const NavbarSide = (props) => {
   const classes = useStyles();
+  const test = "test_hello_world";
   // const [projectID, setProjectID] = useState();
-  console.log("1234");
+  //console.log("1234");
   //useParams();
 
   return (
@@ -104,27 +105,25 @@ const NavbarSide = (props) => {
           <Switch>
           <Route exact path="/">
             <Container>
-              {/* Server */}
-              <UrlToken test={props.test}/>
+              <UrlToken test={test}/>
             </Container>
           </Route>
 
           <Route exact path="/projectList">
             <Container>
-              <ProjectListPage />
+              <ProjectListPage test={test} />
             </Container>
           </Route>
 
           <Route exact path="/projectInfo/:projectId">
             <Grid container>
-                <ProjectInfoPage />
+                <ProjectInfoPage test={test} />
             </Grid>
           </Route>
 
           <Route exact path="/overview/:project_id/:member_id">
             <Container>
-              <OverviewPage />
-              {/* Member Overview */}
+              <OverviewPage test={test} />
             </Container>
           </Route>
 
@@ -138,7 +137,7 @@ const NavbarSide = (props) => {
         </Container>
       </div>
       </Grid>
-    </Router>
+    </Router> 
   );
 }
 

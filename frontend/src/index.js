@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import NewApp from './NewApp';
+import App from './App';
 import NavbarSide from './NavbarSide';
 import reportWebVitals from './reportWebVitals';
+import Login from './components/Login';
+import UrlToken from './components/UrlToken';
+import SideBar from './SideBar';
+import App1 from './App1';
 
 ReactDOM.render(
   <React.StrictMode>
-    <NewApp />
+    <NavbarSide />
   </React.StrictMode>,
   document.getElementById('root')
 );

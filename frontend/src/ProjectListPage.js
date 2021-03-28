@@ -12,6 +12,8 @@ const ProjectListPage = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
   const classes = useStyles();
 
+  console.log(props.test +" ProjectListPage ");
+
   const columns = [
     { field: "id", headerName: "ID", width: 200 },
     { field: "projectName", headerName: "Project Name", width: 400 },

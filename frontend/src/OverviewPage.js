@@ -7,6 +7,7 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";
 import {useParams} from "react-router-dom";
+import NavbarSide from "./NavbarSide";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -21,9 +22,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const OverviewPage = () => {
+const OverviewPage = (props) => {
   const classes = useStyles();
   const {member_id} = useParams();
+
+  console.log(props.test + " OverviewPage ");
 
   // history.push({
   //   pathname: "/projectInfo/" + projectIdArray[0],
@@ -34,7 +37,11 @@ const OverviewPage = () => {
   // }
 
   return (
-    <Grid container spacing={2} className={classes.grid}>
+    <Grid container>
+      <Grid item xs={12} >
+          <NavbarSide />
+        </Grid>
+    {/* <Grid container spacing={2} className={classes.grid}>
       <Grid container spacing={0}>
         <Grid item xs={12} >
           <Navbar />
@@ -47,8 +54,8 @@ const OverviewPage = () => {
         <Charts />
       </Grid>
       <DataFetching />
-    </Grid>
-
+    </Grid> */}
+    </Grid> 
   );
 }
 

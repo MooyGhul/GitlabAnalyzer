@@ -8,7 +8,12 @@ function NewApp() {
   const test = "HELLO WORLD TEST!"
 
   return (
-    < NavbarSide project_id={project_id} member_id={member_id} setProject_id={setProject_id} setMember_id={setMember_id}  test={test}/>
+    < NavbarSide 
+      project_id={project_id} 
+      member_id={member_id} 
+      setProject_id={setProject_id} 
+      setMember_id={setMember_id}  
+      test={test}/>
   )
 };
 

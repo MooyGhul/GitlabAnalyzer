@@ -13,6 +13,8 @@ function ProjectInfoPage(props) {
 
   const [members, setMembers] = useState([]);
 
+  console.log(props.test +" ProjectInfoPage ");
+
   useEffect(() => {
     const fetchData = async () => {
       let getProjectNameUrl = `/project/${projectId}`;
