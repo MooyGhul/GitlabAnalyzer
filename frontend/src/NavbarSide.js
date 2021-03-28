@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const NavbarSide = (props) => {
   const classes = useStyles();
   const test = "test_hello_world";
-  const [member_id, setMemberId] = useState();
+  const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
 
   const handleMemberIDChange = (newMemberId) => {
@@ -130,7 +130,7 @@ const NavbarSide = (props) => {
 
           <Route exact path="/overview/:project_id/:member_id">
             <Container>
-              <OverviewPage test={test} project_id={project_id} />
+              <OverviewPage test={test} project_id={project_id} member_id={member_id}/>
             </Container>
           </Route>
 

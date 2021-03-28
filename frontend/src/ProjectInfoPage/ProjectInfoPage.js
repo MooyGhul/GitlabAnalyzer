@@ -56,7 +56,7 @@ function ProjectInfoPage(props) {
     <div>
       {/* <Header pageTitle="Project Overview"/> */}
       <WideHeader id={projectId} projectName={projectName} />
-      <AllProjectInfo member={members} projectID={projectId} />
+      <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>
     </div>
   );
 }

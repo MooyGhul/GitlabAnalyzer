@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
 const OverviewPage = (props) => {
   const classes = useStyles();
-  const {member_id} = useParams();
+  // eslint-disable-next-line
+  const {member_id} = props.member_id===-1? useParams():props.member_id;
 
   console.log("props:");
   console.log(props);

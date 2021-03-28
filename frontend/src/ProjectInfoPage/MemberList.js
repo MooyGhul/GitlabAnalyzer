@@ -32,6 +32,7 @@ function MemberList(props){
       const buttonClickHandler = (e) => {
         console.log(e.row.id);
         history.push("/overview/" + projectID + "/" + e.row.studentID);
+        props.onMemberIdChange(e.row.studentID);
       };
       
     return(
