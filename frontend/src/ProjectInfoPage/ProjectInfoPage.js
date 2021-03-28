@@ -8,8 +8,11 @@ import {useParams} from "react-router-dom";
 
 function ProjectInfoPage(props) {
   const location = useLocation();
-  const projectId = location.state.id;
-  const [projectName, setProjectName] = useState(location.state.projectName);
+  console.log(props);
+  const projectId = props.project_id===-1 ? location.state.id : props.project_id;
+  //const projectId = location.state.id ;
+  const [projectName, setProjectName] = useState("");
+  //const [projectName, setProjectName] = useState(location.state.projectName);
 
   const [members, setMembers] = useState([]);
 
@@ -22,6 +25,8 @@ function ProjectInfoPage(props) {
       console.log("-----getProjectNameUrl-----");
       console.log("getProjectNameUrl :" + getProjectNameUrl + "; END OF IT.");
       console.log("-----END-----");
+
+      console.log("project id is : " + props.project_id);
 
       const result = await axios.get(
           process.env.NODE_ENV === 'development' ?

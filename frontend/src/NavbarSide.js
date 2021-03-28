@@ -12,7 +12,6 @@ import HomeIcon from "@material-ui/icons/Home"
 import InfoIcon from "@material-ui/icons/Info";
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
 import {useState} from 'react';
-import { useParams } from "react-router-dom";
 
 import Login from './components/Login';
 import UrlToken from './components/UrlToken';
@@ -35,9 +34,17 @@ const useStyles = makeStyles((theme) => ({
 const NavbarSide = (props) => {
   const classes = useStyles();
   const test = "test_hello_world";
-  // const [projectID, setProjectID] = useState();
-  //console.log("1234");
-  //useParams();
+  const [member_id, setMemberId] = useState();
+  const [project_id, setProjectId] = useState(-1);
+
+  const handleMemberIDChange = (newMemberId) => {
+    setMemberId(newMemberId);
+  }
+
+  const handleProjectIDChange = (newProjectId) => {
+    console.log("handleProjectIDChange is called, and project ID is set to " + newProjectId);
+    setProjectId(newProjectId);
+  }
 
   return (
     <Router>
@@ -66,12 +73,12 @@ const NavbarSide = (props) => {
               <ListItemIcon>
                 <InfoIcon />
               </ListItemIcon>
-              <ListItemText primary={"Project List"} />
+              <ListItemText primary={"Project List"} getProjectId/>
             </ListItem>
             </Link>
 
 
-            <Link to="/projectInfo/:projectId" className={classes.link}>
+            <Link to="/projectInfo/{project_id}" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <InfoIcon />
@@ -80,7 +87,7 @@ const NavbarSide = (props) => {
             </ListItem>
             </Link>
 
-          <Link to="/overview/:project_id/:member_id" className={classes.link}>
+          <Link to="/overview/:project_id/{member_id}" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <InfoIcon />
@@ -111,19 +118,19 @@ const NavbarSide = (props) => {
 
           <Route exact path="/projectList">
             <Container>
-              <ProjectListPage test={test} />
+              <ProjectListPage test={test} onProjectIdChange={handleProjectIDChange}/>
             </Container>
           </Route>
 
-          <Route exact path="/projectInfo/:projectId">
+          <Route exact path="/projectInfo/:project_id">
             <Grid container>
-                <ProjectInfoPage test={test} />
+                <ProjectInfoPage test={test} onMemberIdChange={handleMemberIDChange} project_id={project_id} />
             </Grid>
           </Route>
 
           <Route exact path="/overview/:project_id/:member_id">
             <Container>
-              <OverviewPage test={test} />
+              <OverviewPage test={test} project_id={project_id} />
             </Container>
           </Route>
 

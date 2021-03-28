@@ -14,23 +14,24 @@ import './style/App.css'
 
 function App() {
   return (
-    <BrowserRouter>
-        <Switch>
-            <Redirect exact from='/' to='/login' />
-            <Route exact path='/login'> <Login /> </Route>
-            <Route exact path='/token'> <UrlToken /> </Route>
-            <PrivateRoute exact path='/projectList' component={ProjectListPage} />
-            <PrivateRoute exact path='/projectInfo/:projectId' component={ProjectInfoPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id' component={OverviewPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id/commentContribution'
-                          component={CommentContributionPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id/issueContribution'
-                          component={IssueContributionPage} />
-            <PrivateRoute exact path='/overview/:project_id/:member_id/codecontribution'
-                          component={CodeContributionPage} />
-            <Route component={NotFound} />
-        </Switch>
-    </BrowserRouter>
+    <div>Hello World!</div>
+    // <BrowserRouter>
+    //     <Switch>
+    //         <Redirect exact from='/' to='/login' />
+    //         <Route exact path='/login'> <Login /> </Route>
+    //         <Route exact path='/token'> <UrlToken /> </Route>
+    //         <PrivateRoute exact path='/projectList' component={ProjectListPage} />
+    //         <PrivateRoute exact path='/projectInfo/:projectId' component={ProjectInfoPage} />
+    //         <PrivateRoute exact path='/overview/:project_id/:member_id' component={OverviewPage} />
+    //         <PrivateRoute exact path='/overview/:project_id/:member_id/commentContribution'
+    //                       component={CommentContributionPage} />
+    //         <PrivateRoute exact path='/overview/:project_id/:member_id/issueContribution'
+    //                       component={IssueContributionPage} />
+    //         <PrivateRoute exact path='/overview/:project_id/:member_id/codecontribution'
+    //                       component={CodeContributionPage} />
+    //         <Route component={NotFound} />
+    //     </Switch>
+    // </BrowserRouter>
   );
 }
 

@@ -26,26 +26,21 @@ const OverviewPage = (props) => {
   const classes = useStyles();
   const {member_id} = useParams();
 
+  console.log("props:");
+  console.log(props);
+
   console.log(props.test + " OverviewPage ");
 
-  // history.push({
-  //   pathname: "/projectInfo/" + projectIdArray[0],
-  //   state: { id: projectIdArray[0], projectName: projectName },
-  // });
-  // } else {
-  // console.log("multiple projects have been selected ");
-  // }
-
   return (
-    <Grid container>
-      <Grid item xs={12} >
-          <NavbarSide />
-        </Grid>
-    {/* <Grid container spacing={2} className={classes.grid}>
+    // <Grid container>
+    //   <Grid item xs={12} >
+    //       <NavbarSide />
+    //     </Grid>
+    <Grid container spacing={2} className={classes.grid}>
       <Grid container spacing={0}>
-        <Grid item xs={12} >
+        {/* <Grid item xs={12} >
           <Navbar />
-        </Grid>
+        </Grid> */}
         <Grid item xs={12} >
           <Banner memberName={member_id}/>
         </Grid>
@@ -54,8 +49,8 @@ const OverviewPage = (props) => {
         <Charts />
       </Grid>
       <DataFetching />
-    </Grid> */}
-    </Grid> 
+    </Grid>
+    // </Grid> 
   );
 }
 
