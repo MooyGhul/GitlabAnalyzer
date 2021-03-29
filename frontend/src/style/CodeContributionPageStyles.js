@@ -47,22 +47,33 @@ export const useRowStyles = makeStyles({
     },
   },
   cell: {
-    width: 300,
+    width: 200,
   },
+  smallCell: {
+    width: 50,
+  },
+
   mrIcon: {
     color: "white",
     background: "#fc8053",
+    marginRight: "2vw",
+
   },
   cIcon: {
     color: "white",
     background: "#6179ff",
+    marginRight: "2vw",
+
   },
   dropDownIcon: {
     background: "white",
   },
+});
+
+export const useDropDownStyles = makeStyles({
   banner: {
-    background: "#d1d0ff",
+    // background: "#d1d0ff",
     fontWeight: "bold",
     fontSize: "1.0rem",
   },
-});
+})
