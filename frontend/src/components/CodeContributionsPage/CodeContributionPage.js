@@ -10,12 +10,9 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
-<<<<<<< HEAD
-=======
 import Navbar from "../Navbar/Navbar";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"
->>>>>>> master
 
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
@@ -88,13 +85,6 @@ const CodeContributionPage = () => {
       });
   }, [project_id]);
 
-<<<<<<< HEAD
-  return(
-    <Grid container>
-      <Grid container spacing={0}>
-        <Grid item xs={12} >
-          <Banner memberName={member_id}/>
-=======
   return (
     <Grid container spacing={5} justify="center" alignItems="center">
       <Grid item xs={12}>
@@ -103,7 +93,6 @@ const CodeContributionPage = () => {
         </Grid>
         <Grid item xs={12}>
           <Banner memberName={member_id} />
->>>>>>> master
         </Grid>
       </Grid>
       <Grid item xs={12} align="center">

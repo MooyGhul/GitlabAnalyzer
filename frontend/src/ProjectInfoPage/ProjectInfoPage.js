@@ -6,17 +6,12 @@ import AllProjectInfo from "./AllProjectInfo";
 
 function ProjectInfoPage(props) {
   const location = useLocation();
-  console.log(props);
   const projectId = props.project_id===-1 ? location.state.id : props.project_id;
   const [projectName] = useState("");
   const [members, setMembers] = useState([]);
   
   useEffect(() => {
     const fetchData = async () => {
-      
-
-      console.log("project id is : " + props.project_id);
-
       const result = await axios.get(
           process.env.NODE_ENV === 'development' ?
               `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members` :

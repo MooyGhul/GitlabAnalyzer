@@ -40,17 +40,14 @@ const ProjectListPage = (props) => {
   let projectIdArray = [];
 
   const getValue = (e) => {
-    console.log("A selection is made");
     projectIdArray = e.selectionModel;
     return projectIdArray;
   };
 
   const buttonClickHandler = (event) => {
     let projectName;
-    console.log("buttonClickHandler is called!");
 
     if (projectIdArray.length === 0) {
-      console.log("You have not selected any projects!");
       setErrorMsg("You have not selected any projects!.");
     } else if (projectIdArray.length === 1) {
       rows.forEach((project) => {
@@ -60,9 +57,6 @@ const ProjectListPage = (props) => {
         }
       });
 
-      console.log(projectIdArray[0]);
-      console.log(" props : ");
-      console.log(props);
       props.onProjectIdChange(projectIdArray[0]);
 
       history.push({

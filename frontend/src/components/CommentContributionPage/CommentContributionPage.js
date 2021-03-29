@@ -16,10 +16,6 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
-<<<<<<< HEAD
-=======
-import Navbar from "../Navbar/Navbar";
->>>>>>> master
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 import TablePaginationActions from "../TablePaginationActions";
@@ -72,9 +68,6 @@ const CommentContributionPage = (props) => {
     <Grid container spacing={5} justify="center" alignItems="center">
       <Grid item xs={12}>
         <Grid item xs={12}>
-          <Navbar />
-        </Grid>
-        <Grid item xs={12}>
           <Banner memberName={member_id} />
         </Grid>
       </Grid>
@@ -92,17 +85,6 @@ const CommentContributionPage = (props) => {
         />
       </Grid>
 
-<<<<<<< HEAD
-        <Grid container justify='center' alignItems='center' spacing={5} >
-            <Grid item xs={12}>
-                    <Banner memberName={member_id} />
-            </Grid>
-            <Grid className={classes.graph}>
-                <Typography variant="h5" className={classes.graphTitle}>Comment Word Count Per Day</Typography>
-                <BarChart data={graphData} barLabel1={BarChartProperties.comments.label} barColour1={BarChartProperties.comments.barColour} maintainRatio={false}/>
-            </Grid>
-=======
->>>>>>> master
             <Grid item >
                 <ExpandAllBtn expandAll={expandAll} setExpandAll={setExpandAll}/>
             </Grid>
