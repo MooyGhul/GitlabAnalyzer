@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Collections;
 import java.util.List;
 
 import static org.apache.logging.log4j.util.Strings.isNotBlank;
@@ -35,7 +36,8 @@ public class MergeRequestEntity {
     private String description;
 
     private String mergeRequestName;
-    private @ElementCollection List<String> commitIds;
+    @ElementCollection
+    private List<String> commitIds;
     private String url;
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
@@ -51,6 +53,7 @@ public class MergeRequestEntity {
                     .description(json.getString("description"))
                     .createdAt(Instant.parse(json.getString("created_at")))
                     .mergeRequestName(json.getString("title"))
+                    .commitIds(Collections.singletonList(json.getString("commits")))
                     .mergedAt(isNotBlank(mergedAt) ? sdf.parse(mergedAt).toInstant() : null)
                     .url(json.getString("web_url"))
                     .build();

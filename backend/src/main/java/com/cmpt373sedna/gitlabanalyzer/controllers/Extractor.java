@@ -52,6 +52,14 @@ public class Extractor {
             page += 1;
             newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page));
         }
+        for(int i=0;i<mr.size();i++){
+            List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId,"merge_requests/" + mr.get(i).getString("iid") + "/commits"));
+            List<String> commits = new ArrayList<>();
+            for(int j=0;j<l.size();j++){
+                commits.add(l.get(i).getString("id"));
+            }
+            mr.get(i).put("commits",commits);
+        }
         return mr;
     }
 
@@ -105,6 +113,10 @@ public class Extractor {
 
             page += 1;
             newCommits = getJsonObjectsList(buildUri(config, projectId, "repository/commits?per_page=100&page=" + page));
+        }
+        for(int i=0;i<commits.size();i++){
+            List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId, "repository/commits/"+ commits.get(i).getString("id") + "/diff"));
+            commits.get(i).put("diffs",l);
         }
         return commits;
     }
