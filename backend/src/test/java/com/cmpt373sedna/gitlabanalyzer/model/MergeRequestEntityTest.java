@@ -4,15 +4,12 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MergeRequestEntityTest {
 
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     @Test
     void fromGitlabJSON_parses_open_MR_correctly() throws IOException {
         MergeRequestEntity expected = MergeRequestEntity.builder()
@@ -36,7 +33,7 @@ class MergeRequestEntityTest {
     }
 
     @Test
-    void fromGitlabJSON_parses_merged_MR_correctly() throws IOException, ParseException {
+    void fromGitlabJSON_parses_merged_MR_correctly() throws IOException {
         MergeRequestEntity expected = MergeRequestEntity.builder()
                 .id(1)
                 .iid(1)
@@ -46,7 +43,7 @@ class MergeRequestEntityTest {
                 .author("admin")
                 .mergeRequestName("test1")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
-                .mergedAt(sdf.parse("2018-09-07T11:16:17.520Z").toInstant())
+                .mergedAt(Instant.parse("2018-09-07T11:16:17.520Z"))
                 .url("http://gitlab.example.com/my-group/my-project/merge_requests/1")
                 .build();
 
