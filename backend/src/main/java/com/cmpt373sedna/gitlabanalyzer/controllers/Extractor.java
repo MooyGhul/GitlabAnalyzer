@@ -55,6 +55,12 @@ public class Extractor {
         JSONObject j = getJsonObject(buildUri(config,projectId,"merge_requests/" + mergeRequestId + "/versions/"+mergeRequestVersionId));
         j.put("project_id",projectId);
         j.put("merge_request_iid",mergeRequestId);
+        JSONArray js = j.getJSONArray("commits");
+        for(int i=0;i<js.length();i++){
+            JSONObject itr = js.getJSONObject(i);
+            List<JSONObject> commitDiffs = getJsonObjectsList(buildUri(config,projectId,"repository/commits/"+itr.getString("id")+"/diff"));
+            j.getJSONArray("commits").getJSONObject(i).put("commitDiffs",commitDiffs);
+        }
         return j;
 
     }

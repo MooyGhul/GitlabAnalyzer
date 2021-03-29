@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 @Data
 @Builder
@@ -23,84 +24,40 @@ import java.time.Instant;
 @AllArgsConstructor
 public class MergeRequestDiffsEntity {
     private @Id int versionId;
-    private String headCommitSHA;
-    private String baseCommitSHA;
-    private String startCommitSHA;
     private Instant createdAt;
-    @Column(columnDefinition = "TEXT")
-    private String diff;
     private int MRIid;
     private int projectId;
-    private int diffLength;
-    private String oldPath;
-    private String newPath;
     @Column(columnDefinition = "TEXT")
     @ElementCollection
-    private Map<String,String> diffs;
+    private List<String> commits;
 
     public static MergeRequestDiffsEntity fromGitlabJSON(JSONObject json) {
         return MergeRequestDiffsEntity.builder()
                 .versionId(json.getInt("id"))
                 .MRIid(json.getInt("merge_request_iid"))
                 .projectId(json.getInt("project_id"))
-                .headCommitSHA(json.getString("head_commit_sha"))
-                .baseCommitSHA(json.getString("base_commit_sha"))
-                .startCommitSHA(json.getString("start_commit_sha"))
                 .createdAt(Instant.parse(json.getString("created_at")))
-                .diff(getDiffs(json))
-                .diffLength(json.getJSONArray("diffs").length())
-                .oldPath(getOldPath(json))
-                .newPath(getNewPath(json))
-                .diffs(getDiff(json))
+                .commits(getCommits(json))
                 .build();
     }
-    public static String getDiffs(JSONObject json){
-        JSONArray j = json.getJSONArray("diffs");
+    public static List<String> getCommits(JSONObject json){
+        JSONArray j = json.getJSONArray("commits");
+        List<String> list = new ArrayList<>();
         if(j.length()==0){
-            return "";
+            return list;
         }
         else{
-            return j.getJSONObject(0).getString("diff");
-        }
-    }
-    public static String getOldPath(JSONObject json){
-        JSONArray j = json.getJSONArray("diffs");
-        if(j.length()==0){
-            return "";
-        }
-        else{
-            return j.getJSONObject(0).getString("old_path");
-        }
-    }
-    public static String getNewPath(JSONObject json){
-        JSONArray j = json.getJSONArray("diffs");
-        if(j.length()==0){
-            return "";
-        }
-        else{
-            return j.getJSONObject(0).getString("new_path");
-        }
-    }
-
-    public static Map getDiff(JSONObject json){
-        JSONArray j = json.getJSONArray("diffs");
-        if(j.length()==0){
-            return null;
-        }
-        else{
-            HashMap<String,String> map = new HashMap<>();
             for(int i=0;i<j.length();i++){
-                JSONObject js = j.getJSONObject(i);
-                if(js.getString("old_path").equals(js.getString("new_path"))){
-                    map.put(js.getString("new_path"),js.getString("diff"));
-                }
-                else{
-                    String s = new String(js.getString("old_path") + "->" + js.getString("new_path"));
-                    map.put(s,js.getString("diff"));
-                }
+                JSONObject js =  j.getJSONObject(i);
+                JSONObject commitsObject = new JSONObject();
+                commitsObject.put("id",js.getString("id"));
+                commitsObject.put("author",js.getString("author_name"));
+                commitsObject.put("date",Instant.parse(js.getString("created_at")));
+                commitsObject.put("message",js.getString("message"));
+                commitsObject.put("commitDiffs",js.getJSONArray("commitDiffs"));
+                list.add(commitsObject.toString());
             }
-            return map;
         }
+        return list;
     }
-
 }
