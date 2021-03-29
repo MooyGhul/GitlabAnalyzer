@@ -10,7 +10,7 @@ function ProjectInfoPage(props) {
   const projectId = props.project_id===-1 ? location.state.id : props.project_id;
   const [projectName] = useState("");
   const [members, setMembers] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       

@@ -2,6 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffsEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,8 @@ import org.springframework.web.client.RestTemplate;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Component
 public class Extractor {
@@ -28,7 +30,7 @@ public class Extractor {
                         .repoId(obj.getInt("id"))
                         .repoName(obj.getString("name"))
                         .build())
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     public ProjectEntity getProject(ConfigEntity config, String projectId) {
@@ -41,29 +43,51 @@ public class Extractor {
     }
 
     public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId) {
-        return getJsonObjectsList(buildUri(config, projectId, "merge_requests"));
-    }
+        int page = 1;
+        List<JSONObject> mr = new ArrayList<>();
+        List<JSONObject> newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page));
+        while(newMr.size() > 0) {
+            mr.addAll(newMr);
 
-    public List<JSONObject> getMergeRequestComments(ConfigEntity config, int projectId, int mergeRequestId) {
-        List<JSONObject> mergeRequests = getJsonObjectsList(buildUri(config, projectId, "merge_requests/" + mergeRequestId + "/notes"));
-        for(JSONObject mr : mergeRequests) {
-            mr.put("commentType", "merge_request");
+            page += 1;
+            newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page));
         }
-        return mergeRequests;
+        return mr;
     }
 
-    public List<JSONObject> getMergeRequestsDiff(ConfigEntity config, int projectId, int mergeRequestId, int mergeRequestVersionId) {
-        List<JSONObject> MRDiffVersions = getJsonObjectsList(buildUri(config,projectId,mergeRequestId + "/versions/" + mergeRequestVersionId));
-        return MRDiffVersions;
+    public List<JSONObject> getComments(ConfigEntity config, int projectId, String path) {
+        List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, path + "/notes"));
+        return filterJSONComments(comments);
+    }
+
+    public JSONObject getMergeRequestsDiff(ConfigEntity config, int projectId, int mergeRequestId, int mergeRequestVersionId) {
+        JSONObject j = getJsonObject(buildUri(config,projectId,"merge_requests/" + mergeRequestId + "/versions/"+mergeRequestVersionId));
+        j.put("project_id",projectId);
+        j.put("merge_request_iid",mergeRequestId);
+        return j;
+
     }
 
     public List<JSONObject> getMergeRequestsDiffVersions(ConfigEntity config, int projectId, int mergeRequestId) {
-        List<JSONObject> MRDiffs = getJsonObjectsList(buildUri(config,projectId,mergeRequestId + "/versions/"));
-        return MRDiffs;
+        List<JSONObject> MRDiffVersions = getJsonObjectsList(buildUri(config,projectId,"merge_requests/" + mergeRequestId + "/versions"));
+        for(JSONObject mrDiffs : MRDiffVersions) {
+            mrDiffs.put("project_id", projectId);
+            mrDiffs.put("merge_request_iid", mergeRequestId);
+        }
+        return MRDiffVersions;
     }
 
     public List<JSONObject> getIssues(ConfigEntity config, int projectId) {
-        return getJsonObjectsList(buildUri(config, projectId, "issues"));
+        int page = 1;
+        List<JSONObject> issues = new ArrayList<>();
+        List<JSONObject> newIssues = getJsonObjectsList(buildUri(config, projectId, "issues?per_page=100&page=" + page));
+        while(newIssues.size() > 0) {
+            issues.addAll(newIssues);
+
+            page += 1;
+            newIssues = getJsonObjectsList(buildUri(config, projectId, "issues?per_page=100&page=" + page));
+        }
+        return issues;
     }
 
     public List<JSONObject> getCommits(ConfigEntity config, int projectId) {
@@ -79,20 +103,12 @@ public class Extractor {
         return commits;
     }
 
-    public List<JSONObject> getIssueComments(ConfigEntity config, int projectId, int issueId) {
-        List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, "issues/" + issueId + "/notes"));
-        for(JSONObject comment : comments) {
-            comment.put("commentType", "issue");
-        }
-        return comments;
-    }
-
     public List<String> getRepoMembers(ConfigEntity config, int projectId) {
         List<JSONObject> membersJson = getJsonObjectsList(buildUri(config, projectId, "members"));
 
         return membersJson.stream()
                 .map(obj -> obj.getString("username"))
-                .collect(Collectors.toList());
+                .collect(toList());
     }
 
     private URI buildUri(ConfigEntity config, int projectId, String path) {
@@ -117,13 +133,18 @@ public class Extractor {
 
         List<JSONObject> jsonList = new ArrayList<>();
         jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
-
         return jsonList;
     }
 
+
     private JSONObject getJsonObject(URI url) {
         String response = restTemplate.getForObject(url, String.class);
-
         return new JSONObject(response);
+    }
+
+    private List<JSONObject> filterJSONComments(List<JSONObject> comments) {
+        return comments.stream()
+                .filter(comment -> !comment.getBoolean("system"))
+                .collect(toList());
     }
 }

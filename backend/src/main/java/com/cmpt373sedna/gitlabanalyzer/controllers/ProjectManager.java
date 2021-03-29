@@ -2,9 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
+import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,9 @@ import java.util.Optional;
 
 @Component
 public class ProjectManager {
-    private @Getter List<ProjectController> allProjects;
-    private @Getter List<ProjectController> selectedProjects;
-    final private Extractor extractor;
-    private @Setter  String projectToken;
+    private final @Getter List<ProjectController> allProjects;
+    private final Extractor extractor;
+    private @Setter String projectToken;
 
     @Autowired
     private IssueEntityRepository issueRepository;
@@ -32,10 +29,15 @@ public class ProjectManager {
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
+    @Autowired
+    private MergeRequestDiffsVersionsRepository mergeRequestDiffVersionRepository;
+
+    @Autowired
+    private MergeRequestDiffsRepository mergeRequestDiffRepository;
+
     public ProjectManager() {
         this.extractor = new Extractor();
         this.allProjects = new ArrayList<>();
-        this.selectedProjects = new ArrayList<>();
     }
 
     public void addProjects(List<String> urls) {
@@ -86,24 +88,12 @@ public class ProjectManager {
         this.commitRepository.saveAll(projectController.getCommitEntities());
         this.issueRepository.saveAll(projectController.getIssuesEntities());
         this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
+        this.mergeRequestDiffVersionRepository.saveAll(projectController.getMRDiffVersions());
+        this.mergeRequestDiffRepository.saveAll(projectController.getMRDiffs());
 
         return projectController;
     }
 
-    public void selectProjects(List<String> selectedProjects) {
-        for (String projectName: selectedProjects) {
-            selectProject(projectName);
-        }
-    }
-
-    public void selectProject(String projectName) {
-        for (ProjectController project: allProjects) {
-            if (project.getProjectName().equals(projectName)) {
-                selectedProjects.add(project);
-                return;
-            }
-        }
-    }
     public Optional<ProjectController> findProject(int projectId) {
         return this.allProjects.stream()
                 .filter(project -> project.getProjectId() == projectId)

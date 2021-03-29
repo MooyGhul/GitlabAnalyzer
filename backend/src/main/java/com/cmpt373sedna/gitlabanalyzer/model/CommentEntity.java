@@ -16,22 +16,27 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentEntity {
-    private @Id @GeneratedValue int commentId;
+    private @Id int commentId;
     private String commentType;
     private int projectId;
-    private int commentTypeId;
+    private int MRorIssueId;
     private int wordCount;
+    private String createdBy;
     @Column(columnDefinition="text")
     private @Nullable String commentText;
     private @Nullable String commenter;
     private @Nullable Instant commentDate;
+    private @Nullable String MRorIssueName;
 
 
     public static CommentEntity fromGitlabJSON(JSONObject json) {
 
         return CommentEntity.builder()
-                .commentId(json.getInt("noteable_id"))
+                .commentId(json.getInt("id"))
+                .MRorIssueId(json.getInt("MRorIssueId"))
                 .projectId(json.getInt("project_id"))
+                .createdBy(json.getString("created_by"))
+                .MRorIssueName(json.getString("MRorIssueName"))
                 .commenter(json.getJSONObject("author").getString("username"))
                 .commentType(json.getString("noteable_type"))
                 .wordCount(getWordCount(json.getString("body")))

@@ -1,7 +1,6 @@
 import Banner from "./components/Banner";
 import Charts from "./components/Charts/Charts";
 import DataFetching from "./components/DataFetching";
-import "./OverviewPage.css";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Grid} from "@material-ui/core";

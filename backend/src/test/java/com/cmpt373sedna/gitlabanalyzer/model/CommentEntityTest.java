@@ -12,12 +12,15 @@ public class CommentEntityTest {
     @Test
     void fromGitlabJSON_parses_open_Comment_correctly() throws IOException {
         CommentEntity expected = CommentEntity.builder()
-                .commentId(377)
+                .commentId(302)
+                .MRorIssueId(92)
                 .projectId(2)
+                .MRorIssueName("test1")
+                .createdBy("admin")
                 .commenter("pipin")
                 .commentType("Issue")
-                .commentText("closed")
                 .wordCount(1)
+                .commentText("closed")
                 .commentDate(Instant.parse("2013-10-02T09:22:45Z"))
                 .build();
 

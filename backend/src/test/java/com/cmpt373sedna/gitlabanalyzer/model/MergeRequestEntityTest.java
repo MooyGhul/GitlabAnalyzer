@@ -22,8 +22,10 @@ class MergeRequestEntityTest {
                 .status("opened")
                 .author("admin")
                 .description("fixed login page css paddings")
+                .mergeRequestName("test1")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
                 .mergedAt(null)
+                .url("http://gitlab.example.com/my-group/my-project/merge_requests/1")
                 .build();
 
         String jsonString = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleOpenMR.json").readAllBytes());
@@ -42,8 +44,10 @@ class MergeRequestEntityTest {
                 .status("merged")
                 .description("fixed login page css paddings")
                 .author("admin")
+                .mergeRequestName("test1")
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
                 .mergedAt(sdf.parse("2018-09-07T11:16:17.520Z").toInstant())
+                .url("http://gitlab.example.com/my-group/my-project/merge_requests/1")
                 .build();
 
         String jsonString = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleMergedMR.json").readAllBytes());

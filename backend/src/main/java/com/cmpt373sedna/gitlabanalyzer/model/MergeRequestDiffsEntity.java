@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import java.util.List;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -19,8 +21,8 @@ public class MergeRequestDiffsEntity {
     private String headCommitSHA;
     private String baseCommitSHA;
     private String startCommitSHA;
-    private String authorName;
     private Instant createdAt;
+    @Column(columnDefinition = "TEXT")
     private String diff;
     private int MRIid;
     private int projectId;
@@ -30,12 +32,21 @@ public class MergeRequestDiffsEntity {
                 .versionId(json.getInt("id"))
                 .MRIid(json.getInt("merge_request_iid"))
                 .projectId(json.getInt("project_id"))
-                .headCommitSHA(json.getString("head_commit_sh"))
-                .baseCommitSHA(json.getString("base_commit_sh"))
-                .startCommitSHA(json.getString("start_commit_sh"))
-                .authorName(json.getJSONObject("commits").getString("author_name"))
+                .headCommitSHA(json.getString("head_commit_sha"))
+                .baseCommitSHA(json.getString("base_commit_sha"))
+                .startCommitSHA(json.getString("start_commit_sha"))
                 .createdAt(Instant.parse(json.getString("created_at")))
-                .diff(json.getJSONObject("diffs").getString("diff"))
+                .diff(getDiffs(json))
                 .build();
     }
+    public static String getDiffs(JSONObject json){
+        JSONArray j = json.getJSONArray("diffs");
+        if(j.length()==0){
+            return "";
+        }
+        else{
+            return j.getJSONObject(0).getString("diff");
+        }
+    }
+
 }

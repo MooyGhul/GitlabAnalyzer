@@ -10,17 +10,24 @@ import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
 import {useRowStyles} from "../../style/CodeContributionPageStyles";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
+import Button from '@material-ui/core/Button';
+import LinkIcon from '@material-ui/icons/Link';
 
 const CodeContributionRow = (props) => {
-  const { row, openAll } = props;
+  const { row, expandAll } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
+
+  const isOpen = () => {
+    return open || expandAll;
+  }
+
   return (
     <Fragment>
       <TableRow hover role ="checkbox" tabIndex={-1} className={classes.root}>
         <TableCell>
           <IconButton size='small' onClick={() => setOpen(!open)}>
-            {open || openAll ? <ExpandLess className={classes.dropDownIcon} />
+            {isOpen() ? <ExpandLess className={classes.dropDownIcon} />
                               : <ExpandMore className={classes.dropDownIcon} />}
           </IconButton>
         </TableCell>
@@ -28,13 +35,19 @@ const CodeContributionRow = (props) => {
           {row.type === "MR" ? <Avatar className={classes.mrIcon}>M</Avatar>
                             : <Avatar className={classes.cIcon}>C </Avatar> }
         </TableCell>
+        <TableCell className={classes.cell} align="left">
+          <Button variant="outlined" color="primary" href={row.url} target="_blank" rel="noreferrer noopener">
+             Link &nbsp;
+            <LinkIcon />
+          </Button>
+        </TableCell>
         <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
-        <TableCell style={{width: 600}} align="left">{row.details}</TableCell>
+        <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
         <TableCell className={classes.cell} align="left">{row.score}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0, background: '#f1f0fc' }} colSpan={6}>
-          <Collapse in={open || openAll} timeout="auto" unmountOnExit>
+          <Collapse in={isOpen()} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <h2>Code Diff</h2>
               <div>{ComingSoonMsg.msg}</div>
@@ -47,7 +60,7 @@ const CodeContributionRow = (props) => {
 }
 
 CodeContributionRow.propTypes = {
-  openAll: PropTypes.bool.isRequired,
+  expandAll: PropTypes.bool.isRequired,
 };
 
 export default CodeContributionRow;

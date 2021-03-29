@@ -4,6 +4,7 @@
   "attachment": null,
   "project_id": 2,
   "wordCount": 1,
+  "created_by": "admin",
   "author": {
     "id": 1,
     "username": "pipin",
@@ -18,6 +19,8 @@
   "noteable_id": 377,
   "noteable_type": "Issue",
   "noteable_iid": 377,
+  "MRorIssueId": 92,
   "resolvable": false,
-  "confidential": false
+  "confidential": false,
+  "MRorIssueName": "test1"
 }

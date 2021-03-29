@@ -69,7 +69,7 @@ const NavbarSide = (props) => {
             </Link>
 
 
-            <Link to="/projectInfo/{project_id}" className={classes.link}>
+            <Link to="/projectInfo/:project_id" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <InfoIcon />
@@ -78,7 +78,7 @@ const NavbarSide = (props) => {
             </ListItem>
             </Link>
 
-          <Link to="/overview/:project_id/{member_id}" className={classes.link}>
+          <Link to="/overview/:project_id/:member_id/codeContribution" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <InfoIcon />
@@ -119,7 +119,7 @@ const NavbarSide = (props) => {
             </Grid>
           </Route>
 
-          <Route exact path="/overview/:project_id/:member_id">
+          <Route exact path="/overview/:project_id/:member_id/codeContribution">
             <Container>
               <OverviewPage test={test} project_id={project_id} member_id={member_id}/>
             </Container>

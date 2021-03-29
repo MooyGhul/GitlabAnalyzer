@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 public class ProjectController {
 
     private @Getter int projectId;
@@ -54,64 +56,68 @@ public class ProjectController {
         this.members = this.extractor.getRepoMembers(this.config, this.projectId);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
-        //this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
-        //this.MRDiffs = this.getAndParseMergeRequestsDiffs();
+        this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
+        this.MRDiffs = this.getAndParseMergeRequestsDiffs();
 
         return this;
     }
 
     private List<IssueEntity> getAndParseIssues() {
         List<JSONObject> issues = this.extractor.getIssues(this.config, this.projectId);
-        return issues.stream().map(IssueEntity::fromGitlabJSON).collect(Collectors.toList());
+        return issues.stream().map(IssueEntity::fromGitlabJSON).collect(toList());
     }
     private List<CommitEntity> getAndParseCommits() {
         List<JSONObject> commits = this.extractor.getCommits(this.config, this.projectId);
         commits.forEach(commit -> commit.put("project_id", this.projectId));
-        return commits.stream().map(CommitEntity::fromGitlabJSON).collect(Collectors.toList());
+        return commits.stream().map(CommitEntity::fromGitlabJSON).collect(toList());
     }
 
     private List<MergeRequestEntity> getAndParseMergeRequests() {
         List<JSONObject> mergeRequests = extractor.getMergeRequests(this.config, this.projectId);
-        return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(Collectors.toList());
+        return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(toList());
     }
 
     private List<CommentEntity> getAndParseComments() {
         List<JSONObject> comments = new ArrayList<>();
         for(IssueEntity issue : this.issuesEntities) {
-            List<JSONObject> issueComments = this.extractor.getIssueComments(this.config, this.projectId, issue.getIssueIid());
+            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectId, "issues/" + issue.getIssueIid());
+            issueComments = issueComments.stream().peek(comment -> {
+                comment.put("created_by", issue.getAssignee());
+                comment.put("MRorIssueId", issue.getIssueIid());
+                comment.put("MRorIssueName", issue.getIssueName());
+            }).collect(toList());
             comments.addAll(issueComments);
         }
 
         for(MergeRequestEntity mr : this.mergeRequestEntities) {
-            List<JSONObject> mrComments = this.extractor.getMergeRequestComments(this.config, this.projectId, mr.getIid());
+            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectId, "merge_requests/" + mr.getIid());
+            mrComments = mrComments.stream().peek(comment -> {
+                comment.put("created_by", mr.getAuthor());
+                comment.put("MRorIssueId", mr.getIid());
+                comment.put("MRorIssueName", mr.getMergeRequestName());
+            }).collect(toList());
             comments.addAll(mrComments);
         }
         comments.forEach(comment -> comment.put("project_id", this.projectId));
-        return comments.stream().map(CommentEntity::fromGitlabJSON).collect(Collectors.toList());
+        return comments.stream().map(CommentEntity::fromGitlabJSON).collect(toList());
     }
 
     private List<MergeRequestDiffVersionsEntity> getAndParseMergeRequestsDiffVersions() {
         List<JSONObject> mergeRequestsDiffVersions =  new ArrayList<>();
         for(MergeRequestEntity mr: this.mergeRequestEntities) {
             List<JSONObject> list = extractor.getMergeRequestsDiffVersions(this.config, this.projectId, mr.getIid());
-            list.forEach(mrDiffs -> mrDiffs.put("project_id", this.projectId));
-            list.forEach(mrDiffs -> mrDiffs.put("merge_request_iid", mr.getIid()));
             mergeRequestsDiffVersions.addAll(list);
         }
-        return mergeRequestsDiffVersions.stream().map(MergeRequestDiffVersionsEntity::fromGitlabJSON).collect(Collectors.toList());
+        return mergeRequestsDiffVersions.stream().map(MergeRequestDiffVersionsEntity::fromGitlabJSON).collect(toList());
     }
 
     private List<MergeRequestDiffsEntity> getAndParseMergeRequestsDiffs() {
         List<JSONObject> mergeRequestsDiffs = new ArrayList<>();
-        for(MergeRequestEntity mr: this.mergeRequestEntities) {
-            for(MergeRequestDiffVersionsEntity mrDiff: this.MRDiffVersions) {
-                List<JSONObject> list = extractor.getMergeRequestsDiff(this.config, this.projectId, mr.getIid(), mrDiff.getId());
-                list.forEach(mrDiffs -> mrDiffs.put("project_id", this.projectId));
-                list.forEach(mrDiffs -> mrDiffs.put("merge_request_iid", mr.getIid()));
-                mergeRequestsDiffs.addAll(list);
-            }
+        for(MergeRequestDiffVersionsEntity mrDiffs: this.MRDiffVersions) {
+            JSONObject mrDiff = extractor.getMergeRequestsDiff(this.config, this.projectId, mrDiffs.getMRIid(), mrDiffs.getId());
+            mergeRequestsDiffs.add(mrDiff);
         }
-        return mergeRequestsDiffs.stream().map(MergeRequestDiffsEntity::fromGitlabJSON).collect(Collectors.toList());
+        return mergeRequestsDiffs.stream().map(MergeRequestDiffsEntity::fromGitlabJSON).collect(toList());
     }
 
 
