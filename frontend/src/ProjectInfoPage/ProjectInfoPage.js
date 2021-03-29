@@ -11,7 +11,7 @@ function ProjectInfoPage(props) {
   const projectName = location.state.projectName;
 
   const [members, setMembers] = useState([]);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
@@ -24,6 +24,7 @@ function ProjectInfoPage(props) {
     };
     fetchData();
   }, [projectID]);
+  
 
   return (
     <div>
