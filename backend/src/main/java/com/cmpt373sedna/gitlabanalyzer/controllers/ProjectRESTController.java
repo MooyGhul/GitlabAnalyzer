@@ -104,8 +104,6 @@ public class ProjectRESTController {
         return this.issueRepository.findAllByProjectId(projectId);
     }
 
-<<<<<<< HEAD
-=======
     @GetMapping("/{projectId}/merge_requests/{merge_request_iid}/versions")
     Iterable<MergeRequestDiffVersionsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid) {
         return this.mergeRequestDiffVersionRepository.findAllByProjectIdAndMRIid(projectId, MRIid);
@@ -120,5 +118,4 @@ public class ProjectRESTController {
     Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId, @PathVariable(value="MRorIssueId") int MRorIssueId) {
         return this.commentEntityRepository.findAllByProjectIdAndMRorIssueId(projectId,MRorIssueId);
     }
->>>>>>> master
 }
