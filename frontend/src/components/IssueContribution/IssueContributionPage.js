@@ -57,7 +57,7 @@ const IssueContributionPage = () => {
           <Navbar />
         </Grid>
         <Grid item xs={12}>
-          <Banner memberName={member_id} />
+          <Banner memberName={member_id} type="issueContribution" />
         </Grid>
       </Grid>
 

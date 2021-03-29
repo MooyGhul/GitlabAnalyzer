@@ -92,7 +92,7 @@ const CodeContributionPage = () => {
           <Navbar />
         </Grid>
         <Grid item xs={12}>
-          <Banner memberName={member_id} />
+          <Banner memberName={member_id} type="codecontribution" />
         </Grid>
       </Grid>
       <Grid item xs={12} align="center">
