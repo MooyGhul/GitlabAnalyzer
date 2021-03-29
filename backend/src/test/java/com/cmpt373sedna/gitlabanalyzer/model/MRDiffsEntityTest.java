@@ -44,7 +44,7 @@ public class MRDiffsEntityTest {
         JSONObject j = new JSONObject();
         j.put("id","33e2ee8579fda5bc36accc9c6fbd0b4fefda9e30");
         j.put("author","Administrator");
-        j.put("date","2016-07-26T14 :44:29Z");
+        j.put("date","2016-07-26T14:44:29Z");
         j.put("message","Change year to 2018");
         j.put("commitDiffs",n);
         List<String> x = new ArrayList<>();
