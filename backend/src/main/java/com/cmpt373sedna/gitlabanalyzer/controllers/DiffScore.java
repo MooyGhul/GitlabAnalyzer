@@ -14,7 +14,7 @@ public class DiffScore {
         List<String> lines = new ArrayList<>();
 
         for(String diff: diffs) {
-            // Add anything that's not a empty newline, or empty syntax additions/deletions
+            // Add anything that's not a empty newline, or comment
             lines.addAll(Arrays.stream(diff.split("\n")).filter(line ->
                     (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches("[-+]\\s*//.*"))
             ).collect(toList()));
