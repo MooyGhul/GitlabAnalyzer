@@ -41,8 +41,6 @@ public class CommitEntity {
                     .author(json.getString("author_name"))
                     .commitDate(sdf.parse(json.getString("committed_date")).toInstant())
                     .url(json.getString("web_url"))
-                    .hasMr(json.getBoolean("hasMR"))
-                    .MRIid(json.getInt("mr_iid"))
                     .diffs(getCommitDiffs(json))
                     .build();
         }catch (java.text.ParseException e) {

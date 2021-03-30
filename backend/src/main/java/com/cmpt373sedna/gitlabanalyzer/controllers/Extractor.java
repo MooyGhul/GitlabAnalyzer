@@ -121,16 +121,6 @@ public class Extractor {
         for(int i=0;i<commits.size();i++){
             List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId, "repository/commits/"+ commits.get(i).getString("id") + "/diff"));
             commits.get(i).put("diffs",l);
-            List<JSONObject> mrs = getJsonObjectsList(buildUri(config, projectId, "repository/commits/"+ commits.get(i).getString("id") + "/merge_requests"));
-            if(mrs.size()==0){
-                commits.get(i).put("hasMR",false);
-                commits.get(i).put("mr_iid",0);
-            }
-            else{
-                commits.get(i).put("hasMR",true);
-                commits.get(i).put("mr_iid",mrs.get(0).getInt("iid"));
-            }
-
         }
         return commits;
     }
