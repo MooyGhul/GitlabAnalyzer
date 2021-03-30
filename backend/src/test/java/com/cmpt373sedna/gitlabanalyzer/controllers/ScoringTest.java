@@ -11,15 +11,8 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ScoringTest {
-    @Mock
-    private ConfigEntity configEntity;
 
-    @Mock
-    private Extractor extractor;
-
-    private final ProjectEntity projectEntity = new ProjectEntity(1, "repository", 19, 22, 33);
-
-    private final ProjectController projectController = new ProjectController(extractor, configEntity, projectEntity);
+    private DiffScore diffScore = new DiffScore();
 
     private List<String> diffs;
 
@@ -39,7 +32,7 @@ public class ScoringTest {
                 "     private @Nullable String commentText;\n" +
                 "     private @Nullable String commenter;\n");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(1.0, score);
     }
@@ -56,7 +49,7 @@ public class ScoringTest {
                 "     private @Nullable String commentText;\n" +
                 "     private @Nullable String commenter;\n");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(0.0, score);
     }
@@ -72,7 +65,7 @@ public class ScoringTest {
                 "     private @Nullable String commentText;\n" +
                 "     private @Nullable String commenter;\n");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(0.2, score);
     }
@@ -97,7 +90,7 @@ public class ScoringTest {
                 "                  .commenter(json.getJSONObject(\"author\").getString(\"username\"))\n"+
                 "                  .commentType(json.getString(\"noteable_type\"))");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(1.2, score);
     }
@@ -114,7 +107,7 @@ public class ScoringTest {
                 "     private @Nullable String commentText;\n" +
                 "     private @Nullable String commenter;\n");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(0.0, score);
     }
@@ -131,7 +124,7 @@ public class ScoringTest {
                 "     private @Nullable String commentText;\n" +
                 "     private @Nullable String commenter;\n");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(0.2, score);
     }
@@ -148,7 +141,7 @@ public class ScoringTest {
                 "             setComments(commentResult.data);\n" +
                 "             const commentCounts = getGraphData(commentResult.data);");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(0.2, score);
     }
@@ -164,7 +157,7 @@ public class ScoringTest {
                 "+        className={styles.avatar}\n" +
                 "+      />");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(6.2, score);
     }
@@ -176,7 +169,7 @@ public class ScoringTest {
                 "+\t\t{}\n" +
                 "+\t}\n");
 
-        double score = projectController.calcScore(diffs);
+        double score = diffScore.calcScore(diffs);
 
         assertEquals(0.6, score);
     }
