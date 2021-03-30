@@ -4,7 +4,6 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.*;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 
 import java.util.*;
