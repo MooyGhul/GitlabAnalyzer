@@ -4,7 +4,6 @@ import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import com.cmpt373sedna.gitlabanalyzer.repository.ConfigEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
