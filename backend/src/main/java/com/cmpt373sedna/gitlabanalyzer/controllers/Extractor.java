@@ -52,13 +52,17 @@ public class Extractor {
             page += 1;
             newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page));
         }
-        for(int i=0;i<mr.size();i++){
-            List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId,"merge_requests/" + mr.get(i).getString("iid") + "/commits"));
+
+        for(JSONObject mrs : mr){
+            List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId,"merge_requests/" + mrs.getInt("iid") + "/commits"));
             List<String> commits = new ArrayList<>();
-            for(int j=0;j<l.size();j++){
-                commits.add(l.get(i).getString("id"));
+            for(JSONObject commit : l){
+                commits.add(commit.getString("id"));
             }
-            mr.get(i).put("commits",commits);
+            mrs.put("commits",commits);
+            List<JSONObject> MRDiffVersions = getJsonObjectsList(buildUri(config,projectId,"merge_requests/" + mrs.getInt("iid") + "/versions"));
+            JSONObject j = getJsonObject(buildUri(config,projectId,"merge_requests/" + mrs.getInt("iid") + "/versions/"+MRDiffVersions.get(0).getInt("id")));
+            mrs.put("mrDiffs",j.getJSONArray("diffs"));
         }
         return mr;
     }

@@ -88,8 +88,8 @@ public class ProjectManager {
         this.commitRepository.saveAll(projectController.getCommitEntities());
         this.issueRepository.saveAll(projectController.getIssuesEntities());
         this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
-        this.mergeRequestDiffVersionRepository.saveAll(projectController.getMRDiffVersions());
-        this.mergeRequestDiffRepository.saveAll(projectController.getMRDiffs());
+        //this.mergeRequestDiffVersionRepository.saveAll(projectController.getMRDiffVersions());
+        //this.mergeRequestDiffRepository.saveAll(projectController.getMRDiffs());
 
         return projectController;
     }

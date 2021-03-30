@@ -54,8 +54,8 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(p.getIssuesEntities());
         this.commentEntityRepository.saveAll(p.getComments());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
-        this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
-        this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
+        //this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
+        //this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
     }
 
     @GetMapping("/all")
@@ -93,6 +93,7 @@ public class ProjectRESTController {
     Iterable<CommitEntity> getProjectCommits(@PathVariable(value="projectId") int projectId) {
         return this.commitRepository.findAllByProjectId(projectId);
     }
+
 
 
     @GetMapping("/{projectId}/issues")

@@ -27,7 +27,7 @@ public class CommitEntity {
     private String url;
     @Column(columnDefinition = "TEXT")
     @ElementCollection
-    private List<HashMap> diffs;
+    private List<String> diffs;
 
     public static CommitEntity fromGitlabJSON(JSONObject json) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -47,16 +47,16 @@ public class CommitEntity {
         return null;
 
     }
-    public static List<HashMap> getCommitDiffs(JSONObject json) {
+    public static List<String> getCommitDiffs(JSONObject json) {
         JSONArray j = json.getJSONArray("diffs");
-        List<HashMap> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         for(int i=0;i<j.length();i++){
             JSONObject js = j.getJSONObject(i);
-            HashMap<String,String> hash = new HashMap<>();
-            hash.put("diff",js.getString("diff"));
-            hash.put("new_path",js.getString("new_path"));
-            hash.put("old_path",js.getString("old_path"));
-            list.add(hash);
+            JSONObject commitDiffs = new JSONObject();
+            commitDiffs.put("diff",js.getString("diff"));
+            commitDiffs.put("new_path",js.getString("new_path"));
+            commitDiffs.put("old_path",js.getString("old_path"));
+            list.add(commitDiffs.toString());
         }
         return list;
     }
