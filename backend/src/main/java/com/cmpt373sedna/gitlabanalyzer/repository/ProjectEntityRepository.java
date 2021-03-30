@@ -9,8 +9,5 @@ import java.util.List;
 
 @Repository
 public interface ProjectEntityRepository extends CrudRepository<ProjectEntity, Integer> {
-    @Query(value="SELECT repo_name " +
-            "FROM project_entity " +
-            "WHERE repo_id = :projectId ", nativeQuery = true)
-    String findProjectName(int projectId);
+    ProjectEntity findProjectEntityByRepoId(int id);
 }
