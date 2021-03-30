@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ScoringTest {
 
-    private DiffScore diffScore = new DiffScore();
+    private final DiffScore diffScore = new DiffScore();
 
     private List<String> diffs;
 
@@ -74,7 +74,7 @@ public class ScoringTest {
     void deleteAndAddScore() {
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n" +
                 "     private int projectId;\n" +
-                "     private int MRorIssueId;\n" +
+                "-     private int MRorIssueId;\n" +
                 "     private int wordCount;\n" +
                 "-    private @Nullable String createdBy;\n" +
                 "+    private String createdBy;\n" +
@@ -92,7 +92,7 @@ public class ScoringTest {
 
         double score = diffScore.calcScore(diffs);
 
-        assertEquals(1.2, score);
+        assertEquals(2.4, score);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ScoringTest {
 
         double score = diffScore.calcScore(diffs);
 
-        assertEquals(0.2, score);
+        assertEquals(1.2, score);
     }
 
     @Test
@@ -143,7 +143,7 @@ public class ScoringTest {
 
         double score = diffScore.calcScore(diffs);
 
-        assertEquals(0.2, score);
+        assertEquals(1.2, score);
     }
 
     @Test
@@ -172,6 +172,44 @@ public class ScoringTest {
         double score = diffScore.calcScore(diffs);
 
         assertEquals(0.6, score);
+    }
+
+    @Test
+    void syntaxDeleteTest() {
+        diffs.add("{\n" +
+                "-\t{\n" +
+                "-\t\t{}\n" +
+                "-\t}\n");
+
+        double score = diffScore.calcScore(diffs);
+
+        assertEquals(0.6, score);
+    }
+
+    @Test
+    void moveContentTest() {
+        diffs.add("+struct student_t{\n" +
+                "+\tint id;\n" +
+                "+\tstring first;\n" +
+                "+\tstring last;\n" +
+                "+\tvector<course_t> grades;\n" +
+                "+};\n" +
+                "\n" +
+                "// Function Prototypes:\n" +
+                "float gradeToGPA(string grade);\n" +
+                "\n" +
+                "\n" +
+                "-struct student_t{\n" +
+                "-\tint id;\n" +
+                "-\tstring first;\n" +
+                "-\tstring last;\n" +
+                "-\tvector<course_t> grades;\n" +
+                "-};\n" +
+                "-");
+
+        double score = diffScore.calcScore(diffs);
+
+        assertEquals(0.0, score);
     }
 
 }
