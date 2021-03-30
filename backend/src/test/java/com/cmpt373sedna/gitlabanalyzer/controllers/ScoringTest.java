@@ -2,6 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import java.util.ArrayList;
@@ -20,9 +21,15 @@ public class ScoringTest {
 
     private final ProjectController projectController = new ProjectController(extractor, configEntity, projectEntity);
 
+    private List<String> diffs;
+
+    @BeforeEach
+    void setup() {
+        diffs = new ArrayList<>();
+    }
+
     @Test
     void addOnlyScore() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n" +
                 "     private int projectId;\n" +
                 "     private int MRorIssueId;\n" +
@@ -39,7 +46,6 @@ public class ScoringTest {
 
     @Test
     void emptyLineScore() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n" +
                 "     private int projectId;\n" +
                 "     private int MRorIssueId;\n" +
@@ -57,7 +63,6 @@ public class ScoringTest {
 
     @Test
     void deleteOnlyScore() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n" +
                 "     private int projectId;\n" +
                 "     private int MRorIssueId;\n" +
@@ -74,7 +79,6 @@ public class ScoringTest {
 
     @Test
     void deleteAndAddScore() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n" +
                 "     private int projectId;\n" +
                 "     private int MRorIssueId;\n" +
@@ -100,7 +104,6 @@ public class ScoringTest {
 
     @Test
     void calcCommentScore() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n"+
                 "     private int projectId;\n" +
                 "     private int MRorIssueId;\n" +
@@ -118,7 +121,6 @@ public class ScoringTest {
 
     @Test
     void calcValidLineWithComment() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n"+
                 "     private int projectId;\n" +
                 "     private int MRorIssueId;\n" +
@@ -136,7 +138,6 @@ public class ScoringTest {
 
     @Test
     void stringDiffTest() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("@@ -28,7 +28,7 @@ const CommentContributionPage = (props) => {\n" +
                 "     useEffect(() => {\n" +
                 "         const fetchData = async () => {\n" +
@@ -154,7 +155,6 @@ public class ScoringTest {
 
     @Test
     void twoDistinctChanges() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("\"@@ -1,38 +1,24 @@\n" +
                 "-import React from 'react';   \n" +
                 "+    <div className={styles.body}>\n" +
@@ -171,7 +171,6 @@ public class ScoringTest {
 
     @Test
     void syntaxOnlyTest() {
-        List<String> diffs = new ArrayList<>();
         diffs.add("{\n" +
                 "+\t{\n" +
                 "+\t\t{}\n" +
