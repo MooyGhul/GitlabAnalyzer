@@ -45,6 +45,7 @@ public class MergeRequestEntity {
     private List<String> mrDiffs;
     private String url;
 
+
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
         String mergedAt = json.optString("merged_at");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");

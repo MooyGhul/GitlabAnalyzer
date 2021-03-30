@@ -45,7 +45,7 @@ public class Extractor {
     public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId) {
         int page = 1;
         List<JSONObject> mr = new ArrayList<>();
-        List<JSONObject> newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page));
+        List<JSONObject> newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page + "&target_branch=master"));
         while(newMr.size() > 0) {
             mr.addAll(newMr);
 
@@ -121,6 +121,16 @@ public class Extractor {
         for(int i=0;i<commits.size();i++){
             List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId, "repository/commits/"+ commits.get(i).getString("id") + "/diff"));
             commits.get(i).put("diffs",l);
+            List<JSONObject> mrs = getJsonObjectsList(buildUri(config, projectId, "repository/commits/"+ commits.get(i).getString("id") + "/merge_requests"));
+            if(mrs.size()==0){
+                commits.get(i).put("hasMR",false);
+                commits.get(i).put("mr_iid",0);
+            }
+            else{
+                commits.get(i).put("hasMR",true);
+                commits.get(i).put("mr_iid",mrs.get(0).getInt("iid"));
+            }
+
         }
         return commits;
     }

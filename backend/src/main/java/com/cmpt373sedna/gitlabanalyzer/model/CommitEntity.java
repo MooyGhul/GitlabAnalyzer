@@ -28,6 +28,8 @@ public class CommitEntity {
     @Column(columnDefinition = "TEXT")
     @ElementCollection
     private List<String> diffs;
+    private Boolean hasMr;
+    private int MRIid;
 
     public static CommitEntity fromGitlabJSON(JSONObject json) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -39,6 +41,8 @@ public class CommitEntity {
                     .author(json.getString("author_name"))
                     .commitDate(sdf.parse(json.getString("committed_date")).toInstant())
                     .url(json.getString("web_url"))
+                    .hasMr(json.getBoolean("hasMR"))
+                    .MRIid(json.getInt("mr_iid"))
                     .diffs(getCommitDiffs(json))
                     .build();
         }catch (java.text.ParseException e) {
