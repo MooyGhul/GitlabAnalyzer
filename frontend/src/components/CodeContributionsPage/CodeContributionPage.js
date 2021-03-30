@@ -12,18 +12,14 @@ import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import Navbar from "../Navbar/Navbar";
 import InnerNavBar from "../InnerNavBar";
-import {useInnerNavStyle} from "../../style/InnerNavStyle"
-import { useLocation } from "react-router-dom";
+import {useInnerNavStyle} from "../../style/InnerNavStyle" 
 
 const CodeContributionPage = (props) => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
   const { project_id, member_id } = useParams();
   const [graphData] = useState(Contributions);
   const classes = useGraphStyles(); 
-  const innerNavStyle = useInnerNavStyle();
-  const location = useLocation();
-  const projectName = location.state.projectName;
-  
+  const innerNavStyle = useInnerNavStyle();  
 
   const createData = (id, type, date, name, url, score) => {
     return {id, type, date, name, url, score};
@@ -96,7 +92,7 @@ const CodeContributionPage = (props) => {
           <Navbar />
         </Grid>
         <Grid item xs={12}>
-          <Banner memberName={member_id} projectName={projectName} />
+          <Banner memberName={member_id}/>
         </Grid>
       </Grid>
       <Grid item xs={12} align="center">
