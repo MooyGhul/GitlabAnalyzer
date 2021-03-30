@@ -6,8 +6,8 @@ import com.cmpt373sedna.gitlabanalyzer.model.*;
 import lombok.Getter;
 import org.json.JSONObject;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 public class ProjectController {
@@ -24,7 +24,8 @@ public class ProjectController {
 
     private int totalComments;
 
-    private @Getter List<MergeRequestEntity> mergeRequestEntities;
+    private @Getter
+    List<MergeRequestEntity> mergeRequestEntities;
 
     private @Getter List<IssueEntity> issuesEntities;
 
