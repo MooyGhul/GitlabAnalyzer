@@ -80,7 +80,7 @@ public class ProjectController {
         List<String> lines = new ArrayList<>();
         for(String diff: diffs) {
             lines.addAll(Arrays.stream(diff.split("\n")).filter(line ->
-                    (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches("[-+]\\s*//.*"))
+                    (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches("[-+]\\s*//.*|[+-]\\s*[{}()]{1,2}\\s*"))
             ).collect(toList()));
         }
 

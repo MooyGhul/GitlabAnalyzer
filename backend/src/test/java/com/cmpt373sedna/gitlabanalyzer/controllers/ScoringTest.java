@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ProjectControllerTest {
+public class ScoringTest {
     @Mock
     private ConfigEntity configEntity;
 
@@ -167,6 +167,19 @@ public class ProjectControllerTest {
         double score = projectController.calcScore(diffs);
 
         assertEquals(6.2, score);
+    }
+
+    @Test
+    void syntaxOnlyTest() {
+        List<String> diffs = new ArrayList<>();
+        diffs.add("{\n" +
+                "+\t{\n" +
+                "+\t\t{}\n" +
+                "+\t}\n");
+
+        double score = projectController.calcScore(diffs);
+
+        assertEquals(0, score);
     }
 
 }
