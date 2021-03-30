@@ -79,8 +79,9 @@ public class ProjectController {
     protected double calcScore(List<String> diffs) {
         List<String> lines = new ArrayList<>();
         for(String diff: diffs) {
+            // Add anything that's not a empty newline, or empty syntax additions/deletions
             lines.addAll(Arrays.stream(diff.split("\n")).filter(line ->
-                    (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches("[-+]\\s*//.*|[+-]\\s*[{}()]{1,2}\\s*"))
+                    (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches("[-+]\\s*//.*"))
             ).collect(toList()));
         }
 
@@ -94,14 +95,26 @@ public class ProjectController {
 
         if(itr.hasNext()) {
             prev = itr.next();
-            score += prev.startsWith("-") ? 0.2 : 1;
+            if(prev.startsWith("+")) {
+                if(prev.matches("|[+-]\\s*[{}()]{1,2}\\s*")) {
+                    score += 0.2;
+                } else {
+                    score++;
+                }
+            } else {
+                score+= 0.2;
+            }
+
         }
 
         while(itr.hasNext()) {
             String current = itr.next();
             int shortestString = Math.min(current.trim().length(), prev.trim().length());
             if(current.startsWith("+")) {
-                if(prev.startsWith("+")) {
+                if(current.matches("|[+-]\\s*[{}()]{1,2}\\s*")) {
+                    score += 0.2;
+                }
+                else if(prev.startsWith("+")) {
                     score++;
                 } else if(StringUtils.getLevenshteinDistance(current.substring(1), prev.substring(1)) > shortestString){
                     score++;
@@ -113,8 +126,10 @@ public class ProjectController {
             prev = current;
         }
 
-        return score;
+        return Math.round(score * 100.0)/100.0;
     }
+
+    // =======================================================================================================
 
     private List<CommentEntity> getAndParseComments() {
         List<JSONObject> comments = new ArrayList<>();

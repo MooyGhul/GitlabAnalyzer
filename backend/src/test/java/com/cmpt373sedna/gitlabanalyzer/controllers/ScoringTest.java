@@ -178,7 +178,7 @@ public class ScoringTest {
 
         double score = projectController.calcScore(diffs);
 
-        assertEquals(0, score);
+        assertEquals(0.6, score);
     }
 
 }
