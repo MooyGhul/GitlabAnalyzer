@@ -60,10 +60,4 @@ public class ConfigRESTController {
                 .peek(project -> this.projectManager.getOrAddProject(config, project))
                 .collect(Collectors.toList());
     }
-
-    @PutMapping("/{configId}/weights")
-    public void putWeights(@PathVariable String configId, @RequestBody JSONObject body) {
-        ConfigEntity config = this.configEntityRepository.findById(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        config.getWeights().add(body.toString());
-    }
 }

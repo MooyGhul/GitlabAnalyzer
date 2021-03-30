@@ -6,11 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.List;
 
 @Data
 @Builder
@@ -24,6 +22,4 @@ public class ConfigEntity {
     private String name;
     private String token;
     private String url;
-    @ElementCollection
-    private List<String> weights; // Each string is structured as a JSON object holding file type weights and start, end dates
 }
