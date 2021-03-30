@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import { useHistory } from 'react-router-dom';  
-import Authentication from "../Authentication";
+import { useHistory } from 'react-router-dom'; 
 import Header from "./Header";
 import axios from 'axios';
 import Box from '@material-ui/core/Box';  
@@ -9,7 +8,7 @@ import Button from '@material-ui/core/Button';
 import logo from '../logo/gitlab_analyzer.png';
 import {useStyles} from '../style/UrlTokenStyle'
 import {Grid} from "@material-ui/core";
-import useFullPageLoader from "./useFullPageLoader";
+import useFullPageLoader from "./useFullPageLoader"; 
 
 function UrlToken() {
     
@@ -41,9 +40,7 @@ function UrlToken() {
         })
           .then((response) => {
             if (response.status === 200) {
-              hideLoader();
-              Authentication.onValidToken();
-              Authentication.onAuthentication();
+              hideLoader(); 
               history.push({
                 pathname: "projectList",
               });
@@ -51,38 +48,12 @@ function UrlToken() {
           })
           .catch((error) => {
             hideLoader();
+            console.log(error)
             setUrlToken({ url: urlToken.url, token: urlToken.token });
             setErrorMsg("Incorrect url or token. Please try again.");
           });
       };
-    
 
-    // const authenticateToken  = async () => {
-    //     showLoader()
-    //     await axios.post(process.env.NODE_ENV === 'development' ?
-           
-    //         `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
-    //         `/project/create?token=${urlToken.token}`);
-
-    //     await axios.post(process.env.NODE_ENV === 'development' ?
-    //         `${process.env.REACT_APP_DEVHOST}/project/add?url=${urlToken.url}`:
-    //         `/project/add?url=${urlToken.url}`) 
-    //     .then(function(response){
-    //         hideLoader();
-    //         if (response.status === 200){
-    //             Authentication.onValidToken();
-    //             Authentication.onAuthentication();
-    //             history.push('/projectList');
-    //         }
-    //     })
-    //     .catch(function(error){
-    //         console.log(error.response.status);
-    //         if (error.response.status !== 200){
-    //             setUrlToken({url: urlToken.url, token:urlToken.token});
-    //             setErrorMsg('Incorrect url or token. Please try again.');
-    //         }
-    //     }) 
-    // }
 
     const test = async () => {
         const configID = await createConfigID(urlToken.url, urlToken.token);

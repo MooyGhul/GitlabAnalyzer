@@ -3,6 +3,7 @@ import './Navbar.css';
 import { Button } from './Button';
 import {useParams} from 'react-router';
 import { useHistory } from 'react-router-dom';
+import Authentication from "../../Authentication";
 
 const buildItems = (project_id,member_id) =>{
   return (
@@ -54,6 +55,7 @@ function Navbar() {
 
   const handleRedirect = (event,item) => {
     if(item.title==='Sign Out'){
+      Authentication.onLogout();
       window.location = 'https://cas.sfu.ca/cas/logout';
     }
     else{
