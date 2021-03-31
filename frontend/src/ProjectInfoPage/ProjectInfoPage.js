@@ -15,9 +15,8 @@ function ProjectInfoPage(props) {
   const [loader, showLoader, hideLoader] = useFullPageLoader();
 
   useEffect(() => {
-
+    showLoader();
     const loadProject = async() => {
-      showLoader();
       await axios.post(process.env.NODE_ENV === 'development' ?         
       `${process.env.REACT_APP_DEVHOST}/project/${projectID}/load` :
       `/project/${projectID}/load`)
