@@ -70,8 +70,6 @@ const ProjectListPage = (props) => {
 
   return (
     <div>
-      {/* <Header pageTitle="Project List" /> */}
-
       <div className={styles.projectList}>
         <div style={{ display: "flex", height: "100%", marginTop: "5%" }}>
           <div style={{ flexGrow: 2 }}>

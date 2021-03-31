@@ -10,7 +10,6 @@ function MemberList(props){
     const history = useHistory();
     const classes = useStyles();
 
-
     const rows = members.map((member, i) => ({
         id: i,
         studentID: members[i],

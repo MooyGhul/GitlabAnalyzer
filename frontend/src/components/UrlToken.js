@@ -62,7 +62,6 @@ function UrlToken(props) {
     return(
         <div>
         <Grid container>
-            {/* <Header pageTitle="Gitlab Analyzer" /> */}
             <Box className={classes.formBox} borderRadius={16} boxShadow={8}>
             <img src={logo} alt="Logo" className={classes.logo}/>   
             <form onSubmit={nextHandler}>
