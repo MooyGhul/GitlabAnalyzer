@@ -4,8 +4,6 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +11,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MergeRequestEntityTest {
-
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     @Test
     void fromGitlabJSON_parses_open_MR_correctly() throws IOException {
@@ -51,7 +47,7 @@ class MergeRequestEntityTest {
     }
 
     @Test
-    void fromGitlabJSON_parses_merged_MR_correctly() throws IOException, ParseException {
+    void fromGitlabJSON_parses_merged_MR_correctly() throws IOException {
         List<String> list = new ArrayList<>();
         JSONObject Diffs = new JSONObject();
         Diffs.put("diff","@@ -1,5 +1,8 @@\n # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.\n \n+# package-lock\n+package-lock.json\n+\n # dependencies\n /node_modules\n /.pnp\n");
@@ -73,7 +69,7 @@ class MergeRequestEntityTest {
                 .createdAt(Instant.parse("2017-04-29T08:46:00Z"))
                 .commitIds(commitIds)
                 .mrDiffs(list)
-                .mergedAt(sdf.parse("2018-09-07T11:16:17.520Z").toInstant())
+                .mergedAt(Instant.parse("2018-09-07T11:16:17.520Z"))
                 .url("http://gitlab.example.com/my-group/my-project/merge_requests/1")
                 .build();
 

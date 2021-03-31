@@ -5,12 +5,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @Builder
@@ -32,22 +29,17 @@ public class CommitEntity {
     private int MRIid;
 
     public static CommitEntity fromGitlabJSON(JSONObject json) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return CommitEntity.builder()
-                    .commitId((json.getString("id")))
-                    .projectId(json.getInt("project_id"))
-                    .commitName(json.getString("title"))
-                    .author(json.getString("author_name"))
-                    .commitDate(sdf.parse(json.getString("committed_date")).toInstant())
-                    .url(json.getString("web_url"))
-                    .diffs(getCommitDiffs(json))
-                    .build();
-        }catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
 
+
+        return CommitEntity.builder()
+                .commitId((json.getString("id")))
+                .projectId(json.getInt("project_id"))
+                .commitName(json.getString("title"))
+                .author(json.getString("author_name"))
+                .commitDate(Instant.parse(json.getString("committed_date")))
+                .url(json.getString("web_url"))
+                .diffs(getCommitDiffs(json))
+                .build();
     }
     public static List<String> getCommitDiffs(JSONObject json) {
         JSONArray j = json.getJSONArray("diffs");

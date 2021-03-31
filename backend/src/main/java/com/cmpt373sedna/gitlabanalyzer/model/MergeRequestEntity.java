@@ -9,8 +9,6 @@ import org.json.JSONObject;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,26 +46,20 @@ public class MergeRequestEntity {
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
         String mergedAt = json.optString("merged_at");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        try {
-            return MergeRequestEntity.builder()
-                    .id(json.getInt("id"))
-                    .iid(json.getInt("iid"))
-                    .author(json.getJSONObject("author").getString("username"))
-                    .projectId(json.getInt("project_id"))
-                    .status(json.getString("state"))
-                    .description(json.getString("description"))
-                    .createdAt(Instant.parse(json.getString("created_at")))
-                    .mergeRequestName(json.getString("title"))
-                    .commitIds(getCommitIds(json))
-                    .mrDiffs(getMRDiffs(json))
-                    .mergedAt(isNotBlank(mergedAt) ? sdf.parse(mergedAt).toInstant() : null)
-                    .url(json.getString("web_url"))
-                    .build();
-        } catch (java.text.ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return MergeRequestEntity.builder()
+                .id(json.getInt("id"))
+                .iid(json.getInt("iid"))
+                .author(json.getJSONObject("author").getString("username"))
+                .projectId(json.getInt("project_id"))
+                .status(json.getString("state"))
+                .description(json.getString("description"))
+                .createdAt(Instant.parse(json.getString("created_at")))
+                .mergeRequestName(json.getString("title"))
+                .commitIds(getCommitIds(json))
+                .mrDiffs(getMRDiffs(json))
+                .mergedAt(isNotBlank(mergedAt) ? Instant.parse(mergedAt) : null)
+                .url(json.getString("web_url"))
+                .build();
     }
     public static List<String> getCommitIds(JSONObject json){
         JSONArray j = json.getJSONArray("commits");
