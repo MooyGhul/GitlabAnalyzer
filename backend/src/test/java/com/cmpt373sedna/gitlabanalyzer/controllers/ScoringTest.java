@@ -138,12 +138,8 @@ public class ScoringTest {
                 "-    /* private String createdBy; \n" +
                 "-    private String createdBy; */ \n" +
                 "     @Column(columnDefinition=\"text\")\n" +
-                "     private @Nullable String commentText;\n" +
-                "     private @Nullable String commenter;\n");
-
-        diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n"+
-                "     private int projectId;\n" +
-                "     private int MRorIssueId;\n" +
+                "-     private @Nullable String commentText;\n" +
+                "+     private @Nullable String commenter;\n" +
                 "     private int wordCount;\n" +
                 "-    /* " +
                 "-    private String createdBy; \n" +
@@ -155,7 +151,7 @@ public class ScoringTest {
 
         double score = diffScore.calcScore(diffs);
 
-        assertEquals(0, score);
+        assertEquals(1.2, score);
     }
 
     @Test
