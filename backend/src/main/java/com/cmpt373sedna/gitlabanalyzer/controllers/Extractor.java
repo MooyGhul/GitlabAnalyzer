@@ -2,7 +2,6 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
-import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestDiffsEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -72,28 +71,7 @@ public class Extractor {
         return filterJSONComments(comments);
     }
 
-    public JSONObject getMergeRequestsDiff(ConfigEntity config, int projectId, int mergeRequestId, int mergeRequestVersionId) {
-        JSONObject j = getJsonObject(buildUri(config,projectId,"merge_requests/" + mergeRequestId + "/versions/"+mergeRequestVersionId));
-        j.put("project_id",projectId);
-        j.put("merge_request_iid",mergeRequestId);
-        JSONArray js = j.getJSONArray("commits");
-        for(int i=0;i<js.length();i++){
-            JSONObject itr = js.getJSONObject(i);
-            List<JSONObject> commitDiffs = getJsonObjectsList(buildUri(config,projectId,"repository/commits/"+itr.getString("id")+"/diff"));
-            j.getJSONArray("commits").getJSONObject(i).put("commitDiffs",commitDiffs);
-        }
-        return j;
 
-    }
-
-    public List<JSONObject> getMergeRequestsDiffVersions(ConfigEntity config, int projectId, int mergeRequestId) {
-        List<JSONObject> MRDiffVersions = getJsonObjectsList(buildUri(config,projectId,"merge_requests/" + mergeRequestId + "/versions"));
-        for(JSONObject mrDiffs : MRDiffVersions) {
-            mrDiffs.put("project_id", projectId);
-            mrDiffs.put("merge_request_iid", mergeRequestId);
-        }
-        return MRDiffVersions;
-    }
 
     public List<JSONObject> getIssues(ConfigEntity config, int projectId) {
         int page = 1;
