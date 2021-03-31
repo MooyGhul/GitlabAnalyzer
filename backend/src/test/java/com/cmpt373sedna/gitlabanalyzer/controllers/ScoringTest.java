@@ -130,6 +130,35 @@ public class ScoringTest {
     }
 
     @Test
+    void calcMultiLineCommentAddition() {
+        diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n"+
+                "     private int projectId;\n" +
+                "     private int MRorIssueId;\n" +
+                "     private int wordCount;\n" +
+                "-    /* private String createdBy; \n" +
+                "-    private String createdBy; */ \n" +
+                "     @Column(columnDefinition=\"text\")\n" +
+                "     private @Nullable String commentText;\n" +
+                "     private @Nullable String commenter;\n");
+
+        diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n"+
+                "     private int projectId;\n" +
+                "     private int MRorIssueId;\n" +
+                "     private int wordCount;\n" +
+                "-    /* " +
+                "-    private String createdBy; \n" +
+                "-    private String createdBy; \n" +
+                "-    */ \n" +
+                "     @Column(columnDefinition=\"text\")\n" +
+                "     private @Nullable String commentText;\n" +
+                "     private @Nullable String commenter;\n");
+
+        double score = diffScore.calcScore(diffs);
+
+        assertEquals(0, score);
+    }
+
+    @Test
     void stringDiffTest() {
         diffs.add("@@ -28,7 +28,7 @@ const CommentContributionPage = (props) => {\n" +
                 "     useEffect(() => {\n" +
