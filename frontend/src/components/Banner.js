@@ -21,7 +21,7 @@ const Banner = ({ avatar_url, memberName, type }) => {
       fetchData().then();
   }, [project_id]);
 
-  function onMemberChange(event) {
+  const onMemberChange = (event) => {
     const newMemberName = event.target.value;
 
     history.push(`/overview/${project_id}/${newMemberName}/${type}`);
