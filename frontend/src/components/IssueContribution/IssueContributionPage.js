@@ -8,14 +8,13 @@ import {
   TableBody, 
 } from "@material-ui/core";
 import Banner from "../Banner";
-import Navbar from "../Navbar/Navbar";
-import React, {useEffect, useState} from "react";
-import useStyles from "../../style/IssueContributionPageStyles";
-import Row from "./IssueTableDropDown";
-import axios from "axios";
-import {getGraphData} from "../../helper";
-import BarChart from "../Charts/BarChart";
-import BarChartProperties from "../Charts/BarChartProperties";
+import React, { useEffect, useState} from 'react';
+import useStyles from '../../style/IssueContributionPageStyles'; 
+import Row from './IssueTableDropDown'
+import axios from 'axios';
+import {getGraphData} from '../../helper';
+import BarChart from '../Charts/BarChart';
+import BarChartProperties from '../Charts/BarChartProperties';
 import {useParams} from "react-router";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"
@@ -53,9 +52,6 @@ const IssueContributionPage = () => {
   return (
     <Grid container spacing={5} justify="center" alignItems="center">
       <Grid item xs={12}>
-        <Grid item xs={12}>
-          <Navbar />
-        </Grid>
         <Grid item xs={12}>
           <Banner memberName={member_id} />
         </Grid>

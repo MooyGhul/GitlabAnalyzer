@@ -1,6 +1,5 @@
-import React, {useState} from 'react';
-import { useHistory } from 'react-router-dom'; 
-import Header from "./Header";
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';  
 import axios from 'axios';
 import Box from '@material-ui/core/Box';  
 import TextField from '@material-ui/core/TextField';
@@ -10,7 +9,7 @@ import {useStyles} from '../style/UrlTokenStyle'
 import {Grid} from "@material-ui/core";
 import useFullPageLoader from "./useFullPageLoader";
 
-function UrlToken() {
+function UrlToken(props) {
     
     const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: '', token:''});
@@ -18,11 +17,10 @@ function UrlToken() {
     const [loginToken, setLoginToken] = useState(''); 
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
-
     const authenticateToken  = async () => {
         showLoader()
         await axios.post(process.env.NODE_ENV === 'development' ?
-           
+
             `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
             `/project/create?token=${urlToken.token}`);
 
@@ -58,13 +56,12 @@ function UrlToken() {
         addLoginToken();
         authenticateToken();
     }        
-     
+
     const classes = useStyles();
 
     return(
         <div>
         <Grid container>
-            <Header pageTitle="Gitlab Analyzer" />
             <Box className={classes.formBox} borderRadius={16} boxShadow={8}>
             <img src={logo} alt="Logo" className={classes.logo}/>   
             <form onSubmit={nextHandler}>
@@ -78,7 +75,6 @@ function UrlToken() {
 
                 <TextField id='token' classes={{root: classes.customTextField}} label='Server Token'  value={urlToken.token}
                         onChange={e=> setUrlToken({...urlToken, token: e.target.value})}/>
-                 
                 <Button id='create-config' classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'>Next</Button>
             </form>
             </Box>

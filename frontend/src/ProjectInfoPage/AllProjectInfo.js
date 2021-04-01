@@ -74,6 +74,7 @@ const AllProjectInfo = (props) => {
         commitsArray={commitsArray}
         MRsArray={MRsArray}
         projectID={projectID}
+        onMemberIdChange={props.onMemberIdChange}
       />
       {loader}
     </div>
