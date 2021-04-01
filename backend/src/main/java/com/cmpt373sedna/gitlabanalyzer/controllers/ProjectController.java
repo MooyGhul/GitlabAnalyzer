@@ -33,10 +33,6 @@ public class ProjectController {
 
     private @Getter List<CommitEntity> commitEntities;
 
-    private @Getter List<MergeRequestDiffVersionsEntity> MRDiffVersions;
-
-    private @Getter List<MergeRequestDiffsEntity> MRDiffs;
-
     private @Getter List<String> members;
 
     public ProjectController(Extractor extractor, ConfigEntity configEntity, ProjectEntity projectEntity) {
@@ -55,8 +51,6 @@ public class ProjectController {
         this.members = this.extractor.getRepoMembers(this.config, this.projectId);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
-        this.MRDiffVersions = this.getAndParseMergeRequestsDiffVersions();
-        this.MRDiffs = this.getAndParseMergeRequestsDiffs();
 
         return this;
     }
@@ -101,23 +95,6 @@ public class ProjectController {
         return comments.stream().map(CommentEntity::fromGitlabJSON).collect(toList());
     }
 
-    private List<MergeRequestDiffVersionsEntity> getAndParseMergeRequestsDiffVersions() {
-        List<JSONObject> mergeRequestsDiffVersions =  new ArrayList<>();
-        for(MergeRequestEntity mr: this.mergeRequestEntities) {
-            List<JSONObject> list = extractor.getMergeRequestsDiffVersions(this.config, this.projectId, mr.getIid());
-            mergeRequestsDiffVersions.addAll(list);
-        }
-        return mergeRequestsDiffVersions.stream().map(MergeRequestDiffVersionsEntity::fromGitlabJSON).collect(toList());
-    }
-
-    private List<MergeRequestDiffsEntity> getAndParseMergeRequestsDiffs() {
-        List<JSONObject> mergeRequestsDiffs = new ArrayList<>();
-        for(MergeRequestDiffVersionsEntity mrDiffs: this.MRDiffVersions) {
-            JSONObject mrDiff = extractor.getMergeRequestsDiff(this.config, this.projectId, mrDiffs.getMRIid(), mrDiffs.getId());
-            mergeRequestsDiffs.add(mrDiff);
-        }
-        return mergeRequestsDiffs.stream().map(MergeRequestDiffsEntity::fromGitlabJSON).collect(toList());
-    }
 
 
     public int getNumCommits() {

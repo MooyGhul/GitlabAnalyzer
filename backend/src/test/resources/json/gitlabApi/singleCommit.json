@@ -14,5 +14,12 @@
   "parent_ids": [
     "6104942438c14ec7bd21c6cd5bd995272b3faff6"
   ],
-  "web_url": "https://gitlab.example.com/thedude/gitlab-foss/-/commit/ed899a2f4b50b4370feeea94676502b42383c746"
+  "web_url": "https://gitlab.example.com/thedude/gitlab-foss/-/commit/ed899a2f4b50b4370feeea94676502b42383c746",
+  "diffs": [
+    {
+      "new_path":"frontend.gitignore",
+      "diff":"@@ -1,5 +1,8 @@\n # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.\n \n+# package-lock\n+package-lock.json\n+\n # dependencies\n /node_modules\n /.pnp\n",
+      "old_path":"frontend.gitignore"
+    }
+  ]
 }
