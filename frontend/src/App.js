@@ -9,6 +9,7 @@ import CodeContributionPage from "./components/CodeContributionsPage/CodeContrib
 import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
 import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
 import NotFound from './components/NotFound';
+import ScoreBreakdown from "./components/ScoreBreakdown/ScoreBreakdown";
 import './style/App.css'
 
 function App() {
@@ -26,6 +27,8 @@ function App() {
                           component={IssueContributionPage} />
             <PrivateRoute exact path='/overview/:project_id/:member_id/codecontribution'
                           component={CodeContributionPage} />
+            <PrivateRoute exact path='/overview/:project_id/:member_id/breakdown'
+                          component={ScoreBreakdown} />
             <Route component={NotFound} />
         </Switch>
     </BrowserRouter>

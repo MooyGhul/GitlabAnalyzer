@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
@@ -61,6 +61,8 @@ const ScoreBoard = (props) => {
               variant="contained"
               color="primary"
               className={classes.button}
+              component={Link}
+              to={`/overview/${project_id}/${member_id}/breakdown`}
             >
               Score Breakdown <SearchIcon className={classes.icon} />
             </Button>
