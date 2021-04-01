@@ -10,8 +10,8 @@ public class DiffScore {
     private HashMap<String, List<String>> commentStyles = new HashMap<String ,List<String>>() {{
         put("Python", Collections.singletonList("#"));
         put("Javascript", Collections.singletonList("//"));
-        put("C++", Arrays.asList("//", "\\/\\* \\*\\/"));
-        put("Java", Arrays.asList("//", "\\/\\* \\*\\/"));
+        put("C++", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
+        put("Java", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
         put("SQL", Collections.singletonList("--"));
         put("HTML", Collections.singletonList("<!-- -->"));
     }};
@@ -41,15 +41,16 @@ public class DiffScore {
         }
 
         for(String line : lines) {
+            String replace = line.substring(1).replaceAll(singleLineComment + ".*", "");
             if(line.startsWith("-")) {
-                deletedLines.add(line.substring(1));
+                deletedLines.add(replace);
             } else {
-                additionLines.add(line.substring(1));
+                additionLines.add(replace);
             }
         }
 
-        List<String> duplicates = findDuplicates(additionLines, deletedLines);
-        lines.removeIf(line -> duplicates.contains(line.substring(1)));
+//        List<String> duplicates = findDuplicates(additionLines, deletedLines);
+//        lines.removeIf(line -> duplicates.contains(line.substring(1)));
 
         return parseScore(additionLines, deletedLines);
     }

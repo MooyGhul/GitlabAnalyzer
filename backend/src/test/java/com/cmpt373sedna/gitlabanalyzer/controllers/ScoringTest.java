@@ -74,7 +74,7 @@ public class ScoringTest {
     void deleteAndAddScore() {
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n" +
                 "     private int projectId;\n" +
-                "-     private int MRorIssueId;\n" +
+                "-    private int MRorIssueId;\n" +
                 "     private int wordCount;\n" +
                 "-    private @Nullable String createdBy;\n" +
                 "+    private String createdBy;\n" +
@@ -130,6 +130,23 @@ public class ScoringTest {
     }
 
     @Test
+    void calcInlineCommentAddition() {
+        diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n"+
+                "     private int projectId;\n" +
+                "     private int MRorIssueId;\n" +
+                "     private int wordCount;\n" +
+                "-    private String createdBy; \n" +
+                "+    private String createdBy; // This is a comment \n" +
+                "     @Column(columnDefinition=\"text\")\n" +
+                "     private @Nullable String commentText;\n" +
+                "     private @Nullable String commenter;\n");
+
+        double score = diffScore.calcScore(diffs);
+
+        assertEquals(0, score);
+    }
+
+    @Test
     void calcMultiLineCommentAddition() {
         diffs.add("@@ -21,7 +21,7 @@ public class CommentEntity {\n"+
                 "     private int projectId;\n" +
@@ -140,6 +157,7 @@ public class ScoringTest {
                 "     @Column(columnDefinition=\"text\")\n" +
                 "-     private @Nullable String commentText;\n" +
                 "+     private @Nullable String commenter;\n" +
+                "+    /* hello world */ \n" +
                 "     private int wordCount;\n" +
                 "-    /* " +
                 "-    private String createdBy; \n" +
