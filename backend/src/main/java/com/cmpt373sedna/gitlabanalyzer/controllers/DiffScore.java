@@ -16,8 +16,6 @@ public class DiffScore {
         put("HTML", Collections.singletonList("<!-- -->"));
     }};
 
-    private HashMap<String, String> parsedLines;
-
     private String language = "Java";
     private String singleLineComment;
     private String multiLineStartComment;
@@ -34,53 +32,41 @@ public class DiffScore {
 
         for(String diff: diffs) {
             diff = diff.replaceAll(multiLineCommentRegex, "");
-            // Add anything that's not a empty newline, or comment
-            lines.addAll(Arrays.stream(diff.split("\n")).filter(line ->
-                    (line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches(singleLineCommentRegex))
-            ).collect(toList()));
-        }
-
-        for(String line : lines) {
-            String replace = line.substring(1).replaceAll(singleLineComment + ".*", "");
-            if(line.startsWith("-")) {
-                deletedLines.add(replace);
-            } else {
-                additionLines.add(replace);
+            for(String line: diff.split("\n")) {
+                if((line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches(singleLineCommentRegex))) {
+                    String replace = line.substring(1).replaceAll(singleLineComment + ".*", "");
+                    if(line.startsWith("-")) {
+                        deletedLines.add(replace);
+                    } else {
+                        additionLines.add(replace);
+                    }
+                    lines.add(line.split(singleLineComment)[0]);
+                }
             }
         }
 
-//        List<String> duplicates = findDuplicates(additionLines, deletedLines);
-//        lines.removeIf(line -> duplicates.contains(line.substring(1)));
-
-        return parseScore(additionLines, deletedLines);
+        List<String> duplicates = findDuplicates(additionLines, deletedLines);
+        lines.removeIf(line -> duplicates.contains(line.substring(1)));
+        return getScore(lines);
     }
 
-    private double parseScore(List<String> added, List<String> deleted) {
-        List<String> duplicates = findDuplicates(added, deleted);
-        added.removeAll(duplicates);
-        deleted.removeAll(duplicates);
-
-        double score = getScore(added, true);
-        score += getScore(deleted, false);
-
-        return Math.round(score * 100.0)/100.0;
-    }
-
-    private double getScore(List<String> lines, boolean wasAdded) {
+    private double getScore(List<String> lines) {
         double score = 0;
 
         for (String current : lines) {
-            if (wasAdded) {
-                if (current.matches("\\s*[{}()]{1,2}\\s*")) {
-                    score += 0.2;
-                } else {
-                    score++;
-                }
-            } else {
+            // syntax checking
+            if (current.substring(1).matches("\\s*[{}()]{1,2}\\s*")) {
                 score += 0.2;
+            } else {
+                if (current.startsWith("+")) {
+                    score++;
+
+                } else {
+                    score += 0.2;
+                }
             }
         }
-        return score;
+        return Math.round(score * 100.0)/100.0;
     }
 
     private List<String> findDuplicates(List<String> added, List<String> deleted) {
