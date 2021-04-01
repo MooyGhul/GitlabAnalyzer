@@ -78,6 +78,7 @@ public class MergeRequestEntity {
             MRDiffs.put("diff",js.getString("diff"));
             MRDiffs.put("new_path",js.getString("new_path"));
             MRDiffs.put("old_path",js.getString("old_path"));
+            MRDiffs.put("renamed_file", js.getBoolean("renamed_file"));
             list.add(MRDiffs.toString());
         }
         return list;

@@ -1,6 +1,9 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
@@ -8,20 +11,32 @@ import static java.util.stream.Collectors.toList;
 public class DiffScore {
 
     private HashMap<String, List<String>> commentStyles = new HashMap<String ,List<String>>() {{
-        put("Python", Collections.singletonList("#"));
-        put("Javascript", Collections.singletonList("//"));
-        put("C++", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
-        put("Java", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
+        put("py", Collections.singletonList("#"));
+        put("js", Collections.singletonList("//"));
+        put("cpp", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
+        put("java", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
         put("SQL", Collections.singletonList("--"));
-        put("HTML", Collections.singletonList("<!-- -->"));
+        put("html", Collections.singletonList("<!-- -->"));
     }};
 
-    private String language = "Java";
+    private String language = "java";
     private String singleLineComment;
     private String multiLineStartComment;
     private String multiLineEndComment;
 
-    public double calcScore(List<String> diffs) {
+    public double calcScore(List<String> stringDiffs) {
+        List<String> diffs = new ArrayList<>();
+       for(String stringDiff: stringDiffs) {
+           JSONObject jsonDiff = new JSONObject(stringDiff);
+           JSONArray diffsArray = new JSONArray(jsonDiff.getJSONArray("diffs"));
+           for(int i = 0; i < diffsArray.length(); i++) {
+               JSONObject obj = new JSONObject(diffsArray.getString(i));
+               if(!obj.getBoolean("renamed_file")) {
+                   diffs.add(obj.getString("diff"));
+               }
+           }
+        }
+
         List<String> deletedLines = new ArrayList<>();
         List<String> additionLines = new ArrayList<>();
         Map<String, String> lines = new HashMap<>();

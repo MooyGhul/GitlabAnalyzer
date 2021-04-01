@@ -50,6 +50,7 @@ public class CommitEntity {
             commitDiffs.put("diff",js.getString("diff"));
             commitDiffs.put("new_path",js.getString("new_path"));
             commitDiffs.put("old_path",js.getString("old_path"));
+            commitDiffs.put("renamed_file", js.getBoolean("renamed_file"));
             list.add(commitDiffs.toString());
         }
         return list;
