@@ -24,41 +24,42 @@ public class DiffScore {
     public double calcScore(List<String> diffs) {
         List<String> deletedLines = new ArrayList<>();
         List<String> additionLines = new ArrayList<>();
-        List<String> lines = new ArrayList<>();
+        Map<String, String> lines = new HashMap<>();
 
         getCommentCharacters(language);
-        String multiLineCommentRegex = "[-+]\\s*?(" + multiLineStartComment + ")(.|\n)*?(" + multiLineEndComment + ")\\s*?\n";
-        String singleLineCommentRegex = "[-+]\\s*" + singleLineComment +".*";
+        String multiLineCommentRegex = getMultiLineCommentRegex();
+        String singleLineCommentRegex = getSingleLineCommentRegex();
 
         for(String diff: diffs) {
             diff = diff.replaceAll(multiLineCommentRegex, "");
             for(String line: diff.split("\n")) {
                 if((line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches(singleLineCommentRegex))) {
-                    String replace = line.substring(1).replaceAll(singleLineComment + ".*", "");
+                    String replace = removeInlineComments(line);
                     if(line.startsWith("-")) {
                         deletedLines.add(replace);
+                        lines.put(replace, "-");
                     } else {
                         additionLines.add(replace);
+                        lines.put(replace, "+");
                     }
-                    lines.add(line.split(singleLineComment)[0]);
+
                 }
             }
         }
 
         List<String> duplicates = findDuplicates(additionLines, deletedLines);
-        lines.removeIf(line -> duplicates.contains(line.substring(1)));
+        lines.keySet().removeIf(duplicates::contains);
         return getScore(lines);
     }
 
-    private double getScore(List<String> lines) {
+    private double getScore(Map<String, String> lines) {
         double score = 0;
 
-        for (String current : lines) {
-            // syntax checking
+        for (String current : lines.keySet()) {
             if (current.substring(1).matches("\\s*[{}()]{1,2}\\s*")) {
                 score += 0.2;
             } else {
-                if (current.startsWith("+")) {
+                if (lines.get(current).equals("+")) {
                     score++;
 
                 } else {
@@ -83,5 +84,18 @@ public class DiffScore {
             multiLineStartComment = "";
             multiLineEndComment = "";
         }
+    }
+
+    private String getMultiLineCommentRegex() {
+        return "[-+]\\s*?(" + multiLineStartComment + ")(.|\n)*?(" + multiLineEndComment + ")\\s*?\n";
+    }
+
+    private String getSingleLineCommentRegex() {
+        return "[-+]\\s*" + singleLineComment +".*";
+    }
+
+    private String removeInlineComments(String line) {
+        String result = line.substring(1).replaceAll(singleLineComment + ".*", "");
+        return result.replaceAll("\\s*" + multiLineStartComment + ".*?" + multiLineEndComment + "\\s*", " ");
     }
 }

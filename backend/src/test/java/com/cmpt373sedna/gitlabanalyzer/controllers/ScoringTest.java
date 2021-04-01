@@ -3,6 +3,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import java.util.ArrayList;
@@ -138,7 +139,8 @@ public class ScoringTest {
                 "-    private String createdBy; \n" +
                 "+    private String createdBy; // This is a comment \n" +
                 "     @Column(columnDefinition=\"text\")\n" +
-                "     private @Nullable String commentText;\n" +
+                "-    private @Nullable String commentText;\n" +
+                "+    private /* Hello World */ @Nullable String commentText;\n" +
                 "     private @Nullable String commenter;\n");
 
         double score = diffScore.calcScore(diffs);
@@ -170,6 +172,18 @@ public class ScoringTest {
         double score = diffScore.calcScore(diffs);
 
         assertEquals(1.2, score);
+    }
+
+    @Disabled("Still need to add dynamic comment choice on input language")
+    @Test
+    void commentedHTMLCase() {
+        diffs.add("+ <!-- Do not display this image at the moment\n" +
+                "+ <img border=\"0\" src=\"pic_trulli.jpg\" alt=\"Trulli\">\n" +
+                "+ -->\n");
+
+        double score = diffScore.calcScore(diffs);
+
+        assertEquals(0, score);
     }
 
     @Test
