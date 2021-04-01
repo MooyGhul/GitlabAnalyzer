@@ -102,6 +102,9 @@ public class DiffScore {
     }
 
     private String getMultiLineCommentRegex() {
+        if(multiLineStartComment.equals("") && multiLineEndComment.equals("")) {
+            return "";
+        }
         return "[-+]\\s*?(" + multiLineStartComment + ")(.|\n)*?(" + multiLineEndComment + ")\\s*?\n";
     }
 
