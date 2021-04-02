@@ -34,7 +34,10 @@ public class ScoringTest {
     @Test
     void addOnlyScore() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(0);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -45,7 +48,10 @@ public class ScoringTest {
     @Test
     void emptyLineScore() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(6);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -55,7 +61,10 @@ public class ScoringTest {
     @Test
     void deleteSingleLineScore() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(3);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -65,7 +74,10 @@ public class ScoringTest {
     @Test
     void deleteMultiLineScore() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(4);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -75,18 +87,24 @@ public class ScoringTest {
     @Test
     void deleteFilesScore() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(5);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
-        assertEquals(6.0, score);
+        assertEquals(6.4, score);
     }
 
 
     @Test
     void deleteAndAddScore() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(7);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -96,7 +114,10 @@ public class ScoringTest {
     @Test
     void calcOneLineCommentScore() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(12);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -106,7 +127,10 @@ public class ScoringTest {
     @Test
     void calcValidLineWithComment() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(14);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -116,7 +140,10 @@ public class ScoringTest {
     @Test
     void calcInlineCommentAddition() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(13);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -126,29 +153,23 @@ public class ScoringTest {
     @Test
     void calcBlockCommentScore() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(11);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
         assertEquals(0.0, score);
     }
 
-    @Disabled("Still need to add dynamic comment choice on input language")
-    @Test
-    void commentedHTMLCase() {
-        diffs.add("+ <!-- Do not display this image at the moment\n" +
-                "+ <img border=\"0\" src=\"pic_trulli.jpg\" alt=\"Trulli\">\n" +
-                "+ -->\n");
-
-        double score = diffScore.calcScore(diffs);
-
-        assertEquals(0, score);
-    }
-
     @Test
     void stringDiffTest() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(15);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -158,7 +179,10 @@ public class ScoringTest {
     @Test
     void twoDistinctChanges() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(10);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -168,7 +192,10 @@ public class ScoringTest {
     @Test
     void syntaxOnlyTest() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(1);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -178,7 +205,10 @@ public class ScoringTest {
     @Test
     void syntaxDeleteTest() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(2);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -188,7 +218,10 @@ public class ScoringTest {
     @Test
     void moveContentTest() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(9);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 
@@ -198,7 +231,10 @@ public class ScoringTest {
     @Test
     void moveFile() {
         JSONObject newDiff = (JSONObject) jsonDiffs.get(8);
-        diffs.add(newDiff.toString());
+        JSONArray diffList = (JSONArray) newDiff.get("diffs");
+        for (Object o : diffList) {
+            diffs.add(o.toString());
+        }
 
         double score = diffScore.calcScore(diffs);
 

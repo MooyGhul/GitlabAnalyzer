@@ -10,34 +10,37 @@ import static java.util.stream.Collectors.toList;
 
 public class DiffScore {
 
-    private HashMap<String, List<String>> commentStyles = new HashMap<String ,List<String>>() {{
+    private final HashMap<String, List<String>> commentStyles = new HashMap<String ,List<String>>() {{
         put("py", Collections.singletonList("#"));
-        put("js", Collections.singletonList("//"));
+        put("js",  Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
         put("cpp", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
         put("java", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
         put("SQL", Collections.singletonList("--"));
-        put("html", Collections.singletonList("<!-- -->"));
+        put("html", Arrays.asList("<!-- -->", "<!-- -->"));
         put("txt", Collections.singletonList("#"));
+        put("css",  Arrays.asList("\\/\\* \\*\\/", "\\/\\* \\*\\/"));
     }};
 
-    private String language = "java";
     private String singleLineComment;
     private String multiLineStartComment;
     private String multiLineEndComment;
 
     public double calcScore(List<String> stringDiffs) {
-        List<String> diffs = new ArrayList<>();
-       for(String stringDiff: stringDiffs) {
-           JSONObject jsonDiff = new JSONObject(stringDiff);
-           JSONArray diffsArray = new JSONArray(jsonDiff.getJSONArray("diffs"));
-           for(int i = 0; i < diffsArray.length(); i++) {
-               JSONObject obj = new JSONObject(diffsArray.getString(i));
-               if(!obj.getBoolean("renamed_file")) {
-                   diffs.add(obj.getString("diff"));
-               }
-           }
+        double score = 0;
+
+        for(String diff: stringDiffs) {
+            JSONObject obj = new JSONObject(diff);
+            if(!obj.getBoolean("renamed_file")) {
+                String diffString = obj.getString("diff");
+                String language = obj.getString("new_path").split("\\.")[1];
+                score += parseDiff(diffString, language);
+            }
         }
 
+       return score;
+    }
+
+    private double parseDiff(String diff, String language) {
         List<String> deletedLines = new ArrayList<>();
         List<String> additionLines = new ArrayList<>();
         Map<String, String> lines = new HashMap<>();
@@ -46,22 +49,22 @@ public class DiffScore {
         String multiLineCommentRegex = getMultiLineCommentRegex();
         String singleLineCommentRegex = getSingleLineCommentRegex();
 
-        for(String diff: diffs) {
-            diff = diff.replaceAll(multiLineCommentRegex, "");
-            for(String line: diff.split("\n")) {
-                if((line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches(singleLineCommentRegex))) {
-                    String replace = removeInlineComments(line).trim();
-                    if(line.startsWith("-")) {
-                        deletedLines.add(replace);
-                        lines.put(replace, "-");
-                    } else {
-                        additionLines.add(replace);
-                        lines.put(replace, "+");
-                    }
 
+        diff = diff.replaceAll(multiLineCommentRegex, "");
+        for(String line: diff.split("\n")) {
+            if((line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches(singleLineCommentRegex))) {
+                String replace = removeInlineComments(line).trim();
+                if(line.startsWith("-")) {
+                    deletedLines.add(replace);
+                    lines.put(replace, "-");
+                } else {
+                    additionLines.add(replace);
+                    lines.put(replace, "+");
                 }
+
             }
         }
+
 
         List<String> duplicates = findDuplicates(additionLines, deletedLines);
         lines.keySet().removeIf(duplicates::contains);
