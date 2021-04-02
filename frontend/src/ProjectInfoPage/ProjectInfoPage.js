@@ -1,3 +1,4 @@
+import Header from "../components/Header";
 import WideHeader from "./WideHeader/WideHeader";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
@@ -6,40 +7,30 @@ import AllProjectInfo from "./AllProjectInfo";
 
 function ProjectInfoPage(props) {
   const location = useLocation();
-  const projectId = props.project_id===-1 ? location.state.id : props.project_id;
-  const [projectName] = useState("");
+  const projectID = location.state.id;
+  const projectName = location.state.projectName;
+
   const [members, setMembers] = useState([]);
   
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
           process.env.NODE_ENV === 'development' ?
-              `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members` :
-              `/project/${projectId}/members`
+              `${process.env.REACT_APP_DEVHOST}/project/${projectID}/members` :
+              `/project/${projectID}/members`
       );
 
-      // TO DO : May need to put project name somewwhere
-      // let getProjectNameUrl = `/project/${projectId}`;
-
-      // if(process.env.NODE_ENV === 'development') {
-      //   getProjectNameUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}`
-      // }
-
       setMembers(result.data);
-
     };
-    fetchData()
-      .then(()=> {
-        console.log('Successful data retrieval (project_id, projectName)');
-      }).catch(() => {
-      console.log('Failed retrieve data (project_id, projectName)');
-    });
-  }, [projectId, members,props.project_id]);
+    fetchData();
+  }, [projectID]);
+  
 
   return (
     <div>
-      <WideHeader id={projectId} projectName={projectName} />
-      <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>
+      <Header pageTitle="Project Overview"/>
+      <WideHeader id={projectID} projectName={projectName} />
+      <AllProjectInfo member={members} projectID={projectID} />
     </div>
   );
 }

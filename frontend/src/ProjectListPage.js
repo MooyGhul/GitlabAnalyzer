@@ -1,3 +1,4 @@
+import Header from "./components/Header";
 import Button from "@material-ui/core/Button";
 import {useHistory} from "react-router-dom";
 import {DataGrid} from "@material-ui/data-grid";
@@ -57,8 +58,6 @@ const ProjectListPage = (props) => {
         }
       });
 
-      props.onProjectIdChange(projectIdArray[0]);
-
       history.push({
         pathname: "/projectInfo/" + projectIdArray[0],
         state: { id: projectIdArray[0], projectName: projectName },
@@ -70,6 +69,8 @@ const ProjectListPage = (props) => {
 
   return (
     <div>
+      <Header pageTitle="Project List" />
+
       <div className={styles.projectList}>
         <div style={{ display: "flex", height: "100%", marginTop: "5%" }}>
           <div style={{ flexGrow: 2 }}>
