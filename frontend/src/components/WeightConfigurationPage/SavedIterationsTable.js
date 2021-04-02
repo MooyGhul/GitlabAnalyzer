@@ -16,7 +16,7 @@ const Row = (props) => {
     const classes = useStyles();
 
     return (
-        <TableRow key={row.name}>
+        <TableRow key={row.name} hover={true}>
             <TableCell align="center">{row.iterationName}</TableCell>
             <TableCell align="center">{row.startDate}</TableCell>
             <TableCell align="center">{row.endDate}</TableCell>
