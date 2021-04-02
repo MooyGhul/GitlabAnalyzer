@@ -1,9 +1,12 @@
 import {
     Grid,
     Typography,
+    Divider,
   } from "@material-ui/core";
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
+import InnerNavBar from '../InnerNavBar'; 
+import {useInnerNavStyle} from "../../style/InnerNavStyle"
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
@@ -16,7 +19,15 @@ const WeightConfigurationPage = () => {
             <Grid item xs={10}>
                 <Typography className={classes.pageTitle}>Configurations</Typography>
             </Grid>
+            <Grid item xs={10}>
+                <Typography className={classes.subHeader}>Configure Dates</Typography>
+                <Divider className={classes.divider} orientation='horizontal'/>
+            </Grid>
 
+            <Grid item xs={10}>
+                <Typography className={classes.subHeader}>Configure Score Weights</Typography>
+                <Divider className={classes.divider} orientation='horizontal'/>
+            </Grid>
 
         </Grid>
     );
