@@ -2,11 +2,19 @@ import {
     Grid,
     Typography,
     Divider,
+    TableContainer,
+    TableCell,
+    TableRow,
+    TableHead,
+    TableBody,
+    Table
   } from "@material-ui/core";
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 import InnerNavBar from '../InnerNavBar'; 
-import {useInnerNavStyle} from "../../style/InnerNavStyle"
+import {useInnerNavStyle} from "../../style/InnerNavStyle";
+import mockIterationsDates from "../../mockDataDir/mockIterationDates";
+import Row from "./SavedIterationsTable";
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
@@ -26,9 +34,31 @@ const WeightConfigurationPage = () => {
             <Grid item xs={3}>
                 <Typography className={classes.pageTitle}>Insert date picker</Typography>
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={7} >
                 <Typography className={classes.subHeader}>Saved Iterations</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
+                <TableContainer>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className={classes.headCell} align="center">
+                                    Iteration Name
+                                </TableCell>
+                                <TableCell className={classes.headCell} align="center">
+                                    Start Date
+                                </TableCell>
+                                <TableCell className={classes.headCell} align="center">
+                                    End Date
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {mockIterationsDates.map((iterationDates) => (
+                                <Row key={iterationDates.iterationName} row={iterationDates}/>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Grid>
             <Grid item xs={10}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>

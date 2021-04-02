@@ -11,7 +11,12 @@ const useStyles = makeStyles((theme) => ({
     },
     divider: {
         height: '0.15rem',
-    }
+    },
+
+    headCell: {
+        fontWeight: "bold",
+        fontSize: "1.2rem",
+    }, 
 }));
 
 export default useStyles; 
