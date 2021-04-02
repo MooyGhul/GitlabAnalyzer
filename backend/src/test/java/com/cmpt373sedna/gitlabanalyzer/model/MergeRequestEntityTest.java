@@ -19,6 +19,7 @@ class MergeRequestEntityTest {
         Diffs.put("diff","@@ -1,5 +1,8 @@\n # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.\n \n+# package-lock\n+package-lock.json\n+\n # dependencies\n /node_modules\n /.pnp\n");
         Diffs.put("new_path","frontend.gitignore");
         Diffs.put("old_path","frontend.gitignore");
+        Diffs.put("renamed_file", false);
         list.add(Diffs.toString());
         List<String> commitIds = new ArrayList<>();
         commitIds.add("90e99af00139f751c7caf4a9bf1058e0fd75bc38");
@@ -53,6 +54,7 @@ class MergeRequestEntityTest {
         Diffs.put("diff","@@ -1,5 +1,8 @@\n # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.\n \n+# package-lock\n+package-lock.json\n+\n # dependencies\n /node_modules\n /.pnp\n");
         Diffs.put("new_path","frontend.gitignore");
         Diffs.put("old_path","frontend.gitignore");
+        Diffs.put("renamed_file", false);
         list.add(Diffs.toString());
         List<String> commitIds = new ArrayList<>();
         commitIds.add("90e99af00139f751c7caf4a9bf1058e0fd75bc38");
