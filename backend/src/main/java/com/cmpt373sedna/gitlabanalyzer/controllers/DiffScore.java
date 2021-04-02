@@ -17,6 +17,7 @@ public class DiffScore {
         put("java", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
         put("SQL", Collections.singletonList("--"));
         put("html", Collections.singletonList("<!-- -->"));
+        put("txt", Collections.singletonList("#"));
     }};
 
     private String language = "java";
@@ -49,7 +50,7 @@ public class DiffScore {
             diff = diff.replaceAll(multiLineCommentRegex, "");
             for(String line: diff.split("\n")) {
                 if((line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches(singleLineCommentRegex))) {
-                    String replace = removeInlineComments(line);
+                    String replace = removeInlineComments(line).trim();
                     if(line.startsWith("-")) {
                         deletedLines.add(replace);
                         lines.put(replace, "-");
@@ -71,7 +72,7 @@ public class DiffScore {
         double score = 0;
 
         for (String current : lines.keySet()) {
-            if (current.substring(1).matches("\\s*[{}()]{1,2}\\s*")) {
+            if (current.matches("[{}()]{1,2}")) {
                 score += 0.2;
             } else {
                 if (lines.get(current).equals("+")) {
@@ -105,7 +106,7 @@ public class DiffScore {
         if(multiLineStartComment.equals("") && multiLineEndComment.equals("")) {
             return "";
         }
-        return "[-+]\\s*?(" + multiLineStartComment + ")(.|\n)*?(" + multiLineEndComment + ")\\s*?\n";
+        return "[-+]\\s*?(" + multiLineStartComment + ")(.|\\s)*?(" + multiLineEndComment + ")\\s*?";
     }
 
     private String getSingleLineCommentRegex() {
@@ -114,6 +115,9 @@ public class DiffScore {
 
     private String removeInlineComments(String line) {
         String result = line.substring(1).replaceAll(singleLineComment + ".*", "");
+        if(multiLineStartComment.equals("") && multiLineEndComment.equals("")) {
+            return result;
+        }
         return result.replaceAll("\\s*" + multiLineStartComment + ".*?" + multiLineEndComment + "\\s*", " ");
     }
 }
