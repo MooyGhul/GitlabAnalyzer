@@ -1,5 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.model;
 
+import com.cmpt373sedna.gitlabanalyzer.controllers.DiffScore;
 import lombok.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,11 +26,13 @@ public class CommitEntity {
     @Column(columnDefinition = "TEXT")
     @ElementCollection
     private List<String> diffs;
+    private double score;
     private Boolean hasMr;
     private int MRIid;
 
     public static CommitEntity fromGitlabJSON(JSONObject json) {
-
+        DiffScore parser = new DiffScore();
+        List<String> commitDiffs = getCommitDiffs(json);
 
         return CommitEntity.builder()
                 .commitId((json.getString("id")))
@@ -38,7 +41,8 @@ public class CommitEntity {
                 .author(json.getString("author_name"))
                 .commitDate(Instant.parse(json.getString("committed_date")))
                 .url(json.getString("web_url"))
-                .diffs(getCommitDiffs(json))
+                .diffs(commitDiffs)
+                .score(parser.calcScore(commitDiffs))
                 .build();
     }
     public static List<String> getCommitDiffs(JSONObject json) {
