@@ -1,7 +1,5 @@
 package com.cmpt373sedna.gitlabanalyzer.controllers;
 
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.*;
@@ -12,6 +10,7 @@ public class DiffScore {
 
     private final HashMap<String, List<String>> commentStyles = new HashMap<String ,List<String>>() {{
         put("py", Collections.singletonList("#"));
+        put("sh", Collections.singletonList("#"));
         put("js",  Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
         put("cpp", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
         put("java", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
@@ -26,18 +25,19 @@ public class DiffScore {
     private String multiLineEndComment;
 
     public double calcScore(List<String> stringDiffs) {
-        double score = 0;
+        double score = 0.0;
 
         for(String diff: stringDiffs) {
             JSONObject obj = new JSONObject(diff);
             if(!obj.getBoolean("renamed_file")) {
                 String diffString = obj.getString("diff");
-                String language = obj.getString("new_path").split("\\.")[1];
+                String[] pathSplit = obj.getString("new_path").split("\\.");
+                String language = pathSplit[pathSplit.length - 1];
                 score += parseDiff(diffString, language);
             }
         }
 
-       return score;
+       return Math.round(score * 100.0)/100.0;
     }
 
     private double parseDiff(String diff, String language) {
@@ -53,7 +53,7 @@ public class DiffScore {
         diff = diff.replaceAll(multiLineCommentRegex, "");
         for(String line: diff.split("\n")) {
             if((line.startsWith("-") || line.startsWith("+")) && (line.trim().length() > 1) && !(line.matches(singleLineCommentRegex))) {
-                String replace = removeInlineComments(line).trim();
+                String replace = removeInlineComments(line).replaceAll(" ", "").trim();
                 if(line.startsWith("-")) {
                     deletedLines.add(replace);
                     lines.put(replace, "-");
@@ -86,7 +86,7 @@ public class DiffScore {
                 }
             }
         }
-        return Math.round(score * 100.0)/100.0;
+        return score;
     }
 
     private List<String> findDuplicates(List<String> added, List<String> deleted) {
@@ -94,22 +94,29 @@ public class DiffScore {
     }
 
     private void getCommentCharacters(String language) {
-        if(commentStyles.get(language).size() > 1) {
-            singleLineComment = commentStyles.get(language).get(0);
-            multiLineStartComment = commentStyles.get(language).get(1).split(" ")[0];
-            multiLineEndComment = commentStyles.get(language).get(1).split(" ")[1];
+        if(commentStyles.containsKey(language)) {
+            if(commentStyles.get(language).size() > 1) {
+                singleLineComment = commentStyles.get(language).get(0);
+                multiLineStartComment = commentStyles.get(language).get(1).split(" ")[0];
+                multiLineEndComment = commentStyles.get(language).get(1).split(" ")[1];
+            } else {
+                singleLineComment = commentStyles.get(language).get(0);
+                multiLineStartComment = "";
+                multiLineEndComment = "";
+            }
         } else {
-            singleLineComment = commentStyles.get(language).get(0);
+            singleLineComment = "";
             multiLineStartComment = "";
             multiLineEndComment = "";
         }
+
     }
 
     private String getMultiLineCommentRegex() {
         if(multiLineStartComment.equals("") && multiLineEndComment.equals("")) {
             return "";
         }
-        return "[-+]\\s*?(" + multiLineStartComment + ")(.|\\s)*?(" + multiLineEndComment + ")\\s*?";
+        return "[-+]\\s*" + multiLineStartComment + "[\\s\\S]*?" + multiLineEndComment + "\\s*";
     }
 
     private String getSingleLineCommentRegex() {
