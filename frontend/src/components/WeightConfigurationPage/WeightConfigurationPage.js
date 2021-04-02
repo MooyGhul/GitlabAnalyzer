@@ -7,7 +7,8 @@ import {
     TableRow,
     TableHead,
     TableBody,
-    Table
+    Table,
+    TextField,
   } from "@material-ui/core";
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
@@ -63,6 +64,12 @@ const WeightConfigurationPage = () => {
             <Grid item xs={10}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
+            </Grid>
+            <Grid item xs={10}>
+                <form className={classes.root} noValidate autoComplete="off">
+                    <TextField id="MR" label="Merge Request Weight" variant="outlined" type="number"></TextField>
+                    <TextField id="Commit" label="Commit Weight" variant="outlined" type="number"></TextField>
+                </form>
             </Grid>
 
         </Grid>
