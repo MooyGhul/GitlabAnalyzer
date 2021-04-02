@@ -1,4 +1,4 @@
-import {Avatar, Grid, MenuItem, Select, Typography} from "@material-ui/core";
+import {Avatar, Grid, MenuItem, Select} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import ScoreBoard from "./ScoreBoard";
 import useStyles from "../style/BannerStyles";
@@ -38,11 +38,9 @@ const Banner = ({ avatar_url, memberName, type }) => {
           }
           className={classes.large}
         />
-        <Typography className={classes.details}>
-          <Select value={memberName} onChange={onMemberChange}>
-            {members.map((member) => <MenuItem value={member}>{member}</MenuItem>)}
-          </Select>
-        </Typography>
+        <Select value={memberName} onChange={onMemberChange} className={classes.details}>
+          {members.map((member) => <MenuItem value={member}>{member}</MenuItem>)}
+        </Select>
       </Grid>
       <Grid item md={8} sm={8}>
         <ScoreBoard />
