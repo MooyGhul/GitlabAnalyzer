@@ -45,7 +45,6 @@ const CodeContributionRow = (props) => {
         <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
         <TableCell className={classes.cell} align="left">{row.score}</TableCell>
         <TableCell className={classes.cell} align="left">{row.score}</TableCell>
-
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0, background: '#f1f0fc' }} colSpan={7}>
@@ -62,6 +61,8 @@ const CodeContributionRow = (props) => {
     </Fragment>
   );
 }
+
+
 
 CodeContributionRow.propTypes = {
   expandAll: PropTypes.bool.isRequired,
