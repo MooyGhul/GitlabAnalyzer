@@ -23,7 +23,13 @@ const WeightConfigurationPage = () => {
                 <Typography className={classes.subHeader}>Configure Dates</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
             </Grid>
-
+            <Grid item xs={3}>
+                <Typography className={classes.pageTitle}>Insert date picker</Typography>
+            </Grid>
+            <Grid item xs={7}>
+                <Typography className={classes.subHeader}>Saved Iterations</Typography>
+                <Divider className={classes.divider} orientation='horizontal'/>
+            </Grid>
             <Grid item xs={10}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
