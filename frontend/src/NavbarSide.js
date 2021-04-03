@@ -12,7 +12,6 @@ import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
 import {useState} from 'react';
 import UrlToken from './components/UrlToken';
 import ProjectListPage from './ProjectListPage';
-import OverviewPage from './OverviewPage';
 import CodeContributionPage from "./components/CodeContributionsPage/CodeContributionPage";
 import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
 import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
