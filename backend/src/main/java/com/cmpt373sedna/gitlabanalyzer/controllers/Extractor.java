@@ -32,13 +32,9 @@ public class Extractor {
                 .collect(toList());
     }
 
-    public ProjectEntity getProject(ConfigEntity config, String projectId) {
+    public JSONObject getProject(ConfigEntity config, String projectId) {
         JSONObject projectJSON = getJsonObject(buildUri(config, projectId));
-
-        return ProjectEntity.builder()
-                .repoId(projectJSON.getInt("id"))
-                .repoName(projectJSON.getString("name"))
-                .build();
+        return projectJSON;
     }
 
     public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId) {
