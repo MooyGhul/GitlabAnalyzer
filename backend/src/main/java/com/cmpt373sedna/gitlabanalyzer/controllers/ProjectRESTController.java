@@ -63,9 +63,14 @@ public class ProjectRESTController {
 
     @PostMapping("/{projectId}/load")
     void load(@PathVariable() int projectId) {
-        this.projectManager.findProject(projectId)
+        ProjectController projectController = this.projectManager.findProject(projectId)
                 .map(ProjectController::load)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        this.commitRepository.saveAll(projectController.getCommitEntities());
+        this.issueRepository.saveAll(projectController.getIssuesEntities());
+        this.commentEntityRepository.saveAll(projectController.getComments());
+        this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
     }
 
 
