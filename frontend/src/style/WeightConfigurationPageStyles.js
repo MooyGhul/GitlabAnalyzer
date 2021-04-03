@@ -49,6 +49,10 @@ const useStyles = makeStyles((theme) => ({
     addIterationButton: {
         color: 'rgb(255,255,255)',
         backgroundColor: 'rgb(255,180,0)',
+    },
+    deleteButton: {
+        color: 'rgb(255,255,255)',
+        backgroundColor: 'rgb(255,0,100)',
     }
 }));
 

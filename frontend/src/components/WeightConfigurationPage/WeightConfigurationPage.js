@@ -86,6 +86,7 @@ const WeightConfigurationPage = () => {
                                 <TableCell className={classes.headCell} align="center">
                                     End Date
                                 </TableCell>
+                                <TableCell className={classes.headCell} align="center"/>
                             </TableRow>
                         </TableHead>
                         <TableBody>
