@@ -8,16 +8,23 @@ import static java.util.stream.Collectors.toList;
 
 public class DiffScore {
 
-    private final HashMap<String, List<String>> commentStyles = new HashMap<String ,List<String>>() {{
-        put("py", Collections.singletonList("#"));
-        put("sh", Collections.singletonList("#"));
-        put("js",  Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
-        put("cpp", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
-        put("java", Arrays.asList("\\/\\/", "\\/\\* \\*\\/"));
-        put("SQL", Collections.singletonList("--"));
-        put("html", Arrays.asList("<!-- -->", "<!-- -->"));
-        put("txt", Collections.singletonList("#"));
-        put("css",  Arrays.asList("\\/\\* \\*\\/", "\\/\\* \\*\\/"));
+    private final HashMap<String, String[]> commentStyles = new HashMap<String ,String[]>() {{
+
+        String[] cStyleComments = new String[] {"\\/\\/", "\\/\\* \\*\\/"};
+        String[] cssStyleComments = new String[] {"\\/\\* \\*\\/", "\\/\\* \\*\\/"};
+        String[] hashStyleComments = new String[] {"#"};
+        String[] htmlStyleComments = new String[] {"<!-- -->", "<!-- -->"};
+        String[] sqlStyleComments = new String[] {"--"};
+
+        put("py", hashStyleComments);
+        put("sh", hashStyleComments);
+        put("js",  cStyleComments);
+        put("cpp", cStyleComments);
+        put("java", cStyleComments);
+        put("sql", sqlStyleComments);
+        put("html", htmlStyleComments);
+        put("txt", hashStyleComments);
+        put("css",  cssStyleComments);
     }};
 
     private String singleLineComment;
@@ -95,12 +102,12 @@ public class DiffScore {
 
     private void getCommentCharacters(String language) {
         if(commentStyles.containsKey(language)) {
-            if(commentStyles.get(language).size() > 1) {
-                singleLineComment = commentStyles.get(language).get(0);
-                multiLineStartComment = commentStyles.get(language).get(1).split(" ")[0];
-                multiLineEndComment = commentStyles.get(language).get(1).split(" ")[1];
+            if(commentStyles.get(language).length > 1) {
+                singleLineComment = commentStyles.get(language)[0];
+                multiLineStartComment = commentStyles.get(language)[1].split(" ")[0];
+                multiLineEndComment = commentStyles.get(language)[1].split(" ")[1];
             } else {
-                singleLineComment = commentStyles.get(language).get(0);
+                singleLineComment = commentStyles.get(language)[0];
                 multiLineStartComment = "";
                 multiLineEndComment = "";
             }
