@@ -1,38 +1,26 @@
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import TableCell from "@material-ui/core/TableCell";
-import TableBody from "@material-ui/core/TableBody";
-import React from "react";
-import {useDropDownStyles} from "../../style/CodeContributionPageStyles";
+import React, {Fragment} from "react";
+import Button from "@material-ui/core/Button";
+import LinkIcon from '@material-ui/icons/Link';
+import TableRow from "@material-ui/core/TableRow";
 
 const CodeContributionsDropdown = (props) => {
-  const classes = useDropDownStyles();
-  const columns = [
-      {id: 'gitlabLink', label: 'Gitlab Link'},
-      {id: 'date', label: 'Date'},
-      {id: 'name', label: 'Name'},
-      {id: 'score', label: 'Score'},
-    ]
+  const {row} = props;
 
     return (
-      <Table size="small">
-        <TableHead>
+        <Fragment>
           <TableRow>
-            {/*//remove one of these below after removing column: type in main table*/}
-            <TableCell className={classes.banner} />
-            <TableCell className={classes.banner}/>
-            {columns.map((column) => (
-              <TableCell className={classes.banner} key={column.id}>
-                {column.label}
-              </TableCell>
-            ))}
+          <TableCell style={{width: 200}} align="left">
+            <Button variant="outlined" color="primary" href={row.url} target="_blank" rel="noreferrer noopener">
+              Link &nbsp;
+              <LinkIcon />
+            </Button>
+          </TableCell>
+          <TableCell>{row.date}</TableCell>
+          <TableCell>{row.name}</TableCell>
+          <TableCell>{row.score}</TableCell>
           </TableRow>
-        </TableHead>
-        <TableBody>
-
-        </TableBody>
-      </Table>
+        </Fragment>
     )
 }
 

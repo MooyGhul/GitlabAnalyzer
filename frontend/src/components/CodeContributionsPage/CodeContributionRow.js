@@ -12,12 +12,21 @@ import {useRowStyles} from "../../style/CodeContributionPageStyles";
 import Button from '@material-ui/core/Button';
 import LinkIcon from '@material-ui/icons/Link';
 import CodeContributionsDropdown from "./CodeContributionsDropdown";
+import TableHead from "@material-ui/core/TableHead";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
 
 const CodeContributionRow = (props) => {
   const { row, expandAll } = props;
   const [open, setOpen] = useState(false);
   const classes = useRowStyles();
-
+  const commitContributionRows = row.relatedCommits;
+  const columns = [
+    {id: 'gitlabLink', label: 'Gitlab Link'},
+    {id: 'date', label: 'Date'},
+    {id: 'name', label: 'Name'},
+    {id: 'score', label: 'Score'},
+  ]
   const isOpen = () => {
     return open || expandAll;
   }
@@ -43,8 +52,8 @@ const CodeContributionRow = (props) => {
         </TableCell>
         <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
         <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
-        <TableCell className={classes.cell} align="left">{row.score}</TableCell>
-        <TableCell className={classes.cell} align="left">{row.score}</TableCell>
+        <TableCell className={classes.cell} align="left">{row.mrScore}</TableCell>
+        <TableCell className={classes.cell} align="left">{row.totalCommitScore}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0, background: '#f1f0fc' }} colSpan={7}>
@@ -53,7 +62,25 @@ const CodeContributionRow = (props) => {
               <h2>
                 Commits
               </h2>
-              <CodeContributionsDropdown />
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    {/*//remove one of these below after removing column: type in main table*/}
+                    <TableCell className={classes.banner} />
+                    <TableCell className={classes.banner}/>
+                    {columns.map((column) => (
+                      <TableCell className={classes.banner} key={column.id}>
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {commitContributionRows.map((commitRow) => (
+                    <CodeContributionsDropdown key={commitRow.id} row={commitRow}/>
+                  ))}
+                </TableBody>
+              </Table>
             </Box>
           </Collapse>
         </TableCell>

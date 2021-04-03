@@ -41,7 +41,6 @@ const CodeContributionTable = (props) => {
     setPage(0);
   };
 
-
   return (
     <Paper>
       <Grid item>
