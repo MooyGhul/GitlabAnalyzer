@@ -1,125 +1,124 @@
- import axios from "axios";
-import React, { useState, useEffect, useRef  } from "react";
-import { useLocation } from "react-router-dom"; 
+import axios from "axios";
+import React, { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import { useStyles } from "./ProjectInfoStyle";
 import StackedBarChart from "./StackedBarChart";
 import MemberList from "./MemberList";
-import useFullPageLoader from "../components/useFullPageLoader"
+import useFullPageLoader from "../components/useFullPageLoader";
 import useProjectNotSelected from "../components/useProjectNotSelected";
 
-
 function ProjectInfoPage(props) {
-  const location = useLocation();  
-  
+  const location = useLocation();
 
   // const projectId = useRef();
   const [projectName] = useState("");
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
-  const [MRs, setMRs] = useState([]); 
+  const [MRs, setMRs] = useState([]);
   const [loader, showLoader, hideLoader] = useFullPageLoader();
-  const [noProjectSelected, showErrorPage, hideErrorPage] = useProjectNotSelected();
+  const [
+    noProjectSelected,
+    showErrorPage,
+    hideErrorPage,
+  ] = useProjectNotSelected();
   let commitsArray = [];
   let MRsArray = [];
-  const classes = useStyles()
-  const idTest = useRef(-1); 
+  const classes = useStyles();
+  const idTest = useRef(-1);
   const [projectId, setProjectId] = useState(0);
-  
+
   // const projectId = props.projectSelected===-1 && location != undefined ? -1 : location.state.id;
-  
+
   useEffect(() => {
-   
-    
     const defined = () => {
       try {
-        setProjectId(location.state.id)
+        setProjectId(location.state.id);
+        idTest.current=location.state.id;
+        console.log("idTest is now ", idTest)
+      } catch (err) {
+        console.log("location state is undefined ", idTest)
+        return false;
+        // console.log("ERROR", err);
+        // showErrorPage();
       }
-      catch (err){
-        console.log(err)
-        showErrorPage();
-      }
-    }
-         
+    };
 
     const fetchData = async () => {
-      showLoader(); 
+      showLoader();
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
 
       const result = await axios.get(
-          process.env.NODE_ENV === 'development' ?
-              `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members` :
-              `/project/${projectId}/members`
-      ); 
+        process.env.NODE_ENV === "development"
+          ? `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members`
+          : `/project/${projectId}/members`
+      );
 
-      if(process.env.NODE_ENV === 'development') {
-        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/commits`
-        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/merge_requests`
+      if (process.env.NODE_ENV === "development") {
+        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/commits`;
+        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/merge_requests`;
       }
 
       const mrData = await axios.get(mrUrl);
-      const commitData = await axios.get(commitUrl)
-      
+      const commitData = await axios.get(commitUrl);
+
       setMembers(result.data);
       setCommits(commitData.data);
-      setMRs(mrData.data); 
-        
-      
+      setMRs(mrData.data);
     };
-    // setID();
     const result = defined();
-    console.log(result)
-    fetchData().then(hideLoader()); 
-    
-    // idTest.current = location.state.id; 
-    // }  
-}, [projectId,  props]);
-
-
-members.forEach((member) => {
-  let count = 0;
-  commits.forEach((commit) => {
-    if (member === commit.author) {
-      count++;
+    if (result == false) {
+      console.log("Oh no");
+      setProjectId(props.projectId);
+      console.log("projectID is now ", projectId)
+    } else {
+      fetchData().then(hideLoader());
     }
-  });
-  commitsArray.push(count);
-});
+  }, [projectId, props]);
 
-members.forEach((member) => {
-  let count = 0;
-  MRs.forEach((MR) => {
-    if (member === MR.author) {
-      count++;
-    }
+  members.forEach((member) => {
+    let count = 0;
+    commits.forEach((commit) => {
+      if (member === commit.author) {
+        count++;
+      }
+    });
+    commitsArray.push(count);
   });
-  MRsArray.push(count);
-});
 
+  members.forEach((member) => {
+    let count = 0;
+    MRs.forEach((MR) => {
+      if (member === MR.author) {
+        count++;
+      }
+    });
+    MRsArray.push(count);
+  });
 
   return (
     <div>
       {/* <WideHeader id={projectId} projectName={projectName} /> */}
       {/* <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>       */}
       <div className={classes.body}>
-      <div className={classes.barChart}>
-        <StackedBarChart
-          member={members}
-          projectID={projectId}
+        <div className={classes.barChart}>
+          <StackedBarChart
+            member={members}
+            projectID={projectId}
+            commitsArray={commitsArray}
+            MRsArray={MRsArray}
+          />
+        </div>
+        <MemberList
+          members={members}
           commitsArray={commitsArray}
           MRsArray={MRsArray}
+          projectID={projectId}
+          onMemberIdChange={props.onMemberIdChange}
         />
+        {loader}
+        {noProjectSelected}
       </div>
-      <MemberList
-        members={members}
-        commitsArray={commitsArray}
-        MRsArray={MRsArray}
-        projectID={projectId}
-        onMemberIdChange={props.onMemberIdChange}
-      />
-      {loader}
-      {noProjectSelected}
-    </div>
     </div>
   );
 }
