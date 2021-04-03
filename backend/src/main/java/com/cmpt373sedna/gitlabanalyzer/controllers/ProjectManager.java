@@ -29,12 +29,6 @@ public class ProjectManager {
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
-    @Autowired
-    private MergeRequestDiffsVersionsRepository mergeRequestDiffVersionRepository;
-
-    @Autowired
-    private MergeRequestDiffsRepository mergeRequestDiffRepository;
-
     public ProjectManager() {
         this.extractor = new Extractor();
         this.allProjects = new ArrayList<>();
@@ -88,8 +82,6 @@ public class ProjectManager {
         this.commitRepository.saveAll(projectController.getCommitEntities());
         this.issueRepository.saveAll(projectController.getIssuesEntities());
         this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
-        this.mergeRequestDiffVersionRepository.saveAll(projectController.getMRDiffVersions());
-        this.mergeRequestDiffRepository.saveAll(projectController.getMRDiffs());
 
         return projectController;
     }

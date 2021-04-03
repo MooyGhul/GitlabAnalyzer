@@ -16,11 +16,10 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
-import Navbar from "../Navbar/Navbar";
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 import TablePaginationActions from "../TablePaginationActions";
-import InnerNavBar from "../InnerNavBar"; 
+import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from '../../style/InnerNavStyle'
 import ExpandAllBtn from "../ExpandAllBtn";
 
@@ -31,7 +30,7 @@ const CommentContributionPage = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
 
-  const { project_id, member_id } = useParams();
+    const {project_id, member_id} = useParams();
 
   const classes = useStyles(props);
   const innerNavStyle = useInnerNavStyle();
@@ -69,9 +68,6 @@ const CommentContributionPage = (props) => {
     <Grid container spacing={5} justify="center" alignItems="center">
       <Grid item xs={12}>
         <Grid item xs={12}>
-          <Navbar />
-        </Grid>
-        <Grid item xs={12}>
           <Banner memberName={member_id} type="commentContribution" />
         </Grid>
       </Grid>
@@ -80,7 +76,7 @@ const CommentContributionPage = (props) => {
       </Grid>
 
 
-      <Grid className={classes.graph}> 
+      <Grid className={classes.graph}>
         <BarChart
           data={graphData}
           barLabel1={BarChartProperties.comments.label}

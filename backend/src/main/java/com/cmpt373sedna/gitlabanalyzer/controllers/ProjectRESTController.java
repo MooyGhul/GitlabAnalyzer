@@ -31,11 +31,6 @@ public class ProjectRESTController {
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
-    @Autowired
-    private MergeRequestDiffsVersionsRepository mergeRequestDiffVersionRepository;
-
-    @Autowired
-    private MergeRequestDiffsRepository mergeRequestDiffRepository;
 
 
     @PostMapping("/create")
@@ -44,7 +39,6 @@ public class ProjectRESTController {
         this.projectManager.setProjectToken(token);
     }
 
-//    "http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer"
     @PostMapping("/add")
     @Deprecated
     void addProject(@RequestParam String url) {
@@ -54,8 +48,6 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(p.getIssuesEntities());
         this.commentEntityRepository.saveAll(p.getComments());
         this.mergeRequestEntityRepository.saveAll(p.getMergeRequestEntities());
-        this.mergeRequestDiffVersionRepository.saveAll(p.getMRDiffVersions());
-        this.mergeRequestDiffRepository.saveAll(p.getMRDiffs());
     }
 
     @GetMapping("/all")
@@ -63,11 +55,21 @@ public class ProjectRESTController {
         return this.projectRepository.findAll();
     }
 
+    @GetMapping("/{projectId}")
+    String getProjectName(@PathVariable(value="projectId") int projectId) {
+        return this.projectRepository.findProjectEntityByRepoId(projectId).getRepoName();
+    }
+
     @PostMapping("/{projectId}/load")
     void load(@PathVariable() int projectId) {
-        this.projectManager.findProject(projectId)
+        ProjectController projectController = this.projectManager.findProject(projectId)
                 .map(ProjectController::load)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        this.commitRepository.saveAll(projectController.getCommitEntities());
+        this.issueRepository.saveAll(projectController.getIssuesEntities());
+        this.commentEntityRepository.saveAll(projectController.getComments());
+        this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
     }
 
 
@@ -94,20 +96,9 @@ public class ProjectRESTController {
         return this.commitRepository.findAllByProjectId(projectId);
     }
 
-
     @GetMapping("/{projectId}/issues")
     Iterable<IssueEntity> getProjectIssues(@PathVariable(value="projectId") int projectId) {
         return this.issueRepository.findAllByProjectId(projectId);
-    }
-
-    @GetMapping("/{projectId}/merge_requests/{merge_request_iid}/versions")
-    Iterable<MergeRequestDiffVersionsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid) {
-        return this.mergeRequestDiffVersionRepository.findAllByProjectIdAndMRIid(projectId, MRIid);
-    }
-
-    @GetMapping("/{projectId}/merge_requests/{merge_request_iid}/versions/{version_id}")
-    Iterable<MergeRequestDiffsEntity> getMergeRequestDiffVersions(@PathVariable(value = "projectId") int projectId, @PathVariable(value = "merge_request_iid") int MRIid, @PathVariable(value = "version_id") int versionId) {
-        return this.mergeRequestDiffRepository.findAllByProjectIdAndMRIidAndVersionId(projectId, MRIid, versionId);
     }
 
     @GetMapping("/{projectId}/{MRorIssueId}/comments")

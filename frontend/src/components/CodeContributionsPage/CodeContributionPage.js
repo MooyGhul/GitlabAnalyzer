@@ -2,56 +2,55 @@ import CodeContributionTable from "./CodeContributionTable";
 import {Grid} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import moment from "moment";
 import Banner from "../Banner";
 import {useParams} from "react-router-dom";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
-import {Contributions} from "../../mockDataDir/mockGraphContri";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
-import Navbar from "../Navbar/Navbar";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"
+import {formatTableDate, getGraphData} from "../../helper";
 
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
-  const { project_id, member_id } = useParams();
-  const [graphData] = useState(Contributions);
-  const classes = useGraphStyles(); 
+  const {project_id, member_id} = useParams();
+  const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
+  const [graphData, setGraphData] = useState([]);
 
   const createData = (id, type, date, name, url, score) => {
     return {id, type, date, name, url, score};
   }
 
+  const createGraphData = (year, MRDaily, CommitDaily) => {
+    return {year, MRDaily, CommitDaily};
+  }
+
   useEffect(() => {
     const codeContributionData = (commitData, mrData) => {
-      let ccArray = [];
-      for (let i = 0; i < commitData.length; i++) {
-        let createdDate = new Date(commitData[i].commitDate);
-        ccArray.push(createData(commitData[i].commitId,
-          'commit',
-          '' + moment(createdDate).format('LLL'),
-          commitData[i].commitName,
-          commitData[i].url,
-          ComingSoonMsg.msg));
+      let commitArray = [];
+      let mrArray = [];
+      let commitCountsData = [];
+      let mrCountsData = [];
+
+      formatData(commitData, commitArray, mrArray);
+      formatData(mrData, commitArray, mrArray);
+
+      const commitCounts = getGraphData(commitArray, "date");
+      const mrCounts = getGraphData(mrArray, "date");
+      for(let i = 0; i < commitCounts.length; i++) {
+        commitCountsData.push(createGraphData(commitCounts[i].year, 0, commitCounts[i].data));
+      }
+      for(let i = 0; i < mrCounts.length; i++) {
+        mrCountsData.push(createGraphData(mrCounts[i].year, mrCounts[i].data, 0));
       }
 
-      for (let i = 0; i < mrData.length; i++) {
-        if (mrData[i].status === "merged") {
-          let mergedDate = new Date(mrData[i].mergedAt);
-          ccArray.push(createData(mrData[i].id,
-            'MR',
-            '' + moment(mergedDate).format('LLL'),
-            mrData[i].mergeRequestName,
-            mrData[i].url,
-            ComingSoonMsg.msg));
-        }
-      }
+      const ccGraphData = mergeCounts(commitCountsData, mrCountsData);
+      setGraphData(ccGraphData);
 
-      ccArray
-        .sort((a, b) => {
+      let ccArray = [...commitArray, ...mrArray];
+      ccArray.sort((a, b) => {
           let dateA = new Date(a.date);
           let dateB = new Date(b.date);
           return dateB - dateA;
@@ -60,14 +59,76 @@ const CodeContributionPage = () => {
       setCodeContributionRows(ccArray);
     };
 
-    const fetchData = async () => {
-      let mrUrl = `/project/${project_id}/merge_requests`;
-      let commitUrl = `/project/${project_id}/commits`;
+    const formatData = (dataType, commitArray, mrArray) => {
+      for (let i = 0; i < dataType.length; i++) {
+        let dataTypeIndex = dataType[i];
+        const isCommitData = dataTypeIndex.hasOwnProperty('commitId');
+        const isMergedMRData = !isCommitData && (dataTypeIndex.status === 'merged');
 
-      if (process.env.NODE_ENV === "development") {
-        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/merge_requests`;
-        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/commits`;
+        if (isCommitData || isMergedMRData) {
+          let id;
+          let date;
+          let name;
+          let type;
+
+          if (isCommitData) {
+            id = dataTypeIndex.commitId;
+            type = 'commit'
+            date = new Date(dataTypeIndex.commitDate);
+            name = dataTypeIndex.commitName;
+          } else if (isMergedMRData) {
+            id = dataTypeIndex.id;
+            type = 'MR'
+            date = new Date(dataTypeIndex.mergedAt);
+            name = dataTypeIndex.mergeRequestName;
+          }
+
+          const newData = createData(id,
+            type,
+            '' + formatTableDate(date),
+            name,
+            dataTypeIndex.url,
+            ComingSoonMsg.msg);
+
+          if (newData.type === 'commit') {
+            commitArray.push(newData);
+          } else if (newData.type === 'MR') {
+            mrArray.push(newData);
+          }
+        }
       }
+    }
+
+    const mergeCounts = (commitCountsData, mrCountsData) => {
+      let merged;
+      for(let i = 0; i < commitCountsData.length; i++) {
+        for(let j = 0; j < mrCountsData.length; j++) {
+          if (commitCountsData[i].year === mrCountsData[j].year) {
+            commitCountsData[i].MRDaily += mrCountsData[j].MRDaily;
+            mrCountsData.splice(j, 1);
+          }
+        }
+      }
+
+      merged = [...commitCountsData, ...mrCountsData];
+      merged.sort((a,b) => {
+        let dateA = new Date(a.year);
+        let dateB = new Date(b.year);
+        return dateB - dateA;
+      });
+
+      return merged;
+    };
+
+    const fetchData = async () => {
+      let mrUrl = `/project/${project_id}/member/${member_id}/merge_requests`;
+      let commitUrl = `/project/${project_id}/member/${member_id}/commits`;
+
+      if(process.env.NODE_ENV === 'development') {
+        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/merge_requests`;
+        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/commits`;
+      }
+
       const resultCommit = await axios.get(commitUrl);
       const resultMR = await axios.get(mrUrl);
       const commitData = resultCommit.data;
@@ -77,20 +138,18 @@ const CodeContributionPage = () => {
     };
 
     fetchData()
-      .then(() => {
-        console.log("Successful data retrieval");
-      })
-      .catch(() => {
-        console.log("Failed retrieve data");
-      });
-  }, [project_id]);
+      .then(()=> {
+        console.log('Successful data retrieval');
+      }).catch(() => {
+      console.log('Failed retrieve data');
+    });
+  },[project_id, member_id]);
+  console.log(graphData);
+  console.log(codeContributionRows);
 
   return (
     <Grid container spacing={5} justify="center" alignItems="center">
       <Grid item xs={12}>
-        <Grid item xs={12}>
-          <Navbar />
-        </Grid>
         <Grid item xs={12}>
           <Banner memberName={member_id} type="codecontribution" />
         </Grid>
