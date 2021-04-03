@@ -1,29 +1,48 @@
  import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import { useLocation } from "react-router-dom"; 
 import { useStyles } from "./ProjectInfoStyle";
 import StackedBarChart from "./StackedBarChart";
 import MemberList from "./MemberList";
 import useFullPageLoader from "../components/useFullPageLoader"
+import useProjectNotSelected from "../components/useProjectNotSelected";
 
 
 function ProjectInfoPage(props) {
-  const location = useLocation();
-  const projectId = props.project_id===-1 ? location.state.id : location.state.id ;
+  const location = useLocation();  
+  
+
+  // const projectId = useRef();
   const [projectName] = useState("");
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]); 
   const [loader, showLoader, hideLoader] = useFullPageLoader();
+  const [noProjectSelected, showErrorPage, hideErrorPage] = useProjectNotSelected();
   let commitsArray = [];
   let MRsArray = [];
   const classes = useStyles()
+  const idTest = useRef(-1); 
+  const [projectId, setProjectId] = useState(0);
   
-
-  console.log(props)
+  // const projectId = props.projectSelected===-1 && location != undefined ? -1 : location.state.id;
+  
   useEffect(() => {
+   
+    
+    const defined = () => {
+      try {
+        setProjectId(location.state.id)
+      }
+      catch (err){
+        console.log(err)
+        showErrorPage();
+      }
+    }
+         
+
     const fetchData = async () => {
-      showLoader();
+      showLoader(); 
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
 
@@ -43,12 +62,18 @@ function ProjectInfoPage(props) {
       
       setMembers(result.data);
       setCommits(commitData.data);
-      setMRs(mrData.data);
-
+      setMRs(mrData.data); 
+        
+      
     };
-    fetchData().then(hideLoader());
-// eslint-disable-next-line
-}, []);
+    // setID();
+    const result = defined();
+    console.log(result)
+    fetchData().then(hideLoader()); 
+    
+    // idTest.current = location.state.id; 
+    // }  
+}, [projectId,  props]);
 
 
 members.forEach((member) => {
@@ -93,6 +118,7 @@ members.forEach((member) => {
         onMemberIdChange={props.onMemberIdChange}
       />
       {loader}
+      {noProjectSelected}
     </div>
     </div>
   );

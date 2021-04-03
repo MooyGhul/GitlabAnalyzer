@@ -8,7 +8,7 @@ const ProjectNotSelected = (props) => {
     return (
         <div className={classes.body}>
 
-            <p>No project selected</p>
+            <h1 className={classes.errorMsg}>No project selected</h1>
 
 
         </div>

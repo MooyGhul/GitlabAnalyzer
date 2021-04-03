@@ -30,7 +30,7 @@ const NavbarSide = (props) => {
   const [project_id, setProjectId] = useState(-1);
   const [sidebar, setSidebar] = useState(false);
   const [userSelected, setUserSelected] = useState(false);
-  const [projectSelected, setProjectSelected] = useState(-1);  
+  const [projectSelected, setProjectSelected] = useState(false);  
 
   const toggle = () => {
     setSidebar(!sidebar); 
@@ -79,7 +79,7 @@ const NavbarSide = (props) => {
                     <ListItemIcon className={classes.link}>
                       <ListAltIcon />
                     </ListItemIcon>
-                    <ListItemText primary={"Projects"} getProjectId />
+                    <ListItemText primary={"Projects"} />
                   </ListItem>
                 </Link>
 
