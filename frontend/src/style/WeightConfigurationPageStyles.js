@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold', 
         fontSize: '1.4rem'
     },
+    subHeader1: {
+        fontWeight: 'bold', 
+        fontSize: '1.2rem'
+    },
     divider: {
         height: '0.15rem',
     },

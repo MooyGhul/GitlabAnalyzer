@@ -16,9 +16,17 @@ import InnerNavBar from '../InnerNavBar';
 import {useInnerNavStyle} from "../../style/InnerNavStyle";
 import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
+import mockFileTypes from "../../mockDataDir/mockFileTypes";
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
+    const fileTypes = mockFileTypes;
+
+    const createFileTypeWeightsInputs = (fileType) => {
+        return (
+            <TextField id="Commit" label={fileType} variant="outlined" type="number"></TextField>
+        );
+    }
 
     return (
         <Grid container spacing={5} justify="center" alignItems="center">
@@ -64,11 +72,18 @@ const WeightConfigurationPage = () => {
             <Grid item xs={10}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
-            </Grid>
-            <Grid item xs={10}>
                 <form className={classes.root} noValidate autoComplete="off">
                     <TextField id="MR" label="Merge Request Weight" variant="outlined" type="number"></TextField>
                     <TextField id="Commit" label="Commit Weight" variant="outlined" type="number"></TextField>
+                </form>
+            </Grid>
+            <Grid item xs={10}>
+                <Typography className={classes.subHeader1}>Configure Weights by File Type</Typography>
+                <Divider className={classes.divider} orientation='horizontal'/>
+                <form className={classes.root} noValidate autoComplete="off">
+                    {fileTypes.map((fileType) => (
+                        createFileTypeWeightsInputs(fileType)
+                    ))}
                 </form>
             </Grid>
 

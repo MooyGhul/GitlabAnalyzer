@@ -10,3 +10,5 @@ export const mockFileTypes = [
     "Rust",
     "HTML",
 ]
+
+export default mockFileTypes;
