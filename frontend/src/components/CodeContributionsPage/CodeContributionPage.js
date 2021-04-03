@@ -11,10 +11,15 @@ import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"
 import {formatTableDate, getGraphData} from "../../helper";
+import Calendar from '../../components/Calendar';
 
-const CodeContributionPage = () => {
+const CodeContributionPage = (props) => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
-  const {project_id, member_id} = useParams();
+  // eslint-disable-next-line
+  const project_id = props.project_id === -1? useParams():props.project_id;
+  // eslint-disable-next-line
+  const member_id = props.member_id === -1? useParams():props.member_id;
+  // const {project_id, member_id} = useParams();
   const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
   const [graphData, setGraphData] = useState([]);
@@ -172,6 +177,9 @@ const CodeContributionPage = () => {
 
       <Grid item className={classes.table}>
         <CodeContributionTable codeContributionRows={codeContributionRows} />
+      </Grid>
+      <Grid>
+        <Calendar />
       </Grid>
     </Grid>
   );

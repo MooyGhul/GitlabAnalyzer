@@ -28,6 +28,17 @@ const NavbarSide = (props) => {
   const classes = useStyles();
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
+  const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
+  const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+
+
+  const handleStartDate = (newDate) => {
+    setStartDate(newDate)
+  };
+
+  const handleEndDate = (newDate) => {
+    setEndDate(newDate)
+  };
 
   const handleMemberIDChange = (newMemberId) => {
     setMemberId(newMemberId);
@@ -122,19 +133,19 @@ const NavbarSide = (props) => {
 
           <Route exact path="/overview/:project_id/:member_id/codecontribution">
             <Container>
-              <CodeContributionPage project_id={project_id} member_id={member_id}/>
+              <CodeContributionPage project_id={project_id} member_id={member_id} startDate={startDate} endDate={endDate} onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
             </Container>
           </Route>
 
           <Route exact path="/overview/:project_id/:member_id/commentContribution">
             <Container>
-              <CommentContributionPage project_id={project_id} member_id={member_id}/>
+              <CommentContributionPage project_id={project_id} member_id={member_id} startDate={startDate} endDate={endDate} onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
             </Container>
           </Route>
 
           <Route exact path="/overview/:project_id/:member_id/issueContribution">
             <Container>
-              <IssueContributionPage project_id={project_id} member_id={member_id}/>
+              <IssueContributionPage project_id={project_id} member_id={member_id} startDate={startDate} endDate={endDate} onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
             </Container>
           </Route>
 
