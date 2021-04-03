@@ -13,6 +13,9 @@ import {useState} from 'react';
 import UrlToken from './components/UrlToken';
 import ProjectListPage from './ProjectListPage';
 import OverviewPage from './OverviewPage';
+import CodeContributionPage from "./components/CodeContributionsPage/CodeContributionPage";
+import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
+import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
 
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {width: 'inherit'},
@@ -24,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 
 const NavbarSide = (props) => {
   const classes = useStyles();
-  const test = "test_hello_world";
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
 
@@ -78,7 +80,7 @@ const NavbarSide = (props) => {
             </ListItem>
             </Link>
 
-          <Link to="/overview/:project_id/:member_id/codeContribution" className={classes.link}>
+          <Link to="/overview/:project_id/:member_id/codecontribution" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <InfoIcon />
@@ -103,25 +105,37 @@ const NavbarSide = (props) => {
           <Switch>
           <Route exact path="/token">
             <Container>
-              <UrlToken test={test}/>
+              <UrlToken />
             </Container>
           </Route>
 
           <Route exact path="/projectList">
             <Container>
-              <ProjectListPage test={test} onProjectIdChange={handleProjectIDChange}/>
+              <ProjectListPage onProjectIdChange={handleProjectIDChange}/>
             </Container>
           </Route>
 
           <Route exact path="/projectInfo/:project_id">
             <Grid container>
-                <ProjectInfoPage test={test} onMemberIdChange={handleMemberIDChange} project_id={project_id} />
+              <ProjectInfoPage onMemberIdChange={handleMemberIDChange} project_id={project_id} />
             </Grid>
           </Route>
 
-          <Route exact path="/overview/:project_id/:member_id/codeContribution">
+          <Route exact path="/overview/:project_id/:member_id/codecontribution">
             <Container>
-              <OverviewPage test={test} project_id={project_id} member_id={member_id}/>
+              <CodeContributionPage project_id={project_id} member_id={member_id}/>
+            </Container>
+          </Route>
+
+          <Route exact path="/overview/:project_id/:member_id/commentContribution">
+            <Container>
+              <CommentContributionPage project_id={project_id} member_id={member_id}/>
+            </Container>
+          </Route>
+
+          <Route exact path="/overview/:project_id/:member_id/issueContribution">
+            <Container>
+              <IssueContributionPage project_id={project_id} member_id={member_id}/>
             </Container>
           </Route>
 

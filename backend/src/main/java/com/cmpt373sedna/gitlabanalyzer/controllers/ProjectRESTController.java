@@ -56,6 +56,11 @@ public class ProjectRESTController {
         return this.projectRepository.findAll();
     }
 
+    @GetMapping("/{projectId}")
+    String getProjectName(@PathVariable(value="projectId") int projectId) {
+        return this.projectRepository.findProjectEntityByRepoId(projectId).getRepoName();
+    }
+
     @PostMapping("/{projectId}/load")
     void load(@PathVariable() int projectId) {
         this.projectManager.findProject(projectId)
