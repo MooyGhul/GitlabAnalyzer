@@ -7,8 +7,7 @@ const LoadingSpinner = () => {
 
   return (
     <div className={classes.root}>
-      <CircularProgress className={classes.spinner}/>
-      <CircularProgress color="secondary" /> 
+      <CircularProgress className={classes.spinner}/> 
     </div>
   );
 }

@@ -5,9 +5,7 @@ import {
   Drawer, List, ListItem, 
   ListItemIcon, ListItemText,
   Container, Grid
-} from "@material-ui/core";
-import HomeIcon from "@material-ui/icons/Home"
-import InfoIcon from "@material-ui/icons/Info";
+} from "@material-ui/core"; 
 import ProjectInfoPage from './ProjectInfoPage/ProjectInfoPage';
 import {useState} from 'react';
 import UrlToken from './components/UrlToken';
@@ -15,12 +13,30 @@ import ProjectListPage from './ProjectListPage';
 import CodeContributionPage from "./components/CodeContributionsPage/CodeContributionPage";
 import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
 import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SettingsIcon from '@material-ui/icons/Settings';
+import BarChartIcon from '@material-ui/icons/BarChart';
+import GitHubIcon from '@material-ui/icons/GitHub';
 
 const useStyles = makeStyles((theme) => ({
-  drawerPaper: {width: 'inherit'},
+  drawerPaper: {
+    width: '8%',
+    backgroundColor: "#0E0824",  
+    boxShadow:"2px 2px 5px "
+  },
   link: {
     textDecoration: 'none', 
-    color: theme.palette.text.primary
+    color: "rgb(225, 225, 225)",
+  }, 
+  list :{    
+    position: "absolute",
+    top: "30%"
+  },   
+
+  icon: {
+    color:"rgb(225,225,225)",
+    display: "flex"
   }
 }));
 
@@ -40,8 +56,8 @@ const NavbarSide = (props) => {
 
   return (
     <Router>
-      <Grid container>
-      <div style={{display: 'flex'}}>
+      <Grid container >
+      <div style={{display: 'flex'}} >
         <Grid item>
           <Drawer
           style={{width:'240px'}}
@@ -50,30 +66,30 @@ const NavbarSide = (props) => {
           open={true}
           classes={{paper:classes.drawerPaper}}
         >
-          <List>
+          <List className={classes.list}>
             <Link to="/token" className={classes.link}>
             <ListItem button>
-              <ListItemIcon>
-                <HomeIcon />
+              <ListItemIcon className={classes.icon}>
+                <GitHubIcon />
               </ListItemIcon>
-              <ListItemText primary={"Server"} />
+              <ListItemText primary={"Import"} />
             </ListItem>
             </Link>
 
             <Link to="/projectList" className={classes.link}>
             <ListItem button>
-              <ListItemIcon>
-                <InfoIcon />
+              <ListItemIcon className={classes.link}>
+                <ListAltIcon />
               </ListItemIcon>
-              <ListItemText primary={"Project List"} getProjectId/>
+              <ListItemText primary={"Projects"} getProjectId/>
             </ListItem>
             </Link>
 
 
             <Link to="/projectInfo/:project_id" className={classes.link}>
             <ListItem button>
-              <ListItemIcon>
-                <InfoIcon />
+              <ListItemIcon className={classes.link}>
+                <BarChartIcon />
               </ListItemIcon>
               <ListItemText primary={"Project Overview"} />
             </ListItem>
@@ -81,8 +97,8 @@ const NavbarSide = (props) => {
 
           <Link to="/overview/:project_id/:member_id/codecontribution" className={classes.link}>
             <ListItem button>
-              <ListItemIcon>
-                <InfoIcon />
+              <ListItemIcon className={classes.link}>
+                <AccountCircleIcon />
               </ListItemIcon>
               <ListItemText primary={"Member Overview"} />
             </ListItem>
@@ -90,10 +106,10 @@ const NavbarSide = (props) => {
 
           <Link to="/Configurations" className={classes.link}>
             <ListItem button>
-              <ListItemIcon>
-                <InfoIcon />
+              <ListItemIcon className={classes.link}>
+                <SettingsIcon />
               </ListItemIcon>
-              <ListItemText primary={"Configurations"} />
+              <ListItemText primary={"Settings"} />
             </ListItem>
             </Link>
           </List>
