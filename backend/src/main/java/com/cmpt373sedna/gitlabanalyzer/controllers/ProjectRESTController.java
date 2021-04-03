@@ -39,7 +39,6 @@ public class ProjectRESTController {
         this.projectManager.setProjectToken(token);
     }
 
-//    "http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer"
     @PostMapping("/add")
     @Deprecated
     void addProject(@RequestParam String url) {
