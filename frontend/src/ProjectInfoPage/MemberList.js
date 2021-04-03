@@ -35,7 +35,7 @@ function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChan
         <DataGrid
           rows={rows}
           columns={columns}
-          pageSize={5}
+          pageSize={10}
           onRowClick={(e) => buttonClickHandler(e)}
         />
       </div>

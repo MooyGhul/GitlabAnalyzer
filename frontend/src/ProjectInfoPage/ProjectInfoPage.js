@@ -1,5 +1,4 @@
-import WideHeader from "./WideHeader/WideHeader";
-import axios from "axios";
+ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import AllProjectInfo from "./AllProjectInfo";
@@ -40,8 +39,9 @@ function ProjectInfoPage(props) {
 
   return (
     <div>
-      <WideHeader id={projectId} projectName={projectName} />
-      <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>
+      {/* <WideHeader id={projectId} projectName={projectName} /> */}
+      <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>      
+
     </div>
   );
 }

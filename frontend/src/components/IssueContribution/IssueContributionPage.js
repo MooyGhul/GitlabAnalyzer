@@ -50,7 +50,7 @@ const IssueContributionPage = () => {
   }, [project_id, member_id, setGraphData]);
 
   return (
-    <Grid container spacing={5} justify="center" alignItems="center">
+    <Grid container spacing={5} justify="center" alignItems="center" className={classes.container}>
       <Grid item xs={12}>
         <Grid item xs={12}>
           <Banner memberName={member_id} />
