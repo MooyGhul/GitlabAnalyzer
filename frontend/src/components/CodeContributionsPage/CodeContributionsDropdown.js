@@ -10,15 +10,17 @@ const CodeContributionsDropdown = (props) => {
     return (
         <Fragment>
           <TableRow>
-          <TableCell style={{width: 200}} align="left">
-            <Button variant="outlined" color="primary" href={row.url} target="_blank" rel="noreferrer noopener">
-              Link &nbsp;
-              <LinkIcon />
-            </Button>
-          </TableCell>
-          <TableCell>{row.date}</TableCell>
-          <TableCell>{row.name}</TableCell>
-          <TableCell>{row.score}</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell style={{width: 200}} align="left">
+              <Button variant="outlined" color="primary" href={row.url} target="_blank" rel="noreferrer noopener">
+                Link &nbsp;
+                <LinkIcon />
+              </Button>
+            </TableCell>
+            <TableCell>{row.date}</TableCell>
+            <TableCell>{row.name}</TableCell>
+            <TableCell>{row.score}</TableCell>
           </TableRow>
         </Fragment>
     )
