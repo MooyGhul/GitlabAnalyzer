@@ -8,7 +8,6 @@ import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
-import Navbar from "../Navbar/Navbar";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"
 import {formatTableDate, getGraphData} from "../../helper";
@@ -151,9 +150,6 @@ const CodeContributionPage = () => {
   return (
     <Grid container spacing={5} justify="center" alignItems="center" className={classes.container}>
       <Grid item xs={12}>
-        <Grid item xs={12}>
-          <Navbar />
-        </Grid>
         <Grid item xs={12}>
           <Banner memberName={member_id} />
         </Grid>
