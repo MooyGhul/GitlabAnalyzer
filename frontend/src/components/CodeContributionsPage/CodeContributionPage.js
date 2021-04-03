@@ -20,7 +20,11 @@ const CodeContributionPage = () => {
   const innerNavStyle = useInnerNavStyle();
   const [graphData, setGraphData] = useState([]);
 
-  const createData = (id, type, date, name, url, score) => {
+  const createMRData = (id, iid, type, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
+    return {id, iid, type, date, name, url, mrScore, totalCommitScore, relatedCommits};
+  }
+
+  const createCommitData = (id, type, date, name, url, score) => {
     return {id, type, date, name, url, score};
   }
 
@@ -35,11 +39,11 @@ const CodeContributionPage = () => {
       let commitCountsData = [];
       let mrCountsData = [];
 
-      formatData(commitData, commitArray, mrArray);
-      formatData(mrData, commitArray, mrArray);
+      formatData(mrData, mrArray, commitData, commitArray);
+      console.log(mrArray);
 
-      const commitCounts = getGraphData(commitArray, "date");
-      const mrCounts = getGraphData(mrArray, "date");
+      const commitCounts = getGraphData(commitData, "commitDate");
+      const mrCounts = getGraphData(mrData, "mergedAt");
       for(let i = 0; i < commitCounts.length; i++) {
         commitCountsData.push(createGraphData(commitCounts[i].year, 0, commitCounts[i].data));
       }
@@ -60,43 +64,38 @@ const CodeContributionPage = () => {
       setCodeContributionRows(ccArray);
     };
 
-    const formatData = (dataType, commitArray, mrArray) => {
-      for (let i = 0; i < dataType.length; i++) {
-        let dataTypeIndex = dataType[i];
-        const isCommitData = dataTypeIndex.hasOwnProperty('commitId');
-        const isMergedMRData = !isCommitData && (dataTypeIndex.status === 'merged');
+    const formatData = (mrData, mrArray, commitData, commitArray) => {
 
-        if (isCommitData || isMergedMRData) {
-          let id;
-          let date;
-          let name;
-          let type;
+      for(let mrDataIndex = 0; mrDataIndex < mrData.length; mrDataIndex++) {
 
-          if (isCommitData) {
-            id = dataTypeIndex.commitId;
-            type = 'commit'
-            date = new Date(dataTypeIndex.commitDate);
-            name = dataTypeIndex.commitName;
-          } else if (isMergedMRData) {
-            id = dataTypeIndex.id;
-            type = 'MR'
-            date = new Date(dataTypeIndex.mergedAt);
-            name = dataTypeIndex.mergeRequestName;
-          }
+        const relatedCommitIds = commitData.filter(val => {
+          return mrData[mrDataIndex].commitIds.includes(val.commitId);
+        });
 
-          const newData = createData(id,
-            type,
-            '' + formatTableDate(date),
-            name,
-            dataTypeIndex.url,
+        let relatedCommitsArray = [];
+        for(let relatedCommitIndex = 0; relatedCommitIndex < relatedCommitIds.length; relatedCommitIndex++){
+          const commitDate = new Date(relatedCommitIds[relatedCommitIndex].commitDate);
+          const newCommitData = createCommitData(relatedCommitIds[relatedCommitIndex].commitId,
+            'commit',
+            '' + formatTableDate(commitDate),
+            relatedCommitIds[relatedCommitIndex].commitName,
+            relatedCommitIds[relatedCommitIndex].url,
             ComingSoonMsg.msg);
-
-          if (newData.type === 'commit') {
-            commitArray.push(newData);
-          } else if (newData.type === 'MR') {
-            mrArray.push(newData);
-          }
+          relatedCommitsArray.push(newCommitData);
         }
+
+        const mrDate = new Date(mrData[mrDataIndex].mergedAt);
+        const newMrData = createMRData(mrData[mrDataIndex].id,
+          mrData[mrDataIndex].iid,
+          'MR',
+          '' + formatTableDate(mrDate),
+          mrData[mrDataIndex].mergeRequestName,
+          mrData[mrDataIndex].url,
+          ComingSoonMsg.msg,
+          ComingSoonMsg.msg,
+          relatedCommitsArray);
+
+        mrArray.push(newMrData);
       }
     }
 
@@ -115,7 +114,7 @@ const CodeContributionPage = () => {
       merged.sort((a,b) => {
         let dateA = new Date(a.year);
         let dateB = new Date(b.year);
-        return dateB - dateA;
+        return dateA - dateB;
       });
 
       return merged;
@@ -145,8 +144,8 @@ const CodeContributionPage = () => {
       console.log('Failed retrieve data');
     });
   },[project_id, member_id]);
-  console.log(graphData);
-  console.log(codeContributionRows);
+  // console.log(graphData);
+  // console.log(codeContributionRows);
 
   return (
     <Grid container spacing={5} justify="center" alignItems="center">
