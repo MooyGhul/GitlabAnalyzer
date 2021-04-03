@@ -12,8 +12,12 @@ import {
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 
-const Row = ({row, deleteButton}) => {
+const Row = ({row, deleteRow}) => {
     const classes = useStyles();
+
+    const handleDelete = () => {
+        deleteRow(row.iterationName)
+    }
 
     return (
         <TableRow key={row.name} hover={true}>
@@ -21,7 +25,7 @@ const Row = ({row, deleteButton}) => {
             <TableCell align="center">{row.startDate}</TableCell>
             <TableCell align="center">{row.endDate}</TableCell>
             <TableCell align="center">
-                <Button variant="contained" component="span" className={classes.deleteButton} onClick={deleteButton} size="small">Delete</Button>
+                <Button variant="contained" component="span" className={classes.deleteButton} onClick={handleDelete} size="small">Delete</Button>
             </TableCell>
         </TableRow>
     )

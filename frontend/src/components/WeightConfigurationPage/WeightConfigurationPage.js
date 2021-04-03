@@ -98,15 +98,7 @@ const WeightConfigurationPage = () => {
                         </TableHead>
                         <TableBody>
                             {iterDates.map((row) => (
-                                //<Row key={iterationDates.iterationName} deleteButton={DeleteRow} row={iterationDates}/>
-                                <TableRow key={row.name} hover={true}>
-                                    <TableCell align="center">{row.iterationName}</TableCell>
-                                    <TableCell align="center">{row.startDate}</TableCell>
-                                    <TableCell align="center">{row.endDate}</TableCell>
-                                    <TableCell align="center">
-                                        <Button variant="contained" component="span" className={classes.deleteButton} onClick={DeleteRow} size="small">Delete</Button>
-                                    </TableCell>
-                                </TableRow>
+                                <Row key={row.iterationName} deleteRow={DeleteRow} row={row}/>
                             ))}
                         </TableBody>
                     </Table>
