@@ -30,6 +30,25 @@ const useStyles = makeStyles((theme) => ({
         hover: {
             color: "#7553ff",
         }
+    },
+    button: {
+        justifyContent: 'center',
+        textAlign: 'center',
+        justify: 'center'
+    },
+    minusButton: {
+        color: 'rgb(255,0,100)',
+    },
+    plusButton: {
+        color: 'rgb(0,200,255)',
+    },
+    saveButton: {
+        color: 'rgb(255,255,255)',
+        backgroundColor: '#7553ff',
+    },
+    addIterationButton: {
+        color: 'rgb(255,255,255)',
+        backgroundColor: 'rgb(255,180,0)',
     }
 }));
 

@@ -10,6 +10,7 @@ import {
     Table,
     TextField,
     IconButton,
+    Button,
   } from "@material-ui/core";
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
@@ -27,16 +28,14 @@ const WeightConfigurationPage = () => {
 
     const displayIcon = (selected) => {
         if(selected) {
-            return (<IndeterminateCheckBoxIcon />);
+            return (<IndeterminateCheckBoxIcon className={classes.minusButton}/>);
         }
         else {
-            return(<AddBoxIcon/>);
+            return(<AddBoxIcon className={classes.plusButton}/>);
         }
     }
 
-    
-
-    const CreateFileTypeWeightsInputs = (fileType) => {
+    const CreateFileTypeWeightInput = (fileType) => {
         const [selected, setSelected] = React.useState(true); 
 
         const onSelectionClick = () => {
@@ -45,8 +44,8 @@ const WeightConfigurationPage = () => {
     
         return (
             <React.Fragment>
-                <IconButton className={classes.minusButton} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
-                <TextField id={fileType} label={fileType} variant="outlined" type="number"></TextField>
+                <IconButton className={classes.button} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
+                <TextField id={fileType} label={fileType} disabled={!selected} variant="outlined" type="number"></TextField>
             </React.Fragment>
         );
     }
@@ -65,6 +64,11 @@ const WeightConfigurationPage = () => {
             </Grid>
             <Grid item xs={3}>
                 <Typography className={classes.pageTitle}>Insert date picker</Typography>
+                <Grid container justify="flex-end" direction="row">
+                    <Grid item xs={10}>
+                        <Button variant="contained" component="span" className={classes.addIterationButton} size="large">+ Add Iteration</Button>
+                    </Grid>
+                </Grid>
             </Grid>
             <Grid item xs={7} >
                 <Typography className={classes.subHeader}>Saved Iterations</Typography>
@@ -93,6 +97,13 @@ const WeightConfigurationPage = () => {
                 </TableContainer>
             </Grid>
             <Grid item xs={10}>
+                <Grid container justify="flex-end" direction="row">
+                    <Grid item xs={1}>
+                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save</Button>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid item xs={10}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <form className={classes.root} noValidate autoComplete="off">
@@ -104,14 +115,20 @@ const WeightConfigurationPage = () => {
                 <Typography className={classes.subHeader1}>Configure Weights by File Type</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={5}>
-                <form className={classes.root} noValidate autoComplete="off">
-                    {fileTypes.map((fileType) => (
-                        CreateFileTypeWeightsInputs(fileType)
-                    ))}
-                </form>
+                    <form className={classes.root} noValidate autoComplete="off">
+                        {fileTypes.map((fileType) => (
+                            CreateFileTypeWeightInput(fileType)
+                        ))}
+                    </form>  
                 </Grid>
             </Grid>
-
+            <Grid item xs={10}>
+                <Grid container justify="flex-end" direction="row">
+                    <Grid item xs={10}>
+                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save</Button>
+                    </Grid>
+                </Grid>
+            </Grid>
         </Grid>
     );
 }
