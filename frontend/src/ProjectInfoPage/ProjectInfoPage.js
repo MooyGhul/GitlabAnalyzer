@@ -70,12 +70,11 @@ members.forEach((member) => {
 });
 
 console.log(projectName);
-
+console.log(props.projectSelected)
 
   return (
     <div>
-      {/* <WideHeader id={projectId} projectName={projectName} /> */}
-      {/* <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>       */}
+    
       <div className={classes.body}>
       <div className={classes.barChart}>
         <StackedBarChart

@@ -28,13 +28,18 @@ const NavbarSide = (props) => {
   const classes = useStyles();
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
-  const [sidebar, setSidebar] = useState(false); 
+  const [sidebar, setSidebar] = useState(false);
+  const [userSelected, setUserSelected] = useState(false);
+  const [projectSelected, setProjectSelected] = useState(false);  
+
   const toggle = () => {
     setSidebar(!sidebar); 
   };
 
   const handleMemberIDChange = (newMemberId) => {
     setMemberId(newMemberId);
+    setUserSelected(true);
+    console.log("User has been selected")
   };
 
   const handleProjectIDChange = (newProjectId) => {
@@ -43,6 +48,7 @@ const NavbarSide = (props) => {
         newProjectId
     );
     setProjectId(newProjectId);
+    setProjectSelected(true);
   };
 
   return (
@@ -114,7 +120,8 @@ const NavbarSide = (props) => {
             <Switch>
               <Route exact path="/token">
                 <Container>
-                  <UrlToken />
+                  <UrlToken 
+                  />
                 </Container>
               </Route>
 
@@ -124,23 +131,25 @@ const NavbarSide = (props) => {
                 </Container>
               </Route>
 
-              <Route exact path="/projectInfo/:project_id">
+              <Route exact path={`/projectInfo/${project_id}`}>
                 <Grid container>
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
                     project_id={project_id}
+                    projectSelected={projectSelected}
                   />
                 </Grid>
               </Route>
 
               <Route
                 exact
-                path="/overview/:project_id/:member_id/codecontribution"
+                path={`/overview/:project_id/${member_id}/codecontribution`}
               >
                 <Container>
                   <CodeContributionPage
                     project_id={project_id}
-                    member_id={member_id}
+                    member_id={member_id} 
+                    userSelected={userSelected}
                   />
                 </Container>
               </Route>
