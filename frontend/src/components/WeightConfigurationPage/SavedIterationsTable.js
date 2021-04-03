@@ -12,8 +12,7 @@ import {
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 
-const Row = (props) => {
-    const {row} = props;
+const Row = ({row, deleteButton}) => {
     const classes = useStyles();
 
     return (
@@ -22,7 +21,7 @@ const Row = (props) => {
             <TableCell align="center">{row.startDate}</TableCell>
             <TableCell align="center">{row.endDate}</TableCell>
             <TableCell align="center">
-                <Button variant="contained" component="span" className={classes.deleteButton} size="small">Delete</Button>
+                <Button variant="contained" component="span" className={classes.deleteButton} onClick={deleteButton} size="small">Delete</Button>
             </TableCell>
         </TableRow>
     )

@@ -25,6 +25,8 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 const WeightConfigurationPage = () => {
     const classes = useStyles();
     const fileTypes = mockFileTypes;
+    var iterationDates = mockIterationsDates;
+    const [iterDates, setIterDates] = useState(mockIterationsDates);
 
     const displayIcon = (selected) => {
         if(selected) {
@@ -48,6 +50,11 @@ const WeightConfigurationPage = () => {
                 <TextField id={fileType} label={fileType} disabled={!selected} variant="outlined" type="number"></TextField>
             </React.Fragment>
         );
+    }
+
+    const DeleteRow = (rowName) => {
+        var filteredIterations = iterDates.filter(iterDate => iterDate.iterationName != rowName);
+        setIterDates(filteredIterations);
     }
 
     return (
@@ -90,8 +97,16 @@ const WeightConfigurationPage = () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {mockIterationsDates.map((iterationDates) => (
-                                <Row key={iterationDates.iterationName} row={iterationDates}/>
+                            {iterDates.map((row) => (
+                                //<Row key={iterationDates.iterationName} deleteButton={DeleteRow} row={iterationDates}/>
+                                <TableRow key={row.name} hover={true}>
+                                    <TableCell align="center">{row.iterationName}</TableCell>
+                                    <TableCell align="center">{row.startDate}</TableCell>
+                                    <TableCell align="center">{row.endDate}</TableCell>
+                                    <TableCell align="center">
+                                        <Button variant="contained" component="span" className={classes.deleteButton} onClick={DeleteRow} size="small">Delete</Button>
+                                    </TableCell>
+                                </TableRow>
                             ))}
                         </TableBody>
                     </Table>
