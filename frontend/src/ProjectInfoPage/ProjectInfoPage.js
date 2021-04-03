@@ -69,6 +69,8 @@ members.forEach((member) => {
   MRsArray.push(count);
 });
 
+console.log(projectName);
+
 
   return (
     <div>
