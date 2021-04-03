@@ -4,7 +4,6 @@ import TableCell from "@material-ui/core/TableCell";
 import IconButton from "@material-ui/core/IconButton";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import {Avatar} from "@material-ui/core";
 import Collapse from "@material-ui/core/Collapse";
 import Box from "@material-ui/core/Box";
 import * as PropTypes from "prop-types";
@@ -40,10 +39,6 @@ const CodeContributionRow = (props) => {
                               : <ExpandMore className={classes.dropDownIcon} />}
           </IconButton>
         </TableCell>
-        <TableCell className={classes.smallCell} align="left" component='th' scope='row'>
-          {row.type === "MR" ? <Avatar className={classes.mrIcon}>M</Avatar>
-                            : <Avatar className={classes.cIcon}>C </Avatar> }
-        </TableCell>
         <TableCell style={{width: 200}} align="left">
           <Button variant="outlined" color="primary" href={row.url} target="_blank" rel="noreferrer noopener">
              Link &nbsp;
@@ -59,14 +54,12 @@ const CodeContributionRow = (props) => {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0, background: '#f1f0fc' }} colSpan={7}>
           <Collapse in={isOpen()} timeout="auto" unmountOnExit>
             <Box margin={1}>
-              <h2>
-                Commits
-              </h2>
               <Table size="small">
                 <TableHead>
+                  <h2>
+                    Commits
+                  </h2>
                   <TableRow>
-                    {/*//remove one of these below after removing column: type in main table*/}
-                    <TableCell className={classes.banner} />
                     <TableCell className={classes.banner}/>
                     {columns.map((column) => (
                       <TableCell className={classes.banner} key={column.id}>

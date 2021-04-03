@@ -27,7 +27,12 @@ export const useTableStyles = makeStyles({
     backgroundColor: "#7553ff",
     width: "8%",
     color: "white"
-  }
+  },
+  mrIcon: {
+    color: "white",
+    background: "#fc8053",
+    marginRight: "2vw",
+  },
 });
 
 export const usePaginationStyle = makeStyles((theme) => ({
@@ -46,34 +51,18 @@ export const useRowStyles = makeStyles({
       borderBottom: "unset",
     },
   },
+  banner: {
+    background: "#d1d0ff",
+    fontWeight: "bold",
+    fontSize: "1.0rem",
+  },
   cell: {
     width: 200,
   },
   smallCell: {
     width: 50,
   },
-
-  mrIcon: {
-    color: "white",
-    background: "#fc8053",
-    marginRight: "2vw",
-
-  },
-  cIcon: {
-    color: "white",
-    background: "#6179ff",
-    marginRight: "2vw",
-
-  },
   dropDownIcon: {
     background: "white",
   },
 });
-
-export const useDropDownStyles = makeStyles({
-  banner: {
-    // background: "#d1d0ff",
-    fontWeight: "bold",
-    fontSize: "1.0rem",
-  },
-})

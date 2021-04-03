@@ -10,8 +10,7 @@ const CodeContributionsDropdown = (props) => {
     return (
         <Fragment>
           <TableRow>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell/>
             <TableCell style={{width: 200}} align="left">
               <Button variant="outlined" color="primary" href={row.url} target="_blank" rel="noreferrer noopener">
                 Link &nbsp;
