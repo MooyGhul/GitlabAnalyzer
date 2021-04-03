@@ -30,7 +30,7 @@ const NavbarSide = (props) => {
   const [project_id, setProjectId] = useState(-1);
   const [sidebar, setSidebar] = useState(false);
   const [userSelected, setUserSelected] = useState(false);
-  const [projectSelected, setProjectSelected] = useState(false);  
+  const [projectSelected, setProjectSelected] = useState(-1);  
 
   const toggle = () => {
     setSidebar(!sidebar); 
@@ -49,7 +49,7 @@ const NavbarSide = (props) => {
     );
     setProjectId(newProjectId);
     setProjectSelected(true);
-  };
+  }; 
 
   return (
     <Router>
@@ -83,7 +83,8 @@ const NavbarSide = (props) => {
                   </ListItem>
                 </Link>
 
-                <Link to="/projectInfo/:project_id" className={classes.link}>
+                <Link className={classes.link}
+                 to={{pathname: "/projectInfo/:project_id"}}>
                   <ListItem button>
                     <ListItemIcon className={classes.link}>
                       <BarChartIcon />
@@ -94,7 +95,7 @@ const NavbarSide = (props) => {
 
                 <Link
                   to="/overview/:project_id/:member_id/codecontribution"
-                  className={classes.link}
+                  className={classes.link} 
                 >
                   <ListItem button>
                     <ListItemIcon className={classes.link}>
@@ -131,19 +132,19 @@ const NavbarSide = (props) => {
                 </Container>
               </Route>
 
-              <Route exact path={`/projectInfo/${project_id}`}>
+              <Route exact path={`/projectInfo/:project_id`}>
                 <Grid container>
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
                     project_id={project_id}
-                    projectSelected={projectSelected}
+                    projectSelected={projectSelected} 
                   />
                 </Grid>
               </Route>
 
               <Route
                 exact
-                path={`/overview/:project_id/${member_id}/codecontribution`}
+                path={`/overview/:project_id/:member_id/codecontribution`}
               >
                 <Container>
                   <CodeContributionPage

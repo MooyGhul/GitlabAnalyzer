@@ -9,7 +9,7 @@ import useFullPageLoader from "../components/useFullPageLoader"
 
 function ProjectInfoPage(props) {
   const location = useLocation();
-  const projectId = props.project_id===-1 ? location.state.id : props.project_id;
+  const projectId = props.project_id===-1 ? location.state.id : location.state.id ;
   const [projectName] = useState("");
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
@@ -19,6 +19,8 @@ function ProjectInfoPage(props) {
   let MRsArray = [];
   const classes = useStyles()
   
+
+  console.log(props)
   useEffect(() => {
     const fetchData = async () => {
       showLoader();
@@ -69,12 +71,11 @@ members.forEach((member) => {
   MRsArray.push(count);
 });
 
-console.log(projectName);
-console.log(props.projectSelected)
 
   return (
     <div>
-    
+      {/* <WideHeader id={projectId} projectName={projectName} /> */}
+      {/* <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>       */}
       <div className={classes.body}>
       <div className={classes.barChart}>
         <StackedBarChart
