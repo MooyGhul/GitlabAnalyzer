@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     header: {
       position: "fixed",
       color: "white",
-      backgroundColor: "#211550",
+      backgroundColor: "#0E0824",
       padding: "1vh 0 1vh 0",
       fontSize: "20px",
       textAlign: "center",
@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
       top: "0",
       left: "0",
       zIndex: "10000",
+      boxShadow: "2px 2px 5px #0E0824 ", 
     },
   
     menuIcon: {
@@ -46,6 +47,6 @@ const useStyles = makeStyles((theme) => ({
       cursor: "pointer"
     },
   }));
-  
+
   export default useStyles;
   

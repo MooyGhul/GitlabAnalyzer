@@ -2,8 +2,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   body: {
-    // left: "20%",
-    // width: "80%",
+    textAlign:"center"
   },
 
   memberList: {
@@ -15,9 +14,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   barChart: {
-    position: "absolute",
-    bottom: "5%",
-    top: "5%",
+    position: "absolute", 
+    top: "10%",
     width: "40%",
     height: "50%",
     left: "25%",

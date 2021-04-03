@@ -1,5 +1,4 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react"; 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   Drawer,
@@ -54,10 +53,8 @@ const NavbarSide = (props) => {
       <Grid container>
         <div style={{ display: "flex" }}>
           <Grid item>
-            <Drawer
-              style={{ width: "240px" }}
-              variant="persistent"
-              anchor="left"
+            <Drawer 
+              variant="persistent" 
               open={sidebar}
               classes={{ paper: classes.drawerPaper }}
             >

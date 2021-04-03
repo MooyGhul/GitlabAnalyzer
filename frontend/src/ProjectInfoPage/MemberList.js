@@ -1,6 +1,6 @@
 import { DataGrid } from "@material-ui/data-grid";
 import { useHistory } from "react-router-dom"; 
-import { useStyles } from "./AllProjectInfoStyle";
+import { useStyles } from "./ProjectInfoStyle";
 
 function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChange}){
     const history = useHistory();
