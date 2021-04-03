@@ -107,9 +107,17 @@ const WeightConfigurationPage = () => {
             <Grid item xs={10}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
+                <Grid item xs={10}>
+                    <form className={classes.root} noValidate autoComplete="off">
+                        <TextField id="ConfigName" label="Configuration Name" variant="outlined"></TextField>
+                    </form>
+                </Grid>
                 <form className={classes.root} noValidate autoComplete="off">
                     <TextField id="MR" label="Merge Request Weight" variant="outlined" type="number"></TextField>
                     <TextField id="Commit" label="Commit Weight" variant="outlined" type="number"></TextField>
+                    <TextField id="Line" label="Line of Code" variant="outlined" type="number"></TextField>
+                    <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number"></TextField>
+                    <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number"></TextField>
                 </form>
             </Grid>
             <Grid item xs={10}>
