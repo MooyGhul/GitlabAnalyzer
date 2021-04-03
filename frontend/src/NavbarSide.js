@@ -23,60 +23,13 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import GitHubIcon from "@material-ui/icons/GitHub"; 
 import MenuIcon from "@material-ui/icons/Menu";
-
-const useStyles = makeStyles((theme) => ({
-  drawerPaper: {
-    position: "fixed",
-    width: "14%",
-    backgroundColor: "#0E0824",
-    boxShadow: "2px 2px 5px ", 
-  },
-  link: {
-    textDecoration: "none",
-    color: "rgb(225, 225, 225)",
-  },
-  list: {
-    position: "absolute",
-    top: "30%",
-  },
-
-  icon: {
-    color: "rgb(225,225,225)",
-    display: "flex",
-  },
- 
-
-  header: {
-    position: "fixed",
-    color: "white",
-    backgroundColor: "#211550",
-    padding: "1vh 0 1vh 0",
-    fontSize: "20px",
-    textAlign: "center",
-    width: "100%",
-    margin: "0",
-    top: "0",
-    left: "0",
-    zIndex: "10000",
-  },
-
-  menuIcon: {
-    position: "absolute",
-    zIndex: "20000",
-    color: "rgba(236, 236, 236, 0.74)",
-    left: "1%",
-    width: "2%",
-    height: "auto",
-    cursor: "pointer"
-  },
-}));
+import useStyles from "./style/NavbarSideStyle";
 
 const NavbarSide = (props) => {
   const classes = useStyles();
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
-  const [sidebar, setSidebar] = useState(false);
-
+  const [sidebar, setSidebar] = useState(false); 
   const toggle = () => {
     setSidebar(!sidebar); 
   };
