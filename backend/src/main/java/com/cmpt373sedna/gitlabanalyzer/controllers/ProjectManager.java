@@ -52,7 +52,8 @@ public class ProjectManager {
                 .url(baseUrl)
                 .build();
 
-        ProjectEntity projectEntity = this.extractor.getProject(config, projectId);
+        ProjectEntity projectEntity = ProjectEntity.fromGitlabJSON(this.extractor.getProject(config, projectId));
+
 
         ProjectController p = new ProjectController(this.extractor, config, projectEntity);
         p.load();

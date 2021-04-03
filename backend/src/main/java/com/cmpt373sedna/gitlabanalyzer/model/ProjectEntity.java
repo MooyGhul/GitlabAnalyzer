@@ -2,6 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.model;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import org.json.JSONObject;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,6 +25,13 @@ public class ProjectEntity {
         this.numMR = numMR;
         this.numComments = numComments;
 
+    }
+
+    public static ProjectEntity fromGitlabJSON(JSONObject json) {
+        return ProjectEntity.builder()
+                .repoId(json.getInt("id"))
+                .repoName(json.getString("name"))
+                .build();
     }
 
     public ProjectEntity() {
