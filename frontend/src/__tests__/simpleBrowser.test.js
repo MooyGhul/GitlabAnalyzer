@@ -13,11 +13,10 @@ describe('Simple Browser Tests', () => {
     await expect(page).toFill('#password', '1234');
     await expect(page).toClick('#login');
     await expect(page).toMatch('Server information');
-
     await expect(page).toFill('#url', `${GITLAB_HOST}root/naufal-276`);
     await expect(page).toFill('#token', 'XQUSyUSDiQUxsy6CoP8_');
     await expect(page).toClick('#create-config');
-    await expect(page).toMatch('Project List', { timeout: 60000 });
+    await expect(page).toMatch('Project Name', { timeout: 60000 });
 
     const row = await expect(page).toMatchElement('.MuiDataGrid-row', { text: 'naufal-276' });
     const checkbox = await row.$('input[type="checkbox"]');

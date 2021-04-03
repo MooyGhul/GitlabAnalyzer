@@ -16,7 +16,6 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import Banner from "../Banner";
 import CommentRow from "./CommentRow";
-import Navbar from "../Navbar/Navbar";
 import {getGraphData} from "../../helper";
 import useStyles from "../../style/CommentContributionPageStyles";
 import TablePaginationActions from "../TablePaginationActions";
@@ -68,9 +67,6 @@ const CommentContributionPage = (props) => {
   return (
     <Grid container spacing={5} justify="center" alignItems="center">
       <Grid item xs={12}>
-        <Grid item xs={12}>
-          <Navbar />
-        </Grid>
         <Grid item xs={12}>
           <Banner memberName={member_id} />
         </Grid>
