@@ -9,6 +9,7 @@ import {
     TableBody,
     Table,
     TextField,
+    IconButton,
   } from "@material-ui/core";
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
@@ -17,14 +18,36 @@ import {useInnerNavStyle} from "../../style/InnerNavStyle";
 import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
 import mockFileTypes from "../../mockDataDir/mockFileTypes";
+import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
     const fileTypes = mockFileTypes;
 
-    const createFileTypeWeightsInputs = (fileType) => {
+    const displayIcon = (selected) => {
+        if(selected) {
+            return (<IndeterminateCheckBoxIcon />);
+        }
+        else {
+            return(<AddBoxIcon/>);
+        }
+    }
+
+    
+
+    const CreateFileTypeWeightsInputs = (fileType) => {
+        const [selected, setSelected] = React.useState(true); 
+
+        const onSelectionClick = () => {
+            setSelected(!selected); 
+        }
+    
         return (
-            <TextField id="Commit" label={fileType} variant="outlined" type="number"></TextField>
+            <React.Fragment>
+                <IconButton className={classes.minusButton} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
+                <TextField id={fileType} label={fileType} variant="outlined" type="number"></TextField>
+            </React.Fragment>
         );
     }
 
@@ -80,11 +103,13 @@ const WeightConfigurationPage = () => {
             <Grid item xs={10}>
                 <Typography className={classes.subHeader1}>Configure Weights by File Type</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
+                <Grid item xs={5}>
                 <form className={classes.root} noValidate autoComplete="off">
                     {fileTypes.map((fileType) => (
-                        createFileTypeWeightsInputs(fileType)
+                        CreateFileTypeWeightsInputs(fileType)
                     ))}
                 </form>
+                </Grid>
             </Grid>
 
         </Grid>
