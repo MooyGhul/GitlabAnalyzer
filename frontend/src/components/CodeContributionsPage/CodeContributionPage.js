@@ -30,14 +30,12 @@ const CodeContributionPage = (props) => {
   const createGraphData = (year, MRDaily, CommitDaily) => {
     return { year, MRDaily, CommitDaily };
   };
-
-  // console.log("PROPS", props);
+ 
   console.log("HERE IS THE MEMBER ID", member_id)
   useEffect(() => {
     const defined = () => {
       if (project_id === -1) {
-        showErrorPage();
-        // if project has been selected, but user clicked member overview right away
+        showErrorPage(); 
       } 
       else if (member_id === -1) {
         try {
@@ -53,17 +51,6 @@ const CodeContributionPage = (props) => {
         setProjectId(props.project_id);
         setMemberId(props.member_id);
       }
-      
-      
-      // else {
-          // try {
-          //   setProjectId(location.state.project_id);
-          //   setMemberId(location.state.member_id);
-          // } catch (err) {
-          //   setProjectId(props.project_id);
-          //   setMemberId(props.member_id);
-          // } 
-      // }
     };
 
     const codeContributionData = (commitData, mrData) => {
