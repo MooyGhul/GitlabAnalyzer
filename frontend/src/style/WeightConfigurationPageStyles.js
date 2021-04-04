@@ -2,9 +2,12 @@ import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        marginTop: '3%',
+    },
+    textField: {
         '& .MuiTextField-root': {
           margin: theme.spacing(1),
-          width: '25ch',
+          width: '13rem',
         },
       },
     pageTitle: {

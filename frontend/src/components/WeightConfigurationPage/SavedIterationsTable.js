@@ -6,9 +6,10 @@ import {
 import React from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 
-const Row = ({row, deleteRow}) => {
+const Row = (props) => {
     const classes = useStyles();
-
+    const row = props.row;
+    const deleteRow = props.deleteRow;
     const handleDelete = () => {
         deleteRow(row.iterationName)
     }

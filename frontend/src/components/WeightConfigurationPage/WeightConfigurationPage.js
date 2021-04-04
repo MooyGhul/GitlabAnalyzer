@@ -12,7 +12,7 @@ import {
     IconButton,
     Button,
   } from "@material-ui/core";
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, Fragment} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
@@ -23,10 +23,10 @@ import {useParams} from "react-router";
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
-    var {project_id} = useParams();
+    let {project_id} = useParams();
     const [fileT, setFileT] = useState([]);
     const [iterDates, setIterDates] = useState(mockIterationsDates);
-    var configData = {};
+    let configData = {};
      
     useEffect(() => {
         const fetchData = async () => {
@@ -61,20 +61,19 @@ const WeightConfigurationPage = () => {
         const textFieldId = e.target.id;
         const textFieldValue = e.target.value;
         configData[textFieldId] = textFieldValue;
-        console.log(configData);
     }
 
     const CreateFileTypeWeightInput = (fileType) => {
-        var selected = true;
+        let selected = true;
         const onSelectionClick = () => {
             selected = !selected;
         }
     
         return (
-            <React.Fragment>
+            <Fragment>
                 <IconButton className={classes.button} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
                 <TextField id={fileType} defaultValue={1} label={fileType} disabled={!selected} variant="outlined" type="number" onChange={getValueFromTextField}/>
-            </React.Fragment>
+            </Fragment>
         );
     }
 
@@ -96,13 +95,13 @@ const WeightConfigurationPage = () => {
     }
 
     const DeleteRow = (rowName) => {
-        var filteredIterations = iterDates.filter(iterDate => iterDate.iterationName != rowName);
+        let filteredIterations = iterDates.filter(iterDate => iterDate.iterationName != rowName);
         setIterDates(filteredIterations);
     }
 
     const createTextFieldsForProjectWeights = () => {
         return(
-            <form className={classes.root} noValidate autoComplete="off">
+            <form className={classes.textField} noValidate autoComplete="off">
                 <TextField id="MergeRequest" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}/>
                 <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}/>
                 <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2} onChange={getValueFromTextField}/>
@@ -113,7 +112,7 @@ const WeightConfigurationPage = () => {
     } 
 
     return (
-        <Grid container spacing={5} justify="center" alignItems="center">
+        <Grid container spacing={5} justify="center" alignItems="center" className={classes.root}>
             <Grid item xs={10}>
                 <Typography className={classes.pageTitle}> </Typography>
             </Grid>
@@ -159,7 +158,7 @@ const WeightConfigurationPage = () => {
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={10}>
-                    <form className={classes.root} noValidate autoComplete="off">
+                    <form className={classes.textField} noValidate autoComplete="off">
                         <TextField id="ConfigName" label="Configuration Name" variant="outlined" onChange={getValueFromTextField}/>
                     </form>
                 </Grid>
@@ -169,7 +168,7 @@ const WeightConfigurationPage = () => {
                 <Typography className={classes.subHeader1}>Configure Weights by File Type</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={5}>
-                    <form className={classes.root} noValidate autoComplete="off">
+                    <form className={classes.textField} noValidate autoComplete="off">
                         {fileT.map((fileType) => (
                             CreateFileTypeWeightInput(fileType)
                         ))}
