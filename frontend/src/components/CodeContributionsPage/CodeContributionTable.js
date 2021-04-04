@@ -13,9 +13,8 @@ import {useTableStyles} from '../../style/CodeContributionPageStyles';
 import ExpandAllBtn from "../ExpandAllBtn";
 
 const columns = [
-  {id: 'gitlabLink', label: 'Gitlab Link'},
-  {id: 'date', label: 'Date'},
-  {id: 'name', label: 'Name'},
+  {id: 'date', label: 'Merged Date'},
+  {id: 'name', label: 'MR Name'},
   {id: 'mrScore', label: 'MR Score'},
   {id: 'totalCommitScore', label: 'Total Commit Score'},
 ]
@@ -43,15 +42,16 @@ const CodeContributionTable = (props) => {
         <ExpandAllBtn expandAll={expandAll} setExpandAll={setExpandAll}/>
       </Grid>
       <TableContainer>
-        <Table stickyHeader className={classes.table}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell className={classes.banner}>Merge Requests</TableCell>
+              <TableCell align="left" className={classes.banner}> Merge Requests </TableCell>
               {columns.map((column) => (
-                <TableCell className={classes.banner} key={column.id}>
+                <TableCell align="left" className={classes.banner} key={column.id}>
                   {column.label}
                 </TableCell>
               ))}
+              <TableCell className={classes.banner} />
             </TableRow>
           </TableHead>
           <TableBody>

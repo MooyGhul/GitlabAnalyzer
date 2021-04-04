@@ -21,11 +21,11 @@ const CodeContributionRow = (props) => {
   const classes = useRowStyles();
   const commitContributionRows = row.relatedCommits;
   const columns = [
-    {id: 'gitlabLink', label: 'Gitlab Link'},
-    {id: 'date', label: 'Date'},
-    {id: 'name', label: 'Name'},
-    {id: 'score', label: 'Score'},
+    {id: 'date', label: 'Commit Date'},
+    {id: 'name', label: 'Commit Name'},
+    {id: 'score', label: 'Commit Score'},
   ]
+
   const isOpen = () => {
     return open || expandAll;
   }
@@ -33,22 +33,22 @@ const CodeContributionRow = (props) => {
   return (
     <Fragment>
       <TableRow className={classes.root} hover role ="checkbox" tabIndex={-1}>
-        <TableCell className={classes.smallCell}>
-          <IconButton size='small' onClick={() => setOpen(!open)}>
-            {isOpen() ? <ExpandLess className={classes.dropDownIcon} />
-                              : <ExpandMore className={classes.dropDownIcon} />}
-          </IconButton>
-        </TableCell>
         <TableCell style={{width: 200}} align="left">
           <Button variant="outlined" color="primary" href={row.url} target="_blank" rel="noreferrer noopener">
              Link &nbsp;
             <LinkIcon />
           </Button>
         </TableCell>
-        <TableCell className={classes.cell}  align="left">{row.date}</TableCell>
-        <TableCell style={{width: 600}} align="left">{row.name}</TableCell>
-        <TableCell className={classes.cell} align="left">{row.mrScore}</TableCell>
-        <TableCell className={classes.cell} align="left">{row.totalCommitScore}</TableCell>
+        <TableCell align="left">{row.date}</TableCell>
+        <TableCell align="left">{row.name}</TableCell>
+        <TableCell align="left">{row.mrScore}</TableCell>
+        <TableCell align="left">{row.totalCommitScore}</TableCell>
+        <TableCell>
+          <IconButton size='small' onClick={() => setOpen(!open)}>
+            {isOpen() ? <ExpandLess className={classes.dropDownIcon} />
+              : <ExpandMore className={classes.dropDownIcon} />}
+          </IconButton>
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0, background: '#f1f0fc' }} colSpan={7}>
@@ -56,11 +56,8 @@ const CodeContributionRow = (props) => {
             <Box margin={1}>
               <Table size="small">
                 <TableHead>
-                  <h2>
-                    Commits
-                  </h2>
                   <TableRow>
-                    <TableCell className={classes.banner}/>
+                    <TableCell className={classes.banner}> Commits </TableCell>
                     {columns.map((column) => (
                       <TableCell className={classes.banner} key={column.id}>
                         {column.label}

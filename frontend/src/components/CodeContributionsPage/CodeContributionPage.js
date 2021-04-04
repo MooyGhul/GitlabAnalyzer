@@ -144,8 +144,8 @@ const CodeContributionPage = () => {
       console.log('Failed retrieve data');
     });
   },[project_id, member_id]);
-  // console.log(graphData);
-  // console.log(codeContributionRows);
+  console.log(graphData);
+  console.log(codeContributionRows);
 
   return (
     <Grid container spacing={5} justify="center" alignItems="center">

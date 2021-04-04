@@ -1,7 +1,6 @@
 import {makeStyles} from "@material-ui/core/styles";
 
 export const useGraphStyles = makeStyles({
- 
   graph: {
     width: "60vw",
     height: "30vh",
@@ -27,12 +26,7 @@ export const useTableStyles = makeStyles({
     backgroundColor: "#7553ff",
     width: "8%",
     color: "white"
-  },
-  mrIcon: {
-    color: "white",
-    background: "#fc8053",
-    marginRight: "2vw",
-  },
+  }
 });
 
 export const usePaginationStyle = makeStyles((theme) => ({
@@ -56,13 +50,15 @@ export const useRowStyles = makeStyles({
     fontWeight: "bold",
     fontSize: "1.0rem",
   },
-  cell: {
-    width: 200,
-  },
-  smallCell: {
-    width: 50,
-  },
   dropDownIcon: {
     background: "white",
   },
+});
+
+export const useDropdownStyles = makeStyles({
+  root: {
+    "& > *": {
+      borderBottom: "unset",
+    },
+  }
 });
