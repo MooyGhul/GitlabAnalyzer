@@ -6,15 +6,12 @@ import Button from "@material-ui/core/Button";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import SearchIcon from "@material-ui/icons/Search";
 import Scores from "../components/Scores";
-import useStyles from "../style/ScoreBoardStyles";
-import WeightDialog from "./WeightsDialog";
+import useStyles from "../style/ScoreBoardStyles"; 
 
 const ScoreBoard = (props) => {
   const [mergeRequestCount, setMergeRequestCount] = useState(0);
-  const [commitCount, setCommitCount] = useState(0);
-  const [weights, setWeights] = useState({ commitScore: 1, mrScore: 2, fileScore: 3 });
-  const classes = useStyles(props);
-  const [language, setLanguage] = useState("C++");
+  const [commitCount, setCommitCount] = useState(0); 
+  const classes = useStyles(props); 
 
   const { project_id, member_id } = useParams();
 
@@ -39,47 +36,37 @@ const ScoreBoard = (props) => {
     });
   }, [project_id, member_id]);
 
-  const handleFile = (newLanguage) => {
-    setLanguage(newLanguage);
-  };
-
   return (
-    <Grid container spacing={2}>
-      <Grid item lg={8} md={8} sm={8} className={classes.cards}>
+    <Grid container spacing={10} className={classes.scoreboardContainer}>
+      <Grid item lg={6} md={6} sm={6} className={classes.cards}>
         <Scores
           mergeRequestCount={mergeRequestCount}
-          commitCount={commitCount}
-          language={language}
-          onChange={handleFile}
-        />
+          commitCount={commitCount}  
+        />         
+        </Grid>
+
+        <Grid item lg={6} md={6} sm={6}>
+          <Grid item className={classes.buttonContainer}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Score Breakdown <SearchIcon className={classes.icon} />
+              </Button>
+              
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.button}
+              >
+                Copy Scores <FileCopyIcon className={classes.icon} />
+              </Button>
+            </Grid>
+          </Grid>
       </Grid>
 
-      <Grid item lg={4} md={4} sm={4}>
-        <Grid item className={classes.buttons}>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-            >
-              Score Breakdown <SearchIcon className={classes.icon} />
-            </Button>
-          </Grid>
-          <Grid item>
-           <WeightDialog weights={weights} setWeights={setWeights}/>
-          </Grid>
-          <Grid item>
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.button}
-            >
-              Copy Scores <FileCopyIcon className={classes.icon} />
-            </Button>
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
+ 
   );
 };
 

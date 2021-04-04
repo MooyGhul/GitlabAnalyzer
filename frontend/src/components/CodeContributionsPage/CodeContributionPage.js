@@ -54,7 +54,7 @@ const CodeContributionPage = () => {
           let dateA = new Date(a.date);
           let dateB = new Date(b.date);
           return dateB - dateA;
-        });
+        }) 
 
       setCodeContributionRows(ccArray);
     };
@@ -149,9 +149,9 @@ const CodeContributionPage = () => {
 
   return (
     <Grid container spacing={5} justify="center" alignItems="center" className={classes.container}>
-      <Grid item xs={12}>
+      <Grid item xs={12}> 
         <Grid item xs={12}>
-          <Banner memberName={member_id} />
+          <Banner memberName={member_id}/>
         </Grid>
       </Grid>
       <Grid item xs={12} align="center">
