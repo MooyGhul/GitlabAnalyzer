@@ -19,7 +19,8 @@
     {
       "new_path":"frontend.gitignore",
       "diff":"@@ -1,5 +1,8 @@\n # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.\n \n+# package-lock\n+package-lock.json\n+\n # dependencies\n /node_modules\n /.pnp\n",
-      "old_path":"frontend.gitignore"
+      "old_path":"frontend.gitignore",
+      "renamed_file": false
     }
   ]
 }

@@ -29,7 +29,7 @@ const AllProjectInfo = (props) => {
 
       const mrData = await axios.get(mrUrl);
       const commitData = await axios.get(commitUrl)
-     
+  
       setCommits(commitData.data);
       setMRs(mrData.data);
     };

@@ -32,9 +32,11 @@ function ProjectInfoPage(props) {
       .then(()=> {
         console.log('Successful data retrieval (project_id, projectName)');
       }).catch(() => {
-      console.log('Failed retrieve data (project_id, projectName)');
-    });
-  }, [projectId, members,props.project_id]);
+        console.log('Failed retrieve data (project_id, projectName)');
+      });
+// eslint-disable-next-line
+}, []);
+
 
   return (
     <div>

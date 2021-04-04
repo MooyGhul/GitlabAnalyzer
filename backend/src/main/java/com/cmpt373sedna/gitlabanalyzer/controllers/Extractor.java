@@ -111,6 +111,11 @@ public class Extractor {
                 .collect(toList());
     }
 
+    public JSONObject getRepoFileTypes(ConfigEntity config, int projectId) {
+        String response = restTemplate.getForObject(buildUri(config, projectId, "languages"), String.class);
+        return new JSONObject(response);
+    }
+
     private URI buildUri(ConfigEntity config, int projectId, String path) {
         return URI.create(config.getUrl() + "api/v4/projects/" + projectId + "/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
     }

@@ -8,13 +8,13 @@ import {
   TableBody, 
 } from "@material-ui/core";
 import Banner from "../Banner";
-import React, { useEffect, useState} from 'react';
-import useStyles from '../../style/IssueContributionPageStyles'; 
-import Row from './IssueTableDropDown'
-import axios from 'axios';
-import {getGraphData} from '../../helper';
-import BarChart from '../Charts/BarChart';
-import BarChartProperties from '../Charts/BarChartProperties';
+import React, {useEffect, useState} from "react";
+import useStyles from "../../style/IssueContributionPageStyles";
+import Row from "./IssueTableDropDown";
+import axios from "axios";
+import {getGraphData} from "../../helper";
+import BarChart from "../Charts/BarChart";
+import BarChartProperties from "../Charts/BarChartProperties";
 import {useParams} from "react-router";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"

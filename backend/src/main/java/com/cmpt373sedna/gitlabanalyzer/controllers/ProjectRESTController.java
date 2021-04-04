@@ -39,7 +39,6 @@ public class ProjectRESTController {
         this.projectManager.setProjectToken(token);
     }
 
-//    "http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer"
     @PostMapping("/add")
     @Deprecated
     void addProject(@RequestParam String url) {
@@ -55,7 +54,7 @@ public class ProjectRESTController {
     Iterable<ProjectEntity> all() {
         return this.projectRepository.findAll();
     }
-    
+
     @GetMapping("/{projectId}")
     String getProjectName(@PathVariable(value="projectId") int projectId) {
         return this.projectRepository.findProjectEntityByRepoId(projectId).getRepoName();
@@ -63,9 +62,14 @@ public class ProjectRESTController {
 
     @PostMapping("/{projectId}/load")
     void load(@PathVariable() int projectId) {
-        this.projectManager.findProject(projectId)
+        ProjectController projectController = this.projectManager.findProject(projectId)
                 .map(ProjectController::load)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        this.commitRepository.saveAll(projectController.getCommitEntities());
+        this.issueRepository.saveAll(projectController.getIssuesEntities());
+        this.commentEntityRepository.saveAll(projectController.getComments());
+        this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
     }
 
 
