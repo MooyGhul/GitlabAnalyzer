@@ -8,7 +8,6 @@ export const mockFileTypes = [
     "C",
     "TypeScript",
     "Rust",
-    "HTML",
 ]
 
 export default mockFileTypes;

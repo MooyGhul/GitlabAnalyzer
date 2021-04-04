@@ -14,20 +14,39 @@ import {
   } from "@material-ui/core";
 import React, { useEffect, useState, setState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
-import InnerNavBar from '../InnerNavBar'; 
-import {useInnerNavStyle} from "../../style/InnerNavStyle";
 import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
-import mockFileTypes from "../../mockDataDir/mockFileTypes";
 import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+import axios from "axios";
+import {useParams} from "react-router";
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
-    const fileTypes = mockFileTypes;
+    var {project_id} = useParams();
+    const [fileT, setFileT] = useState([]);
     const [iterDates, setIterDates] = useState(mockIterationsDates);
     var configData = {};
      
+    useEffect(() => {
+        const fetchData = async () => {
+          const languageResult = await axios.get(
+            process.env.NODE_ENV === "development"
+              ? `${process.env.REACT_APP_DEVHOST}/project/${project_id}/languages`
+              : `/project/${project_id}/languages`
+          );
+          setFileT(languageResult.data);
+        };
+        fetchData()
+          .then(() => {
+            console.log("Successfully obtained languages");
+          })
+          .catch((e) => {
+            console.log("Failed to obtain languages");
+            console.log(e);
+          });
+      }, [project_id, setFileT]);
+
 
     const displayIcon = (selected) => {
         if(selected) {
@@ -45,12 +64,10 @@ const WeightConfigurationPage = () => {
         console.log(configData);
     }
 
-
     const CreateFileTypeWeightInput = (fileType) => {
-        const [selected, setSelected] = React.useState(true); 
-
+        var selected = true;
         const onSelectionClick = () => {
-            setSelected(!selected); 
+            selected = !selected;
         }
     
         return (
@@ -65,11 +82,6 @@ const WeightConfigurationPage = () => {
         var filteredIterations = iterDates.filter(iterDate => iterDate.iterationName != rowName);
         setIterDates(filteredIterations);
     }
-
-    
-    const getValuesFromTextFields = () =>{
-
-    } 
 
     return (
         <Grid container spacing={5} justify="center" alignItems="center">
@@ -146,7 +158,7 @@ const WeightConfigurationPage = () => {
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={5}>
                     <form className={classes.root} noValidate autoComplete="off">
-                        {fileTypes.map((fileType) => (
+                        {fileT.map((fileType) => (
                             CreateFileTypeWeightInput(fileType)
                         ))}
                     </form>  
