@@ -63,6 +63,7 @@ function ProjectInfoPage(props) {
       setCommits(commitData.data);
       setMRs(mrData.data);
     }; 
+    defined();
     if (projectId==-1) {
       console.log("Oh no"); 
     } else {
