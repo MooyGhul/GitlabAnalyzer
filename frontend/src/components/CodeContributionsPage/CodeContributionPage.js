@@ -36,7 +36,9 @@ const CodeContributionPage = (props) => {
       if (project_id === -1) {
         showErrorPage();
       } 
-     
+      else if (member_id === -1){
+        showErrorPage();
+      }
       else {
           try {
             setProjectId(location.state.project_id);
