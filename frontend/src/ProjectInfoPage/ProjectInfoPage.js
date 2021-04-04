@@ -23,9 +23,7 @@ function ProjectInfoPage(props) {
   ] = useProjectNotSelected();
   let commitsArray = [];
   let MRsArray = [];
-  const classes = useStyles();
-  const idTest = useRef(-1);
-  // const [projectId, setProjectId] = useState(props.project_id===-1 ? location.state.id : props.project_id);
+  const classes = useStyles(); 
   const [projectId, setProjectId] = useState(props.project_id);
 
   useEffect(() => {
@@ -64,11 +62,9 @@ function ProjectInfoPage(props) {
       setMembers(result.data);
       setCommits(commitData.data);
       setMRs(mrData.data);
-    };
-    const result = defined();
-    if (result == false) {
-      console.log("Oh no");
-      console.log("projectID is now ", projectId);
+    }; 
+    if (projectId==-1) {
+      console.log("Oh no"); 
     } else {
       fetchData().then(hideLoader());
     }
