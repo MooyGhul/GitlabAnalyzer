@@ -47,7 +47,7 @@ const WeightConfigurationPage = () => {
         return (
             <React.Fragment>
                 <IconButton className={classes.button} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
-                <TextField id={fileType} label={fileType} disabled={!selected} variant="outlined" type="number"></TextField>
+                <TextField id={fileType} defaultValue={1} label={fileType} disabled={!selected} variant="outlined" type="number"></TextField>
             </React.Fragment>
         );
     }
@@ -56,6 +56,10 @@ const WeightConfigurationPage = () => {
         var filteredIterations = iterDates.filter(iterDate => iterDate.iterationName != rowName);
         setIterDates(filteredIterations);
     }
+
+    const getValuesFromTextFields = () =>{
+        
+    } 
 
     return (
         <Grid container spacing={5} justify="center" alignItems="center">
@@ -120,11 +124,11 @@ const WeightConfigurationPage = () => {
                     </form>
                 </Grid>
                 <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="MR" label="Merge Request Weight" variant="outlined" type="number"></TextField>
-                    <TextField id="Commit" label="Commit Weight" variant="outlined" type="number"></TextField>
-                    <TextField id="Line" label="Line of Code" variant="outlined" type="number"></TextField>
-                    <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number"></TextField>
-                    <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number"></TextField>
+                    <TextField id="MR" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1}></TextField>
+                    <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1}></TextField>
+                    <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2}></TextField>
+                    <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={0.2}></TextField>
+                    <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={0.2}></TextField>
                 </form>
             </Grid>
             <Grid item xs={10}>
