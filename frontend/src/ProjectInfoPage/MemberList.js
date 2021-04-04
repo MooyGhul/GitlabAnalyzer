@@ -25,8 +25,10 @@ function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChan
       ];
     
       const buttonClickHandler = (e) => {
-        console.log(e.row.id);
-        history.push( `/overview/${projectID}/${e.row.studentID}/codeContribution`);
+        let studentID = e.row.studentID
+        history.push(
+          {pathname:`/overview/${projectID}/${studentID}/codeContribution`, 
+           state: {project_id: projectID, member_id:studentID}});
         onMemberIdChange(e.row.studentID);
       };
       

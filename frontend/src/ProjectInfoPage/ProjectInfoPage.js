@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useStyles } from "./ProjectInfoStyle";
 import StackedBarChart from "./StackedBarChart";
@@ -8,9 +8,7 @@ import useFullPageLoader from "../components/useFullPageLoader";
 import useProjectNotSelected from "../components/useProjectNotSelected";
 
 function ProjectInfoPage(props) {
-  const location = useLocation();
-
-  // const projectId = useRef();
+  const location = useLocation(); 
   const [projectName] = useState("");
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
@@ -18,8 +16,7 @@ function ProjectInfoPage(props) {
   const [loader, showLoader, hideLoader] = useFullPageLoader();
   const [
     noProjectSelected,
-    showErrorPage,
-    hideErrorPage,
+    showErrorPage, 
   ] = useProjectNotSelected();
   let commitsArray = [];
   let MRsArray = [];
@@ -28,7 +25,7 @@ function ProjectInfoPage(props) {
 
   useEffect(() => {
     const defined = () => {
-      if (projectId == -1) {
+      if (projectId === -1) {
         showErrorPage();
       } else {
         try {
@@ -64,7 +61,7 @@ function ProjectInfoPage(props) {
       setMRs(mrData.data);
     }; 
     defined();
-    if (projectId==-1) {
+    if (projectId===-1) {
       console.log("Oh no"); 
     } else {
       fetchData().then(hideLoader());

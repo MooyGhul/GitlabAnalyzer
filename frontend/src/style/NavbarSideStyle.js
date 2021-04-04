@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
   
     menuIcon: {
-      position: "absolute",
+      position: "fixed",
       zIndex: "20000",
       color: "rgba(236, 236, 236, 0.74)",
       left: "1%",
