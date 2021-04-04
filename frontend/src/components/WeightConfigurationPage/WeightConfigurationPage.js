@@ -12,7 +12,7 @@ import {
     IconButton,
     Button,
   } from "@material-ui/core";
-import React, { useEffect, useState, setState} from 'react';
+import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
@@ -73,7 +73,7 @@ const WeightConfigurationPage = () => {
         return (
             <React.Fragment>
                 <IconButton className={classes.button} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
-                <TextField id={fileType} defaultValue={1} label={fileType} disabled={!selected} variant="outlined" type="number" onChange={getValueFromTextField}></TextField>
+                <TextField id={fileType} defaultValue={1} label={fileType} disabled={!selected} variant="outlined" type="number" onChange={getValueFromTextField}/>
             </React.Fragment>
         );
     }
@@ -103,11 +103,11 @@ const WeightConfigurationPage = () => {
     const createTextFieldsForProjectWeights = () => {
         return(
             <form className={classes.root} noValidate autoComplete="off">
-                <TextField id="MergeRequest" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}></TextField>
-                <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}></TextField>
-                <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2} onChange={getValueFromTextField}></TextField>
-                <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}></TextField>
-                <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}></TextField>
+                <TextField id="MergeRequest" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}/>
+                <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}/>
+                <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2} onChange={getValueFromTextField}/>
+                <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}/>
+                <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}/>
             </form>  
         );
     } 
@@ -160,7 +160,7 @@ const WeightConfigurationPage = () => {
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={10}>
                     <form className={classes.root} noValidate autoComplete="off">
-                        <TextField id="ConfigName" label="Configuration Name" variant="outlined" onChange={getValueFromTextField}></TextField>
+                        <TextField id="ConfigName" label="Configuration Name" variant="outlined" onChange={getValueFromTextField}/>
                     </form>
                 </Grid>
                 {createTextFieldsForProjectWeights()}

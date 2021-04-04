@@ -1,15 +1,9 @@
 import {
-    Grid,
-    Typography,
-    Divider,
-    TableContainer,
     TableCell,
     TableRow,
-    TableHead,
-    TableBody,
     Button,
   } from "@material-ui/core";
-import React, { useEffect, useState} from 'react';
+import React from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 
 const Row = ({row, deleteRow}) => {
