@@ -12,7 +12,7 @@ import {
     IconButton,
     Button,
   } from "@material-ui/core";
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState, setState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 import InnerNavBar from '../InnerNavBar'; 
 import {useInnerNavStyle} from "../../style/InnerNavStyle";
@@ -25,8 +25,9 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 const WeightConfigurationPage = () => {
     const classes = useStyles();
     const fileTypes = mockFileTypes;
-    var iterationDates = mockIterationsDates;
     const [iterDates, setIterDates] = useState(mockIterationsDates);
+    var configData = {};
+     
 
     const displayIcon = (selected) => {
         if(selected) {
@@ -36,6 +37,14 @@ const WeightConfigurationPage = () => {
             return(<AddBoxIcon className={classes.plusButton}/>);
         }
     }
+
+    const getValueFromTextField = (e) => {
+        const textFieldId = e.target.id;
+        const textFieldValue = e.target.value;
+        configData[textFieldId] = textFieldValue;
+        console.log(configData);
+    }
+
 
     const CreateFileTypeWeightInput = (fileType) => {
         const [selected, setSelected] = React.useState(true); 
@@ -47,7 +56,7 @@ const WeightConfigurationPage = () => {
         return (
             <React.Fragment>
                 <IconButton className={classes.button} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
-                <TextField id={fileType} defaultValue={1} label={fileType} disabled={!selected} variant="outlined" type="number"></TextField>
+                <TextField id={fileType} defaultValue={1} label={fileType} disabled={!selected} variant="outlined" type="number" onChange={getValueFromTextField}></TextField>
             </React.Fragment>
         );
     }
@@ -57,8 +66,9 @@ const WeightConfigurationPage = () => {
         setIterDates(filteredIterations);
     }
 
+    
     const getValuesFromTextFields = () =>{
-        
+
     } 
 
     return (
@@ -120,15 +130,15 @@ const WeightConfigurationPage = () => {
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={10}>
                     <form className={classes.root} noValidate autoComplete="off">
-                        <TextField id="ConfigName" label="Configuration Name" variant="outlined"></TextField>
+                        <TextField id="ConfigName" label="Configuration Name" variant="outlined" onChange={getValueFromTextField}></TextField>
                     </form>
                 </Grid>
                 <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="MR" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1}></TextField>
-                    <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1}></TextField>
-                    <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2}></TextField>
-                    <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={0.2}></TextField>
-                    <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={0.2}></TextField>
+                    <TextField id="MergeRequest" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}></TextField>
+                    <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}></TextField>
+                    <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2} onChange={getValueFromTextField}></TextField>
+                    <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}></TextField>
+                    <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}></TextField>
                 </form>
             </Grid>
             <Grid item xs={10}>
