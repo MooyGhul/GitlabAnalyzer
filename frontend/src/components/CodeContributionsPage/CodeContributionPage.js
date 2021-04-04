@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Banner from "../Banner";
-import { useParams } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { ComingSoonMsg } from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
@@ -15,15 +14,14 @@ import { formatTableDate, getGraphData } from "../../helper";
 import useProjectNotSelected from "../../components/useProjectNotSelected";
 
 const CodeContributionPage = (props) => {
-  const [codeContributionRows, setCodeContributionRows] = useState([]); 
+  const [codeContributionRows, setCodeContributionRows] = useState([]);
   const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
   const [graphData, setGraphData] = useState([]);
   const [project_id, setProjectId] = useState(props.project_id);
   const [member_id, setMemberId] = useState(props.member_id);
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
-  
-
+  const location = useLocation();
 
   const createData = (id, type, date, name, url, score) => {
     return { id, type, date, name, url, score };
@@ -33,42 +31,23 @@ const CodeContributionPage = (props) => {
     return { year, MRDaily, CommitDaily };
   };
 
-  const location = useLocation(); 
-
+  console.log("PROPS", props);
   useEffect(() => {
     const defined = () => {
-      console.log("Project Id", project_id);
       if (project_id === -1) {
-        console.log("hahahahahaha");
         showErrorPage();
-      } 
-      
-      else if (member_id === -1){ 
+      } else if (member_id === -1) {
         try {
           setProjectId(location.state.project_id);
-          setProjectId(location.state.member_id)
-          console.log("LOCATION", location);
-          console.log(member_id);
+          setMemberId(location.state.member_id);
         } catch (err) {
           setProjectId(props.project_id);
           setMemberId(props.member_id);
-          showErrorPage();
         }
-        // console.log("")
-        // console.log("MEMBERID", member_id)
-        // showErrorPage();
-      }      
-      // else {
-      //   try {
-      //     setProjectId(location.state.project_id);
-      //     setProjectId(location.state.member_id)
-      //     console.log("LOCATION", location);
-      //     console.log(member_id);
-      //   } catch (err) {
-      //     setProjectId(props.project_id);
-      //     setMemberId(props.member_id)
-      //   }
-      // }
+      } else {
+        setProjectId(location.state.project_id);
+        setMemberId(location.state.member_id);
+      }
     };
 
     const codeContributionData = (commitData, mrData) => {
@@ -187,16 +166,18 @@ const CodeContributionPage = (props) => {
       codeContributionData(commitData, mrData);
     };
     defined();
-    fetchData()
-      .then(() => {
-        console.log("Successful data retrieval");
-      })
-      .catch(() => {
-        console.log("Failed retrieve data");
-      });
-  }, [project_id, member_id, props, location]);
-  console.log(graphData);
-  console.log(codeContributionRows);
+
+    if (member_id !== -1) {
+      fetchData()
+        .then(() => {
+          console.log("Successful data retrieval");
+        })
+        .catch(() => {
+          console.log("Failed retrieve data");
+        });
+    }
+    // eslint-disable-next-line
+  }, [project_id, member_id, props]);
 
   return (
     <div>
@@ -233,8 +214,6 @@ const CodeContributionPage = (props) => {
       </Grid>
       {noProjectSelected}
     </div>
-
-    
   );
 };
 

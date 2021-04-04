@@ -9,7 +9,7 @@ import useProjectNotSelected from "../components/useProjectNotSelected";
 
 function ProjectInfoPage(props) {
   const location = useLocation(); 
-  const [projectName] = useState("");
+  // const [projectName] = useState("");
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
@@ -61,11 +61,10 @@ function ProjectInfoPage(props) {
       setMRs(mrData.data);
     }; 
     defined();
-    if (projectId===-1) {
-      console.log("Oh no"); 
-    } else {
+    if (projectId!==-1) { 
       fetchData().then(hideLoader());
     }
+  // eslint-disable-next-line
   }, [projectId, props]);
 
   members.forEach((member) => {
