@@ -30,23 +30,21 @@ const CodeContributionPage = (props) => {
   const createGraphData = (year, MRDaily, CommitDaily) => {
     return { year, MRDaily, CommitDaily };
   };
-
-  console.log("PROPS", props);
+ 
   useEffect(() => {
     const defined = () => {
       if (project_id === -1) {
         showErrorPage();
-      } else if (member_id === -1) {
-        try {
-          setProjectId(location.state.project_id);
-          setMemberId(location.state.member_id);
-        } catch (err) {
-          setProjectId(props.project_id);
-          setMemberId(props.member_id);
-        }
-      } else {
-        setProjectId(location.state.project_id);
-        setMemberId(location.state.member_id);
+      } 
+     
+      else {
+          try {
+            setProjectId(location.state.project_id);
+            setMemberId(location.state.member_id);
+          } catch (err) {
+            setProjectId(props.project_id);
+            setMemberId(props.member_id);
+          }           
       }
     };
 
