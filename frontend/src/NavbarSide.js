@@ -137,7 +137,7 @@ const NavbarSide = (props) => {
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
                     project_id={project_id}
-                    projectSelected={projectSelected} 
+                    projectSelected={projectSelected}
                   />
                 </Grid>
               </Route>

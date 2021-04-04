@@ -26,10 +26,13 @@ function ProjectInfoPage(props) {
   const classes = useStyles();
   const idTest = useRef(-1);
   const [projectId, setProjectId] = useState(0);
+  // const [storedProjectId, setStoredProjectId] = useLocalStorage('projectId', 0);
+
+
 
   // const projectId = props.projectSelected===-1 && location != undefined ? -1 : location.state.id;
 
-  useEffect(() => {
+  useEffect(() => { 
     const defined = () => {
       try {
         setProjectId(location.state.id);
@@ -68,10 +71,9 @@ function ProjectInfoPage(props) {
     };
     const result = defined();
     if (result == false) {
-      console.log("Oh no");
-      setProjectId(props.projectId);
+      console.log("Oh no");  
       console.log("projectID is now ", projectId)
-    } else {
+    } else { 
       fetchData().then(hideLoader());
     }
   }, [projectId, props]);
@@ -124,3 +126,4 @@ function ProjectInfoPage(props) {
 }
 
 export default ProjectInfoPage;
+ 
