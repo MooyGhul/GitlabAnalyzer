@@ -78,10 +78,39 @@ const WeightConfigurationPage = () => {
         );
     }
 
+    const createTableHeader = () => {
+        return(
+            <TableRow>
+                <TableCell className={classes.headCell} align="center">
+                    Iteration Name
+                </TableCell>
+                <TableCell className={classes.headCell} align="center">
+                    Start Date
+                </TableCell>
+                <TableCell className={classes.headCell} align="center">
+                    End Date
+                </TableCell>
+                <TableCell className={classes.headCell} align="center"/>
+            </TableRow>
+        );
+    }
+
     const DeleteRow = (rowName) => {
         var filteredIterations = iterDates.filter(iterDate => iterDate.iterationName != rowName);
         setIterDates(filteredIterations);
     }
+
+    const createTextFieldsForProjectWeights = () => {
+        return(
+            <form className={classes.root} noValidate autoComplete="off">
+                <TextField id="MergeRequest" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}></TextField>
+                <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}></TextField>
+                <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2} onChange={getValueFromTextField}></TextField>
+                <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}></TextField>
+                <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}></TextField>
+            </form>  
+        );
+    } 
 
     return (
         <Grid container spacing={5} justify="center" alignItems="center">
@@ -109,18 +138,7 @@ const WeightConfigurationPage = () => {
                 <TableContainer>
                     <Table>
                         <TableHead>
-                            <TableRow>
-                                <TableCell className={classes.headCell} align="center">
-                                    Iteration Name
-                                </TableCell>
-                                <TableCell className={classes.headCell} align="center">
-                                    Start Date
-                                </TableCell>
-                                <TableCell className={classes.headCell} align="center">
-                                    End Date
-                                </TableCell>
-                                <TableCell className={classes.headCell} align="center"/>
-                            </TableRow>
+                            {createTableHeader()}
                         </TableHead>
                         <TableBody>
                             {iterDates.map((row) => (
@@ -145,13 +163,7 @@ const WeightConfigurationPage = () => {
                         <TextField id="ConfigName" label="Configuration Name" variant="outlined" onChange={getValueFromTextField}></TextField>
                     </form>
                 </Grid>
-                <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="MergeRequest" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}></TextField>
-                    <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}></TextField>
-                    <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2} onChange={getValueFromTextField}></TextField>
-                    <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}></TextField>
-                    <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}></TextField>
-                </form>
+                {createTextFieldsForProjectWeights()}
             </Grid>
             <Grid item xs={10}>
                 <Typography className={classes.subHeader1}>Configure Weights by File Type</Typography>
