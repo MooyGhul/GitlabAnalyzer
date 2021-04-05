@@ -22,22 +22,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Calendar = (props) => {
+const Calendar = ({project_id,member_id,startDate,endDate,handleStartDate,handleEndDate}) => {
   const classes = useStyles();
 
   // I will move this hooks to the parent class (configure component) when it is merged.
   // then I will add a "making an array" logic to send all the configure thing to backend.
-  const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
-  const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
-
-  const handleStartDate = (newDate) => {setStartDate(newDate)};
-  const handleEndDate = (newDate) => {setEndDate(newDate)};
 
   const startDateChange = (event)=>{
-    props.onStartDateChange(event);
+    handleStartDate(event);
   };
   const endDateChange = (event)=>{
-    props.onEndDateChange(event);
+    handleEndDate(event);
   };
 
   return (
@@ -47,7 +42,7 @@ const Calendar = (props) => {
           id="start-date"
           label="Start Date"
           type="datetime-local"
-          defaultValue={new Date(props.startDate)}
+          defaultValue={startDate}
           onChange={startDateChange}
           className={classes.textField}
           InputLabelProps={{
@@ -60,7 +55,7 @@ const Calendar = (props) => {
           id="end-date"
           label="End Date"
           type="datetime-local"
-          defaultValue={new Date(props.endDate)}
+          defaultValue={endDate}
           onChange={endDateChange}
           className={classes.textField}
           InputLabelProps={{

@@ -15,6 +15,7 @@ import ProjectListPage from './ProjectListPage';
 import CodeContributionPage from "./components/CodeContributionsPage/CodeContributionPage";
 import CommentContributionPage from './components/CommentContributionPage/CommentContributionPage'
 import IssueContributionPage from './components/IssueContribution/IssueContributionPage';
+import WeightConfigurationPage from './components/WeightConfigurationPage/WeightConfigurationPage'
 
 const useStyles = makeStyles((theme) => ({
   drawerPaper: {width: 'inherit'},
@@ -30,7 +31,6 @@ const NavbarSide = (props) => {
   const [project_id, setProjectId] = useState(-1);
   const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
   const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
-
 
   const handleStartDate = (newDate) => {
     setStartDate(newDate)
@@ -151,10 +151,9 @@ const NavbarSide = (props) => {
 
           <Route exact path="/Configurations">
             <Container>
-              Configurations
+              <WeightConfigurationPage project_id={project_id} member_id={member_id} startDate={startDate} endDate={endDate} onStartDateChange={handleStartDate} onEndDateChange={handleEndDate}/>
             </Container>
           </Route>
-
         </Switch>
         </Container>
       </div>

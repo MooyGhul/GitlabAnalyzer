@@ -20,6 +20,7 @@ import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox'
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import axios from "axios";
 import {useParams} from "react-router";
+import Calendar from "../Calendar";
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
@@ -138,7 +139,9 @@ const WeightConfigurationPage = () => {
                 <Divider className={classes.divider} orientation='horizontal'/>
             </Grid>
             <Grid item xs={3}>
-                <Typography className={classes.pageTitle}>Insert date picker</Typography>
+                <Typography className={classes.pageTitle}>
+                  <Calendar />
+                </Typography>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>
                         <Button variant="contained" component="span" className={classes.addIterationButton} size="large">+ Add Iteration</Button>
