@@ -4,8 +4,7 @@ import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -13,28 +12,37 @@ public class ConfigurationEntityTest {
 
     @Test
     void fromGitlabJSON_parses_ConfigEntity_correctly() throws IOException {
-        List<String> configList = new ArrayList<>();
         JSONObject testConfig = new JSONObject();
         testConfig.put("Javascript", 1.2);
         testConfig.put("CSS", 0.4);
 
-        JSONObject testObj = new JSONObject();
-        testObj.put("name","test_config");
-        testObj.put("startDate","2013-10-02T09:22:45Z");
-        testObj.put("endDate","2013-10-02T10:22:45Z");
-        testObj.put("weights",testConfig);
-        configList.add(testObj.toString());
+        JSONObject testIteration = new JSONObject();
+        testIteration.put("name","test_config");
+        testIteration.put("startDate","2013-10-02T09:22:45Z");
+        testIteration.put("endDate","2013-10-02T10:22:45Z");
 
-        ConfigurationEntity expected = ConfigurationEntity.builder()
+        IterationConfigurationEntity expectedIteration = IterationConfigurationEntity.builder()
                 .token("test1")
-                .configurations(configList)
+                .iterationName("test_iteration")
+                .startDate(Instant.parse("2013-10-02T09:22:45Z"))
+                .endDate(Instant.parse("2013-10-02T10:22:45Z"))
                 .build();
 
-        String jsonString = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleConfigEntity.json").readAllBytes());
-        JSONObject json = new JSONObject(jsonString);
-        ConfigurationEntity actual = ConfigurationEntity.fromGitlabJSON(json);
+        WeightConfigurationEntity expectedConfiguration = WeightConfigurationEntity.builder()
+                .token("test1")
+                .configuration(testConfig.toString())
+                .build();
 
-        assertEquals(expected, actual);
+        String weightJson = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleWeightConfigurationEntity.json").readAllBytes());
+        String iterationJson = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleIterationConfiguration.json").readAllBytes());
 
+        JSONObject iterationObj = new JSONObject(iterationJson);
+        JSONObject weightObj = new JSONObject(weightJson);
+
+        IterationConfigurationEntity actualIteration = IterationConfigurationEntity.fromGitlabJSON(iterationObj);
+        WeightConfigurationEntity actualConfiguration = WeightConfigurationEntity.fromGitlabJSON(weightObj);
+
+        assertEquals(expectedConfiguration, actualConfiguration);
+        assertEquals(expectedIteration, actualIteration);
     }
 }
