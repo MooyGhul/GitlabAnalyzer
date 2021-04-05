@@ -105,4 +105,11 @@ public class ProjectRESTController {
     Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId, @PathVariable(value="MRorIssueId") int MRorIssueId) {
         return this.commentEntityRepository.findAllByProjectIdAndMRorIssueId(projectId,MRorIssueId);
     }
+
+    @GetMapping("/{projectId}/languages")
+    List<String> getProjectLanguages(@PathVariable(value="projectId") int projectId) {
+        ProjectController projectController = this.projectManager.findProject(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return projectController.getLanguages();
+    }
 }
