@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IterationConfigurationRepository extends CrudRepository<IterationConfigurationEntity, Integer> {
+    Iterable<IterationConfigurationEntity> findAllByToken(String token);
 }
