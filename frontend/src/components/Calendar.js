@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useState } from 'react'; 
 import DateFnsUtils from '@date-io/date-fns';
 import { 
   MuiPickersUtilsProvider,
@@ -24,6 +24,14 @@ const useStyles = makeStyles((theme) => ({
 
 const Calendar = (props) => {
   const classes = useStyles();
+
+  // I will move this hooks to the parent class (configure component) when it is merged.
+  // then I will add a "making an array" logic to send all the configure thing to backend.
+  const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
+  const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+
+  const handleStartDate = (newDate) => {setStartDate(newDate)};
+  const handleEndDate = (newDate) => {setEndDate(newDate)};
 
   const startDateChange = (event)=>{
     props.onStartDateChange(event);
