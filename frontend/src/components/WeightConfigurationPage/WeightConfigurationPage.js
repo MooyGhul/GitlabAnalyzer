@@ -27,7 +27,11 @@ const WeightConfigurationPage = () => {
     const [fileT, setFileT] = useState([]);
     const [iterDates, setIterDates] = useState(mockIterationsDates);
     let configData = {};
-     
+    const defaultFileWeight = 1;
+    const defaultCommitMRWeight = 1;
+    const defaultLineOfCodeWeight = 1.2; 
+    const defaultMinorCodeChangeWeight = 0.2;
+
     useEffect(() => {
         const fetchData = async () => {
           const languageResult = await axios.get(
@@ -72,7 +76,7 @@ const WeightConfigurationPage = () => {
         return (
             <Fragment>
                 <IconButton className={classes.button} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
-                <TextField id={fileType} defaultValue={1} label={fileType} disabled={!selected} variant="outlined" type="number" onChange={getValueFromTextField}/>
+                <TextField id={fileType} defaultValue={defaultFileWeight} label={fileType} disabled={!selected} variant="outlined" type="number" onChange={getValueFromTextField}/>
             </Fragment>
         );
     }
@@ -102,11 +106,11 @@ const WeightConfigurationPage = () => {
     const createTextFieldsForProjectWeights = () => {
         return(
             <form className={classes.textField} noValidate autoComplete="off">
-                <TextField id="MergeRequest" label="Merge Request Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}/>
-                <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={1} onChange={getValueFromTextField}/>
-                <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={1.2} onChange={getValueFromTextField}/>
-                <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}/>
-                <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={0.2} onChange={getValueFromTextField}/>
+                <TextField id="MergeRequest" label="Merge Request Weight" variant="outlined" type="number" defaultValue={defaultCommitMRWeight} onChange={getValueFromTextField}/>
+                <TextField id="Commit" label="Commit Weight" variant="outlined" type="number" defaultValue={defaultCommitMRWeight} onChange={getValueFromTextField}/>
+                <TextField id="Line" label="Line of Code" variant="outlined" type="number" defaultValue={defaultLineOfCodeWeight} onChange={getValueFromTextField}/>
+                <TextField id="Deleted" label="Deleted Line" variant="outlined" type="number" defaultValue={defaultMinorCodeChangeWeight} onChange={getValueFromTextField}/>
+                <TextField id="Syntax" label="Syntax Change" variant="outlined" type="number" defaultValue={defaultMinorCodeChangeWeight} onChange={getValueFromTextField}/>
             </form>  
         );
     } 
