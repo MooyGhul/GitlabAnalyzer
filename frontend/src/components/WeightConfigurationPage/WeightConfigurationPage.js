@@ -24,32 +24,41 @@ import {useParams} from "react-router";
 const WeightConfigurationPage = () => {
     const classes = useStyles();
     let {project_id} = useParams();
-    const [fileT, setFileT] = useState([]);
+    const [fileType, setFileType] = useState([]);
     const [iterDates, setIterDates] = useState(mockIterationsDates);
-    let configData = {};
     const defaultFileWeight = 1;
     const defaultCommitMRWeight = 1;
     const defaultLineOfCodeWeight = 1.2; 
     const defaultMinorCodeChangeWeight = 0.2;
+    let configData = {
+        "MergeRequest": defaultCommitMRWeight,
+        "Commit": defaultCommitMRWeight,
+        "Line": defaultLineOfCodeWeight,
+        "Deleted": defaultMinorCodeChangeWeight,
+        "Syntax": defaultMinorCodeChangeWeight,
+    };
 
     useEffect(() => {
         const fetchData = async () => {
           const languageResult = await axios.get(
             process.env.NODE_ENV === "development"
-              ? `${process.env.REACT_APP_DEVHOST}/project/${project_id}/languages`
+              ? `${process.env.REACT_APP_DEVHOST}/project/25513/languages`
               : `/project/${project_id}/languages`
           );
-          setFileT(languageResult.data);
+          setFileType(languageResult.data);
+          languageResult.data.forEach(lang => configData[lang] = defaultFileWeight);
         };
+
         fetchData()
           .then(() => {
             console.log("Successfully obtained languages");
-          })
+          } )
           .catch((e) => {
             console.log("Failed to obtain languages");
             console.log(e);
           });
-      }, [project_id, setFileT]);
+          
+      }, [project_id, setFileType]);
 
 
     const displayIcon = (selected) => {
@@ -65,6 +74,7 @@ const WeightConfigurationPage = () => {
         const textFieldId = e.target.id;
         const textFieldValue = e.target.value;
         configData[textFieldId] = textFieldValue;
+        console.log(configData);
     }
 
     const CreateFileTypeWeightInput = (fileType) => {
@@ -173,7 +183,7 @@ const WeightConfigurationPage = () => {
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={5}>
                     <form className={classes.textField} noValidate autoComplete="off">
-                        {fileT.map((fileType) => (
+                        {fileType.map((fileType) => (
                             CreateFileTypeWeightInput(fileType)
                         ))}
                     </form>  
