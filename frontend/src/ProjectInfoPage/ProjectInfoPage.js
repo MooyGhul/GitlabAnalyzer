@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 import AllProjectInfo from "./AllProjectInfo";
 import getMemberList from "../data/memberListGetter";
 
-function ProjectInfoPage() {
+function ProjectInfoPage(props) {
   const location = useLocation();
   const projectId = props.project_id===-1 ? location.state.id : props.project_id;
   const [projectName] = useState("");
