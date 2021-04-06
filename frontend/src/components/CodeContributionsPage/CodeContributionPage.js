@@ -1,5 +1,5 @@
 import CodeContributionTable from "./CodeContributionTable";
-import {Grid} from "@material-ui/core";
+import {Grid, Switch} from "@material-ui/core";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Banner from "../Banner";
@@ -9,15 +9,19 @@ import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import {useGraphStyles} from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
-import {useInnerNavStyle} from "../../style/InnerNavStyle"
+import {useInnerNavStyle} from "../../style/InnerNavStyle";
 import {formatTableDate, getGraphData} from "../../helper";
+import {Scores} from "../../mockDataDir/mockGraphContri";
 
 const CodeContributionPage = () => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
   const {project_id, member_id} = useParams();
   const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
+  const [countsData, setCountsData] = useState([]);
+  const [scoreData, setScoreData] = useState([]);
   const [graphData, setGraphData] = useState([]);
+  const [scoreMode, setScoreMode] = useState(false);
 
   const createData = (id, type, date, name, url, score) => {
     return {id, type, date, name, url, score};
@@ -46,8 +50,10 @@ const CodeContributionPage = () => {
         mrCountsData.push(createGraphData(mrCounts[i].year, mrCounts[i].data, 0));
       }
 
-      const ccGraphData = mergeCounts(commitCountsData, mrCountsData);
-      setGraphData(ccGraphData);
+      const ccCountsData = mergeCounts(commitCountsData, mrCountsData);
+      setCountsData(ccCountsData);
+      setScoreData(Scores);
+      setGraphData(Scores);
 
       let ccArray = [...commitArray, ...mrArray];
       ccArray.sort((a, b) => {
@@ -144,8 +150,13 @@ const CodeContributionPage = () => {
       console.log('Failed retrieve data');
     });
   },[project_id, member_id]);
-  console.log(graphData);
-  console.log(codeContributionRows);
+  // console.log(countsData);
+  // console.log(codeContributionRows);
+
+  const handleSwitch = (event) => {
+    setScoreMode(event.target.checked);
+    scoreMode ? setGraphData(scoreData) : setGraphData(countsData);
+  }
 
   return (
     <Grid container spacing={5} justify="center" alignItems="center">
@@ -159,6 +170,11 @@ const CodeContributionPage = () => {
       </Grid>
 
       <Grid className={classes.graph}>
+        <Switch
+          checked={scoreMode}
+          onChange={handleSwitch}
+          name='graphSwitch'
+          />
         <BarChart
           data={graphData}
           codeContribution={true}
