@@ -18,7 +18,6 @@ function UrlToken() {
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
 
-<<<<<<< HEAD
     const createConfigID = async (url, token) => {
         return axios({
           method: "post",
@@ -28,14 +27,6 @@ function UrlToken() {
           data: { url, token },
         }).then((res) => res.data.id);
       };
-=======
-    const authenticateToken  = async () => {
-        showLoader()
-        await axios.post(process.env.NODE_ENV === 'development' ?
-
-            `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
-            `/project/create?token=${urlToken.token}`);
->>>>>>> master
 
       
       const loadAllProjects = async (configID) => {
@@ -56,7 +47,6 @@ function UrlToken() {
           })
           .catch((error) => {
             hideLoader();
-            console.log(error)
             setUrlToken({ url: urlToken.url, token: urlToken.token });
             setErrorMsg("Incorrect url or token. Please try again.");
           });
@@ -78,16 +68,10 @@ function UrlToken() {
       const nextHandler = (event) => {
         event.preventDefault();
         addLoginToken();
-<<<<<<< HEAD
         test();
       };
           
      
-=======
-        authenticateToken();
-    }        
-
->>>>>>> master
     const classes = useStyles();
 
     return(
