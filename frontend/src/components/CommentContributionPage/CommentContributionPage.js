@@ -68,7 +68,7 @@ const CommentContributionPage = (props) => {
     <Grid container spacing={5} justify="center" alignItems="center">
       <Grid item xs={12}>
         <Grid item xs={12}>
-          <Banner memberName={member_id} />
+          <Banner memberName={member_id} type="commentContribution" />
         </Grid>
       </Grid>
       <Grid item xs={12} align="center">
