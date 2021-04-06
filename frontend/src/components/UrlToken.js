@@ -56,19 +56,14 @@ function UrlToken() {
 
 
     const test = async () => {
-        const configID = await createConfigID(urlToken.url, urlToken.token);
-        console.log(configID)
-        const response = await loadAllProjects(configID);
-        console.log(response);
+        const configID = await createConfigID(urlToken.url, urlToken.token); 
+        await loadAllProjects(configID); 
       };   
     
 
-      const addLoginToken = () => {
-        console.log(window.location.href);
+      const addLoginToken = () => { 
         const data = new URLSearchParams(window.location.search);
-        console.log(data.get("ticket"));
-        setLoginToken(data.get("ticket"));
-        console.log(loginToken);
+        setLoginToken(data.get("ticket")); 
       };
     
 

@@ -6,7 +6,7 @@ import { useLocation } from "react-router-dom";
 import AllProjectInfo from "./AllProjectInfo";
 import useFullPageLoader from "../components/useFullPageLoader";
  
-function ProjectInfoPage(props) {
+const ProjectInfoPage = (props) => {
   const location = useLocation();
   const projectID = location.state.id;
   const projectName = location.state.projectName;
