@@ -9,15 +9,12 @@ import {
     TableBody,
     Table,
     TextField,
-    IconButton,
     Button,
   } from "@material-ui/core";
-import React, { useEffect, useState, Fragment} from 'react';
+import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
-import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox';
-import AddBoxIcon from '@material-ui/icons/AddBox';
 import axios from "axios";
 import {useParams} from "react-router";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
@@ -31,13 +28,13 @@ const WeightConfigurationPage = () => {
     const defaultCommitMRWeight = 1;
     const defaultLineOfCodeWeight = 1.2; 
     const defaultMinorCodeChangeWeight = 0.2;
-    let configData = {
+    var configData = {
         "MergeRequest": defaultCommitMRWeight,
         "Commit": defaultCommitMRWeight,
         "Line": defaultLineOfCodeWeight,
         "Deleted": defaultMinorCodeChangeWeight,
         "Syntax": defaultMinorCodeChangeWeight,
-    };
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -48,6 +45,7 @@ const WeightConfigurationPage = () => {
           );
           setFileType(languageResult.data);
           languageResult.data.forEach(lang => configData[lang] = defaultFileWeight);
+          console.log(configData);
         };
 
         fetchData()
@@ -57,19 +55,9 @@ const WeightConfigurationPage = () => {
           .catch((e) => {
             console.log("Failed to obtain languages");
             console.log(e);
-          });
+        });
           
-      }, [project_id, setFileType]);
-
-
-    const displayIcon = (selected) => {
-        if(selected) {
-            return (<IndeterminateCheckBoxIcon className={classes.minusButton}/>);
-        }
-        else {
-            return(<AddBoxIcon className={classes.plusButton}/>);
-        }
-    }
+    }, [project_id, setFileType]);
 
     const getValueFromTextField = (e) => {
         const textFieldId = e.target.id;
@@ -77,22 +65,6 @@ const WeightConfigurationPage = () => {
         configData[textFieldId] = textFieldValue;
         console.log(configData);
     }
-
-    /*
-    const CreateFileTypeWeightInput = (fileType) => {
-        let selected = true;
-        const onSelectionClick = () => {
-            selected = !selected;
-        }
-    
-        return (
-            <Fragment>
-                <IconButton className={classes.button} onClick={onSelectionClick}>{displayIcon(selected)}</IconButton>
-                <TextField id={fileType} defaultValue={defaultFileWeight} label={fileType} disabled={!selected} variant="outlined" type="number" onChange={getValueFromTextField}/>
-            </Fragment>
-        );
-    }
-    */
 
     const createTableHeader = () => {
         return(
@@ -112,7 +84,7 @@ const WeightConfigurationPage = () => {
     }
 
     const DeleteRow = (rowName) => {
-        let filteredIterations = iterDates.filter(iterDate => iterDate.iterationName != rowName);
+        let filteredIterations = iterDates.filter(iterDate => iterDate.iterationName !== rowName);
         setIterDates(filteredIterations);
     }
 
@@ -187,7 +159,7 @@ const WeightConfigurationPage = () => {
                 <Grid item xs={5}>
                     <form className={classes.textField} noValidate autoComplete="off">
                         {fileType.map((fileType) => (
-                            <CreateFileTypeWeightInput fileType={fileType}/>
+                            <CreateFileTypeWeightInput fileType={fileType} getTextFieldValue={getValueFromTextField} defaultFileWeight={defaultFileWeight}/>
                         ))}
                     </form>  
                 </Grid>
