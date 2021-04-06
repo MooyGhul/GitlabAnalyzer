@@ -1,6 +1,4 @@
-import Header from "../components/Header";
 import WideHeader from "./WideHeader/WideHeader";
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import AllProjectInfo from "./AllProjectInfo";
@@ -8,9 +6,8 @@ import useFullPageLoader from "../components/useFullPageLoader";
  
 const ProjectInfoPage = (props) => {
   const location = useLocation();
-  const projectID = location.state.id;
-  const projectName = location.state.projectName;
-
+  const projectId = props.project_id===-1 ? location.state.id : props.project_id;
+  const [projectName] = useState("");
   const [members, setMembers] = useState([]);
   const [loader, showLoader, hideLoader] = useFullPageLoader();
 
