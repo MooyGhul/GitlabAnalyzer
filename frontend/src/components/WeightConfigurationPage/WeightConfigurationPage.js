@@ -20,6 +20,7 @@ import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox'
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import axios from "axios";
 import {useParams} from "react-router";
+import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
@@ -77,6 +78,7 @@ const WeightConfigurationPage = () => {
         console.log(configData);
     }
 
+    /*
     const CreateFileTypeWeightInput = (fileType) => {
         let selected = true;
         const onSelectionClick = () => {
@@ -90,6 +92,7 @@ const WeightConfigurationPage = () => {
             </Fragment>
         );
     }
+    */
 
     const createTableHeader = () => {
         return(
@@ -184,7 +187,7 @@ const WeightConfigurationPage = () => {
                 <Grid item xs={5}>
                     <form className={classes.textField} noValidate autoComplete="off">
                         {fileType.map((fileType) => (
-                            CreateFileTypeWeightInput(fileType)
+                            <CreateFileTypeWeightInput fileType={fileType}/>
                         ))}
                     </form>  
                 </Grid>
