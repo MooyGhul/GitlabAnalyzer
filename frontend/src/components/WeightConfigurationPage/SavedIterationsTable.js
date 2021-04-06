@@ -8,8 +8,7 @@ import useStyles from '../../style/WeightConfigurationPageStyles';
 
 const Row = (props) => {
     const classes = useStyles();
-    const row = props.row;
-    const deleteRow = props.deleteRow;
+    const {row, deleteRow} = props;
     const handleDelete = () => {
         deleteRow(row.iterationName)
     }
