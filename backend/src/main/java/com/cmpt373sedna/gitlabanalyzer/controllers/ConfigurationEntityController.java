@@ -6,7 +6,11 @@ import com.cmpt373sedna.gitlabanalyzer.repository.WeightConfigurationEntityRepos
 import com.cmpt373sedna.gitlabanalyzer.repository.IterationConfigurationRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/configuration")
@@ -47,5 +51,24 @@ public class ConfigurationEntityController {
     @GetMapping("/get/weightScores/{token}")
     public Iterable<WeightConfigurationEntity> getScoreConfigurations(@PathVariable String token) {
         return this.weightConfigurationEntityRepository.findAllByToken(token);
+    }
+
+    @PostMapping("/update/iterations/{id}")
+    public void updateIterationConfigurations(@PathVariable int id, @RequestBody IterationConfigurationEntity body) {
+        IterationConfigurationEntity iterationConfig = this.iterationConfigurationRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND));
+        iterationConfig.setIterationName(body.getIterationName());
+        iterationConfig.setStartDate(body.getStartDate());
+        iterationConfig.setEndDate(body.getEndDate());
+        this.iterationConfigurationRepository.save(iterationConfig);
+    }
+
+    @PostMapping("/update/weightScores/{id}")
+    public void updateScoreConfigurations(@PathVariable int id, @RequestBody String body) {
+        WeightConfigurationEntity weightConfig = this.weightConfigurationEntityRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND));
+        JSONObject updatedConfig = new JSONObject(body);
+        weightConfig.setConfiguration(updatedConfig.getJSONObject("configurations").toString());
+        this.weightConfigurationEntityRepository.save(weightConfig);
     }
 }
