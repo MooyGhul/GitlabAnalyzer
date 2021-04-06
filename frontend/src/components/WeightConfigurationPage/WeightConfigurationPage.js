@@ -40,7 +40,7 @@ const WeightConfigurationPage = () => {
         const fetchData = async () => {
           const languageResult = await axios.get(
             process.env.NODE_ENV === "development"
-              ? `${process.env.REACT_APP_DEVHOST}/project/25513/languages`
+              ? `${process.env.REACT_APP_DEVHOST}/project/${project_id}/languages`
               : `/project/${project_id}/languages`
           );
           setFileType(languageResult.data);
@@ -159,7 +159,7 @@ const WeightConfigurationPage = () => {
                 <Grid item xs={5}>
                     <form className={classes.textField} noValidate autoComplete="off">
                         {fileType.map((fileType) => (
-                            <CreateFileTypeWeightInput fileType={fileType} getTextFieldValue={getValueFromTextField} defaultFileWeight={defaultFileWeight}/>
+                            <CreateFileTypeWeightInput key={fileType} fileType={fileType} /*getTextFieldValue={getValueFromTextField}*/ defaultFileWeight={defaultFileWeight} configData={configData}/>
                         ))}
                     </form>  
                 </Grid>

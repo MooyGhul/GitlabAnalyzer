@@ -8,21 +8,31 @@ import IndeterminateCheckBoxIcon from '@material-ui/icons/IndeterminateCheckBox'
 import AddBoxIcon from '@material-ui/icons/AddBox';
 
 const CreateFileTypeWeightInput = (props) => {
-    const {fileType, getTextFieldValue, defaultFileWeight} = props
+    const {fileType, defaultFileWeight, configData} = props
     const [selected, setSelected] = useState(true);
+    const [textFieldValue, setTextFieldValue] = useState(defaultFileWeight);
     const classes = useStyles();
 
     const onSelectionClick = () => {
         setSelected(!selected);
     }
 
-    const displayIcon = (selected) => {
+    const displayIcon = () => {
         if(selected) {
-            return (<IndeterminateCheckBoxIcon className={classes.minusButton}></IndeterminateCheckBoxIcon>);
+            configData[fileType] = textFieldValue;
+            return (<IndeterminateCheckBoxIcon className={classes.minusButton}/>);
         }
         else {
-            return(<AddBoxIcon className={classes.plusButton}></AddBoxIcon>);
+            configData[fileType] = -1;
+            return(<AddBoxIcon className={classes.plusButton}/>);
         }
+    }
+
+    const getTextFieldValue = (e) => {
+        const textFieldId = e.target.id;
+        const value = e.target.value;
+        configData[textFieldId] = value;
+        setTextFieldValue(value);
     }
 
     return (
