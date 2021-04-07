@@ -7,10 +7,13 @@ import FileCopyIcon from "@material-ui/icons/FileCopy";
 import SearchIcon from "@material-ui/icons/Search";
 import Scores from "../components/Scores";
 import useStyles from "../style/ScoreBoardStyles"; 
+import useClipboard from "react-use-clipboard";
 
 const ScoreBoard = (props) => {
   const [mergeRequestCount, setMergeRequestCount] = useState(0);
   const [commitCount, setCommitCount] = useState(0); 
+  const score_summary = "Total commit score: " + commitCount + "; Total MR score: " + mergeRequestCount + "; " 
+  const [isCopied, setCopied] = useClipboard(score_summary);
   const classes = useStyles(props); 
 
   const { project_id, member_id } = useParams();
@@ -35,10 +38,12 @@ const ScoreBoard = (props) => {
       console.log("Failed to get counts");
     });
   }, [project_id, member_id]);
+  console.log(isCopied);
 
   return (
     <Grid container spacing={10} className={classes.scoreboardContainer}>
-      <Grid item lg={6} md={6} sm={6} className={classes.cards}>
+      <Grid item lg={6} md={6} sm={6} className={classes.cards}>       
+
         <Scores
           mergeRequestCount={mergeRequestCount}
           commitCount={commitCount}  
@@ -58,8 +63,10 @@ const ScoreBoard = (props) => {
               <Button
                 variant="contained"
                 color="primary"
-                className={classes.button}
+                className={classes.button} 
+                onClick={setCopied}                
               >
+                
                 Copy Scores <FileCopyIcon className={classes.icon} />
               </Button>
             </Grid>
