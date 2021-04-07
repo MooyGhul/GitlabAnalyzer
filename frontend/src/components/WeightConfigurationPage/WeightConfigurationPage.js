@@ -28,7 +28,7 @@ const WeightConfigurationPage = () => {
     const defaultCommitMRWeight = 1;
     const defaultLineOfCodeWeight = 1.2; 
     const defaultMinorCodeChangeWeight = 0.2;
-    var configData = {
+    let configData = {
         "MergeRequest": defaultCommitMRWeight,
         "Commit": defaultCommitMRWeight,
         "Line": defaultLineOfCodeWeight,
