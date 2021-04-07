@@ -35,15 +35,10 @@ const NavbarSide = (props) => {
   };
 
   const handleMemberIDChange = (newMemberId) => {
-    setMemberId(newMemberId); 
-    console.log("User has been selected")
+    setMemberId(newMemberId);  
   };
 
   const handleProjectIDChange = (newProjectId) => {
-    console.log(
-      "handleProjectIDChange is called, and project ID is set to " +
-        newProjectId
-    );
     setProjectId(newProjectId); 
   }; 
 
