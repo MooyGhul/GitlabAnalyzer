@@ -29,21 +29,18 @@ const NavbarSide = (props) => {
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
   const [sidebar, setSidebar] = useState(false); 
+
   const toggle = () => {
     setSidebar(!sidebar); 
   };
 
   const handleMemberIDChange = (newMemberId) => {
-    setMemberId(newMemberId);
+    setMemberId(newMemberId);  
   };
 
   const handleProjectIDChange = (newProjectId) => {
-    console.log(
-      "handleProjectIDChange is called, and project ID is set to " +
-        newProjectId
-    );
-    setProjectId(newProjectId);
-  };
+    setProjectId(newProjectId); 
+  }; 
 
   return (
     <Router>
@@ -73,11 +70,12 @@ const NavbarSide = (props) => {
                     <ListItemIcon className={classes.link}>
                       <ListAltIcon />
                     </ListItemIcon>
-                    <ListItemText primary={"Projects"} getProjectId />
+                    <ListItemText primary={"Projects"} />
                   </ListItem>
                 </Link>
 
-                <Link to="/projectInfo/:project_id" className={classes.link}>
+                <Link className={classes.link}
+                 to={{pathname: "/projectInfo/:project_id"}}>
                   <ListItem button>
                     <ListItemIcon className={classes.link}>
                       <BarChartIcon />
@@ -88,7 +86,7 @@ const NavbarSide = (props) => {
 
                 <Link
                   to="/overview/:project_id/:member_id/codecontribution"
-                  className={classes.link}
+                  className={classes.link} 
                 >
                   <ListItem button>
                     <ListItemIcon className={classes.link}>
@@ -114,7 +112,8 @@ const NavbarSide = (props) => {
             <Switch>
               <Route exact path="/token">
                 <Container>
-                  <UrlToken />
+                  <UrlToken 
+                  />
                 </Container>
               </Route>
 
@@ -124,23 +123,23 @@ const NavbarSide = (props) => {
                 </Container>
               </Route>
 
-              <Route exact path="/projectInfo/:project_id">
+              <Route exact path={`/projectInfo/:project_id`}>
                 <Grid container>
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
-                    project_id={project_id}
+                    project_id={project_id} 
                   />
                 </Grid>
               </Route>
 
               <Route
                 exact
-                path="/overview/:project_id/:member_id/codecontribution"
+                path={`/overview/:project_id/:member_id/codecontribution`}
               >
                 <Container>
                   <CodeContributionPage
                     project_id={project_id}
-                    member_id={member_id}
+                    member_id={member_id}  
                   />
                 </Container>
               </Route>

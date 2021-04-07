@@ -9,7 +9,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.Instant;
 
 @Data
 @Builder
@@ -23,6 +22,4 @@ public class ConfigEntity {
     private String name;
     private String token;
     private String url;
-    private Instant startDate;
-    private Instant endDate;
 }
