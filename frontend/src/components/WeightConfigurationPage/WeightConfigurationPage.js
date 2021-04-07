@@ -17,11 +17,8 @@ import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
 import axios from "axios";
 import {useParams} from "react-router";
-<<<<<<< HEAD
 import Calendar from "../Calendar";
-=======
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
->>>>>>> master
 
 const WeightConfigurationPage = () => {
     const classes = useStyles();
@@ -39,6 +36,17 @@ const WeightConfigurationPage = () => {
         "Deleted": defaultMinorCodeChangeWeight,
         "Syntax": defaultMinorCodeChangeWeight,
     }
+
+    const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
+    const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+
+    const handleStartDate = (newDate) => {
+      setStartDate(newDate)
+    };
+
+    const handleEndDate = (newDate) => {
+      setEndDate(newDate)
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -116,7 +124,7 @@ const WeightConfigurationPage = () => {
             </Grid>
             <Grid item xs={3}>
                 <Typography className={classes.pageTitle}>
-                  <Calendar />
+                  <Calendar startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/>
                 </Typography>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>

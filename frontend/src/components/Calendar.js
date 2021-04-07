@@ -1,32 +1,18 @@
-import React, { useState } from 'react'; 
+import React from 'react'; 
 import DateFnsUtils from '@date-io/date-fns';
-import { 
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-  KeyboardTimePicker
-} from '@material-ui/pickers';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+import {KeyboardDateTimePicker} from "@material-ui/pickers";
 import "react-datepicker/dist/react-datepicker.css";
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 
-const useStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: 225,
-  },
-}));
 
-const Calendar = ({project_id,member_id,startDate,endDate,handleStartDate,handleEndDate}) => {
-  const classes = useStyles();
+const Calendar = ({startDate,endDate,handleStartDate,handleEndDate}) => {
 
   // I will move this hooks to the parent class (configure component) when it is merged.
   // then I will add a "making an array" logic to send all the configure thing to backend.
+
+  console.log("Initial Start Date: " + startDate);
+  console.log("Initial End Date: " + endDate);
 
   const startDateChange = (event)=>{
     handleStartDate(event);
@@ -37,70 +23,32 @@ const Calendar = ({project_id,member_id,startDate,endDate,handleStartDate,handle
 
   return (
     <div>
-      <form className={classes.container} noValidate>
-        <TextField
-          id="start-date"
-          label="Start Date"
-          type="datetime-local"
-          defaultValue={startDate}
-          onChange={startDateChange}
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </form>
-      <form className={classes.container} noValidate>
-        <TextField
-          id="end-date"
-          label="End Date"
-          type="datetime-local"
-          defaultValue={endDate}
-          onChange={endDateChange}
-          className={classes.textField}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        />
-      </form>
-      
-{/* 
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                disableToolbar
+          <Grid container justify="space-around">
+              <KeyboardDateTimePicker
                 variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Date picker inline"
-                value={new Date(props.startDate)}
+                ampm={false}
+                label="Start Date"
+                value={startDate}
                 onChange={startDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
+                onError={console.log}
+                format="yyyy/MM/dd HH:mm"
               />
-
-            </Grid>
-          </MuiPickersUtilsProvider>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                disableToolbar
+          </Grid>
+      </MuiPickersUtilsProvider>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify="space-around">
+              <KeyboardDateTimePicker
                 variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Date picker inline"
-                value={new Date(props.endDate)}
+                ampm={false}
+                label="End Date"
+                value={endDate}
                 onChange={endDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
+                onError={console.log}
+                format="yyyy/MM/dd HH:mm"
               />
-
-            </Grid>
-          </MuiPickersUtilsProvider> */}
+          </Grid>
+      </MuiPickersUtilsProvider>
   ​  </div>
   );
 }
