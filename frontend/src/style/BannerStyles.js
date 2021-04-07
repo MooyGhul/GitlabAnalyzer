@@ -17,22 +17,21 @@ const useStyles = makeStyles((theme) => ({
   },
 
   large: {
-    height: "18vh",
-    width: "18vw",
+    width:"20%",
+    height:"auto"
   },
 
   profile: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
-    marginTop: "10px",
+    alignItems: "center", 
+    marginTop:"3em",
   },
 
   details: {
-    fontSize: "35px",
-    position: "relative",
-    left: "20%",
+    fontSize: "30px",
+    position: "relative", 
     marginBottom:"3vh",
     fontWeight:"bold"
   },
