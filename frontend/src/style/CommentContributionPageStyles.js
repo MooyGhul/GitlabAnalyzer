@@ -6,6 +6,19 @@ const useStyles = makeStyles((theme) => ({
         left: "0", 
         top:"2vh",
     },
+
+    contents:{ 
+        width:"100%",  
+        [theme.breakpoints.up("lg")]: {
+          marginTop: "30vh", 
+        },
+        [theme.breakpoints.down("md")]: {
+          marginTop: "25vh", 
+        },
+        [theme.breakpoints.down("sm")]: {
+          marginTop: "20vh", 
+        }, 
+      },
     head: {
         backgroundColor: "#d1d0ff",
         color: theme.palette.common.white,

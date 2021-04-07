@@ -8,6 +8,19 @@ const useStyles = makeStyles((theme) => ({
         top:"2vh",
     },
 
+    contents:{ 
+        width:"100%",  
+        [theme.breakpoints.up("lg")]: {
+          marginTop: "30vh", 
+        },
+        [theme.breakpoints.down("md")]: {
+          marginTop: "25vh", 
+        },
+        [theme.breakpoints.down("sm")]: {
+          marginTop: "20vh", 
+        }, 
+      },
+
     root: {
         '& > *': {
             borderBottom: 'unset',

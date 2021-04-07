@@ -72,6 +72,14 @@ const CommentContributionPage = (props) => {
           <Banner memberName={member_id} type="commentContribution" />
         </Grid>
       </Grid>
+
+      <Grid
+          container
+          spacing={5}
+          justify="center"
+          alignItems="center"
+          className={classes.contents}
+        >
       <Grid item xs={12} align="center">
         <InnerNavBar commentStyle={innerNavStyle.actionItemComment} />
       </Grid>
@@ -139,6 +147,7 @@ const CommentContributionPage = (props) => {
           </Table>
         </TableContainer>
       </Grid>
+    </Grid>
     </Grid>
     </div>
   );
