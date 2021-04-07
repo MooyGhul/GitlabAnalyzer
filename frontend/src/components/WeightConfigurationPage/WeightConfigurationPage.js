@@ -48,6 +48,27 @@ const WeightConfigurationPage = () => {
       setEndDate(newDate)
     };
 
+    const authenticateToken  = async () => {
+      await axios.post(process.env.NODE_ENV === 'development' ?
+
+          `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
+          `/project/create?token=${urlToken.token}`)
+      // .then(function(response){
+      //     hideLoader();
+      //     if (response.status === 200){
+      //         history.push('/projectList');
+      //     }
+      // })
+      // .catch(function(error){
+      //     console.log(error.response.status);
+      //     if (error.response.status !== 200){
+      //         setUrlToken({url: urlToken.url, token:urlToken.token});
+      //         setErrorMsg('Incorrect url or token. Please try again.');
+      //     }
+      // }) 
+      ;
+  }
+
     useEffect(() => {
         const fetchData = async () => {
           const languageResult = await axios.get(
