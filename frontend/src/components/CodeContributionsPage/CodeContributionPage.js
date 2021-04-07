@@ -30,14 +30,13 @@ const CodeContributionPage = (props) => {
   const createGraphData = (year, MRDaily, CommitDaily) => {
     return { year, MRDaily, CommitDaily };
   };
- 
-  console.log("HERE IS THE MEMBER ID", member_id)
+
+  console.log("HERE IS THE MEMBER ID", member_id);
   useEffect(() => {
     const defined = () => {
       if (project_id === -1) {
-        showErrorPage(); 
-      } 
-      else if (member_id === -1) {
+        showErrorPage();
+      } else if (member_id === -1) {
         try {
           setProjectId(location.state.project_id);
           setMemberId(location.state.member_id);
@@ -45,9 +44,8 @@ const CodeContributionPage = (props) => {
           setProjectId(props.project_id);
           setMemberId(props.member_id);
           showErrorPage();
-        } 
-      }  
-      else{
+        }
+      } else {
         setProjectId(props.project_id);
         setMemberId(props.member_id);
       }
@@ -196,23 +194,33 @@ const CodeContributionPage = (props) => {
             <Banner memberName={member_id} />
           </Grid>
         </Grid>
-        <Grid item xs={12} align="center">
-          <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
-        </Grid>
+        <Grid
+          container
+          spacing={5}
+          justify="center"
+          alignItems="center"
+          className={classes.contents}
+        >
+          <Grid item xs={12} align="center">
+            <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
+          </Grid>
 
-        <Grid className={classes.graph}>
-          <BarChart
-            data={graphData}
-            codeContribution={true}
-            barLabel1={BarChartProperties.codeContribution.labelMRs}
-            barColour1={BarChartProperties.codeContribution.barColourMRs}
-            barLabel2={BarChartProperties.codeContribution.labelCommits}
-            barColour2={BarChartProperties.codeContribution.barColourCommits}
-            maintainRatio={false}
-          />
-        </Grid>
-        <Grid item className={classes.table}>
-          <CodeContributionTable codeContributionRows={codeContributionRows} />
+          <Grid className={classes.graph}>
+            <BarChart
+              data={graphData}
+              codeContribution={true}
+              barLabel1={BarChartProperties.codeContribution.labelMRs}
+              barColour1={BarChartProperties.codeContribution.barColourMRs}
+              barLabel2={BarChartProperties.codeContribution.labelCommits}
+              barColour2={BarChartProperties.codeContribution.barColourCommits}
+              maintainRatio={false}
+            />
+          </Grid>
+          <Grid item className={classes.table}>
+            <CodeContributionTable
+              codeContributionRows={codeContributionRows}
+            />
+          </Grid>
         </Grid>
       </Grid>
       {noProjectSelected}

@@ -20,8 +20,7 @@ const useStyles = makeStyles((theme) => ({
       color: "rgb(225,225,225)",
       display: "flex",
     },
-   
-  
+     
     header: {
       position: "fixed",
       color: "white",

@@ -5,15 +5,17 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgb(236,242,245)",
     height: "90%", 
     [theme.breakpoints.up("lg")]: {
-      width: "35vw",  
+      width: "30vw",  
     },
     [theme.breakpoints.down("md")]: {
+      height:"50%",
       width: "30vw",
       fontSize:"10px"
     },
     [theme.breakpoints.down("sm")]: {
       width: "25vw",
-      height: "80%",
+      height: "20%",
+      fontSize:"10px"
     },
   }, 
 
@@ -24,8 +26,8 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     fontWeight: "bold",
-    [theme.breakpoints.up("lg")]: {
-      margin: "2vh 0 2vh 0",
+    [theme.breakpoints.up("lg")]: { 
+      fontSize: "1.0rem",
     },
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.0rem",
@@ -33,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.0rem",
   },
   values: {
-    display: "flex",
-    margin: "3vh 0 3vh 1.5vw",
+    display: "flex", 
+    marginLeft: "20px",
     [theme.breakpoints.down("sm")]: {
       fontSize: "1.2rem",
     },
