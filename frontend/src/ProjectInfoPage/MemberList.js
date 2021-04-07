@@ -2,7 +2,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { useHistory } from "react-router-dom"; 
 import { useStyles } from "./ProjectInfoStyle";
 
-function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChange}){
+function MemberList({ members, commitsArray, MRsArray, commentsArray, issues, projectID, onMemberIdChange}){
     const history = useHistory();
     const classes = useStyles();
 
@@ -11,8 +11,8 @@ function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChan
         studentID: members[i],
         commits: commitsArray[i],
         merge_requests: MRsArray[i],
-        wordCountMR: "Not Implemented",
-        wordCountIssue: "Not Imiplemented"
+        CountMR: commentsArray[i],
+        CountIssue: issues.length,
       }))
       
       const columns = [
@@ -20,8 +20,8 @@ function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChan
         { field: "studentID", headerName: "Student ID", width: 200 },
         { field: "commits", headerName: "Total commits", width: 230 },
         { field: "merge_requests", headerName: "Total MRs", width: 200 },
-        { field: "wordCountMR", headerName: "Review (words)", width: 250 },
-        { field: "wordCountIssue", headerName: "Issue (words)", width: 250 },
+        { field: "CountMR", headerName: "Comments (count)", width: 250 },
+        { field: "CountIssue", headerName: "Issue (count)", width: 250 },
       ];
     
       const buttonClickHandler = (e) => {

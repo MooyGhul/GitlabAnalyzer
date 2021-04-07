@@ -1,11 +1,10 @@
 import { HorizontalBar } from "react-chartjs-2";
 
-function StackedBarChart(props) {
+function StackedBarChart({members, commitsArray, MRsArray, commentsArray}) {
   let colorListCommit = [];
   let colorListMR = [];
-  let members = props.member;
-  let commitsArray = props.commitsArray;
-  let MRsArray = props.MRsArray;
+  let colorListComment = [];
+  console.log(members)
 
   for (var i = 0; i < members.length; i++) {
     colorListCommit.push("rgba(53,63,196,0.7)");
@@ -13,6 +12,10 @@ function StackedBarChart(props) {
 
   for (i = 0; i < members.length; i++) {
     colorListMR.push("rgba(40, 240, 230, 0.7");
+  }
+
+  for (i = 0; i < members.length; i++) {
+    colorListComment.push("rgba(253, 17, 165, 0.7");
   }
 
   return (
@@ -35,6 +38,15 @@ function StackedBarChart(props) {
               backgroundColor: colorListMR,
               borderWidth: 4,
             },
+
+            {
+              label: "Comments (count)",
+              data: commentsArray,
+              maintainAspectRatio: true,
+              backgroundColor: colorListComment,
+              borderWidth: 4,
+            },
+
           ],
         }}
         options={{

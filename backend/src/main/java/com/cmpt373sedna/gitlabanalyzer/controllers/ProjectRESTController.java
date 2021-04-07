@@ -102,8 +102,12 @@ public class ProjectRESTController {
     }
 
     @GetMapping("/{projectId}/{MRorIssueId}/comments")
-    Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId, @PathVariable(value="MRorIssueId") int MRorIssueId) {
+    Iterable<CommentEntity> getProjectCommentsForMROrIssue(@PathVariable(value="projectId") int projectId, @PathVariable(value="MRorIssueId") int MRorIssueId) {
         return this.commentEntityRepository.findAllByProjectIdAndMRorIssueId(projectId,MRorIssueId);
+    }
+    @GetMapping("/{projectId}/comments")
+    Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId) {
+        return this.commentEntityRepository.findAllByProjectId(projectId);
     }
 
     @GetMapping("/{projectId}/languages")

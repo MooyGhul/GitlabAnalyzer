@@ -9,8 +9,9 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     width: "65%",
     height: "45%",
-    top: "50%",
-    left: "20%", 
+    top: "52%", 
+    left: "50%",
+    transform: "translate(-50%, 0%)"
   },
 
   barChart: {
@@ -18,7 +19,8 @@ const useStyles = makeStyles((theme) => ({
     top: "10%",
     width: "40%",
     height: "50%",
-    left: "25%",
+    left: "50%",
+    transform: "translate(-50%, 0%)"
   },
 }));
 export { useStyles };
