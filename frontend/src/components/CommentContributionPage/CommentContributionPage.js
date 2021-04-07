@@ -65,7 +65,8 @@ const CommentContributionPage = (props) => {
   };
 
   return (
-    <Grid container spacing={5} justify="center" alignItems="center">
+    <div className={classes.container}>
+    <Grid container spacing={5} justify="center" alignItems="center" >
       <Grid item xs={12}>
         <Grid item xs={12}>
           <Banner memberName={member_id} type="commentContribution" />
@@ -139,6 +140,7 @@ const CommentContributionPage = (props) => {
         </TableContainer>
       </Grid>
     </Grid>
+    </div>
   );
 };
 
