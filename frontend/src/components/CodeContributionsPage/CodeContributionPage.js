@@ -30,10 +30,9 @@ const CodeContributionPage = (props) => {
   const createGraphData = (year, MRDaily, CommitDaily) => {
     return { year, MRDaily, CommitDaily };
   };
-
-  console.log("HERE IS THE MEMBER ID", member_id);
+ 
   useEffect(() => {
-    const defined = () => {
+    const setProjectIdAndMemberId = () => {
       if (project_id === -1) {
         showErrorPage();
       } else if (member_id === -1) {
@@ -166,7 +165,7 @@ const CodeContributionPage = (props) => {
 
       codeContributionData(commitData, mrData);
     };
-    defined();
+    setProjectIdAndMemberId();
 
     if (member_id !== -1) {
       fetchData()

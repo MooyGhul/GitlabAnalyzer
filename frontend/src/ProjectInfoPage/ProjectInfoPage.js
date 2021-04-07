@@ -23,7 +23,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
   const [projectId, setProjectId] = useState(project_id);
 
   useEffect(() => {
-    const defined = () => {
+    const updateProjectId = () => {
       if (projectId === -1) {
         showErrorPage();
       } else {
@@ -55,7 +55,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
       setCommits(commitData.data);
       setMRs(mrData.data);
     }; 
-    defined();
+    updateProjectId();
     if (projectId!==-1) { 
       fetchData().then(hideLoader());
     }
