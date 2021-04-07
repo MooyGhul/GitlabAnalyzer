@@ -8,13 +8,7 @@ function StackedBarChart({members, commitsArray, MRsArray, commentsArray}) {
 
   for (var i = 0; i < members.length; i++) {
     colorListCommit.push("rgba(53,63,196,0.7)");
-  }
-
-  for (i = 0; i < members.length; i++) {
     colorListMR.push("rgba(40, 240, 230, 0.7");
-  }
-
-  for (i = 0; i < members.length; i++) {
     colorListComment.push("rgba(253, 17, 165, 0.7");
   }
 
