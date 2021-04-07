@@ -22,7 +22,8 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
   const classes = useStyles(); 
   const [projectId, setProjectId] = useState(project_id);
 
-  useEffect(() => {
+
+  useEffect(() => {    
     const defined = () => {
       if (projectId === -1) {
         showErrorPage();
@@ -36,38 +37,41 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
     };
 
     const fetchData = async () => {
-      showLoader();
+      let projectUrl = `/project/${projectId}/load`
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
       let memberUrl = `/project/${projectId}/members`;
 
       if (process.env.NODE_ENV === "development") {
+        projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/commits`;
         commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/merge_requests`;
         memberUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members`;
       }
-
+      await axios.post(projectUrl);
       const mrData = await axios.get(mrUrl);
       const commitData = await axios.get(commitUrl);
       const memberData = await axios.get(memberUrl);
       
-      console.log(mrData)
+      console.log(memberData)
       console.log("MEMBERDATA", memberData)
       if (memberData.data===""){
-        setMembers(['No student available'])
+        setMembers([])
       }
       else{
       setMembers(memberData.data);
       }
       setCommits(commitData.data);
       setMRs(mrData.data);
-    }; 
+    };  
     defined();
+    showLoader(); 
     if (projectId!==-1) { 
       fetchData().then(hideLoader());
     }
   // eslint-disable-next-line
   }, [projectId]);
+
   console.log(members)  
   members.forEach((member) => {
     let countCommit = 0;
@@ -107,9 +111,10 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
           projectID={projectId}
           onMemberIdChange={onMemberIdChange}
         />
-        {loader}
-        {noProjectSelected}
+        
       </div>
+      {loader}
+      {noProjectSelected}
     </div>
    
   );
