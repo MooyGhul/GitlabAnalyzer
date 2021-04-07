@@ -1,6 +1,12 @@
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+
+    container:{
+        position: "absolute",
+        left: "0"
+    },
+
     root: {
         '& > *': {
             borderBottom: 'unset',

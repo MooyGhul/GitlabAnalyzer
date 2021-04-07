@@ -1,10 +1,11 @@
-import React from 'react'; 
-import styles from "../style/header.module.css"
+import styles from "../style/header.module.css"; 
 
 const Header = (props) => {
-    return(
-            <h1 className={styles.header}>{props.pageTitle}</h1>
-    )
-}
+  return (
+    <div>
+      <h1 className={styles.header}>{props.pageTitle}</h1> 
+    </div>
+  );
+};
 
 export default Header;

@@ -39,7 +39,6 @@ public class ProjectRESTController {
         this.projectManager.setProjectToken(token);
     }
 
-//    "http://cmpt373-1211-14.cmpt.sfu.ca:8929/root/gitlabanalyzer"
     @PostMapping("/add")
     @Deprecated
     void addProject(@RequestParam String url) {
@@ -56,11 +55,21 @@ public class ProjectRESTController {
         return this.projectRepository.findAll();
     }
 
+    @GetMapping("/{projectId}")
+    String getProjectName(@PathVariable(value="projectId") int projectId) {
+        return this.projectRepository.findProjectEntityByRepoId(projectId).getRepoName();
+    }
+
     @PostMapping("/{projectId}/load")
     void load(@PathVariable() int projectId) {
-        this.projectManager.findProject(projectId)
+        ProjectController projectController = this.projectManager.findProject(projectId)
                 .map(ProjectController::load)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        this.commitRepository.saveAll(projectController.getCommitEntities());
+        this.issueRepository.saveAll(projectController.getIssuesEntities());
+        this.commentEntityRepository.saveAll(projectController.getComments());
+        this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
     }
 
 
@@ -95,5 +104,12 @@ public class ProjectRESTController {
     @GetMapping("/{projectId}/{MRorIssueId}/comments")
     Iterable<CommentEntity> getProjectComments(@PathVariable(value="projectId") int projectId, @PathVariable(value="MRorIssueId") int MRorIssueId) {
         return this.commentEntityRepository.findAllByProjectIdAndMRorIssueId(projectId,MRorIssueId);
+    }
+
+    @GetMapping("/{projectId}/languages")
+    List<String> getProjectLanguages(@PathVariable(value="projectId") int projectId) {
+        ProjectController projectController = this.projectManager.findProject(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return projectController.getLanguages();
     }
 }
