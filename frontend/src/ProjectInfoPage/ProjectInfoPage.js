@@ -7,7 +7,7 @@ import MemberList from "./MemberList";
 import useFullPageLoader from "../components/useFullPageLoader";
 import useProjectNotSelected from "../components/useProjectNotSelected";
 
-function ProjectInfoPage({onMemberIdChange,project_id}) {
+function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChange, projectLoaded }) {
   const location = useLocation(); 
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
@@ -20,7 +20,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
   let commitsArray = [];
   let MRsArray = [];
   const classes = useStyles(); 
-  const [projectId, setProjectId] = useState(project_id);
+  const [projectId, setProjectId] = useState(project_id); 
 
 
   useEffect(() => {    
@@ -36,25 +36,27 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
       }
     };
 
-    const fetchData = async () => {
+    const loadProject = async () => {
+      showLoader();
       let projectUrl = `/project/${projectId}/load`
+      projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
+      await axios.post(projectUrl);
+    }
+
+    const fetchData = async () => {  
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
       let memberUrl = `/project/${projectId}/members`;
 
-      if (process.env.NODE_ENV === "development") {
-        projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
+      if (process.env.NODE_ENV === "development") {        
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/commits`;
         commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/merge_requests`;
         memberUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members`;
       }
-      await axios.post(projectUrl);
       const mrData = await axios.get(mrUrl);
       const commitData = await axios.get(commitUrl);
       const memberData = await axios.get(memberUrl);
-      
-      console.log(memberData)
-      console.log("MEMBERDATA", memberData)
+  
       if (memberData.data===""){
         setMembers([])
       }
@@ -64,11 +66,17 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
       setCommits(commitData.data);
       setMRs(mrData.data);
     };  
-    defined();
-    showLoader(); 
+
+    defined(); 
+    if (!projectLoaded){
+      loadProject();
+      onProjectLoadedStateChange(true);
+    }
+
     if (projectId!==-1) { 
       fetchData().then(hideLoader());
     }
+  
   // eslint-disable-next-line
   }, [projectId]);
 
