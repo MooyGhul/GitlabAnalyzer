@@ -7,7 +7,7 @@ import MemberList from "./MemberList";
 import useFullPageLoader from "../components/useFullPageLoader";
 import useProjectNotSelected from "../components/useProjectNotSelected";
 
-function ProjectInfoPage(props) {
+function ProjectInfoPage({onMemberIdChange,project_id}) {
   const location = useLocation(); 
   // const [projectName] = useState("");
   const [members, setMembers] = useState([]);
@@ -21,7 +21,7 @@ function ProjectInfoPage(props) {
   let commitsArray = [];
   let MRsArray = [];
   const classes = useStyles(); 
-  const [projectId, setProjectId] = useState(props.project_id);
+  const [projectId, setProjectId] = useState(project_id);
 
   useEffect(() => {
     const defined = () => {
@@ -29,10 +29,9 @@ function ProjectInfoPage(props) {
         showErrorPage();
       } else {
         try {
-          setProjectId(location.state.id);
-          console.log(projectId);
+          setProjectId(location.state.id); 
         } catch (err) {
-          setProjectId(props.project_id);
+          setProjectId(project_id);
         }
       }
     };
@@ -65,32 +64,30 @@ function ProjectInfoPage(props) {
       fetchData().then(hideLoader());
     }
   // eslint-disable-next-line
-  }, [projectId, props]);
+  }, [projectId]);
 
   members.forEach((member) => {
-    let count = 0;
+    let countCommit = 0;
+    let countMR = 0;
+
     commits.forEach((commit) => {
       if (member === commit.author) {
-        count++;
+        countCommit++;
       }
     });
-    commitsArray.push(count);
-  });
+    commitsArray.push(countCommit);
 
-  members.forEach((member) => {
-    let count = 0;
     MRs.forEach((MR) => {
       if (member === MR.author) {
-        count++;
+        countMR++;
       }
     });
-    MRsArray.push(count);
-  });
+    MRsArray.push(countMR);
+  }); 
+ 
 
   return (
-    <div>
-      {/* <WideHeader id={projectId} projectName={projectName} /> */}
-      {/* <AllProjectInfo member={members} projectID={projectId} onMemberIdChange={props.onMemberIdChange}/>       */}
+    <div> 
       <div className={classes.body}>
         <div className={classes.barChart}>
           <StackedBarChart
@@ -105,7 +102,7 @@ function ProjectInfoPage(props) {
           commitsArray={commitsArray}
           MRsArray={MRsArray}
           projectID={projectId}
-          onMemberIdChange={props.onMemberIdChange}
+          onMemberIdChange={onMemberIdChange}
         />
         {loader}
         {noProjectSelected}

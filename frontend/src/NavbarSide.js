@@ -28,17 +28,14 @@ const NavbarSide = (props) => {
   const classes = useStyles();
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
-  const [sidebar, setSidebar] = useState(false);
-  const [userSelected, setUserSelected] = useState(false);
-  const [projectSelected, setProjectSelected] = useState(false);  
+  const [sidebar, setSidebar] = useState(false); 
 
   const toggle = () => {
     setSidebar(!sidebar); 
   };
 
   const handleMemberIDChange = (newMemberId) => {
-    setMemberId(newMemberId);
-    setUserSelected(true);
+    setMemberId(newMemberId); 
     console.log("User has been selected")
   };
 
@@ -47,8 +44,7 @@ const NavbarSide = (props) => {
       "handleProjectIDChange is called, and project ID is set to " +
         newProjectId
     );
-    setProjectId(newProjectId);
-    setProjectSelected(true);
+    setProjectId(newProjectId); 
   }; 
 
   return (
@@ -136,8 +132,7 @@ const NavbarSide = (props) => {
                 <Grid container>
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
-                    project_id={project_id}
-                    projectSelected={projectSelected}
+                    project_id={project_id} 
                   />
                 </Grid>
               </Route>
@@ -149,8 +144,7 @@ const NavbarSide = (props) => {
                 <Container>
                   <CodeContributionPage
                     project_id={project_id}
-                    member_id={member_id} 
-                    userSelected={userSelected}
+                    member_id={member_id}  
                   />
                 </Container>
               </Route>
