@@ -53,7 +53,7 @@ function UrlToken() {
       };
 
 
-    const test = async () => {
+    const loadWithConfigId = async () => {
         const configID = await createConfigID(urlToken.url, urlToken.token); 
         await loadAllProjects(configID); 
       };   
@@ -62,13 +62,14 @@ function UrlToken() {
       const addLoginToken = () => { 
         const data = new URLSearchParams(window.location.search);
         setLoginToken(data.get("ticket")); 
+        console.log(loginToken)
       };
     
 
       const nextHandler = (event) => {
         event.preventDefault();
         addLoginToken();
-        test();
+        loadWithConfigId();
       };
           
      
