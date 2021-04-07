@@ -45,7 +45,6 @@ const WeightConfigurationPage = () => {
           );
           setFileType(languageResult.data);
           languageResult.data.forEach(lang => configData[lang] = defaultFileWeight);
-          console.log(configData);
         };
 
         fetchData()
@@ -63,7 +62,6 @@ const WeightConfigurationPage = () => {
         const textFieldId = e.target.id;
         const textFieldValue = e.target.value;
         configData[textFieldId] = textFieldValue;
-        console.log(configData);
     }
 
     const createTableHeader = () => {
@@ -159,7 +157,7 @@ const WeightConfigurationPage = () => {
                 <Grid item xs={5}>
                     <form className={classes.textField} noValidate autoComplete="off">
                         {fileType.map((fileType) => (
-                            <CreateFileTypeWeightInput key={fileType} fileType={fileType} /*getTextFieldValue={getValueFromTextField}*/ defaultFileWeight={defaultFileWeight} configData={configData}/>
+                            <CreateFileTypeWeightInput key={fileType} fileType={fileType} defaultFileWeight={defaultFileWeight} configData={configData}/>
                         ))}
                     </form>  
                 </Grid>
