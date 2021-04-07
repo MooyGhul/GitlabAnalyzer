@@ -23,8 +23,9 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import GitHubIcon from "@material-ui/icons/GitHub"; 
 import MenuIcon from "@material-ui/icons/Menu";
 import useStyles from "./style/NavbarSideStyle";
+import ScoreBreakdown from "./components/ScoreBreakdown/ScoreBreakdown";
 
-const NavbarSide = (props) => {
+const NavbarSide = () => {
   const classes = useStyles();
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
@@ -162,6 +163,18 @@ const NavbarSide = (props) => {
               >
                 <Container>
                   <IssueContributionPage
+                    project_id={project_id}
+                    member_id={member_id}
+                  />
+                </Container>
+              </Route>
+
+              <Route
+                exact
+                path="/overview/:project_id/:member_id/breakdown/:breakdown_type"
+              >
+                <Container>
+                  <ScoreBreakdown
                     project_id={project_id}
                     member_id={member_id}
                   />

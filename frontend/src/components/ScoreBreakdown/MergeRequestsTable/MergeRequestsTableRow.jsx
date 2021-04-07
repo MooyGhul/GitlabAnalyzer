@@ -4,17 +4,17 @@ import {formatTableDate} from "../../../helper";
 import React from "react";
 import {useStyles} from "../../../style/ScoreBreakdownStyles";
 
-export default function MergeRequestsTableRow(props) {
+export default function MergeRequestsTableRow({ mergeRequest, mergedCodeScore, totalCodeScore, commentScore }) {
   const classes = useStyles();
 
   return (
     <TableRow className={classes.root}>
-      <TableCell className={classes.cell}>{formatTableDate(props.mergeRequest.mergedAt)}</TableCell>
-      <TableCell className={classes.cell}>{props.mergeRequest.mergeRequestName}</TableCell>
+      <TableCell className={classes.cell}>{formatTableDate(mergeRequest.mergedAt)}</TableCell>
+      <TableCell className={classes.cell}>{mergeRequest.mergeRequestName}</TableCell>
       <TableCell className={classes.cell}>-</TableCell>
-      <TableCell className={classes.cell}>{props.mergedCodeScore}</TableCell>
-      <TableCell className={classes.cell}>{props.totalCodeScore}</TableCell>
-      <TableCell className={classes.cell}>{props.commentScore}</TableCell>
+      <TableCell className={classes.cell}>{mergedCodeScore}</TableCell>
+      <TableCell className={classes.cell}>{totalCodeScore}</TableCell>
+      <TableCell className={classes.cell}>{commentScore}</TableCell>
     </TableRow>
   )
 }

@@ -3,15 +3,15 @@ import React from "react";
 import PropTypes from "prop-types";
 import {useStyles} from "../../../style/ScoreBreakdownStyles";
 
-export default function DayByDayTableTotalRow(props) {
+export default function DayByDayTableTotalRow({ scores, mrScore, issueScore }) {
   const classes = useStyles();
 
   return (
     <TableRow className={classes.root}>
       <TableCell className={classes.cell}><b>Total</b></TableCell>
-      {Object.keys(props.scores).map((key) => <TableCell className={classes.cell}><b>{props.scores[key]}</b></TableCell>)}
-      <TableCell className={classes.cell}><b>{props.mrScore}</b></TableCell>
-      <TableCell className={classes.cell}><b>{props.issueScore}</b></TableCell>
+      {Object.keys(scores).map((key) => <TableCell className={classes.cell}><b>{scores[key]}</b></TableCell>)}
+      <TableCell className={classes.cell}><b>{mrScore}</b></TableCell>
+      <TableCell className={classes.cell}><b>{issueScore}</b></TableCell>
     </TableRow>
   )
 }

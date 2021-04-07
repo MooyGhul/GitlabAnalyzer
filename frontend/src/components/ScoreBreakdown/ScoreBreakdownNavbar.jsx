@@ -7,12 +7,10 @@ import DateRangeIcon from "@material-ui/icons/DateRange";
 import MergeTypeIcon from "@material-ui/icons/MergeType";
 import {useInnerNavStyle} from "../../style/InnerNavStyle";
 
-const ScoreBreakdownNavbar = (props) => {
+const ScoreBreakdownNavbar = ({ codeStyle, commentStyle }) => {
   const { project_id, member_id } = useParams();
   const [value, setValue] = React.useState(0);
   const classes = useInnerNavStyle();
-  const codeStyle = props.codeStyle;
-  const commentStyle = props.commentStyle;
 
   return (
     <div>
