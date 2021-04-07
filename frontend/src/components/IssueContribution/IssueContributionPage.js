@@ -53,7 +53,7 @@ const IssueContributionPage = () => {
     <Grid container spacing={5} justify="center" alignItems="center" className={classes.container}>
       <Grid item xs={12}>
         <Grid item xs={12}>
-          <Banner memberName={member_id} />
+          <Banner memberName={member_id} type="issueContribution" />
         </Grid>
       </Grid>
 
