@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
 
   memberList: {
     position: "absolute",
-    width: "65%",
+    width: "60%",
     height: "45%",
     top: "52%", 
     left: "50%",

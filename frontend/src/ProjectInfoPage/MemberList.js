@@ -16,12 +16,12 @@ function MemberList({ members, commitsArray, MRsArray, commentsArray, issues, pr
       }))
       
       const columns = [
-        { field: "id", headerName: "ID", width: 100 },
-        { field: "studentID", headerName: "Student ID", width: 200 },
-        { field: "commits", headerName: "Total commits", width: 230 },
-        { field: "merge_requests", headerName: "Total MRs", width: 200 },
+        { field: "id", headerName: "ID", width: 50 },
+        { field: "studentID", headerName: "Student", width: 180 },
+        { field: "commits", headerName: "Commit (count)", width: 230 },
+        { field: "merge_requests", headerName: "MR (count)", width: 200 },
         { field: "CountMR", headerName: "Comments (count)", width: 250 },
-        { field: "CountIssue", headerName: "Issue (count)", width: 250 },
+        { field: "CountIssue", headerName: "Issue (count)", width: 210 },
       ];
     
       const buttonClickHandler = (e) => {

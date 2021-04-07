@@ -1,4 +1,4 @@
-import { HorizontalBar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
 function StackedBarChart({members, commitsArray, MRsArray, commentsArray}) {
   let colorListCommit = [];
@@ -20,7 +20,7 @@ function StackedBarChart({members, commitsArray, MRsArray, commentsArray}) {
 
   return (
     <div>
-      <HorizontalBar
+      <Bar
         data={{
           labels: members,
           datasets: [
@@ -53,7 +53,7 @@ function StackedBarChart({members, commitsArray, MRsArray, commentsArray}) {
           responsive: true,
           title: {
             display: true,
-            text: "Code contribution",
+            text: "Overall contribution",
             fontSize: 30,
           },
 
