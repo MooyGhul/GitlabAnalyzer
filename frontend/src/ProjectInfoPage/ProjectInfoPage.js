@@ -1,49 +1,115 @@
-import WideHeader from "./WideHeader/WideHeader";
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import AllProjectInfo from "./AllProjectInfo";
+import { useStyles } from "./ProjectInfoStyle";
+import StackedBarChart from "./StackedBarChart";
+import MemberList from "./MemberList";
 import useFullPageLoader from "../components/useFullPageLoader";
-import axios from 'axios';
+import useProjectNotSelected from "../components/useProjectNotSelected";
 
-
-const ProjectInfoPage = (props) => {
-  const location = useLocation();
-  const projectId = props.project_id===-1 ? location.state.id : props.project_id;
-  const [projectName] = useState("");
+function ProjectInfoPage({onMemberIdChange,project_id}) {
+  const location = useLocation(); 
   const [members, setMembers] = useState([]);
+  const [commits, setCommits] = useState([]);
+  const [MRs, setMRs] = useState([]);
   const [loader, showLoader, hideLoader] = useFullPageLoader();
+  const [
+    noProjectSelected,
+    showErrorPage, 
+  ] = useProjectNotSelected();
+  let commitsArray = [];
+  let MRsArray = [];
+  const classes = useStyles(); 
+  const [projectId, setProjectId] = useState(project_id);
 
   useEffect(() => {
-    showLoader();
-    const loadProject = async() => {
-      await axios.post(process.env.NODE_ENV === 'development' ?         
-      `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load` :
-      `/project/${projectId}/load`)
-    }
+    const defined = () => {
+      if (projectId === -1) {
+        showErrorPage();
+      } else {
+        try {
+          setProjectId(location.state.id); 
+        } catch (err) {
+          setProjectId(project_id);
+        }
+      }
+    };
+
     const fetchData = async () => {
-        const result = await axios.get(
-          process.env.NODE_ENV === 'development' ?
-              `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members` :
-              `/project/${projectId}/members`
-      );
+      showLoader();
+      let mrUrl = `/project/${projectId}/merge_requests`;
+      let commitUrl = `/project/${projectId}/commits`;
+      let memberUrl = `/project/${projectId}/members`;
+
+      if (process.env.NODE_ENV === "development") {
+        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/commits`;
+        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/merge_requests`;
+        memberUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members`;
+      }
+
+      const mrData = await axios.get(mrUrl);
+      const commitData = await axios.get(commitUrl);
+      const memberData = await axios.get(memberUrl);
       
-      if (result.data===""){
-        setMembers([])
+      console.log(mrData)
+      console.log("MEMBERDATA", memberData)
+      if (memberData.data===""){
+        setMembers(['No student available'])
       }
       else{
-        setMembers(result.data);
+      setMembers(memberData.data);
       }
+      setCommits(commitData.data);
+      setMRs(mrData.data);
     }; 
-    loadProject();
-    fetchData().then(hideLoader());
-     // eslint-disable-next-line
-  }, [projectId]); 
-  
+    defined();
+    if (projectId!==-1) { 
+      fetchData().then(hideLoader());
+    }
+  // eslint-disable-next-line
+  }, [projectId]);
+  console.log(members)  
+  members.forEach((member) => {
+    let countCommit = 0;
+    let countMR = 0;
+
+    commits.forEach((commit) => {
+      if (member === commit.author) {
+        countCommit++;
+      }
+    });
+    commitsArray.push(countCommit);
+
+    MRs.forEach((MR) => {
+      if (member === MR.author) {
+        countMR++;
+      }
+    }); 
+    MRsArray.push(countMR);
+  }); 
+ 
+
   return (
     <div> 
-      <WideHeader id={projectId} projectName={projectName} />
-      <AllProjectInfo member={members} projectID={projectId} />
-      {loader}
+      <div className={classes.body}>
+        <div className={classes.barChart}>
+          <StackedBarChart
+            member={members}
+            projectID={projectId}
+            commitsArray={commitsArray}
+            MRsArray={MRsArray}
+          />
+        </div>
+        <MemberList
+          members={members}
+          commitsArray={commitsArray}
+          MRsArray={MRsArray}
+          projectID={projectId}
+          onMemberIdChange={onMemberIdChange}
+        />
+        {loader}
+        {noProjectSelected}
+      </div>
     </div>
    
   );

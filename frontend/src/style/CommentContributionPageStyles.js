@@ -1,6 +1,10 @@
 import {makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
+    container:{
+        position: "absolute",
+        left: "0"
+    },
     head: {
         backgroundColor: "#d1d0ff",
         color: theme.palette.common.white,

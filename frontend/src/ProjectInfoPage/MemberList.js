@@ -1,6 +1,6 @@
 import { DataGrid } from "@material-ui/data-grid";
 import { useHistory } from "react-router-dom"; 
-import { useStyles } from "./AllProjectInfoStyle";
+import { useStyles } from "./ProjectInfoStyle";
 
 function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChange}){
     const history = useHistory();
@@ -25,8 +25,10 @@ function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChan
       ];
     
       const buttonClickHandler = (e) => {
-        console.log(e.row.id);
-        history.push( `/overview/${projectID}/${e.row.studentID}/codeContribution`);
+        let studentID = e.row.studentID
+        history.push(
+          {pathname:`/overview/${projectID}/${studentID}/codeContribution`, 
+           state: {project_id: projectID, member_id:studentID}});
         onMemberIdChange(e.row.studentID);
       };
       
@@ -35,7 +37,7 @@ function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChan
         <DataGrid
           rows={rows}
           columns={columns}
-          pageSize={5}
+          pageSize={10}
           onRowClick={(e) => buttonClickHandler(e)}
         />
       </div>
