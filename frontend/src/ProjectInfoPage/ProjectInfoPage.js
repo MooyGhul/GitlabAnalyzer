@@ -9,7 +9,6 @@ import useProjectNotSelected from "../components/useProjectNotSelected";
 
 function ProjectInfoPage({onMemberIdChange,project_id}) {
   const location = useLocation(); 
-  // const [projectName] = useState("");
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
@@ -40,22 +39,19 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
       showLoader();
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
-
-      const result = await axios.get(
-        process.env.NODE_ENV === "development"
-          ? `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members`
-          : `/project/${projectId}/members`
-      );
+      let memberUrl = `/project/${projectId}/members`;
 
       if (process.env.NODE_ENV === "development") {
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/commits`;
         commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/merge_requests`;
+        memberUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members`;
       }
 
       const mrData = await axios.get(mrUrl);
       const commitData = await axios.get(commitUrl);
+      const memberData = await axios.get(memberUrl);
 
-      setMembers(result.data);
+      setMembers(memberData.data);
       setCommits(commitData.data);
       setMRs(mrData.data);
     }; 
