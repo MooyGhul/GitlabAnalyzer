@@ -11,7 +11,7 @@ const ProjectListPage = (props) => {
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
   const classes = useStyles();
-  const [loader, showLoader, hideLoader] = useFullPageLoader();
+  const [loader, showLoader, hideLoader] = useFullPageLoader(); 
 
   const columns = [
     { field: "id", headerName: "ID", width: 200 },
