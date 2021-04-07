@@ -37,10 +37,10 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
     };
 
     const loadProject = async () => {
-      showLoader();
+      showLoader()
       let projectUrl = `/project/${projectId}/load`
       projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
-      await axios.post(projectUrl);
+      await axios.post(projectUrl).then(hideLoader());
     }
 
     const fetchData = async () => {  
@@ -74,7 +74,7 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
     }
 
     if (projectId!==-1) { 
-      fetchData().then(hideLoader());
+      fetchData()
     }
   
   // eslint-disable-next-line
