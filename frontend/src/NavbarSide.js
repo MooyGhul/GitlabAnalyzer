@@ -29,7 +29,7 @@ const NavbarSide = (props) => {
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
   const [sidebar, setSidebar] = useState(false); 
-  const [projectLoaded, setProjectLoaded] = useState(false);
+  const [projectLoaded, setProjectLoaded] = useState("noProjectLoaded");
   const [previousProjectId, setPreviousProjectId] = useState(-1);
 
   const toggle = () => {
@@ -44,8 +44,8 @@ const NavbarSide = (props) => {
     setProjectId(newProjectId); 
   }; 
 
-  const handleProjectLoadedChange = () => {
-    setProjectLoaded(true);
+  const handleProjectLoadedChange = (state) => {
+    setProjectLoaded(state);
   }
 
   const handleNewProjectLoaded = (newProjectId) => {
