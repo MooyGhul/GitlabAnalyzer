@@ -14,7 +14,7 @@
   "author": {
     "id": 1,
     "name": "Administrator",
-    "username": "root",
+    "username": "admin",
     "state": "active",
     "avatar_url": null,
     "web_url" : "https://gitlab.example.com/admin"
