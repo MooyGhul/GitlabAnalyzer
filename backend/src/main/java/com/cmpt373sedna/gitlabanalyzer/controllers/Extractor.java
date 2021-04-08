@@ -16,6 +16,10 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class Extractor {
     private final RestTemplate restTemplate;
+    private final String PATH_MERGE_REQUEST = null;
+    private final String PATH_COMMENTS = null;
+    private final String PATH_ISSUES = null;
+    private final String PATH_COMMITS = null;
 
     public Extractor() {
         this.restTemplate = new RestTemplate();
@@ -39,6 +43,19 @@ public class Extractor {
                 .repoId(projectJSON.getInt("id"))
                 .repoName(projectJSON.getString("name"))
                 .build();
+    }
+
+    private List<JSONObject> getAPIRequestData(ConfigEntity config, int projectId, String apiPath) {
+        int page = 1;
+        List<JSONObject> data = new ArrayList<>();
+        List<JSONObject> newData = getJsonObjectsList(buildUri(config, projectId, apiPath + page));
+        while(newData.size() > 0) {
+            data.addAll(newData);
+
+            page += 1;
+            newData = getJsonObjectsList(buildUri(config, projectId, apiPath + page));
+        }
+        return data;
     }
 
     public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId) {
@@ -70,8 +87,6 @@ public class Extractor {
         List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, path + "/notes"));
         return filterJSONComments(comments);
     }
-
-
 
     public List<JSONObject> getIssues(ConfigEntity config, int projectId) {
         int page = 1;
@@ -140,7 +155,6 @@ public class Extractor {
         jsonResponse.forEach(obj -> jsonList.add((JSONObject) obj));
         return jsonList;
     }
-
 
     private JSONObject getJsonObject(URI url) {
         String response = restTemplate.getForObject(url, String.class);
