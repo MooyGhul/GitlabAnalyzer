@@ -29,11 +29,15 @@ const NavbarSide = (props) => {
   const classes = useStyles();
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
-
+  const [token, setToken] = useState();
   const [sidebar, setSidebar] = useState(false); 
 
   const toggle = () => {
     setSidebar(!sidebar); 
+  };
+
+  const handleTokenAccess = (newToken) => {
+    setToken(newToken);  
   };
 
   const handleMemberIDChange = (newMemberId) => {
@@ -113,7 +117,7 @@ const NavbarSide = (props) => {
             <Switch>
               <Route exact path="/token">
                 <Container>
-                  <UrlToken 
+                  <UrlToken handleTokenAccess={handleTokenAccess}
                   />
                 </Container>
               </Route>
@@ -170,7 +174,7 @@ const NavbarSide = (props) => {
               </Route>
 
               <Route exact path="/Settings">
-                <Container><WeightConfigurationPage /></Container>
+                <Container><WeightConfigurationPage token={token}/></Container>
               </Route>
             </Switch>
           </Container>

@@ -19,8 +19,9 @@ import axios from "axios";
 import {useParams} from "react-router";
 import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
+import moment from 'moment';
 
-const WeightConfigurationPage = () => {
+const WeightConfigurationPage = ({token}) => {
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
@@ -39,6 +40,7 @@ const WeightConfigurationPage = () => {
 
     const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
     const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+    const [iterationName, setIterationName] = useState('new Iteration');
 
     const handleStartDate = (newDate) => {
       setStartDate(newDate)
@@ -48,26 +50,30 @@ const WeightConfigurationPage = () => {
       setEndDate(newDate)
     };
 
-    const authenticateToken  = async () => {
+    const saveIterationConfiguration  = async () => {
       await axios.post(process.env.NODE_ENV === 'development' ?
 
-          `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
-          `/project/create?token=${urlToken.token}`)
-      // .then(function(response){
-      //     hideLoader();
-      //     if (response.status === 200){
-      //         history.push('/projectList');
-      //     }
-      // })
-      // .catch(function(error){
-      //     console.log(error.response.status);
-      //     if (error.response.status !== 200){
-      //         setUrlToken({url: urlToken.url, token:urlToken.token});
-      //         setErrorMsg('Incorrect url or token. Please try again.');
-      //     }
-      // }) 
-      ;
+            `${process.env.REACT_APP_DEVHOST}/configuration/newIterationConfig` :
+            `/configuration/newIterationConfig`,
+          {
+            token: `${token}`,
+            iterationName: `${iterationName}`,
+            startDate:`${moment(startDate).format()}`,
+            endDate:`${moment(endDate).format()}`
+          }
+      ).catch(function(error){
+          console.log(error.response.status);
+      });
   }
+
+  const checkConfig = async () => {
+    const res = await axios.get(process.env.NODE_ENV === 'development' ?
+
+            `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
+            `/configuration/iterations/all`
+    );
+    console.log(res);
+  };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -90,6 +96,10 @@ const WeightConfigurationPage = () => {
         });
           
     }, [project_id, setFileType]);
+
+    const getIterationNameFromTextField = (e) => {
+      setIterationName(e.target.value);
+    }
 
     const getValueFromTextField = (e) => {
         const textFieldId = e.target.id;
@@ -144,12 +154,17 @@ const WeightConfigurationPage = () => {
                 <Divider className={classes.divider} orientation='horizontal'/>
             </Grid>
             <Grid item xs={3}>
+                <form className={classes.textField} noValidate autoComplete="off">
+                    <TextField id="IterationName" label="Iteration Name" variant="outlined" onChange={getIterationNameFromTextField}/>
+                </form>
                 <Typography className={classes.pageTitle}>
                   <Calendar startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/>
                 </Typography>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>
-                        <Button variant="contained" component="span" className={classes.addIterationButton} size="large">+ Add Iteration</Button>
+                        <Button variant="contained" component="span" className={classes.addIterationButton} size="large" onClick={saveIterationConfiguration}>+ Add Iteration</Button>
+                        <Button variant="contained" component="span" className={classes.addIterationButton} size="large" onClick={checkConfig}>+ Add Iteration</Button>
+                        
                     </Grid>
                 </Grid>
             </Grid>
