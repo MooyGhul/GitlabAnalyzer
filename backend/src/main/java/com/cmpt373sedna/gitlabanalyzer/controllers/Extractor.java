@@ -18,7 +18,7 @@ public class Extractor {
     private final RestTemplate restTemplate;
     private final String PATH_MERGE_REQUEST = null;
     private final String PATH_COMMENTS = null;
-    private final String PATH_ISSUES = null;
+    private final String PATH_ISSUES = "issues?per_page=100&page=";
     private final String PATH_COMMITS = null;
 
     public Extractor() {
@@ -89,15 +89,7 @@ public class Extractor {
     }
 
     public List<JSONObject> getIssues(ConfigEntity config, int projectId) {
-        int page = 1;
-        List<JSONObject> issues = new ArrayList<>();
-        List<JSONObject> newIssues = getJsonObjectsList(buildUri(config, projectId, "issues?per_page=100&page=" + page));
-        while(newIssues.size() > 0) {
-            issues.addAll(newIssues);
-
-            page += 1;
-            newIssues = getJsonObjectsList(buildUri(config, projectId, "issues?per_page=100&page=" + page));
-        }
+        List<JSONObject> issues = getAPIRequestData(config, projectId, PATH_ISSUES);
         return issues;
     }
 
