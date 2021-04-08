@@ -53,8 +53,8 @@ public class ConfigRESTController {
     @PostMapping("/{configId}/load")
     public List<ProjectEntity> loadConfig(@PathVariable String configId) {
         ConfigEntity config = this.configEntityRepository.findById(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
-        return this.extractor.getProjects(config).stream()
+        List<ProjectEntity> projectList = ProjectEntity.fromGitlabJSONList(this.extractor.getProjects(config));
+        return projectList.stream()
                 .map(project -> this.projectEntityRepository.save(project))
                 .peek(project -> this.projectManager.getOrAddProject(config, project))
                 .collect(Collectors.toList());

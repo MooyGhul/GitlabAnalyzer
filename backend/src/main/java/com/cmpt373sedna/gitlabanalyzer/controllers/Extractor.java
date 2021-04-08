@@ -21,15 +21,9 @@ public class Extractor {
         this.restTemplate = new RestTemplate();
     }
 
-    public List<ProjectEntity> getProjects(ConfigEntity config) {
+    public List<JSONObject> getProjects(ConfigEntity config) {
         List<JSONObject> projectsArray = getJsonObjectsList(buildUri(config));
-
-        return projectsArray.stream()
-                .map(obj -> ProjectEntity.builder()
-                        .repoId(obj.getInt("id"))
-                        .repoName(obj.getString("name"))
-                        .build())
-                .collect(toList());
+        return projectsArray;
     }
 
     public JSONObject getProject(ConfigEntity config, String projectId) {
