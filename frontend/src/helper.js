@@ -1,3 +1,5 @@
+import moment from "moment";
+
 const monthNames = ["January", "February", "March",
     "April", "May", "June", "July", "August", "September",
     "October", "November", "December"];
@@ -16,7 +18,7 @@ const groupBy = (arr, key) => {
     }, {});
 };
 
-export const getGraphData = (arr, key) => {
+export const getGraphData = (arr, key, startDate="2021-01-01", endDate=moment().format("YYYY-MM-DD")) => {
     let result = [];
     const groupedData = groupBy(arr, key);
     for(const obj in groupedData) {
@@ -35,8 +37,24 @@ export const getGraphData = (arr, key) => {
             return -1;
         }
     });
-    return result
+    return padDates(result, startDate, endDate);
 };
+
+const padDates = (dates, startDate, endDate) => {
+    dates.splice().unshift({"year": startDate, "data": 0});
+    dates.splice(dates.length-1).push({"year": endDate, "data": 0});
+
+    // Found the solution to use moment to check sequential dates: https://stackoverflow.com/questions/26756997/dump-missing-date-in-data-for-chartjs
+    for(let i = 0; i < dates.length - 1; i++) {
+        let date1 = moment(dates[i].year, "YYYY-MM-DD");
+        let date2 = moment(dates[i+1].year, "YYYY-MM-DD");
+
+        if(!date1.add(1, "days").isSame(date2)) {
+            dates.splice(i+1, 0, {"year": date1.format("YYYY-MM-DD"), "data": 0});
+        }
+    }
+    return dates;
+}
 
 export const formatGraphDate = (commentDate) => {
     let date = new Date(commentDate);
