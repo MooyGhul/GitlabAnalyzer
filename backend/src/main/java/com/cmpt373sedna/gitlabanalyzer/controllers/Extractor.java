@@ -19,7 +19,7 @@ public class Extractor {
     private final String PATH_MERGE_REQUEST = null;
     private final String PATH_COMMENTS = null;
     private final String PATH_ISSUES = "issues?per_page=100&page=";
-    private final String PATH_COMMITS = null;
+    private final String PATH_COMMITS = "repository/commits?per_page=100&page=" ;
 
     public Extractor() {
         this.restTemplate = new RestTemplate();
@@ -94,15 +94,8 @@ public class Extractor {
     }
 
     public List<JSONObject> getCommits(ConfigEntity config, int projectId) {
-        int page = 1;
-        List<JSONObject> commits = new ArrayList<>();
-        List<JSONObject> newCommits = getJsonObjectsList(buildUri(config, projectId, "repository/commits?per_page=100&page=" + page));
-        while(newCommits.size() > 0) {
-            commits.addAll(newCommits);
+        List<JSONObject> commits = getAPIRequestData(config, projectId, PATH_COMMITS);
 
-            page += 1;
-            newCommits = getJsonObjectsList(buildUri(config, projectId, "repository/commits?per_page=100&page=" + page));
-        }
         for(int i=0;i<commits.size();i++){
             List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId, "repository/commits/"+ commits.get(i).getString("id") + "/diff"));
             commits.get(i).put("diffs",l);
