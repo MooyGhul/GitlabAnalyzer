@@ -13,7 +13,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
   const [comments, setComments] = useState([]);
-  const [issues, setIssues] = useState([]);
+  const [issues, setIssues] = useState([]);  
   const [loader, showLoader, hideLoader] = useFullPageLoader();
   const [
     noProjectSelected,
@@ -22,6 +22,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
   let commitsArray = [];
   let MRsArray = [];
   let commentsArray = [];
+  let issuesArray = [];
   const classes = useStyles(); 
   const [projectId, setProjectId] = useState(project_id);
 
@@ -77,6 +78,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
     let countCommit = 0;
     let countMR = 0;
     let countComment = 0;
+    let countIssue = 0;
 
     commits.forEach((commit) => {
       if (member === commit.author) {
@@ -97,8 +99,17 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
         countComment++;
       }
     });
-    commentsArray.push(countComment)
+    commentsArray.push(countComment);
+
+    issues.forEach((issue)=>{
+      if (member === issue.author){
+        countIssue++;
+      }
+    });
+    issuesArray.push(countIssue);
   }); 
+
+  console.log(issuesArray)
 
   return (
     <div>
@@ -110,6 +121,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
             commitsArray={commitsArray}
             MRsArray={MRsArray}         
             commentsArray={commentsArray}
+            issuesArray={issuesArray}
           />
         </div>
         <MemberList
@@ -117,7 +129,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
           commitsArray={commitsArray}
           MRsArray={MRsArray}
           projectID={projectId}
-          issues = {issues}
+          issuesArray = {issuesArray}
           commentsArray={commentsArray}
           onMemberIdChange={onMemberIdChange}
         />

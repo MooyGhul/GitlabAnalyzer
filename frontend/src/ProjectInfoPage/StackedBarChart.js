@@ -1,15 +1,17 @@
 import { Bar } from "react-chartjs-2";
 
-function StackedBarChart({members, commitsArray, MRsArray, commentsArray}) {
+function StackedBarChart({members, commitsArray, MRsArray, commentsArray, issuesArray}) {
   let colorListCommit = [];
   let colorListMR = [];
   let colorListComment = [];
+  let colorIssueComment = [];
   console.log(members)
 
   for (var i = 0; i < members.length; i++) {
     colorListCommit.push("rgba(53,63,196,0.7)");
     colorListMR.push("rgba(40, 240, 230, 0.7");
     colorListComment.push("rgba(253, 17, 165, 0.7");
+    colorIssueComment.push("rgba(56,255,21,0.7")
   }
 
   return (
@@ -38,6 +40,14 @@ function StackedBarChart({members, commitsArray, MRsArray, commentsArray}) {
               data: commentsArray,
               maintainAspectRatio: true,
               backgroundColor: colorListComment,
+              borderWidth: 4,
+            },
+
+            {
+              label: "Issues (count)",
+              data: issuesArray,
+              maintainAspectRatio: true,
+              backgroundColor: colorIssueComment,
               borderWidth: 4,
             },
 

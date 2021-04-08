@@ -2,7 +2,7 @@ import { DataGrid } from "@material-ui/data-grid";
 import { useHistory } from "react-router-dom"; 
 import { useStyles } from "./ProjectInfoStyle";
 
-function MemberList({ members, commitsArray, MRsArray, commentsArray, issues, projectID, onMemberIdChange}){
+function MemberList({ members, commitsArray, MRsArray, commentsArray, issuesArray, projectID, onMemberIdChange}){
     const history = useHistory();
     const classes = useStyles();
 
@@ -12,7 +12,7 @@ function MemberList({ members, commitsArray, MRsArray, commentsArray, issues, pr
         commits: commitsArray[i],
         merge_requests: MRsArray[i],
         CountMR: commentsArray[i],
-        CountIssue: issues.length,
+        CountIssue: issuesArray[i],
       }))
       
       const columns = [
