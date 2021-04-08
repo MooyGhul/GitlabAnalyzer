@@ -19,6 +19,7 @@ public class IssueEntityTest {
                 .issueName("test1")
                 .issueDescription("fixed login page css paddings")
                 .assignee("Administrator")
+                .author("root"s)
                 .openedDate(Instant.parse("2017-04-29T08:46:00Z"))
                 .closedDate(null)
                 .build();
@@ -40,6 +41,7 @@ public class IssueEntityTest {
                 .issueName("Ut commodi ullam eos dolores perferendis nihil sunt.")
                 .issueDescription("Omnis vero earum sunt corporis dolor et placeat.")
                 .assignee("Dr. Luella Kovacek")
+                .author("root")
                 .openedDate(Instant.parse("2016-01-04T15:31:46.176Z"))
                 .closedDate(Instant.parse("2016-01-04T15:31:46.176Z"))
                 .build();
