@@ -11,14 +11,14 @@
       "created_at" : "2016-01-04T15:31:39.788Z",
       "updated_at" : "2016-01-04T15:31:39.788Z"
     },
-    "author" : {
-      "state" : "active",
-      "web_url" : "https://gitlab.example.com/root",
-      "avatar_url" : null,
-      "username" : "root",
-      "id" : 1,
-      "name" : "Administrator"
-    },
+    // "author" : {
+    //   "state" : "active",
+    //   "web_url" : "https://gitlab.example.com/root",
+    //   "avatar_url" : null,
+    //   "username" : "root",
+    //   "id" : 1,
+    //   "name" : "Administrator"
+    // },
     "description" : "Omnis vero earum sunt corporis dolor et placeat.",
     "state" : "closed",
     "iid" : 1,
@@ -38,6 +38,7 @@
       "id" : 9,
       "name" : "Dr. Luella Kovacek"
     },
+    "author": "root",
     "labels" : ["foo", "bar"],
     "upvotes": 4,
     "downvotes": 0,

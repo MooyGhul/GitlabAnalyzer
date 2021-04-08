@@ -11,14 +11,7 @@
   "source_branch": "test1",
   "upvotes": 0,
   "downvotes": 0,
-  "author": {
-    "id": 1,
-    "name": "Administrator",
-    "username": "admin",
-    "state": "active",
-    "avatar_url": null,
-    "web_url" : "https://gitlab.example.com/admin"
-  },
+  "author": "root",
   "user" : {
     "can_merge" : false
   },
