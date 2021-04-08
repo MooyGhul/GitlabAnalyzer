@@ -7,6 +7,10 @@ import org.json.JSONObject;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
+
 @Entity
 @Data
 @Builder
@@ -27,12 +31,7 @@ public class ProjectEntity {
 
     }
 
-    public static ProjectEntity fromGitlabJSON(JSONObject json) {
-        return ProjectEntity.builder()
-                .repoId(json.getInt("id"))
-                .repoName(json.getString("name"))
-                .build();
-    }
+
 
     public ProjectEntity() {
         this.repoId = -1;
@@ -40,5 +39,21 @@ public class ProjectEntity {
         this.numCommits = 0;
         this.numMR = 0;
         this.numComments = 0;
+    }
+
+    public static ProjectEntity fromGitlabJSON(JSONObject json) {
+        return ProjectEntity.builder()
+                .repoId(json.getInt("id"))
+                .repoName(json.getString("name"))
+                .build();
+    }
+
+    public static List<ProjectEntity> fromGitlabJSONList(List<JSONObject> projectsArray) {
+        return projectsArray.stream()
+                .map(obj -> ProjectEntity.builder()
+                        .repoId(obj.getInt("id"))
+                        .repoName(obj.getString("name"))
+                        .build())
+                .collect(toList());
     }
 }
