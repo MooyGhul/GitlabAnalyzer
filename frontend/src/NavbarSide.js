@@ -30,6 +30,7 @@ const NavbarSide = (props) => {
   const [project_id, setProjectId] = useState(-1);
   const [sidebar, setSidebar] = useState(false); 
   const [projectLoaded, setProjectLoaded] = useState(false);
+  const [previousProjectId, setPreviousProjectId] = useState(-1);
 
   const toggle = () => {
     setSidebar(!sidebar); 
@@ -43,8 +44,12 @@ const NavbarSide = (props) => {
     setProjectId(newProjectId); 
   }; 
 
-  const handleProjectLoadedChange = (dataLoadedState) => {
+  const handleProjectLoadedChange = () => {
     setProjectLoaded(true);
+  }
+
+  const handleNewProjectLoaded = (newProjectId) => {
+    setPreviousProjectId(newProjectId);
   }
 
   return (
@@ -133,7 +138,9 @@ const NavbarSide = (props) => {
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
                     onProjectLoadedStateChange={handleProjectLoadedChange}
-                    dataLoaded={projectLoaded}
+                    onNewProjectLoaded = {handleNewProjectLoaded}
+                    previousProjectId = {previousProjectId}
+                    projectLoaded={projectLoaded}
                     project_id={project_id} 
                   />
                 </Grid>

@@ -37,8 +37,7 @@ const ScoreBoard = (props) => {
     }).catch(() => {
       console.log("Failed to get counts");
     });
-  }, [project_id, member_id]);
-  console.log(isCopied);
+  }, [project_id, member_id]); 
 
   return (
     <Grid container spacing={10} className={classes.scoreboardContainer}>

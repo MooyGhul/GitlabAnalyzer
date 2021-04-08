@@ -7,7 +7,7 @@ import MemberList from "./MemberList";
 import useFullPageLoader from "../components/useFullPageLoader";
 import useProjectNotSelected from "../components/useProjectNotSelected";
 
-function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChange, projectLoaded }) {
+function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChange, projectLoaded, onNewProjectLoaded, previousProjectId }) {
   const location = useLocation(); 
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
@@ -15,6 +15,7 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
   const [comments, setComments] = useState([]);
   const [issues, setIssues] = useState([]);  
   const [loader, showLoader, hideLoader] = useFullPageLoader();
+  const [dataLoaded, setDataLoaded] = useState(false);
   const [
     noProjectSelected,
     showErrorPage, 
@@ -25,25 +26,33 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
   let issuesArray = [];
   const classes = useStyles(); 
   const [projectId, setProjectId] = useState(project_id); 
-
+  
   useEffect(() => {
+    showLoader();
+    console.log("PROJECT ID", projectId)
     const updateProjectId = () => {
       if (projectId === -1) {
         showErrorPage();
       } else {
         try {
           setProjectId(location.state.id); 
+          onNewProjectLoaded(location.state.id);
         } catch (err) {
           setProjectId(project_id);
+          onNewProjectLoaded(project_id);
         }
       }
     };
 
-    const loadProject = async () => {
-      showLoader()
-      let projectUrl = `/project/${projectId}/load`
+    const loadProject = async () => { 
+      
+      let projectUrl = `/project/${projectId}/load`      
+      if (process.env.NODE_ENV === "development") {     
       projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
-      await axios.post(projectUrl).then(hideLoader());
+      await axios.post(projectUrl);
+      }
+      console.log("Project has been loaded");
+      onProjectLoadedStateChange(true);
     }
 
     const fetchData = async () => {  
@@ -65,7 +74,7 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
       const memberData = await axios.get(memberUrl);
       const commentData = await axios.get(commentUrl);
       const issueData = await axios.get(issueUrl);
-  
+
       if (memberData.data===""){
         setMembers([])
       }
@@ -76,21 +85,52 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
       setMRs(mrData.data);
       setComments(commentData.data);
       setIssues(issueData.data);
-    }; 
+      setDataLoaded(true);
+      console.log("DATA HAVE BEEN FETCHED")
+    };  
     updateProjectId(); 
 
-    if (!projectLoaded){
-      loadProject();
-      onProjectLoadedStateChange(true);
-    }
-    if (projectId!==-1) { 
-      fetchData()
-    }
-  
-  // eslint-disable-next-line
-  }, [projectId]);
+    console.log("Previous project ID: ", previousProjectId)
+    console.log("ProjectLoaded? ", projectLoaded);
+    
 
-  console.log(members)  
+    loadProject().then(hideLoader());
+    fetchData();
+    // if (!projectLoaded){
+    //   loadProject().then(hideLoader());
+    //   onProjectLoadedStateChange(true);
+    // } 
+
+    // if (projectLoaded && projectId!==-1){
+    //   console.log("PROJECT IS LOADED!!!!")
+    //   fetchData();
+    // }
+ 
+
+
+
+  //   if (!projectLoaded){
+  //     console.log("PROJECT HAS NOT BEEN LOADED!!!")
+  //     loadProject(); 
+  //     onProjectLoadedStateChange(true);
+  //   }   
+
+  //   else if (projectId!==-1 && projectLoaded) { 
+  //     if (previousProjectId == projectId){
+  //       console.log("THE SAME PROJECT HAS BEEN LOADED. GOING TO FETCH DATA")
+  //       fetchData();
+  //       setDataLoaded(true);
+  //     }
+  //     // if (previousProjectId != projectId){
+  //     //   loadProject();
+  //     //   // fetchData().then(hideLoader());;
+  //     //   onProjectLoadedStateChange(false);
+  //     //   console.log("PROJECT LOADED AFTER A DIFFERENT PROJECT WAS ADDED? ", projectLoaded)
+  //     // } 
+  //   }  
+  // // eslint-disable-next-line
+  }, [projectId, projectLoaded,]);
+  console.log("MEMBERS ", members);
   members.forEach((member) => {
     let countCommit = 0;
     let countMR = 0;
@@ -125,9 +165,7 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
     });
     issuesArray.push(countIssue);
   }); 
-
-  console.log(issuesArray)
-
+   
   return (
     <div>
       <div className={classes.body}>

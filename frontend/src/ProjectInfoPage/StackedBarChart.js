@@ -4,8 +4,7 @@ function StackedBarChart({members, commitsArray, MRsArray, commentsArray, issues
   let colorListCommit = [];
   let colorListMR = [];
   let colorListComment = [];
-  let colorIssueComment = [];
-  console.log(members)
+  let colorIssueComment = []; 
 
   for (var i = 0; i < members.length; i++) {
     colorListCommit.push("rgba(53,63,196,0.7)");
