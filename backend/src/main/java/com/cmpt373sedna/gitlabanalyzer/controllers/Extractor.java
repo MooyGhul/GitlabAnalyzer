@@ -17,7 +17,7 @@ import static java.util.stream.Collectors.toList;
 public class Extractor {
     private final RestTemplate restTemplate;
     private final String PATH_MERGE_REQUEST = "merge_requests?per_page=100&target_branch=master&page=";
-    private final String PATH_COMMENTS = null;
+    private final String PATH_COMMENTS = "/notes?per_page=100&page=";
     private final String PATH_ISSUES = "issues?per_page=100&page=";
     private final String PATH_COMMITS = "repository/commits?per_page=100&page=" ;
 
@@ -76,7 +76,7 @@ public class Extractor {
     }
 
     public List<JSONObject> getComments(ConfigEntity config, int projectId, String path) {
-        List<JSONObject> comments = getJsonObjectsList(buildUri(config, projectId, path + "/notes"));
+        List<JSONObject> comments = getAPIRequestData(config, projectId, path + PATH_COMMENTS);
         return filterJSONComments(comments);
     }
 
