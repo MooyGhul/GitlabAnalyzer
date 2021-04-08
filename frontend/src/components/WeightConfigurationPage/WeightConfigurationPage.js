@@ -21,7 +21,7 @@ import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 import moment from 'moment';
 
-const WeightConfigurationPage = ({token}) => {
+const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, handleEndDate}) => {
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
@@ -38,17 +38,7 @@ const WeightConfigurationPage = ({token}) => {
         "Syntax": defaultMinorCodeChangeWeight,
     }
 
-    const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
-    const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
     const [iterationName, setIterationName] = useState('new Iteration');
-
-    const handleStartDate = (newDate) => {
-      setStartDate(newDate)
-    };
-
-    const handleEndDate = (newDate) => {
-      setEndDate(newDate)
-    };
 
     const saveIterationConfiguration  = async () => {
       await axios.post(process.env.NODE_ENV === 'development' ?
@@ -65,15 +55,6 @@ const WeightConfigurationPage = ({token}) => {
           console.log(error.response.status);
       });
   }
-
-  const checkConfig = async () => {
-    const res = await axios.get(process.env.NODE_ENV === 'development' ?
-
-            `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
-            `/configuration/iterations/all`
-    );
-    console.log(res);
-  };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -163,8 +144,6 @@ const WeightConfigurationPage = ({token}) => {
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>
                         <Button variant="contained" component="span" className={classes.addIterationButton} size="large" onClick={saveIterationConfiguration}>+ Add Iteration</Button>
-                        <Button variant="contained" component="span" className={classes.addIterationButton} size="large" onClick={checkConfig}>+ Add Iteration</Button>
-                        
                     </Grid>
                 </Grid>
             </Grid>

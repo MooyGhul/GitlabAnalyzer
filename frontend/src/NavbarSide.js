@@ -32,6 +32,17 @@ const NavbarSide = (props) => {
   const [token, setToken] = useState();
   const [sidebar, setSidebar] = useState(false); 
 
+  const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
+  const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+
+  const handleStartDate = (newDate) => {
+    setStartDate(newDate)
+  };
+
+  const handleEndDate = (newDate) => {
+    setEndDate(newDate)
+  };
+
   const toggle = () => {
     setSidebar(!sidebar); 
   };
@@ -174,7 +185,7 @@ const NavbarSide = (props) => {
               </Route>
 
               <Route exact path="/Settings">
-                <Container><WeightConfigurationPage token={token}/></Container>
+                <Container><WeightConfigurationPage token={token} startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/></Container>
               </Route>
             </Switch>
           </Container>
