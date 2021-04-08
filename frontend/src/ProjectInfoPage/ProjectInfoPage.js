@@ -28,8 +28,8 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
   const [projectId, setProjectId] = useState(project_id); 
   
   useEffect(() => {
-    showLoader();
     console.log("PROJECT ID", projectId)
+    showLoader();
     const updateProjectId = () => {
       if (projectId === -1) {
         showErrorPage();
@@ -45,7 +45,6 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
     };
 
     const loadProject = async () => { 
-      
       let projectUrl = `/project/${projectId}/load`      
       if (process.env.NODE_ENV === "development") {     
       projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
@@ -93,9 +92,17 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
     console.log("Previous project ID: ", previousProjectId)
     console.log("ProjectLoaded? ", projectLoaded);
     
+    
+    if (!projectLoaded){
+      console.log("No project was previously added. Loading project.")
+      loadProject(); 
+    }
 
-    loadProject().then(hideLoader());
-    fetchData();
+    if (projectLoaded){
+      console.log("A project is loaded.")
+      fetchData().then(hideLoader());
+    }
+ 
     // if (!projectLoaded){
     //   loadProject().then(hideLoader());
     //   onProjectLoadedStateChange(true);
