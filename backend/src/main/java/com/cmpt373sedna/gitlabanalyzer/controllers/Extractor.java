@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class Extractor {
     private final RestTemplate restTemplate;
-    private final String PATH_MERGE_REQUEST = null;
+    private final String PATH_MERGE_REQUEST = "merge_requests?per_page=100&target_branch=master&page=";
     private final String PATH_COMMENTS = null;
     private final String PATH_ISSUES = "issues?per_page=100&page=";
     private final String PATH_COMMITS = "repository/commits?per_page=100&page=" ;
@@ -59,15 +59,7 @@ public class Extractor {
     }
 
     public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId) {
-        int page = 1;
-        List<JSONObject> mr = new ArrayList<>();
-        List<JSONObject> newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page + "&target_branch=master"));
-        while(newMr.size() > 0) {
-            mr.addAll(newMr);
-
-            page += 1;
-            newMr = getJsonObjectsList(buildUri(config, projectId, "merge_requests?per_page=100&page=" + page));
-        }
+        List<JSONObject> mr = getAPIRequestData(config, projectId, PATH_MERGE_REQUEST);
 
         for(JSONObject mrs : mr){
             List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId,"merge_requests/" + mrs.getInt("iid") + "/commits"));
