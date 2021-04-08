@@ -20,12 +20,12 @@ const CodeContributionPage = () => {
   const innerNavStyle = useInnerNavStyle();
   const [graphData, setGraphData] = useState([]);
 
-  const createMRData = (id, iid, type, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
-    return {id, iid, type, date, name, url, mrScore, totalCommitScore, relatedCommits};
+  const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
+    return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
   }
 
-  const createCommitData = (id, type, date, name, url, score) => {
-    return {id, type, date, name, url, score};
+  const createCommitData = (id, date, name, url, score) => {
+    return {id, date, name, url, score};
   }
 
   const createGraphData = (year, MRDaily, CommitDaily) => {
@@ -40,7 +40,6 @@ const CodeContributionPage = () => {
       let mrCountsData = [];
 
       formatData(mrData, mrArray, commitData, commitArray);
-      console.log(mrArray);
 
       const commitCounts = getGraphData(commitData, "commitDate");
       const mrCounts = getGraphData(mrData, "mergedAt");
@@ -65,9 +64,7 @@ const CodeContributionPage = () => {
     };
 
     const formatData = (mrData, mrArray, commitData, commitArray) => {
-
       for(let mrDataIndex = 0; mrDataIndex < mrData.length; mrDataIndex++) {
-
         const relatedCommitIds = commitData.filter(val => {
           return mrData[mrDataIndex].commitIds.includes(val.commitId);
         });
@@ -76,7 +73,6 @@ const CodeContributionPage = () => {
         for(let relatedCommitIndex = 0; relatedCommitIndex < relatedCommitIds.length; relatedCommitIndex++){
           const commitDate = new Date(relatedCommitIds[relatedCommitIndex].commitDate);
           const newCommitData = createCommitData(relatedCommitIds[relatedCommitIndex].commitId,
-            'commit',
             '' + formatTableDate(commitDate),
             relatedCommitIds[relatedCommitIndex].commitName,
             relatedCommitIds[relatedCommitIndex].url,
@@ -87,7 +83,6 @@ const CodeContributionPage = () => {
         const mrDate = new Date(mrData[mrDataIndex].mergedAt);
         const newMrData = createMRData(mrData[mrDataIndex].id,
           mrData[mrDataIndex].iid,
-          'MR',
           '' + formatTableDate(mrDate),
           mrData[mrDataIndex].mergeRequestName,
           mrData[mrDataIndex].url,
