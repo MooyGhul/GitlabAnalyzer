@@ -29,6 +29,7 @@ const NavbarSide = (props) => {
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
   const [sidebar, setSidebar] = useState(false); 
+  const [projectLoaded, setProjectLoaded] = useState(false);
 
   const toggle = () => {
     setSidebar(!sidebar); 
@@ -41,6 +42,10 @@ const NavbarSide = (props) => {
   const handleProjectIDChange = (newProjectId) => {
     setProjectId(newProjectId); 
   }; 
+
+  const handleProjectLoadedChange = (dataLoadedState) => {
+    setProjectLoaded(true);
+  }
 
   return (
     <Router>
@@ -127,6 +132,8 @@ const NavbarSide = (props) => {
                 <Grid container>
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
+                    onProjectLoadedStateChange={handleProjectLoadedChange}
+                    dataLoaded={projectLoaded}
                     project_id={project_id} 
                   />
                 </Grid>

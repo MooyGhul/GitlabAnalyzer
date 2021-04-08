@@ -7,7 +7,7 @@ import MemberList from "./MemberList";
 import useFullPageLoader from "../components/useFullPageLoader";
 import useProjectNotSelected from "../components/useProjectNotSelected";
 
-function ProjectInfoPage({onMemberIdChange,project_id}) {
+function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChange, projectLoaded }) {
   const location = useLocation(); 
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
@@ -24,7 +24,7 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
   let commentsArray = [];
   let issuesArray = [];
   const classes = useStyles(); 
-  const [projectId, setProjectId] = useState(project_id);
+  const [projectId, setProjectId] = useState(project_id); 
 
   useEffect(() => {
     const updateProjectId = () => {
@@ -39,41 +39,58 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
       }
     };
 
-    const fetchData = async () => {
-      showLoader();
+    const loadProject = async () => {
+      showLoader()
+      let projectUrl = `/project/${projectId}/load`
+      projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
+      await axios.post(projectUrl).then(hideLoader());
+    }
+
+    const fetchData = async () => {  
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
       let memberUrl = `/project/${projectId}/members`; 
       let commentUrl = `/project/${projectId}/comments`; 
       let issueUrl = `/project/${projectId}/issues`; 
 
-      if (process.env.NODE_ENV === "development") {
+      if (process.env.NODE_ENV === "development") {        
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/commits`;
         commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/merge_requests`;
         memberUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members`;
         commentUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/comments`;
         issueUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/issues`;
       }
-
       const mrData = await axios.get(mrUrl);
       const commitData = await axios.get(commitUrl);
       const memberData = await axios.get(memberUrl);
       const commentData = await axios.get(commentUrl);
       const issueData = await axios.get(issueUrl);
-
+  
+      if (memberData.data===""){
+        setMembers([])
+      }
+      else{
       setMembers(memberData.data);
+      }
       setCommits(commitData.data);
       setMRs(mrData.data);
       setComments(commentData.data);
       setIssues(issueData.data);
     }; 
-    updateProjectId();
-    if (projectId!==-1) { 
-      fetchData().then(hideLoader());
+    updateProjectId(); 
+
+    if (!projectLoaded){
+      loadProject();
+      onProjectLoadedStateChange(true);
     }
+    if (projectId!==-1) { 
+      fetchData()
+    }
+  
   // eslint-disable-next-line
   }, [projectId]);
 
+  console.log(members)  
   members.forEach((member) => {
     let countCommit = 0;
     let countMR = 0;
@@ -133,10 +150,12 @@ function ProjectInfoPage({onMemberIdChange,project_id}) {
           commentsArray={commentsArray}
           onMemberIdChange={onMemberIdChange}
         />
-        {loader}
-        {noProjectSelected}
+        
       </div>
+      {loader}
+      {noProjectSelected}
     </div>
+   
   );
 }
 
