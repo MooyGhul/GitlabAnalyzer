@@ -20,12 +20,15 @@ import {useParams} from "react-router";
 import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 import moment from 'moment';
+import { AirlineSeatFlatAngled } from "@material-ui/icons";
 
 const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, handleEndDate}) => {
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
-    const [iterDates, setIterDates] = useState(mockIterationsDates);
+    const [iterDates, setIterDates] = useState([]);
+    const [flag, setFlag] = useState(0);
+    
     const defaultFileWeight = 1;
     const defaultCommitMRWeight = 1;
     const defaultLineOfCodeWeight = 1.2; 
@@ -39,6 +42,19 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
     }
 
     const [iterationName, setIterationName] = useState('new Iteration');
+
+    useEffect(() => {
+      const fetchIterationsDates  = async () => {
+        console.log("----START----");
+        let iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
+              `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
+              `configuration/iterations/all`);
+        console.log("----iterationsDates----");
+        console.log(iterationsDates.data);
+        setIterDates(iterationsDates.data);
+      }
+      fetchIterationsDates();
+    }, [flag]);
 
     const saveIterationConfiguration  = async () => {
       await axios.post(process.env.NODE_ENV === 'development' ?
@@ -54,6 +70,8 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
       ).catch(function(error){
           console.log(error.response.status);
       });
+      setFlag(flag+1);
+      console.log(flag);
   }
 
     useEffect(() => {
