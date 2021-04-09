@@ -1,7 +1,4 @@
 import React, {useState} from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -16,11 +13,10 @@ import {useTableStyles} from '../../style/CodeContributionPageStyles';
 import ExpandAllBtn from "../ExpandAllBtn";
 
 const columns = [
-  {id: 'type', label: 'Type'},
-  {id: 'gitlabLink', label: 'Gitlab Link'},
-  {id: 'date', label: 'Date'},
-  {id: 'name', label: 'Name'},
-  {id: 'score', label: 'Score'},
+  {id: 'date', label: 'Merged Date'},
+  {id: 'name', label: 'MR Name'},
+  {id: 'mrScore', label: 'MR Score'},
+  {id: 'totalCommitScore', label: 'Total Commit Score'},
 ]
 
 const CodeContributionTable = (props) => {
@@ -46,20 +42,16 @@ const CodeContributionTable = (props) => {
         <ExpandAllBtn expandAll={expandAll} setExpandAll={setExpandAll}/>
       </Grid>
       <TableContainer>
-        <Table stickyHeader className={classes.table}>
+        <Table stickyHeader>
           <TableHead>
             <TableRow>
-              <TableCell className={classes.banner}>
-                <IconButton size='small' onClick={() => setExpandAll(!expandAll)}>
-                  {expandAll ? <ExpandLess className={classes.banner} />
-                          : <ExpandMore className={classes.banner} />}
-                </IconButton>
-              </TableCell >
+              <TableCell align="left" className={classes.banner}> Merge Requests </TableCell>
               {columns.map((column) => (
-                <TableCell className={classes.banner} key={column.id}>
+                <TableCell align="left" className={classes.banner} key={column.id}>
                   {column.label}
                 </TableCell>
               ))}
+              <TableCell className={classes.banner} />
             </TableRow>
           </TableHead>
           <TableBody>
