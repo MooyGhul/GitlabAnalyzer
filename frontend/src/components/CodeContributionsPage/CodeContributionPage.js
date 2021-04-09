@@ -1,17 +1,15 @@
 import CodeContributionTable from "./CodeContributionTable";
-import {Grid, Switch} from "@material-ui/core";
-import React, {useEffect, useState} from "react";
+import { Grid, Switch } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Banner from "../Banner";
 import { useLocation } from "react-router-dom";
-import { ComingSoonMsg } from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
-import {useGraphStyles, useSwitchStyles} from "../../style/CodeContributionPageStyles";
+import { useGraphStyles, useSwitchStyles } from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
-import {useInnerNavStyle} from "../../style/InnerNavStyle";
-import {formatTableDate, getGraphData} from "../../helper";
-import {Scores} from "../../mockDataDir/mockGraphContri";
+import { useInnerNavStyle } from "../../style/InnerNavStyle";
+import { getGraphData, mergeGraphData, formatData, makeCommitGraphData, makeMRGraphData } from "../../helper";
 import useProjectNotSelected from "../../components/useProjectNotSelected";
 
 const CodeContributionPage = (props) => {
@@ -27,18 +25,6 @@ const CodeContributionPage = (props) => {
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
   const location = useLocation();
   const [scoreMode, setScoreMode] = useState(false);
-
-  const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
-    return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
-  }
-
-  const createCommitData = (id, date, name, url, score) => {
-    return {id, date, name, url, score};
-  }
-
-  const createGraphData = (year, MRDaily, CommitDaily) => {
-    return { year, MRDaily, CommitDaily };
-  };
 
   useEffect(() => {
     const defined = () => {
@@ -95,76 +81,6 @@ const CodeContributionPage = (props) => {
       });
 
       setCodeContributionRows(ccArray);
-    };
-
-    const formatData = (mrData, mrArray, commitData, commitArray) => {
-      for(let mrDataIndex = 0; mrDataIndex < mrData.length; mrDataIndex++) {
-        const relatedCommitIds = commitData.filter(val => {
-          return mrData[mrDataIndex].commitIds.includes(val.commitId);
-        });
-
-        let relatedCommitsArray = [];
-        for(let relatedCommitIndex = 0; relatedCommitIndex < relatedCommitIds.length; relatedCommitIndex++){
-          const commitDate = new Date(relatedCommitIds[relatedCommitIndex].commitDate);
-          const newCommitData = createCommitData(relatedCommitIds[relatedCommitIndex].commitId,
-            '' + formatTableDate(commitDate),
-            relatedCommitIds[relatedCommitIndex].commitName,
-            relatedCommitIds[relatedCommitIndex].url,
-            ComingSoonMsg.msg);
-          relatedCommitsArray.push(newCommitData);
-        }
-
-        const mrDate = new Date(mrData[mrDataIndex].mergedAt);
-        const newMrData = createMRData(mrData[mrDataIndex].id,
-          mrData[mrDataIndex].iid,
-          '' + formatTableDate(mrDate),
-          mrData[mrDataIndex].mergeRequestName,
-          mrData[mrDataIndex].url,
-          ComingSoonMsg.msg,
-          ComingSoonMsg.msg,
-          relatedCommitsArray);
-
-        mrArray.push(newMrData);
-      }
-    };
-
-    const makeCommitGraphData = (commitDataTypeArray, commitDataOutputArray) => {
-      for(let i = 0; i < commitDataTypeArray.length; i++) {
-        commitDataOutputArray.push(
-          createGraphData(
-            commitDataTypeArray[i].year,
-            0,
-            commitDataTypeArray[i].data));
-      }
-    }
-
-    const makeMRGraphData = (mrDataTypeArray, mrDataOutputArray) => {
-      for(let i = 0; i < mrDataTypeArray.length; i++) {
-        mrDataOutputArray.push(
-          createGraphData(
-            mrDataTypeArray[i].year,
-            mrDataTypeArray[i].data,
-            0));
-      }
-    }
-
-    const mergeGraphData = (commitData, mrData) => {
-      let merged;
-      for (let i = 0; i < commitData.length; i++) {
-        for (let j = 0; j < mrData.length; j++) {
-          if (commitData[i].year === mrData[j].year) {
-            commitData[i].MRDaily += mrData[j].MRDaily;
-            mrData.splice(j, 1);
-          }
-        }
-      }
-      merged = [...commitData, ...mrData];
-      merged.sort((a, b) => {
-        let dateA = new Date(a.year);
-        let dateB = new Date(b.year);
-        return dateA - dateB;
-      });
-      return merged;
     };
 
     const fetchData = async () => {
