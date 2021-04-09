@@ -24,8 +24,8 @@ const CodeContributionPage = () => {
     return {id, iid, type, date, name, url, mrScore, totalCommitScore, relatedCommits};
   }
 
-  const createCommitData = (id, type, date, name, url, score) => {
-    return {id, type, date, name, url, score};
+  const createCommitData = (id, type, date, name, url, score, diffs) => {
+    return {id, type, date, name, url, score, diffs};
   }
 
   const createGraphData = (year, MRDaily, CommitDaily) => {
@@ -80,7 +80,8 @@ const CodeContributionPage = () => {
             '' + formatTableDate(commitDate),
             relatedCommitIds[relatedCommitIndex].commitName,
             relatedCommitIds[relatedCommitIndex].url,
-            ComingSoonMsg.msg);
+            ComingSoonMsg.msg,
+            relatedCommitIds[relatedCommitIndex].diffs);
           relatedCommitsArray.push(newCommitData);
         }
 
