@@ -35,7 +35,6 @@ const CodeContributionPage = (props) => {
     return { year, MRDaily, CommitDaily };
   };
 
-  console.log("HERE IS THE MEMBER ID", member_id)
   useEffect(() => {
     const defined = () => {
       if (project_id === -1) {
