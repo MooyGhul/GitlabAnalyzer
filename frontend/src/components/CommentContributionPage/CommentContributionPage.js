@@ -44,7 +44,7 @@ const CommentContributionPage = (props) => {
             );
             setComments(commentResult.data);
             console.log(commentResult.data);
-            const commentCounts = getGraphData(commentResult.data, "commentDate");
+            const commentCounts = getGraphData(commentResult.data, "commentDate", false);
             setGraphData(commentCounts);
         };
         fetchData().then(() => {

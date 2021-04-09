@@ -65,23 +65,27 @@ const CodeContributionPage = (props) => {
       let commitArray = [];
       let mrArray = [];
       let commitCountsData = [];
+      let commitScoresData = [];
       let mrCountsData = [];
+      let mrScoresData = [];
 
       formatData(mrData, mrArray, commitData, commitArray);
 
-      const commitCounts = getGraphData(commitData, "commitDate");
-      const mrCounts = getGraphData(mrData, "mergedAt");
-      for(let i = 0; i < commitCounts.length; i++) {
-        commitCountsData.push(createGraphData(commitCounts[i].year, 0, commitCounts[i].data));
-      }
-      for(let i = 0; i < mrCounts.length; i++) {
-        mrCountsData.push(createGraphData(mrCounts[i].year, mrCounts[i].data, 0));
-      }
+      const commitCounts = getGraphData(commitData, "commitDate", false);
+      const mrCounts = getGraphData(mrData, "mergedAt", false);
+      const commitScores = getGraphData(commitData, "commitDate", true);
+      const mrScores = getGraphData(mrData, "mergedAt", true);
 
-      const ccCountsData = mergeCounts(commitCountsData, mrCountsData);
+      makeCommitGraphData(commitCounts, commitCountsData);
+      makeCommitGraphData(commitScores, commitScoresData);
+      makeMRGraphData(mrCounts, mrCountsData);
+      makeMRGraphData(mrScores, mrScoresData);
+
+      const ccCountsData = mergeGraphData(commitCountsData, mrCountsData);
+      const ccScoreData = mergeGraphData(commitScoresData, mrScoresData);
       setCountsData(ccCountsData);
-      setScoreData(Scores);
-      setGraphData(Scores);
+      setScoreData(ccScoreData);
+      setGraphData(ccScoreData);
 
       let ccArray = [...commitArray, ...mrArray];
       ccArray.sort((a, b) => {
@@ -124,24 +128,42 @@ const CodeContributionPage = (props) => {
       }
     };
 
-    const mergeCounts = (commitCountsData, mrCountsData) => {
+    const makeCommitGraphData = (commitDataTypeArray, commitDataOutputArray) => {
+      for(let i = 0; i < commitDataTypeArray.length; i++) {
+        commitDataOutputArray.push(
+          createGraphData(
+            commitDataTypeArray[i].year,
+            0,
+            commitDataTypeArray[i].data));
+      }
+    }
+
+    const makeMRGraphData = (mrDataTypeArray, mrDataOutputArray) => {
+      for(let i = 0; i < mrDataTypeArray.length; i++) {
+        mrDataOutputArray.push(
+          createGraphData(
+            mrDataTypeArray[i].year,
+            mrDataTypeArray[i].data,
+            0));
+      }
+    }
+
+    const mergeGraphData = (commitData, mrData) => {
       let merged;
-      for (let i = 0; i < commitCountsData.length; i++) {
-        for (let j = 0; j < mrCountsData.length; j++) {
-          if (commitCountsData[i].year === mrCountsData[j].year) {
-            commitCountsData[i].MRDaily += mrCountsData[j].MRDaily;
-            mrCountsData.splice(j, 1);
+      for (let i = 0; i < commitData.length; i++) {
+        for (let j = 0; j < mrData.length; j++) {
+          if (commitData[i].year === mrData[j].year) {
+            commitData[i].MRDaily += mrData[j].MRDaily;
+            mrData.splice(j, 1);
           }
         }
       }
-
-      merged = [...commitCountsData, ...mrCountsData];
+      merged = [...commitData, ...mrData];
       merged.sort((a, b) => {
         let dateA = new Date(a.year);
         let dateB = new Date(b.year);
         return dateA - dateB;
       });
-
       return merged;
     };
 

@@ -16,13 +16,20 @@ const groupBy = (arr, key) => {
     }, {});
 };
 
-export const getGraphData = (arr, key) => {
+export const getGraphData = (arr, key, score) => {
     let result = [];
     const groupedData = groupBy(arr, key);
     for(const obj in groupedData) {
         if(groupedData.hasOwnProperty(obj)) {
             let year = obj;
-            let comments = groupedData[year].length;
+            let comments = 0;
+            if(score) {
+                for(let i = 0; i < groupedData[year].length;i++){
+                    comments = comments + groupedData[year][i].score;
+                }
+            } else {
+                comments = groupedData[year].length;
+           }
             result.push({"year": year, "data": comments});
         }
     }
