@@ -65,19 +65,21 @@ export const useRowStyles = makeStyles({
       borderBottom: "unset",
     },
   },
-  cell: {
-    width: 300,
-  },
-  mrIcon: {
-    color: "white",
-    background: "#fc8053",
-  },
-  cIcon: {
-    color: "white",
-    background: "#6179ff",
+  banner: {
+    background: "#d1d0ff",
+    fontWeight: "bold",
+    fontSize: "1.0rem",
   },
   dropDownIcon: {
     background: "white",
   },
 
+});
+
+export const useDropdownStyles = makeStyles({
+  root: {
+    "& > *": {
+      borderBottom: "unset",
+    },
+  }
 });
