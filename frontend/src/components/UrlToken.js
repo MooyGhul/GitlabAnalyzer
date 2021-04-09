@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 import logo from '../logo/gitlab_analyzer.png';
 import {useStyles} from '../style/UrlTokenStyle'
 import {Grid} from "@material-ui/core";
-import useFullPageLoader from "./useFullPageLoader";
+import useFullPageLoader from "./useFullPageLoader"; 
 
 function UrlToken({handleTokenAccess}) {
 
@@ -18,47 +18,61 @@ function UrlToken({handleTokenAccess}) {
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
 
-    const authenticateToken  = async () => {
+    const createConfigID = async (url, token) => {
+        return axios({
+          method: "post",
+          url: (process.env.NODE_ENV === 'development' ?           
+          `${process.env.REACT_APP_DEVHOST}/api/config/` :
+          `/api/config/`),
+          data: { url, token },
+        }).then((res) => res.data.id);
+      };
+
+      
+      const loadAllProjects = async (configID) => {
         showLoader()
-        await axios.post(process.env.NODE_ENV === 'development' ?
-
-            `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
-            `/project/create?token=${urlToken.token}`);
-
-        await axios.post(process.env.NODE_ENV === 'development' ?
-            `${process.env.REACT_APP_DEVHOST}/project/add?url=${urlToken.url}`:
-            `/project/add?url=${urlToken.url}`) 
-        .then(function(response){
-            hideLoader();
-            if (response.status === 200){
-                history.push('/projectList');
-            }
+        return axios({
+          method: "post",
+          url: (process.env.NODE_ENV === 'development' ?
+                  `${process.env.REACT_APP_DEVHOST}/api/config/${configID}/load`:
+                  `/api/config/${configID}/load`) 
         })
-        .catch(function(error){
-            console.log(error.response.status);
-            if (error.response.status !== 200){
-                setUrlToken({url: urlToken.url, token:urlToken.token});
-                setErrorMsg('Incorrect url or token. Please try again.');
+          .then((response) => {
+            if (response.status === 200) {
+              hideLoader(); 
+              history.push({
+                pathname: "projectList",
+              });
             }
-        }) 
-    }
+          })
+          .catch((error) => {
+            hideLoader();
+            setUrlToken({ url: urlToken.url, token: urlToken.token });
+            setErrorMsg("Incorrect url or token. Please try again.");
+          });
+      };
 
     const setTokenForRootComponent = () => {
       handleTokenAccess(urlToken.token);
     }
 
-    const addLoginToken = () => {
-        console.log(window.location.href);
-        const data = new URLSearchParams(window.location.search)
-        setLoginToken(data.get('ticket'))
-        console.log(loginToken)
-    }
+    const loadWithConfigId = async () => {
+        const configID = await createConfigID(urlToken.url, urlToken.token); 
+        await loadAllProjects(configID); 
+      };   
+    
 
-    const nextHandler = event => {
+    const addLoginToken = () => { 
+      const data = new URLSearchParams(window.location.search);
+      setLoginToken(data.get("ticket")); 
+      console.log(loginToken)
+    };
+
+      const nextHandler = (event) => {
         event.preventDefault();
         addLoginToken();
-        authenticateToken();
-    }        
+        loadWithConfigId();
+      };
 
     const classes = useStyles();
 
