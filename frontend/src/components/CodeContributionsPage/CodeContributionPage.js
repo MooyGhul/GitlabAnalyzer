@@ -151,8 +151,6 @@ const CodeContributionPage = () => {
       console.log('Failed retrieve data');
     });
   },[project_id, member_id]);
-  // console.log(countsData);
-  // console.log(codeContributionRows);
 
   const handleSwitch = (event) => {
     setScoreMode(event.target.checked);

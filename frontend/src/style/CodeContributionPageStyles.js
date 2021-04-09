@@ -91,16 +91,6 @@ export const useTableStyles = makeStyles({
   }
 });
 
-export const usePaginationStyle = makeStyles((theme) => ({
-  root: {
-    flexShrink: 0,
-    marginRight: theme.spacing(65),
-  },
-  icons: {
-    backgroundColor: "none",
-  },
-}));
-
 export const useRowStyles = makeStyles({
   root: {
     "& > *": {
