@@ -10,6 +10,12 @@ export const useGraphStyles = makeStyles({
     margin: "0 auto 0 auto",
     width: "90%",
   },
+
+  container:{
+    position: "absolute",
+    top:"0",
+    left:"0"
+  }
 });
 
 export const useSwitchStyles = makeStyles({
