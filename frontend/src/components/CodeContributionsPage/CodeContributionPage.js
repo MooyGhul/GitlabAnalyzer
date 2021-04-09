@@ -7,7 +7,7 @@ import {useParams} from "react-router-dom";
 import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
-import {useGraphStyles} from "../../style/CodeContributionPageStyles";
+import {useGraphStyles, useSwitchStyles} from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle";
 import {formatTableDate, getGraphData} from "../../helper";
@@ -18,6 +18,7 @@ const CodeContributionPage = () => {
   const {project_id, member_id} = useParams();
   const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
+  const switchStyle = useSwitchStyles();
   const [countsData, setCountsData] = useState([]);
   const [scoreData, setScoreData] = useState([]);
   const [graphData, setGraphData] = useState([]);
@@ -171,10 +172,12 @@ const CodeContributionPage = () => {
 
       <Grid className={classes.graph}>
         <Switch
+          classes={switchStyle}
           checked={scoreMode}
           onChange={handleSwitch}
           name='graphSwitch'
           />
+
         <BarChart
           data={graphData}
           codeContribution={true}
