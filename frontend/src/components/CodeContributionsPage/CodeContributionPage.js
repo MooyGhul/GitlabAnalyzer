@@ -22,9 +22,9 @@ const CodeContributionPage = (props) => {
   const [graphData, setGraphData] = useState([]);
   const [project_id, setProjectId] = useState(props.project_id);
   const [member_id, setMemberId] = useState(props.member_id);
+  const [scoreMode, setScoreMode] = useState(false);
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
   const location = useLocation();
-  const [scoreMode, setScoreMode] = useState(false);
 
   useEffect(() => {
     const defined = () => {

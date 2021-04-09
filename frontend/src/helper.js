@@ -66,8 +66,6 @@ export const formatTableDate = (commentDate) => {
   return `${month} ${day}, ${year} @ ${time}`;
 };
 
-// Specifically for Code Contribution Data
-
 const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
   return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
 };
