@@ -93,41 +93,7 @@ function ProjectInfoPage({
       setMRs(mrData.data);
       setComments(commentData.data);
       setIssues(issueData.data);
-
-      members.forEach((member) => {
-        let countCommit = 0;
-        let countMR = 0;
-        let countComment = 0;
-        let countIssue = 0;
-
-        commits.forEach((commit) => {
-          if (member === commit.author) {
-            countCommit++;
-          }
-        });
-        commitsArray.push(countCommit);
-
-        MRs.forEach((MR) => {
-          if (member === MR.author) {
-            countMR++;
-          }
-        });
-        MRsArray.push(countMR);
-
-        comments.forEach((comment) => {
-          if (member === comment.commenter) {
-            countComment++;
-          }
-        });
-        commentsArray.push(countComment);
-
-        issues.forEach((issue) => {
-          if (member === issue.author) {
-            countIssue++;
-          }
-        });
-        issuesArray.push(countIssue);
-      });
+     
     };
 
     const loadAndFetchProjectData = async () => {
@@ -143,9 +109,45 @@ function ProjectInfoPage({
       await fetchData();
     };
     loadAndFetchProjectData();
+     
     // eslint-disable-next-line
   }, []);
 
+  members.forEach((member) => {
+    let countCommit = 0;
+    let countMR = 0;
+    let countComment = 0;
+    let countIssue = 0;
+
+    commits.forEach((commit) => {
+      if (member === commit.author) {
+        countCommit++;
+      }
+    });
+    commitsArray.push(countCommit);
+
+    MRs.forEach((MR) => {
+      if (member === MR.author) {
+        countMR++;
+      }
+    });
+    MRsArray.push(countMR); 
+
+    comments.forEach((comment) => {
+      if (member === comment.commenter) {
+        countComment++;
+      }
+    });
+    commentsArray.push(countComment);
+
+    issues.forEach((issue) => {
+      if (member === issue.author) {
+        countIssue++;
+      }
+    });
+    issuesArray.push(countIssue);
+  });
+  
   return (
     <div>
       <div className={classes.body}>
