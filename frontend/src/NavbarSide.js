@@ -29,8 +29,9 @@ const NavbarSide = (props) => {
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
   const [sidebar, setSidebar] = useState(false); 
-  const [projectLoaded, setProjectLoaded] = useState("noProjectLoaded");
+  const [projectLoaded, setProjectLoaded] = useState(false);
   const [previousProjectId, setPreviousProjectId] = useState(-1);
+  const [dataFetched, setDataFetched] = useState(false);
 
   const toggle = () => {
     setSidebar(!sidebar); 
@@ -50,6 +51,10 @@ const NavbarSide = (props) => {
 
   const handleNewProjectLoaded = (newProjectId) => {
     setPreviousProjectId(newProjectId);
+  }
+
+  const handleDataFetched = (state)=>{
+    setDataFetched(state);
   }
 
   return (
@@ -138,6 +143,8 @@ const NavbarSide = (props) => {
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
                     onProjectLoadedStateChange={handleProjectLoadedChange}
+                    onDataFetched={handleDataFetched}
+                    dataFetched={dataFetched}
                     onNewProjectLoaded = {handleNewProjectLoaded}
                     previousProjectId = {previousProjectId}
                     projectLoaded={projectLoaded}

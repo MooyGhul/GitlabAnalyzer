@@ -14,6 +14,8 @@ function ProjectInfoPage({
   projectLoaded,
   onNewProjectLoaded,
   previousProjectId,
+  onDataFetched,
+  dataFetched,
 }) {
   const location = useLocation();
   const [members, setMembers] = useState([]);
@@ -21,8 +23,7 @@ function ProjectInfoPage({
   const [MRs, setMRs] = useState([]);
   const [comments, setComments] = useState([]);
   const [issues, setIssues] = useState([]);
-  const [loader, showLoader, hideLoader] = useFullPageLoader();
-  const [dataLoaded, setDataLoaded] = useState(false);
+  const [loader, showLoader, hideLoader] = useFullPageLoader(); 
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
   let commitsArray = [];
   let MRsArray = [];
@@ -32,45 +33,34 @@ function ProjectInfoPage({
   const [projectId, setProjectId] = useState(project_id);
 
   useEffect(() => {
-    console.log("projectLoaded at the beginning of useEffect: ", projectLoaded);
-
-    console.log("PROJECT ID", projectId);
     showLoader();
+
     const updateProjectId = () => {
       if (projectId === -1) {
         showErrorPage();
       } else {
         try {
           setProjectId(location.state.id);
-          onNewProjectLoaded(location.state.id);
         } catch (err) {
           setProjectId(project_id);
-          onNewProjectLoaded(project_id);
         }
       }
     };
+    console.log("PROJECT IDDDDDD", projectId);
+    console.log("PREVIOUS ID", previousProjectId);
 
     const loadProject = async () => {
+      console.log("load project was run")
+      console.log("projectLoaded", projectLoaded)
+
       let projectUrl = `/project/${projectId}/load`;
       if (process.env.NODE_ENV === "development") {
         projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
         await axios.post(projectUrl);
       }
-      console.log("Project has been loaded");
-
-      if (projectLoaded === "noProjectLoaded") {
-        onProjectLoadedStateChange("projectLoaded");
-      }
-
-      if (projectLoaded === "projectLoaded" && previousProjectId !== projectId) {
-        onProjectLoadedStateChange("newProjectLoaded");
-      }
-
-      console.log(
-        "Previous project ID INSIDE LOAD PROJECT: ",
-        previousProjectId
-      );
-      console.log("Current project ID ISNIDE LOAD PROJECT: ", projectId);
+      
+      onNewProjectLoaded(projectId);
+      onProjectLoadedStateChange(!projectLoaded);   
     };
 
     const fetchData = async () => {
@@ -101,38 +91,33 @@ function ProjectInfoPage({
       setCommits(commitData.data);
       setMRs(mrData.data);
       setComments(commentData.data);
-      setIssues(issueData.data);
-      setDataLoaded(true);
-      console.log("DATA HAVE BEEN FETCHED");
+      setIssues(issueData.data);  
     };
-    updateProjectId();
+    updateProjectId(); 
 
-    console.log("Previous project ID: ", previousProjectId);
-    console.log("ProjectLoaded? ", projectLoaded);
-
-    if (projectLoaded === "noProjectLoaded") {
-      console.log("No project was previously added. Loading project.");
-      loadProject();
+    if (!projectLoaded) { 
+      console.log("No project was previously added. Loading project.")
+      loadProject(); 
     }
 
-    if (projectLoaded === "projectLoaded" && previousProjectId === projectId) {
-      console.log("A project is loaded.");
+    if (projectLoaded && previousProjectId === projectId){
+      console.log("A project is loaded.")
       fetchData().then(hideLoader());
     }
 
-    if (projectLoaded === "projectLoaded" && previousProjectId !== projectId) {
-      console.log("A different project is loaded");
-      loadProject();
+    if (projectLoaded && previousProjectId !==projectId){
+      console.log("different project is loaded");
+      loadProject().then(fetchData().then)
+      fetchData().then(hideLoader());
+
     }
 
-    if (projectLoaded === "newProjectLoaded") {
-      console.log("ALSDKFLASDKFLASDKF");
-      fetchData().then(hideLoader());
-    }
 
     // eslint-disable-next-line
   }, [projectId, projectLoaded]);
-  console.log("MEMBERS ", members);
+
+
+
   members.forEach((member) => {
     let countCommit = 0;
     let countMR = 0;
@@ -167,6 +152,8 @@ function ProjectInfoPage({
     });
     issuesArray.push(countIssue);
   });
+
+  
 
   return (
     <div>
