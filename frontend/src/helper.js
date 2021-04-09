@@ -66,7 +66,7 @@ export const formatTableDate = (commentDate) => {
   return `${month} ${day}, ${year} @ ${time}`;
 };
 
-// For Code Contribution Data
+// Specifically for Code Contribution Data
 
 const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
   return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
@@ -80,7 +80,7 @@ const createGraphData = (year, MRDaily, CommitDaily) => {
   return { year, MRDaily, CommitDaily };
 };
 
-export const formatData = (mrData, mrArray, commitData, commitArray) => {
+export const formatData = (mrData, mrArray, commitData) => {
   for(let mrDataIndex = 0; mrDataIndex < mrData.length; mrDataIndex++) {
     const relatedCommitIds = commitData.filter(val => {
       return mrData[mrDataIndex].commitIds.includes(val.commitId);

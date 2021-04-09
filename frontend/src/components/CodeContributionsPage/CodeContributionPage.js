@@ -48,14 +48,13 @@ const CodeContributionPage = (props) => {
     };
 
     const codeContributionData = (commitData, mrData) => {
-      let commitArray = [];
       let mrArray = [];
       let commitCountsData = [];
       let commitScoresData = [];
       let mrCountsData = [];
       let mrScoresData = [];
 
-      formatData(mrData, mrArray, commitData, commitArray);
+      formatData(mrData, mrArray, commitData);
 
       const commitCounts = getGraphData(commitData, "commitDate", false);
       const mrCounts = getGraphData(mrData, "mergedAt", false);
@@ -73,7 +72,7 @@ const CodeContributionPage = (props) => {
       setScoreData(ccScoreData);
       setGraphData(ccScoreData);
 
-      let ccArray = [...commitArray, ...mrArray];
+      let ccArray = mrArray;
       ccArray.sort((a, b) => {
         let dateA = new Date(a.date);
         let dateB = new Date(b.date);
