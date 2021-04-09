@@ -1,24 +1,27 @@
 import CodeContributionTable from "./CodeContributionTable";
-import {Grid} from "@material-ui/core";
-import React, {useEffect, useState} from "react";
+import { Grid } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Banner from "../Banner";
-import {useParams} from "react-router-dom";
-import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
+import { useLocation } from "react-router-dom";
+import { ComingSoonMsg } from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
-import {useGraphStyles} from "../../style/CodeContributionPageStyles";
-import Navbar from "../Navbar/Navbar";
+import { useGraphStyles } from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
-import {useInnerNavStyle} from "../../style/InnerNavStyle"
-import {formatTableDate, getGraphData} from "../../helper";
+import { useInnerNavStyle } from "../../style/InnerNavStyle";
+import { formatTableDate, getGraphData } from "../../helper";
+import useProjectNotSelected from "../../components/useProjectNotSelected";
 
-const CodeContributionPage = () => {
+const CodeContributionPage = (props) => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
-  const {project_id, member_id} = useParams();
   const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
   const [graphData, setGraphData] = useState([]);
+  const [project_id, setProjectId] = useState(props.project_id);
+  const [member_id, setMemberId] = useState(props.member_id);
+  const [noProjectSelected, showErrorPage] = useProjectNotSelected();
+  const location = useLocation();
 
   const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
     return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
@@ -29,10 +32,31 @@ const CodeContributionPage = () => {
   }
 
   const createGraphData = (year, MRDaily, CommitDaily) => {
-    return {year, MRDaily, CommitDaily};
-  }
+    return { year, MRDaily, CommitDaily };
+  };
 
+  console.log("HERE IS THE MEMBER ID", member_id)
   useEffect(() => {
+    const defined = () => {
+      if (project_id === -1) {
+        showErrorPage();
+      }
+      else if (member_id === -1) {
+        try {
+          setProjectId(location.state.project_id);
+          setMemberId(location.state.member_id);
+        } catch (err) {
+          setProjectId(props.project_id);
+          setMemberId(props.member_id);
+          showErrorPage();
+        }
+      }
+      else{
+        setProjectId(props.project_id);
+        setMemberId(props.member_id);
+      }
+    };
+
     const codeContributionData = (commitData, mrData) => {
       let commitArray = [];
       let mrArray = [];
@@ -55,10 +79,10 @@ const CodeContributionPage = () => {
 
       let ccArray = [...commitArray, ...mrArray];
       ccArray.sort((a, b) => {
-          let dateA = new Date(a.date);
-          let dateB = new Date(b.date);
-          return dateB - dateA;
-        });
+        let dateA = new Date(a.date);
+        let dateB = new Date(b.date);
+        return dateB - dateA;
+      });
 
       setCodeContributionRows(ccArray);
     };
@@ -92,12 +116,12 @@ const CodeContributionPage = () => {
 
         mrArray.push(newMrData);
       }
-    }
+    };
 
     const mergeCounts = (commitCountsData, mrCountsData) => {
       let merged;
-      for(let i = 0; i < commitCountsData.length; i++) {
-        for(let j = 0; j < mrCountsData.length; j++) {
+      for (let i = 0; i < commitCountsData.length; i++) {
+        for (let j = 0; j < mrCountsData.length; j++) {
           if (commitCountsData[i].year === mrCountsData[j].year) {
             commitCountsData[i].MRDaily += mrCountsData[j].MRDaily;
             mrCountsData.splice(j, 1);
@@ -106,7 +130,7 @@ const CodeContributionPage = () => {
       }
 
       merged = [...commitCountsData, ...mrCountsData];
-      merged.sort((a,b) => {
+      merged.sort((a, b) => {
         let dateA = new Date(a.year);
         let dateB = new Date(b.year);
         return dateA - dateB;
@@ -119,7 +143,7 @@ const CodeContributionPage = () => {
       let mrUrl = `/project/${project_id}/member/${member_id}/merge_requests`;
       let commitUrl = `/project/${project_id}/member/${member_id}/commits`;
 
-      if(process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === "development") {
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/merge_requests`;
         commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/commits`;
       }
@@ -131,47 +155,55 @@ const CodeContributionPage = () => {
 
       codeContributionData(commitData, mrData);
     };
+    defined();
 
-    fetchData()
-      .then(()=> {
-        console.log('Successful data retrieval');
-      }).catch(() => {
-      console.log('Failed retrieve data');
-    });
-  },[project_id, member_id]);
-  console.log(graphData);
-  console.log(codeContributionRows);
+    if (member_id !== -1) {
+      fetchData()
+        .then(() => {
+          console.log("Successful data retrieval");
+        })
+        .catch(() => {
+          console.log("Failed retrieve data");
+        });
+    }
+    // eslint-disable-next-line
+  }, [project_id, member_id, props]);
 
   return (
-    <Grid container spacing={5} justify="center" alignItems="center">
-      <Grid item xs={12}>
+    <div>
+      <Grid
+        container
+        spacing={5}
+        justify="center"
+        alignItems="center"
+        className={classes.container}
+      >
         <Grid item xs={12}>
-          <Navbar />
+          <Grid item xs={12}>
+            <Banner memberName={member_id} />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Banner memberName={member_id} />
+        <Grid item xs={12} align="center">
+          <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
+        </Grid>
+
+        <Grid className={classes.graph}>
+          <BarChart
+            data={graphData}
+            codeContribution={true}
+            barLabel1={BarChartProperties.codeContribution.labelMRs}
+            barColour1={BarChartProperties.codeContribution.barColourMRs}
+            barLabel2={BarChartProperties.codeContribution.labelCommits}
+            barColour2={BarChartProperties.codeContribution.barColourCommits}
+            maintainRatio={false}
+          />
+        </Grid>
+        <Grid item className={classes.table}>
+          <CodeContributionTable codeContributionRows={codeContributionRows} />
         </Grid>
       </Grid>
-      <Grid item xs={12} align="center">
-        <InnerNavBar codeStyle={innerNavStyle.actionItemCode}/>
-      </Grid>
-
-      <Grid className={classes.graph}>
-        <BarChart
-          data={graphData}
-          codeContribution={true}
-          barLabel1={BarChartProperties.codeContribution.labelMRs}
-          barColour1={BarChartProperties.codeContribution.barColourMRs}
-          barLabel2={BarChartProperties.codeContribution.labelCommits}
-          barColour2={BarChartProperties.codeContribution.barColourCommits}
-          maintainRatio={false}
-        />
-      </Grid>
-
-      <Grid item className={classes.table}>
-        <CodeContributionTable codeContributionRows={codeContributionRows} />
-      </Grid>
-    </Grid>
+      {noProjectSelected}
+    </div>
   );
 };
 

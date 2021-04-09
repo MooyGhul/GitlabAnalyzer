@@ -1,5 +1,6 @@
 package com.cmpt373sedna.gitlabanalyzer.model;
 
+import com.cmpt373sedna.gitlabanalyzer.controllers.DiffScore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -41,11 +42,14 @@ public class MergeRequestEntity {
     @Column(columnDefinition = "TEXT")
     @ElementCollection
     private List<String> mrDiffs;
+    private double score;
     private String url;
 
 
     public static MergeRequestEntity fromGitlabJSON(JSONObject json) {
         String mergedAt = json.optString("merged_at");
+        DiffScore parser = new DiffScore();
+        List<String> mrDiffs = getMRDiffs(json);
         return MergeRequestEntity.builder()
                 .id(json.getInt("id"))
                 .iid(json.getInt("iid"))
@@ -56,7 +60,8 @@ public class MergeRequestEntity {
                 .createdAt(Instant.parse(json.getString("created_at")))
                 .mergeRequestName(json.getString("title"))
                 .commitIds(getCommitIds(json))
-                .mrDiffs(getMRDiffs(json))
+                .mrDiffs(mrDiffs)
+                .score(parser.calcScore(mrDiffs))
                 .mergedAt(isNotBlank(mergedAt) ? Instant.parse(mergedAt) : null)
                 .url(json.getString("web_url"))
                 .build();
@@ -78,6 +83,7 @@ public class MergeRequestEntity {
             MRDiffs.put("diff",js.getString("diff"));
             MRDiffs.put("new_path",js.getString("new_path"));
             MRDiffs.put("old_path",js.getString("old_path"));
+            MRDiffs.put("renamed_file", js.getBoolean("renamed_file"));
             list.add(MRDiffs.toString());
         }
         return list;

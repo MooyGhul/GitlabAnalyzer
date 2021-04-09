@@ -1,15 +1,10 @@
 import { DataGrid } from "@material-ui/data-grid";
 import { useHistory } from "react-router-dom"; 
-import { useStyles } from "./AllProjectInfoStyle";
+import { useStyles } from "./ProjectInfoStyle";
 
-function MemberList(props){
-    let members = props.members
-    let commitsArray = props.commitsArray
-    let MRsArray = props.MRsArray
-    let projectID = props.projectID
+function MemberList({ members, commitsArray, MRsArray, projectID, onMemberIdChange}){
     const history = useHistory();
     const classes = useStyles();
-
 
     const rows = members.map((member, i) => ({
         id: i,
@@ -30,8 +25,11 @@ function MemberList(props){
       ];
     
       const buttonClickHandler = (e) => {
-        console.log(e.row.id);
-        history.push( `/overview/${projectID}/${e.row.studentID}/codeContribution`);
+        let studentID = e.row.studentID
+        history.push(
+          {pathname:`/overview/${projectID}/${studentID}/codeContribution`, 
+           state: {project_id: projectID, member_id:studentID}});
+        onMemberIdChange(e.row.studentID);
       };
       
     return(
@@ -39,7 +37,7 @@ function MemberList(props){
         <DataGrid
           rows={rows}
           columns={columns}
-          pageSize={5}
+          pageSize={10}
           onRowClick={(e) => buttonClickHandler(e)}
         />
       </div>

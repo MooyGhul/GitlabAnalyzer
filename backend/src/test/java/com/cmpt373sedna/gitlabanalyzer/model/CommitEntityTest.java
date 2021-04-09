@@ -19,6 +19,7 @@ public class CommitEntityTest {
         commitDiffs.put("diff","@@ -1,5 +1,8 @@\n # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.\n \n+# package-lock\n+package-lock.json\n+\n # dependencies\n /node_modules\n /.pnp\n");
         commitDiffs.put("new_path","frontend.gitignore");
         commitDiffs.put("old_path","frontend.gitignore");
+        commitDiffs.put("renamed_file", false);
         list.add(commitDiffs.toString());
 
         CommitEntity expected = CommitEntity.builder()

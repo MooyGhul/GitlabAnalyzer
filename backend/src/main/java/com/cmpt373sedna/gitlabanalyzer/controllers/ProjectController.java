@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static java.util.stream.Collectors.toList;
 
 public class ProjectController {
@@ -25,7 +24,8 @@ public class ProjectController {
 
     private int totalComments;
 
-    private @Getter List<MergeRequestEntity> mergeRequestEntities;
+    private @Getter
+    List<MergeRequestEntity> mergeRequestEntities;
 
     private @Getter List<IssueEntity> issuesEntities;
 
@@ -34,6 +34,8 @@ public class ProjectController {
     private @Getter List<CommitEntity> commitEntities;
 
     private @Getter List<String> members;
+
+    private @Getter List<String> languages;
 
     public ProjectController(Extractor extractor, ConfigEntity configEntity, ProjectEntity projectEntity) {
         this.extractor = extractor;
@@ -51,6 +53,7 @@ public class ProjectController {
         this.members = this.extractor.getRepoMembers(this.config, this.projectId);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
+        this.languages = this.getAndParseProjectLanguages();
 
         return this;
     }
@@ -95,7 +98,13 @@ public class ProjectController {
         return comments.stream().map(CommentEntity::fromGitlabJSON).collect(toList());
     }
 
+    private List<String> getAndParseProjectLanguages() {
+        JSONObject langsJSON = this.extractor.getRepoFileTypes(this.config, this.projectId);
+        List<String> langs = new ArrayList<>();
+        langsJSON.keys().forEachRemaining(langs::add);
 
+        return langs;
+    }
 
     public int getNumCommits() {
         return this.commitEntities.size();
