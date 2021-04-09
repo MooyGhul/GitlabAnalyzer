@@ -130,8 +130,10 @@ function ProjectInfoPage({
       if (member === MR.author) {
         countMR++;
       }
+      console.log(MR.score)
     });
     MRsArray.push(countMR); 
+
 
     comments.forEach((comment) => {
       if (member === comment.commenter) {
@@ -147,6 +149,8 @@ function ProjectInfoPage({
     });
     issuesArray.push(countIssue);
   });
+
+  console.log(MRs)
   
   return (
     <div>
