@@ -2,6 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.*;
 import com.cmpt373sedna.gitlabanalyzer.repository.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,11 @@ public class ProjectRESTController {
     @GetMapping("/all")
     Iterable<ProjectEntity> all() {
         return this.projectRepository.findAll();
+    }
+
+    @GetMapping("/all/projectList")
+    List<JSONObject> getProjectListInfo() {
+        return this.projectManager.getProjectListInfo();
     }
 
     @GetMapping("/{projectId}")
