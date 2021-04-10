@@ -80,15 +80,19 @@ const ScoreBoard = (props) => {
   console.log(totalCommitScore)
  
   const score_summary =
-    "Total commit score: " +
+    "Number of commits: " + 
+    commitCount +
+    "; Total commit score: " +
     totalCommitScore +
+    "; Number of MRs: " +
+    MRCount +
     "; Total MR score: " +
     totalMRScore +
     "; Comment count: " +
     commentCount +
-    "; Comment Word Count" +
+    "; Comment Word Count: " +
     commentWordCount +
-    "Issue count: " +
+    "; Issue count: " +
     issueCount +
     "; Issue word count: " +
     issueWordCount +
