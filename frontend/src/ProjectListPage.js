@@ -1,4 +1,7 @@
-import Button from "@material-ui/core/Button";
+import {
+  Button,
+  Snackbar,
+} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import {DataGrid} from "@material-ui/data-grid";
 import React, {useState, useEffect} from "react";
@@ -13,12 +16,36 @@ const ProjectListPage = (props) => {
   const classes = useStyles();
   const [loader, showLoader, hideLoader] = useFullPageLoader(); 
 
-  const syncButton = () => {
-    const onSyncButtonClick = () => {
-      
+  const SyncButton = () => {
+    const [snackBar, setSnackBar] = useState(false)
+    const handleClick = () => {
+      setSnackBar(true);
     }
 
-    return (<Button variant="contained" component="span" size="large">Sync Now</Button>);
+    const handleClose = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+  
+      setSnackBar(false);
+    };
+
+    return (
+      <React.Fragment>
+        <Snackbar
+          anchorOrigin={{
+            position: 'absolute',
+            vertical: 'bottom',
+            horizontal: 'left',
+          }}
+          open={snackBar}
+          onClose={handleClose}
+          autoHideDuration={3000}
+          message="Sync started"
+        />
+        <Button variant="contained" component="span" size="large" onClick={handleClick}>Sync Now</Button>
+      </React.Fragment>
+    );
   }
 
   const columns = [
@@ -29,8 +56,7 @@ const ProjectListPage = (props) => {
       field: "syncNow", 
       headerName: "Sync Now", 
       width: 400, 
-      renderCell: () => (syncButton()),
-      onCellClick: () => (console.log('test'))
+      renderCell: () => (<SyncButton/>),
     },
   ];
 
