@@ -178,7 +178,7 @@ const NavbarSide = () => {
 
               <Route
                 exact
-                path="/overview/:project_id/:member_id/breakdown/:breakdown_type"
+                path="/overview/:project_id/:member_id/breakdown"
               >
                 <Container>
                   <ScoreBreakdown

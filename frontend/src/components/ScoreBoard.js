@@ -62,7 +62,7 @@ const ScoreBoard = (props) => {
               color="primary"
               className={classes.button}
               component={Link}
-              to={`/overview/${project_id}/${member_id}/breakdown/day_by_day`}
+              to={`/overview/${project_id}/${member_id}/breakdown`}
             >
               Score Breakdown <SearchIcon className={classes.icon} />
             </Button>
