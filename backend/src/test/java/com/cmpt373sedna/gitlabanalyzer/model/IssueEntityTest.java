@@ -13,17 +13,18 @@ public class IssueEntityTest {
     @Test
     void fromGitlabJSON_parses_open_Issue_correctly() throws IOException {
         IssueEntity expected = IssueEntity.builder()
-                .issueId(1)
-                .issueIid(1)
-                .projectId(3)
-                .issueName("test1")
-                .issueDescription("fixed login page css paddings")
-                .assignee("Administrator")
-                .openedDate(Instant.parse("2017-04-29T08:46:00Z"))
+                .issueId(12)
+                .issueIid(12)
+                .projectId(2)
+                .issueName("Create Issues Class")
+                .issueDescription("Created a new class for issues")
+                .assignee("Dr. Luella Kovacek")
+                .author("root")
+                .openedDate(Instant.parse("2021-01-30T03:29:41.831Z"))
                 .closedDate(null)
                 .build();
 
-        String jsonString = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleOpenMR.json").readAllBytes());
+        String jsonString = new String(this.getClass().getResourceAsStream("/json/gitlabApi/singleOpenIssue.json").readAllBytes());
         JSONObject json = new JSONObject(jsonString);
         IssueEntity actual = IssueEntity.fromGitlabJSON(json);
 
@@ -40,6 +41,7 @@ public class IssueEntityTest {
                 .issueName("Ut commodi ullam eos dolores perferendis nihil sunt.")
                 .issueDescription("Omnis vero earum sunt corporis dolor et placeat.")
                 .assignee("Dr. Luella Kovacek")
+                .author("root")
                 .openedDate(Instant.parse("2016-01-04T15:31:46.176Z"))
                 .closedDate(Instant.parse("2016-01-04T15:31:46.176Z"))
                 .build();
