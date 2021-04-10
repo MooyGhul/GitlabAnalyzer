@@ -129,7 +129,7 @@ public class Extractor {
     }
 
     private URI buildUri(ConfigEntity config) {
-        return URI.create(config.getUrl() + "api/v4/projects?access_token=" + config.getToken());
+        return URI.create(config.getUrl() + "api/v4/projects?visibility=private&access_token=" + config.getToken());
     }
 
     private List<JSONObject> getJsonObjectsList(URI url) {
