@@ -97,6 +97,7 @@ const ScoreBoard = (props) => {
     "; Issue word count: " +
     issueWordCount +
     ";";
+    
   const [isCopied, setCopied] = useClipboard(score_summary);
 
   return (
