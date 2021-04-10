@@ -67,16 +67,21 @@ const ProjectListPage = (props) => {
       const result = await axios.get( process.env.NODE_ENV === 'development' ?
           `${process.env.REACT_APP_DEVHOST}/project/all/projectList`:
           "/project/all/projectList");
+      console.log(result.data)
       setData(result.data);
     };
     fetchData().then(hideLoader());
   }, [])
   
+  const deStringProject = (project) => {
+    const json = JSON.parse(project)
+    return {
+      id: json.id,
+      projectName: json.name
+    }
+  }
 
-  const rows = data.map((project) => ({
-    id: project.repoId,
-    projectName: project.repoName,
-  }));
+  const rows = data.map((project) => (deStringProject(project)));
 
   let projectIdArray = [];
 

@@ -27,11 +27,7 @@ function UrlToken() {
         await axios.post(process.env.NODE_ENV === 'development' ?
             //?token=${urlToken.token}&url=${urlToken.url}
             `${process.env.REACT_APP_DEVHOST}/api/config/create` :
-            `/api/config/create`, json);
-
-        await axios.post(process.env.NODE_ENV === 'development' ?
-            `${process.env.REACT_APP_DEVHOST}/project/add?url=${urlToken.url}`:
-            `/project/add?url=${urlToken.url}`) 
+            `/api/config/create`, json)
         .then(function(response){
             hideLoader();
             if (response.status === 200){
