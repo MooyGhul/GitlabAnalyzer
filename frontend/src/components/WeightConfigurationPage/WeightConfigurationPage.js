@@ -26,7 +26,9 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
-    const [iterDates, setIterDates] = useState([]);
+    const [iterDates, setIterDates] = useState(mockIterationsDates);
+    const [iterationName, setIterationName] = useState('new Iteration');
+    // const [iterDates, setIterDates] = useState([]);
     const [flag, setFlag] = useState(0);
     
     const defaultFileWeight = 1;
@@ -40,8 +42,6 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
         "Deleted": defaultMinorCodeChangeWeight,
         "Syntax": defaultMinorCodeChangeWeight,
     }
-
-    const [iterationName, setIterationName] = useState('new Iteration');
 
     // useEffect(() => {
     //   const fetchIterationsDates  = async () => {
@@ -67,15 +67,17 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
             startDate:`${moment(startDate).format()}`,
             endDate:`${moment(endDate).format()}`
           }
-      ).catch(function(error){
+      ).catch((error) => {
           console.log(error.response.status);
       });
+
+      // Leave them for now, I am going to need them in my next MR soon
       setFlag(flag+1);
       console.log(flag);
-      
+
+      // Leave them for now, I am going to need them in my next MR soon
       const iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
-              `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
-              `configuration/iterations/all`);
+              `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` : `configuration/iterations/all`);
 
       console.log("iterationsDates :");
       console.log(iterationsDates);
@@ -163,9 +165,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                 <form className={classes.textField} noValidate autoComplete="off">
                     <TextField id="IterationName" label="Iteration Name" variant="outlined" onChange={getIterationNameFromTextField}/>
                 </form>
-                <Typography className={classes.pageTitle}>
-                  <Calendar startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/>
-                </Typography>
+                <Calendar startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>
                         <Button variant="contained" component="span" className={classes.addIterationButton} size="large" onClick={saveIterationConfiguration}>+ Add Iteration</Button>
@@ -191,7 +191,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
             <Grid item xs={10}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={1}>
-                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save CHANGE</Button>
+                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save Change</Button>
                     </Grid>
                 </Grid>
             </Grid>
