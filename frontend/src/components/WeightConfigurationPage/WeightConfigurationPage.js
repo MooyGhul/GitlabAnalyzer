@@ -101,7 +101,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
             console.log("Failed to obtain languages");
             console.log(e);
         });
-          
+    // eslint-disable-next-line
     }, [project_id, setFileType]);
 
     const getIterationNameFromTextField = (e) => {
