@@ -20,7 +20,7 @@ import {useParams} from "react-router";
 import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 import moment from 'moment';
-import { AirlineSeatFlatAngled } from "@material-ui/icons";
+import { AirlineSeatFlatAngled, ContactsOutlined } from "@material-ui/icons";
 
 const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, handleEndDate}) => {
     const classes = useStyles();
@@ -43,18 +43,18 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
 
     const [iterationName, setIterationName] = useState('new Iteration');
 
-    useEffect(() => {
-      const fetchIterationsDates  = async () => {
-        console.log("----START----");
-        let iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
-              `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
-              `configuration/iterations/all`);
-        console.log("----iterationsDates----");
-        console.log(iterationsDates.data);
-        setIterDates(iterationsDates.data);
-      }
-      fetchIterationsDates();
-    }, [flag]);
+    // useEffect(() => {
+    //   const fetchIterationsDates  = async () => {
+    //     console.log("----START----");
+    //     let iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
+    //           `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
+    //           `configuration/iterations/all`);
+    //     console.log("----iterationsDates----");
+    //     console.log(iterationsDates.data);
+    //     setIterDates(iterationsDates.data);
+    //   }
+    //   fetchIterationsDates();
+    // }, []);
 
     const saveIterationConfiguration  = async () => {
       await axios.post(process.env.NODE_ENV === 'development' ?
@@ -72,7 +72,14 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
       });
       setFlag(flag+1);
       console.log(flag);
-  }
+      
+      const iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
+              `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
+              `configuration/iterations/all`);
+
+      console.log("iterationsDates :");
+      console.log(iterationsDates);
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -184,7 +191,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
             <Grid item xs={10}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={1}>
-                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save</Button>
+                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save CHANGE</Button>
                     </Grid>
                 </Grid>
             </Grid>
