@@ -20,6 +20,7 @@ public class Extractor {
     private final String PATH_COMMENTS = "/notes?per_page=100&page=";
     private final String PATH_ISSUES = "issues?per_page=100&page=";
     private final String PATH_COMMITS = "repository/commits?per_page=100&page=" ;
+    private final String PATH_PROJECTS = "/projects?membership=true&per_page=100&page=";
 
     public Extractor() {
         this.restTemplate = new RestTemplate();
@@ -54,6 +55,19 @@ public class Extractor {
 
             page += 1;
             newData = getJsonObjectsList(buildUri(config, projectId, apiPath + page));
+        }
+        return data;
+    }
+
+    private List<JSONObject> getAPIRequestData(ConfigEntity config, String apiPath) {
+        int page = 1;
+        List<JSONObject> data = new ArrayList<>();
+        List<JSONObject> newData = getJsonObjectsList(buildUri(config, apiPath + page));
+        while(newData.size() > 0) {
+            data.addAll(newData);
+
+            page += 1;
+            newData = getJsonObjectsList(buildUri(config, apiPath + page));
         }
         return data;
     }
@@ -100,6 +114,13 @@ public class Extractor {
 
         return membersJson.stream()
                 .map(obj -> obj.getString("username"))
+                .collect(toList());
+    }
+
+    public List<JSONObject> getBasicProjectInfo(ConfigEntity config) {
+        List<JSONObject> projects = getAPIRequestData(config, PATH_PROJECTS);
+        return projects.stream()
+                .map(obj -> new JSONObject(obj, "id", "name"))
                 .collect(toList());
     }
 
