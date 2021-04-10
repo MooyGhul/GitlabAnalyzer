@@ -117,7 +117,7 @@ public class Extractor {
                 .collect(toList());
     }
 
-    public List<JSONObject> getBasicProjectInfo(ConfigEntity config) {
+    public List<String> getBasicProjectInfo(ConfigEntity config) {
         List<JSONObject> projects = getAPIProjectListInfo(config, PATH_PROJECTS);
         List<String> temp = projects.stream()
                 .map(obj -> new JSONObject(obj, "id", "name").toString())
