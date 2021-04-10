@@ -78,7 +78,7 @@ const createGraphData = (year, MRDaily, CommitDaily) => {
   return { year, MRDaily, CommitDaily };
 };
 
-export const formatData = (mrData, mrArray, commitData) => {
+export const makeCodeContributionTableData = (mrData, mrArray, commitData) => {
   for(let mrDataIndex = 0; mrDataIndex < mrData.length; mrDataIndex++) {
     const relatedCommitIds = commitData.filter(val => {
       return mrData[mrDataIndex].commitIds.includes(val.commitId);

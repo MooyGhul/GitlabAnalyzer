@@ -9,7 +9,8 @@ import BarChartProperties from "../Charts/BarChartProperties";
 import { useGraphStyles, useSwitchStyles } from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
 import { useInnerNavStyle } from "../../style/InnerNavStyle";
-import { getGraphData, mergeGraphData, formatData, makeCommitGraphData, makeMRGraphData } from "../../helper";
+import { getGraphData, makeCommitGraphData, makeMRGraphData, mergeGraphData } from "../../helper";
+import { makeCodeContributionTableData } from "../../helper";
 import useProjectNotSelected from "../../components/useProjectNotSelected";
 
 const CodeContributionPage = (props) => {
@@ -54,7 +55,7 @@ const CodeContributionPage = (props) => {
       let mrCountsData = [];
       let mrScoresData = [];
 
-      formatData(mrData, mrArray, commitData);
+      makeCodeContributionTableData(mrData, mrArray, commitData);
 
       const commitCounts = getGraphData(commitData, "commitDate", false);
       const mrCounts = getGraphData(mrData, "mergedAt", false);
