@@ -65,12 +65,11 @@ const ProjectListPage = (props) => {
     showLoader();
     const fetchData = async () => {
       const result = await axios.get( process.env.NODE_ENV === 'development' ?
-          `${process.env.REACT_APP_DEVHOST}/project/all`:
-          "/project/all");
+          `${process.env.REACT_APP_DEVHOST}/project/all/projectList`:
+          "/project/all/projectList");
       setData(result.data);
     };
     fetchData().then(hideLoader());
-    // eslint-disable-next-line
   }, [])
   
 
