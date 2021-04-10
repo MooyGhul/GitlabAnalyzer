@@ -8,19 +8,24 @@ const useStyles = makeStyles((theme) => ({
   memberList: {
     position: "absolute",
     width: "60%",
-    height: "45%",
-    top: "52%", 
-    left: "50%",
-    transform: "translate(-50%, 0%)"
+    height: "50%",
+    top: "40%", 
+    left: "50%", 
+    transform: "translate(-50%, 0)"
   },
 
-  barChart: {
-    position: "absolute", 
-    top: "10%",
-    width: "40%",
-    height: "50%",
+  barChartContainer: { 
+    position:"absolute",
+    width:"100%",
+    height:"50%", 
+    top:"10%",
     left: "50%",
-    transform: "translate(-50%, 0%)"
+    transform: "translate(-50%, 0)"
+
   },
+  barChart:{ 
+    display:"inline-block", 
+    width:"30%",
+  }
 }));
 export { useStyles };

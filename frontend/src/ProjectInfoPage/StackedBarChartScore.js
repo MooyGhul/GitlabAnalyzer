@@ -1,16 +1,16 @@
 import { Bar } from "react-chartjs-2";
 
-function StackedBarChart({members, commitsArray, MRsArray, commentsArray, issuesArray}) {
+function StackedBarChartScore({
+  members, 
+  commitScoreArray, 
+  MRScoreArray, 
+}) {
   let colorListCommit = [];
   let colorListMR = [];
-  let colorListComment = [];
-  let colorIssueComment = []; 
 
   for (var i = 0; i < members.length; i++) {
     colorListCommit.push("rgba(53,63,196,0.7)");
     colorListMR.push("rgba(40, 240, 230, 0.7");
-    colorListComment.push("rgba(253, 17, 165, 0.7");
-    colorIssueComment.push("rgba(56,255,21,0.7")
   }
 
   return (
@@ -20,43 +20,27 @@ function StackedBarChart({members, commitsArray, MRsArray, commentsArray, issues
           labels: members,
           datasets: [
             {
-              label: "Commits",
-              data: commitsArray,
+              label: "Commit score",
+              data: commitScoreArray,
               maintainAspectRatio: true,
               backgroundColor: colorListCommit,
               borderWidth: 4,
             },
+
             {
-              label: "Merge requests",
-              data: MRsArray,
+              label: "Merge request score",
+              data: MRScoreArray,
               maintainAspectRatio: true,
               backgroundColor: colorListMR,
               borderWidth: 4,
             },
-
-            {
-              label: "Comments (count)",
-              data: commentsArray,
-              maintainAspectRatio: true,
-              backgroundColor: colorListComment,
-              borderWidth: 4,
-            },
-
-            {
-              label: "Issues (count)",
-              data: issuesArray,
-              maintainAspectRatio: true,
-              backgroundColor: colorIssueComment,
-              borderWidth: 4,
-            },
-
           ],
         }}
         options={{
           responsive: true,
           title: {
             display: true,
-            text: "Overall contribution",
+            text: "Contribution scores",
             fontSize: 30,
           },
 
@@ -75,7 +59,7 @@ function StackedBarChart({members, commitsArray, MRsArray, commentsArray, issues
                 ticks: { beginAtZero: true },
                 scaleLabel: {
                   display: true,
-                  labelString: "Contribution",
+                  labelString: "Contribution score",
                 },
                 stacked: true,
               },
@@ -87,4 +71,4 @@ function StackedBarChart({members, commitsArray, MRsArray, commentsArray, issues
   );
 }
 
-export default StackedBarChart;
+export default StackedBarChartScore;

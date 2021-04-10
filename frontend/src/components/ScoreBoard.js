@@ -70,15 +70,12 @@ const ScoreBoard = (props) => {
   });
 
   commits.forEach((commit) => {
-    totalCommitScore += commit.score;
+    totalCommitScore += commit.score*-1;
   });
 
   totalMRScore = Math.round(totalMRScore);
   totalCommitScore = Math.round(totalCommitScore);
-
-  console.log(totalMRScore)
-  console.log(totalCommitScore)
- 
+  
   const score_summary =
     "Number of commits: " + 
     commitCount +

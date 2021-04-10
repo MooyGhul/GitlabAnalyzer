@@ -2,7 +2,9 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useStyles } from "./ProjectInfoStyle";
-import StackedBarChart from "./StackedBarChart";
+import StackedBarChartCount from "./StackedBarChartCount";
+import StackedBarChartScore from "./StackedBarChartScore";
+import StackedBarChartWordCount from "./StackedBarChartWordCount";
 import MemberList from "./MemberList";
 import useFullPageLoader from "../components/useFullPageLoader";
 import useProjectNotSelected from "../components/useProjectNotSelected";
@@ -23,10 +25,15 @@ function ProjectInfoPage({
   const [issues, setIssues] = useState([]);
   const [loader, showLoader, hideLoader] = useFullPageLoader();
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
-  let commitsArray = [];
-  let MRsArray = [];
-  let commentsArray = [];
-  let issuesArray = [];
+  let commitCountArray = [];
+  let MRCountArray = [];
+  let commentCountArray = [];
+  let issueCountArray = [];
+  let commitScoreArray = [];
+  let MRScoreArray = [];
+  let commentWordCountArray = [];
+  let issueWordCountArray = [];
+
   const classes = useStyles();
   const [projectId, setProjectId] = useState(project_id);
 
@@ -54,13 +61,13 @@ function ProjectInfoPage({
       })
         .then((response) => {
           if (response.status === 200) {
-            hideLoader(); 
+            hideLoader();
             onProjectLoadedStateChange(true);
             onNewProjectLoaded(projectId);
           }
         })
         .catch((error) => {
-          hideLoader(); 
+          hideLoader();
         });
     };
 
@@ -93,7 +100,6 @@ function ProjectInfoPage({
       setMRs(mrData.data);
       setComments(commentData.data);
       setIssues(issueData.data);
-     
     };
 
     const loadAndFetchProjectData = async () => {
@@ -103,13 +109,13 @@ function ProjectInfoPage({
         await fetchData();
       }
 
-      if (projectLoaded && previousProjectId !== projectId) {        
+      if (projectLoaded && previousProjectId !== projectId) {
         await loadProject();
       }
       await fetchData();
     };
     loadAndFetchProjectData();
-     
+
     // eslint-disable-next-line
   }, []);
 
@@ -118,57 +124,94 @@ function ProjectInfoPage({
     let countMR = 0;
     let countComment = 0;
     let countIssue = 0;
+    let issueWordCount = 0;
+    let commentWordCount = 0;
+    let totalMRScore = 0;
+    let totalCommitScore = 0;
 
     commits.forEach((commit) => {
       if (member === commit.author) {
         countCommit++;
+        totalCommitScore += commit.score;
       }
     });
-    commitsArray.push(countCommit);
+
+    commitCountArray.push(countCommit);
+    commitScoreArray.push(totalCommitScore);
 
     MRs.forEach((MR) => {
       if (member === MR.author) {
         countMR++;
-      } 
+        totalMRScore += MR.score;
+      }
     });
-    MRsArray.push(countMR); 
-
+    MRCountArray.push(countMR);
+    MRScoreArray.push(totalMRScore);
 
     comments.forEach((comment) => {
       if (member === comment.commenter) {
         countComment++;
+        commentWordCount += comment.wordCount;
       }
     });
-    commentsArray.push(countComment);
+    commentCountArray.push(countComment);
+    commentWordCountArray.push(commentWordCount);
 
     issues.forEach((issue) => {
       if (member === issue.author) {
         countIssue++;
+        issueWordCount += issue.wordCount;
       }
     });
-    issuesArray.push(countIssue);
+    issueCountArray.push(countIssue);
+    issueWordCountArray.push(issueWordCount);
   });
-  
+
   return (
     <div>
       <div className={classes.body}>
-        <div className={classes.barChart}>
-          <StackedBarChart
-            members={members}
-            projectID={projectId}
-            commitsArray={commitsArray}
-            MRsArray={MRsArray}
-            commentsArray={commentsArray}
-            issuesArray={issuesArray}
-          />
+        <div className={classes.barChartContainer}>
+          <div className={classes.barChart}>
+            <StackedBarChartCount
+              members={members}
+              projectID={projectId}
+              commitCountArray={commitCountArray}
+              MRCountArray={MRCountArray}
+              commentCountArray={commentCountArray}
+              issueCountArray={issueCountArray}
+            />
+          </div>
+
+          <div className={classes.barChart}>
+            <StackedBarChartScore
+              members={members}
+              projectID={projectId}
+              commitScoreArray={commitScoreArray}
+              MRScoreArray={MRScoreArray}
+              className={classes.barChart}
+            />
+          </div>
+          <div className={classes.barChart}>
+            <StackedBarChartWordCount
+              members={members}
+              projectID={projectId}
+              commentWordCountArray={commentWordCountArray}
+              issueWordCountArray={issueWordCountArray}
+              className={classes.barChart}
+            />
+          </div>
         </div>
         <MemberList
-          members={members}
-          commitsArray={commitsArray}
-          MRsArray={MRsArray}
           projectID={projectId}
-          issuesArray={issuesArray}
-          commentsArray={commentsArray}
+          members={members}
+          commitCountArray={commitCountArray}
+          commitScoreArray={commitScoreArray}
+          MRCountArray={MRCountArray}
+          MRScoreArray={MRScoreArray}
+          issueCountArray={issueCountArray}
+          issueWordCountArray={issueWordCountArray}
+          commentCountArray={commentCountArray}
+          commentWordCountArray={commentWordCountArray}
           onMemberIdChange={onMemberIdChange}
         />
       </div>

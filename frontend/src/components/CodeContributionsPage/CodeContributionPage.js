@@ -179,7 +179,7 @@ const CodeContributionPage = (props) => {
       >
         <Grid item xs={12}>
           <Grid item xs={12}>
-            <Banner memberName={member_id} type="commentContribution"
+            <Banner memberName={member_id} type="codecontribution"
                     />
           </Grid>
         </Grid>
