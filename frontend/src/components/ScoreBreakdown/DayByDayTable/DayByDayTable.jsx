@@ -7,12 +7,16 @@ import {
   TableRow
 } from "@material-ui/core";
 import React from "react";
+import PropTypes from "prop-types";
 import DayByDayTableTotalRow from "./DayByDayTableTotalRow";
 import DayByDayTableRow from "./DayByDayTableRow";
 import {useStyles} from "../../../style/ScoreBreakdownStyles";
 
-export default function DayByDayTable(props) {
+export default function DayByDayTable({ scoreData, commentData }) {
   const classes = useStyles();
+
+  const dates = [...new Set(Object.keys(scoreData).concat(Object.keys(commentData)))].sort();
+  const fileExtensions = [...new Set(Object.keys(scoreData).flatMap((key) => Object.keys(scoreData[key])))];
 
   return (
     <TableContainer>
@@ -20,21 +24,22 @@ export default function DayByDayTable(props) {
         <TableHead>
           <TableRow className={classes.banner}>
             <TableCell align="left" className={classes.banner}>Date</TableCell>
-            <TableCell align="left" className={classes.banner}>.js</TableCell>
-            <TableCell align="left" className={classes.banner}>.java</TableCell>
-            <TableCell align="left" className={classes.banner}>.css</TableCell>
-            <TableCell align="left" className={classes.banner}>.html</TableCell>
+            {fileExtensions.map((fileExtension) => <TableCell align="left" className={classes.banner}>.{fileExtension}</TableCell>)}
             <TableCell align="left" className={classes.banner}>MR Score</TableCell>
             <TableCell align="left" className={classes.banner}>Issue Score</TableCell>
             <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
-          <DayByDayTableRow date={Date.now()} scores={{ '.js': 0, '.java': 0, '.css': 0, '.html': 0 }} mrScore={0} issueScore={0} />
-          <DayByDayTableRow date={Date.now() + 86400000} scores={{ '.js': 5, '.java': 3, '.css': 44, '.html': 643 }} mrScore={12} issueScore={22}/>
-          <DayByDayTableTotalRow scores={{ '.js': 5, '.java': 3, '.css': 44, '.html': 643 }} mrScore={12} issueScore={22}/>
+          {dates.map((date) => <DayByDayTableRow date={date} scores={scoreData[date] || {}} fileExtensions={fileExtensions} commentScores={commentData[date] || {}} />)}
+          <DayByDayTableTotalRow scores={scoreData} fileExtensions={fileExtensions} commentScores={commentData} />
         </TableBody>
       </Table>
     </TableContainer>
   )
+}
+
+DayByDayTable.propTypes = {
+  scoreData: PropTypes.object.isRequired,
+  commentData: PropTypes.object.isRequired,
 }

@@ -4,22 +4,22 @@ import React from "react";
 import PropTypes from "prop-types";
 import {useStyles} from "../../../style/ScoreBreakdownStyles";
 
-export default function DayByDayTableRow({ date, scores, mrScore, issueScore }) {
+export default function DayByDayTableRow({ date, scores, fileExtensions, commentScores }) {
   const classes = useStyles();
 
   return (
     <TableRow className={classes.root}>
       <TableCell className={classes.cell}>{formatTableDate(date, false)}</TableCell>
-      {Object.keys(scores).map((key) => <TableCell className={classes.cell}>{scores[key]}</TableCell>)}
-      <TableCell className={classes.cell}>{mrScore}</TableCell>
-      <TableCell className={classes.cell}>{issueScore}</TableCell>
+      {fileExtensions.map((key) => <TableCell className={classes.cell}>{scores[key]?.toFixed(1) || 0}</TableCell>)}
+      <TableCell className={classes.cell}>{commentScores.MergeRequest || 0}</TableCell>
+      <TableCell className={classes.cell}>{commentScores.Issue || 0}</TableCell>
     </TableRow>
   )
 }
 
 DayByDayTableRow.propTypes = {
-  date: PropTypes.number.isRequired,
+  date: PropTypes.string.isRequired,
+  fileExtensions: PropTypes.array.isRequired,
   scores: PropTypes.object.isRequired,
-  mrScore: PropTypes.number.isRequired,
-  issueScore: PropTypes.number.isRequired,
+  commentScores: PropTypes.object.isRequired,
 };
