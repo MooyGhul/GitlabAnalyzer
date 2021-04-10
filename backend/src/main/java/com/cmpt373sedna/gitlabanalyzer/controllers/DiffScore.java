@@ -38,16 +38,18 @@ public class DiffScore {
             JSONObject obj = new JSONObject(diff);
             if(!obj.getBoolean("renamed_file")) {
                 String diffString = obj.getString("diff");
-                String[] pathSplit = obj.getString("new_path").split("\\.");
-                String language = pathSplit[pathSplit.length - 1];
-                score += parseDiff(diffString, language);
+                score += parseDiff(diffString, obj.getString("new_path"));
             }
         }
 
        return Math.round(score * 100.0)/100.0;
     }
 
-    private double parseDiff(String diff, String language) {
+
+    public double parseDiff(String diff, String path) {
+        String[] pathSplit = path.split("\\.");
+        String language = pathSplit[pathSplit.length - 1];
+
         List<String> deletedLines = new ArrayList<>();
         List<String> additionLines = new ArrayList<>();
         Map<String, String> lines = new HashMap<>();
