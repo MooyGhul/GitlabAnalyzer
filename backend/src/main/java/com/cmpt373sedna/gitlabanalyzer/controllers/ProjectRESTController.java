@@ -32,8 +32,6 @@ public class ProjectRESTController {
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
-
-
     @PostMapping("/create")
     @Deprecated
     void initializeUser(@RequestParam String token) {

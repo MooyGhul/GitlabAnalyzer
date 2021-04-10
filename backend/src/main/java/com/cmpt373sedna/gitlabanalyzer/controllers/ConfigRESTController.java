@@ -27,8 +27,9 @@ public class ConfigRESTController {
     @Autowired
     private ProjectEntityRepository projectEntityRepository;
 
-    @PostMapping
+    @PostMapping("/create")
     public ConfigEntity create(@RequestBody ConfigEntity body) {
+        projectManager.setConfig(body);
         return this.configEntityRepository.save(body);
     }
 
@@ -42,6 +43,7 @@ public class ConfigRESTController {
         if (!configId.equals(body.getId())) {
             throw new IllegalArgumentException("URL ID and body ID don't match");
         }
+        projectManager.setConfig(body);
         return this.configEntityRepository.save(body);
     }
 

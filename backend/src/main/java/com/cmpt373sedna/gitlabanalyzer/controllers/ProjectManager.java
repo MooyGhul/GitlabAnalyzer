@@ -21,7 +21,7 @@ public class ProjectManager {
     private final Extractor extractor;
     private @Setter String projectToken;
     private List<JSONObject> projectList;
-    private ConfigEntity config;
+    private @Setter ConfigEntity config;
 
     @Autowired
     private IssueEntityRepository issueRepository;
@@ -54,7 +54,7 @@ public class ProjectManager {
                 .token(this.projectToken)
                 .url(baseUrl)
                 .build();
-        this.config = config;
+        //this.config = config;
         ProjectEntity projectEntity = this.extractor.getProject(config, projectId);
 
         ProjectController p = new ProjectController(this.extractor, config, projectEntity);
