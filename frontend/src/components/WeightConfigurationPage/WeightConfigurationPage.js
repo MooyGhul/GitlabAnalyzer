@@ -20,7 +20,6 @@ import {useParams} from "react-router";
 import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 import moment from 'moment';
-import { AirlineSeatFlatAngled, ContactsOutlined } from "@material-ui/icons";
 
 const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, handleEndDate}) => {
     const classes = useStyles();
