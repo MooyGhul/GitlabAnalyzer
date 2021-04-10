@@ -21,9 +21,9 @@ function UrlToken() {
     const authenticateToken  = async () => {
         showLoader()
         await axios.post(process.env.NODE_ENV === 'development' ?
-
-            `${process.env.REACT_APP_DEVHOST}/project/create?token=${urlToken.token}` :
-            `/project/create?token=${urlToken.token}`);
+            //?token=${urlToken.token}&url=${urlToken.url}
+            `${process.env.REACT_APP_DEVHOST}/api/config/create` :
+            `/api/config/create`, {body: {token:urlToken.token, url: urlToken.url}});
 
         await axios.post(process.env.NODE_ENV === 'development' ?
             `${process.env.REACT_APP_DEVHOST}/project/add?url=${urlToken.url}`:
