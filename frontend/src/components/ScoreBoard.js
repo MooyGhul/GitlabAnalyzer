@@ -97,9 +97,9 @@ const ScoreBoard = (props) => {
     "; Issue word count: " +
     issueWordCount +
     ";";
-    
+  
   const [isCopied, setCopied] = useClipboard(score_summary);
-
+  console.log(isCopied)
   return (
     <Grid container spacing={10} className={classes.scoreboardContainer}>
       <Grid item lg={6} md={6} sm={6} className={classes.cards}>

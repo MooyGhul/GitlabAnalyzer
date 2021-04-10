@@ -11,7 +11,8 @@ import { useGraphStyles } from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
 import { useInnerNavStyle } from "../../style/InnerNavStyle";
 import { formatTableDate, getGraphData } from "../../helper";
-import useProjectNotSelected from "../../components/useProjectNotSelected";
+import useProjectNotSelected from "../../components/useProjectNotSelected"; 
+
 
 const CodeContributionPage = (props) => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
@@ -21,7 +22,7 @@ const CodeContributionPage = (props) => {
   const [project_id, setProjectId] = useState(props.project_id);
   const [member_id, setMemberId] = useState(props.member_id);
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
-  const location = useLocation();
+  const location = useLocation();   
 
   const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
     return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
@@ -178,7 +179,8 @@ const CodeContributionPage = (props) => {
       >
         <Grid item xs={12}>
           <Grid item xs={12}>
-            <Banner memberName={member_id} />
+            <Banner memberName={member_id} type="commentContribution"
+                    />
           </Grid>
         </Grid>
         <Grid
@@ -201,6 +203,7 @@ const CodeContributionPage = (props) => {
               barLabel2={BarChartProperties.codeContribution.labelCommits}
               barColour2={BarChartProperties.codeContribution.barColourCommits}
               maintainRatio={false}
+              
             />
           </Grid>
           <Grid item className={classes.table}>
