@@ -20,7 +20,7 @@ public class Extractor {
     private final String PATH_COMMENTS = "/notes?per_page=100&page=";
     private final String PATH_ISSUES = "issues?per_page=100&page=";
     private final String PATH_COMMITS = "repository/commits?per_page=100&page=" ;
-    private final String PATH_PROJECTS = "/projects?membership=true&per_page=100&page=";
+    private final String PATH_PROJECTS = "projects?membership=true&per_page=100&page=";
 
     public Extractor() {
         this.restTemplate = new RestTemplate();
@@ -118,10 +118,25 @@ public class Extractor {
     }
 
     public List<JSONObject> getBasicProjectInfo(ConfigEntity config) {
-        List<JSONObject> projects = getAPIRequestData(config, PATH_PROJECTS);
-        return projects.stream()
-                .map(obj -> new JSONObject(obj, "id", "name"))
+        List<JSONObject> projects = getAPIProjectListInfo(config, PATH_PROJECTS);
+        List<String> temp = projects.stream()
+                .map(obj -> new JSONObject(obj, "id", "name").toString())
                 .collect(toList());
+        System.out.println("***********extractor\n*****************\n*********************\n" + temp.toString());
+        return temp;
+    }
+
+    private List<JSONObject> getAPIProjectListInfo(ConfigEntity config, String apiPath) {
+        int page = 1;
+        List<JSONObject> data = new ArrayList<>();
+        List<JSONObject> newData = getJsonObjectsList(buildUriProjectList(config, apiPath + page));
+        while(newData.size() > 0) {
+            data.addAll(newData);
+
+            page += 1;
+            newData = getJsonObjectsList(buildUriProjectList(config, apiPath + page));
+        }
+        return data;
     }
 
     public JSONObject getRepoFileTypes(ConfigEntity config, int projectId) {
@@ -138,11 +153,19 @@ public class Extractor {
     }
 
     private URI buildUri(ConfigEntity config, String path) {
-        return URI.create(config.getUrl() + "api/v4/projects/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
+        URI temp = URI.create(config.getUrl() + "/api/v4/projects/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
+        System.out.println("*****************\n**********************\n*******************************\n" + temp.toString());
+        return temp;
     }
 
     private URI buildUri(ConfigEntity config) {
         return URI.create(config.getUrl() + "api/v4/projects?access_token=" + config.getToken());
+    }
+
+    private URI buildUriProjectList(ConfigEntity config, String path) {
+        URI temp = URI.create(config.getUrl() + "/api/v4/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
+        System.out.println("*****************URI\n**********************\n*******************************\n" + temp.toString());
+        return temp;
     }
 
     private List<JSONObject> getJsonObjectsList(URI url) {

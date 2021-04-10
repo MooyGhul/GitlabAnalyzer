@@ -54,9 +54,11 @@ public class ProjectRESTController {
         return this.projectRepository.findAll();
     }
 
-    @GetMapping("/all/projectList")
-    List<JSONObject> getProjectListInfo() {
-        return this.projectManager.getProjectListInfo();
+    @GetMapping("/projectList")
+    Iterable<JSONObject> getProjectListInfo() {
+        List<JSONObject> temp = this.projectManager.getProjectListInfo();
+        System.out.println("***********\n*****************\n*********************PM\n" + temp.toString());
+        return temp;
     }
 
     @GetMapping("/{projectId}")

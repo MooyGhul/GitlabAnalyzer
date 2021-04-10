@@ -96,6 +96,8 @@ public class ProjectManager {
     }
 
     public List<JSONObject> getProjectListInfo() {
-        return this.extractor.getBasicProjectInfo(this.config);
+        List<JSONObject> temp = this.extractor.getBasicProjectInfo(this.config);
+        System.out.println("***********\n*****************\n*********************PM\n" + temp.toString());
+        return temp;
     }
 }
