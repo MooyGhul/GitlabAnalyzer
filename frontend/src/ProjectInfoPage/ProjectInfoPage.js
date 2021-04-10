@@ -38,9 +38,8 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
 
     const loadProject = async () => {
       showLoader()
-      let projectUrl = `/project/${projectId}/load`
-      projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
-      await axios.post(projectUrl).then(hideLoader());
+      let projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
+      await axios.post(projectUrl);
     }
 
     const fetchData = async () => {  
@@ -68,9 +67,13 @@ function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChang
     };  
 
     defined(); 
-    if (!projectLoaded){
-      loadProject();
-      onProjectLoadedStateChange(true);
+    if (!projectLoaded) {
+      showLoader();
+      loadProject().then(() => {
+        hideLoader();
+        fetchData();
+        onProjectLoadedStateChange(true);
+      });
     }
 
     if (projectId!==-1) { 
