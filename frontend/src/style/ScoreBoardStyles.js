@@ -47,8 +47,6 @@ const useStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down("md")]: {
       marginTop: "2vh", 
-    },
-    [theme.breakpoints.down("sm")]: { 
     }, 
     
   },

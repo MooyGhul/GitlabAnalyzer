@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor:"rgb(208,209,253,0.7)",
+    boxShadow: "2px 2px 5px rgb(208,209,253) ", 
     position: "absolute",
     width:"100%",  
     [theme.breakpoints.up("lg")]: {

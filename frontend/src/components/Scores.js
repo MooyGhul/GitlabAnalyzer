@@ -1,35 +1,52 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import Card from "@material-ui/core/Card";
-import { CardContent, Divider } from "@material-ui/core";
-import useStyles from "../style/ScoreStyles"; 
+import { Divider } from "@material-ui/core";
+import useStyles from "../style/ScoreStyles";
 
 const Scores = (props) => {
-  let { mergeRequestCount, commitCount } = props;
-  const classes = useStyles(props); 
+  let {
+    totalMRScore,
+    MRCount,
+    totalCommitScore,
+    commitCount,
+    commentCount,
+    commentWordCount,
+    issueCount,
+    issueWordcount,
+  } = props;
+  const classes = useStyles(props);
 
   return (
-    <Grid container spacing={2}>
-      <Grid item lg={6} md={12} sm={12}>
-        <Card className={classes.card1}>
-          <CardContent>
-            <section className={classes.titles}>
-              <p className={classes.title}>Total Commit</p>
-              <p className={classes.title}>Total MR</p>
-              <p className={classes.title}>Comments</p>
-              <p className={classes.title}>Issues</p>
-            </section>
-            <Divider />
-            <section className={classes.values}>
-              <p>{commitCount ? commitCount : "N/A"}</p>
-              <p>{mergeRequestCount ? mergeRequestCount : "N/A"}</p>
-              <p>{commitCount ? commitCount : "N/A"}</p>
-              <p>{mergeRequestCount ? mergeRequestCount : "N/A"}</p>
-            </section>
-          </CardContent>
-        </Card>
+    <Grid container className={classes.scoreContainer}>
+      <Grid item lg={3} md={3} sm={2} className={classes.score}>
+        <p className={classes.title}>Total Commit</p>
+        <Divider />
+        <p>{commitCount ? commitCount : "N/A"} commits <br></br>{totalCommitScore ? totalCommitScore : "N/A"} points</p>
       </Grid>
- 
+
+      <Grid item lg={3} md={3} sm={2} className={classes.score}>
+        <p className={classes.title}>Total MR</p>
+        <Divider />
+        <p>{MRCount ? MRCount : "N/A"} MRs <br></br>{totalMRScore ? totalMRScore : "N/A"} points</p>
+      </Grid>
+
+      <Grid item lg={3} md={3} sm={2} className={classes.score}>
+        <p className={classes.title}>Comments</p>
+        <Divider />
+        <p>
+          {commentCount ? commentCount : "N/A"} comments <br></br>
+          {commentWordCount ? commentWordCount : "N/A"} words
+        </p>
+      </Grid>
+
+      <Grid item lg={3} md={3} sm={2} className={classes.score}>
+        <p className={classes.title}>Issues</p>
+        <Divider />
+        <p>
+          {issueCount ? issueCount : "N/A"} issues <br></br>
+          {issueWordcount ? issueWordcount : "N/A"} words{" "}
+        </p>
+      </Grid>
     </Grid>
   );
 };

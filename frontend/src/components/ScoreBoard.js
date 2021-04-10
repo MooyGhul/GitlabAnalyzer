@@ -6,18 +6,24 @@ import Button from "@material-ui/core/Button";
 import FileCopyIcon from "@material-ui/icons/FileCopy";
 import SearchIcon from "@material-ui/icons/Search";
 import Scores from "../components/Scores";
-import useStyles from "../style/ScoreBoardStyles"; 
+import useStyles from "../style/ScoreBoardStyles";
 import useClipboard from "react-use-clipboard";
 
-const ScoreBoard = (props) => { 
-  // const score_summary = "Total commit score: " + commitCount + "; Total MR score: " + mergeRequestCount + "; " 
-  // const [isCopied, setCopied] = useClipboard(score_summary);
-  const classes = useStyles(props); 
+const ScoreBoard = (props) => {
+  const classes = useStyles(props);
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
   const [comments, setComments] = useState([]);
   const [issues, setIssues] = useState([]);
   const { project_id, member_id } = useParams();
+  let MRCount = MRs.length;
+  let commitCount = commits.length;
+  let commentCount = comments.length;
+  let issueCount = issues.length;
+  let issueWordCount = 0;
+  let commentWordCount = 0;
+  let totalMRScore = 0;
+  let totalCommitScore = 0;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,9 +32,9 @@ const ScoreBoard = (props) => {
       let commentUrl = `/project/${project_id}/${member_id}/comments`;
       let issueUrl = `/project/${project_id}/${member_id}/issues`;
 
-      if(process.env.NODE_ENV === 'development') {
-        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/merge_requests`
-        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/commits`
+      if (process.env.NODE_ENV === "development") {
+        mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/merge_requests`;
+        commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/commits`;
         commentUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/comments`;
         issueUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/issues`;
       }
@@ -42,51 +48,89 @@ const ScoreBoard = (props) => {
       setComments(commentData.data);
       setIssues(issueData.data);
     };
-    fetchData().then(() => {
-      console.log("Obtained MR and Issue Counts");
-    }).catch(() => {
-      console.log("Failed to get counts");
-    });
-  }, [project_id, member_id]); 
-  
-  console.log("MRS ", MRs)
-  console.log("Commits ", commits)
-  
+    fetchData()
+      .then(() => {
+        console.log("Obtained MR and Issue Counts");
+      })
+      .catch(() => {
+        console.log("Failed to get counts");
+      });
+  }, [project_id, member_id]);
+
+  issues.forEach((issue) => {
+    issueWordCount += issue.wordCount;
+  });
+
+  comments.forEach((comment) => {
+    commentWordCount += comment.wordCount;
+  });
+
+  MRs.forEach((MR) => {
+    totalMRScore += MR.score;
+  });
+
+  commits.forEach((commit) => {
+    totalCommitScore += commit.score;
+  });
+
+  totalMRScore = Math.round(totalMRScore);
+  totalCommitScore = Math.round(totalCommitScore);
+
+  console.log(totalMRScore)
+  console.log(totalCommitScore)
+ 
+  const score_summary =
+    "Total commit score: " +
+    totalCommitScore +
+    "; Total MR score: " +
+    totalMRScore +
+    "; Comment count: " +
+    commentCount +
+    "; Comment Word Count" +
+    commentWordCount +
+    "Issue count: " +
+    issueCount +
+    "; Issue word count: " +
+    issueWordCount +
+    ";";
+  const [isCopied, setCopied] = useClipboard(score_summary);
 
   return (
     <Grid container spacing={10} className={classes.scoreboardContainer}>
-      <Grid item lg={6} md={6} sm={6} className={classes.cards}>       
-
+      <Grid item lg={6} md={6} sm={6} className={classes.cards}>
         <Scores
-          // mergeRequestCount={mergeRequestCount}
-          // commitCount={commitCount}  
-        />         
-        </Grid>
-
-        <Grid item lg={6} md={6} sm={6}>
-          <Grid item className={classes.buttonContainer}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-              >
-                Score Breakdown <SearchIcon className={classes.icon} />
-              </Button>
-              
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button} 
-                // onClick={setCopied}                
-              >
-                
-                Copy Scores <FileCopyIcon className={classes.icon} />
-              </Button>
-            </Grid>
-          </Grid>
+          totalMRScore={totalMRScore}
+          MRCount = {MRCount}
+          totalCommitScore={totalCommitScore}
+          commitCount={commitCount}
+          issueWordCount={issueWordCount}
+          commentWordCount={commentWordCount}
+          issueCount={issueCount}
+          commentCount={commentCount}
+        />
       </Grid>
 
- 
+      <Grid item lg={6} md={6} sm={6}>
+        <Grid item className={classes.buttonContainer}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+          >
+            Score Breakdown <SearchIcon className={classes.icon} />
+          </Button>
+
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            onClick={setCopied}
+          >
+            Copy Scores <FileCopyIcon className={classes.icon} />
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 };
 

@@ -129,8 +129,7 @@ function ProjectInfoPage({
     MRs.forEach((MR) => {
       if (member === MR.author) {
         countMR++;
-      }
-      console.log(MR.score)
+      } 
     });
     MRsArray.push(countMR); 
 
@@ -149,8 +148,6 @@ function ProjectInfoPage({
     });
     issuesArray.push(countIssue);
   });
-
-  console.log(MRs)
   
   return (
     <div>
