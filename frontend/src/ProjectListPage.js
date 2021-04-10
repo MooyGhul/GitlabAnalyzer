@@ -13,9 +13,25 @@ const ProjectListPage = (props) => {
   const classes = useStyles();
   const [loader, showLoader, hideLoader] = useFullPageLoader(); 
 
+  const syncButton = () => {
+    const onSyncButtonClick = () => {
+      
+    }
+
+    return (<Button variant="contained" component="span" size="large">Sync Now</Button>);
+  }
+
   const columns = [
     { field: "id", headerName: "ID", width: 200 },
     { field: "projectName", headerName: "Project Name", width: 400 },
+    { field: "lastSync", headerName: "Last Sync", width: 400},
+    { 
+      field: "syncNow", 
+      headerName: "Sync Now", 
+      width: 400, 
+      renderCell: () => (syncButton()),
+      onCellClick: () => (console.log('test'))
+    },
   ];
 
   const [data, setData] = useState([]);
@@ -43,6 +59,8 @@ const ProjectListPage = (props) => {
     projectIdArray = e.selectionModel;
     return projectIdArray;
   };
+
+  
 
   const buttonClickHandler = (event) => {
     let projectName;
