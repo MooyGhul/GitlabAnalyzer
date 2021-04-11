@@ -145,11 +145,11 @@ public class Extractor {
     }
 
     private URI buildUri(ConfigEntity config, int projectId, String path) {
-        return URI.create(config.getUrl() + "api/v4/projects/" + projectId + "/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
+        return URI.create(config.getUrl() + "/api/v4/projects/" + projectId + "/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
     }
 
     private URI buildUri(ConfigEntity config, int projectId) {
-        return URI.create(config.getUrl() + "api/v4/projects/" + projectId + "?access_token=" + config.getToken());
+        return URI.create(config.getUrl() + "/api/v4/projects/" + projectId + "?access_token=" + config.getToken());
     }
 
     private URI buildUri(ConfigEntity config, String path) {
@@ -159,7 +159,7 @@ public class Extractor {
     }
 
     private URI buildUri(ConfigEntity config) {
-        return URI.create(config.getUrl() + "api/v4/projects?access_token=" + config.getToken());
+        return URI.create(config.getUrl() + "/api/v4/projects?access_token=" + config.getToken());
     }
 
     private URI buildUriProjectList(ConfigEntity config, String path) {
