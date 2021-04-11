@@ -16,6 +16,12 @@ const ProjectListPage = (props) => {
   const classes = useStyles();
   const [loader, showLoader, hideLoader] = useFullPageLoader(); 
 
+  const syncProject = (projectId) => {
+    await axios.post(process.env.NODE_ENV === 'development' ?
+            `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load` :
+            `/project/${projectId}/load`)
+  }
+
   const SyncButton = () => {
     const [snackBar, setSnackBar] = useState(false)
     const handleClick = () => {
@@ -43,7 +49,7 @@ const ProjectListPage = (props) => {
           autoHideDuration={3000}
           message="Sync started"
         />
-        <Button variant="contained" component="span" size="large" onClick={handleClick}>Sync Now</Button>
+        <Button variant="contained" component="span" size="large" color="primary" onClick={handleClick}>Sync Now</Button>
       </React.Fragment>
     );
   }
@@ -55,7 +61,7 @@ const ProjectListPage = (props) => {
     { 
       field: "syncNow", 
       headerName: "Sync Now", 
-      width: 400, 
+      width: 200, 
       renderCell: () => (<SyncButton/>),
     },
   ];
@@ -90,7 +96,7 @@ const ProjectListPage = (props) => {
     return {
       id: json.id,
       projectName: json.name,
-      lastSync: json.lastSync,
+      lastSync: json.lastSync,  
     }
   }
 
