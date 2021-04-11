@@ -20,8 +20,7 @@ import InnerNavBar from "../InnerNavBar";
 import {useInnerNavStyle} from "../../style/InnerNavStyle"
 import ExpandAllBtn from "../ExpandAllBtn"; 
 
-const IssueContributionPage = (props) => {
-    const {startDate, endDate} = props;
+const IssueContributionPage = () => {
     const classes = useStyles();
     const [expandAll, setExpandAll] = React.useState(false);
     const [issues, setIssues] = useState([]); 
@@ -37,7 +36,7 @@ const IssueContributionPage = (props) => {
           : `/project/${project_id}/member/${member_id}/issues`
       );
       setIssues(issueResult.data);
-      const issueCounts = getGraphData(issueResult.data, "openedDate");
+      const issueCounts = getGraphData(issueResult.data, "openedDate", false);
       setGraphData(issueCounts);
     };
     fetchData()
@@ -48,7 +47,7 @@ const IssueContributionPage = (props) => {
         console.log("Failed to obtain issues");
         console.log(e);
       });
-  }, [project_id, member_id, setGraphData, startDate, endDate]);
+  }, [project_id, member_id, setGraphData]);
 
   return (
     <Grid container spacing={5} justify="center" alignItems="center" className={classes.container}>

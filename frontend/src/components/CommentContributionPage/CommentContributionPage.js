@@ -24,7 +24,6 @@ import { useInnerNavStyle } from "../../style/InnerNavStyle";
 import ExpandAllBtn from "../ExpandAllBtn";
 
 const CommentContributionPage = (props) => {
-  const {startDate, endDate} = props;
   const [comments, setComments] = useState([]);
   const [graphData, setGraphData] = useState([]);
   const [expandAll, setExpandAll] = useState(false);
@@ -45,7 +44,7 @@ const CommentContributionPage = (props) => {
           : `/project/${project_id}/member/${member_id}/comments`
       );
       setComments(commentResult.data);
-      const commentCounts = getGraphData(commentResult.data, "commentDate");
+      const commentCounts = getGraphData(commentResult.data, "commentDate", false);
       setGraphData(commentCounts);
     };
     fetchData()
@@ -56,7 +55,7 @@ const CommentContributionPage = (props) => {
         console.log("Failed to obtain comments");
         console.log(e);
       });
-  }, [project_id, member_id, setGraphData, startDate, endDate]);
+  }, [project_id, member_id, setGraphData]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -67,7 +66,7 @@ const CommentContributionPage = (props) => {
     setPage(0);
   };
 
-  return ( 
+  return (
       <Grid container spacing={5} justify="center" alignItems="center" className={classes.container}>
         <Grid item xs={12}>
           <Grid item xs={12}>
@@ -171,7 +170,7 @@ const CommentContributionPage = (props) => {
             </TableContainer>
           </Grid>
         </Grid>
-      </Grid> 
+      </Grid>
   );
 };
 
