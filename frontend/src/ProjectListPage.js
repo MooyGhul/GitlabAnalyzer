@@ -1,27 +1,26 @@
-import {
-  Button,
-  Snackbar,
-} from "@material-ui/core";
-import {useHistory} from "react-router-dom";
-import {DataGrid} from "@material-ui/data-grid";
-import React, {useState, useEffect} from "react";
+import { Button, Snackbar } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
+import { DataGrid } from "@material-ui/data-grid";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./style/projectList.module.css";
-import {useStyles} from "./style/ProjectListPageStyle"; 
+import { useStyles } from "./style/ProjectListPageStyle";
 import useFullPageLoader from "./components/useFullPageLoader";
 
 const ProjectListPage = (props) => {
   const history = useHistory();
   const [errorMsg, setErrorMsg] = useState("");
   const classes = useStyles();
-  const [loader, showLoader, hideLoader] = useFullPageLoader(); 
+  const [loader, showLoader, hideLoader] = useFullPageLoader();
   const [projectIdArray, setProjectIdArray] = useState([]);
 
   const syncProject = async (projectId) => {
-    await axios.post(process.env.NODE_ENV === 'development' ?
-            `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load` :
-            `/project/${projectId}/load`)
-  }
+    await axios.post(
+      process.env.NODE_ENV === "development"
+        ? `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`
+        : `/project/${projectId}/load`
+    );
+  };
 
   const SyncButton = () => {
     const [snackBar, setSnackBar] = useState(false);
@@ -29,16 +28,16 @@ const ProjectListPage = (props) => {
     const handleClick = () => {
       const projectsToSync = projectIdArray;
       setSnackBar(true);
-      Promise.all(projectsToSync.map(projectId => syncProject(projectId)))
-        .then((value) => console.log(value))
-
-    }
+      Promise.all(
+        projectsToSync.map((projectId) => syncProject(projectId))
+      ).then((value) => console.log(value));
+    };
 
     const handleClose = (event, reason) => {
-      if (reason === 'clickaway') {
+      if (reason === "clickaway") {
         return;
       }
-  
+
       setSnackBar(false);
     };
 
@@ -46,27 +45,34 @@ const ProjectListPage = (props) => {
       <React.Fragment>
         <Snackbar
           anchorOrigin={{
-            position: 'absolute',
-            vertical: 'bottom',
-            horizontal: 'left',
+            position: "absolute",
+            vertical: "bottom",
+            horizontal: "left",
           }}
           open={snackBar}
           onClose={handleClose}
           autoHideDuration={3000}
           message="Sync started"
         />
-        <Button variant="contained" color="primary" className={classes.syncButton} onClick={handleClick}>Sync Now</Button>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.syncButton}
+          onClick={handleClick}
+        >
+          Sync Now
+        </Button>
       </React.Fragment>
     );
-  }
+  };
 
   const columns = [
     { field: "id", headerName: "ID", width: 200 },
     { field: "projectName", headerName: "Project Name", width: 400 },
-    { field: "lastSync", headerName: "Last Sync", width: 400},
-    { 
-      field: "syncNow", 
-      headerName: "Sync Now", 
+    { field: "lastSync", headerName: "Last Sync", width: 400 },
+    {
+      field: "syncNow",
+      headerName: "Sync Now",
       width: 200,
     },
   ];
@@ -74,44 +80,61 @@ const ProjectListPage = (props) => {
   const [allProjects, setAllProjects] = useState([]);
   const [savedProjects, setSavedProjects] = useState([]);
   const [rows, setRows] = useState([]);
-  useEffect(() => {
-    showLoader();
-    const fetchData = async () => {
-      const result = await axios.get( process.env.NODE_ENV === 'development' ?
-          `${process.env.REACT_APP_DEVHOST}/project/all/projectList`:
-          "/project/all/projectList");
+  const [fetched, setFetched] = useState(false);
 
-      const resultSavedProjects = await axios.get( process.env.NODE_ENV === 'development' ?
-          `${process.env.REACT_APP_DEVHOST}/project/all`:
-          "/project/all");
+  useEffect(() => {
+    const fetchData = async () => {
+      showLoader();
+      const result = await axios.get(
+        process.env.NODE_ENV === "development"
+          ? `${process.env.REACT_APP_DEVHOST}/project/all/projectList`
+          : "/project/all/projectList"
+      );
+
+      const resultSavedProjects = await axios.get(
+        process.env.NODE_ENV === "development"
+          ? `${process.env.REACT_APP_DEVHOST}/project/all`
+          : "/project/all"
+      );
 
       setAllProjects(result.data);
       setSavedProjects(resultSavedProjects.data);
-      console.log(resultSavedProjects.data);
-      const tempRows = allProjects.map((project) => (deStringProjectResponse(project)));
+      console.log("SAVED PROJECTS: ", resultSavedProjects.data);
+      const tempRows = allProjects.map((project) =>
+        deStringProjectResponse(project)
+      );
       setRows(tempRows);
+      setFetched(true);
     };
-    fetchData().then(() => {
-      hideLoader()
-    });
-  }, [])
-  
+
+    const runFetchData = async () => {
+      if (!fetched) {
+        await fetchData();
+      } else {
+        hideLoader();
+      }
+    };
+    runFetchData();
+    // eslint-disable-next-line
+  }, [rows]);
+
   const deStringProjectResponse = (project) => {
-    const json = JSON.parse(project)
-    console.log(json)
-    const matchingProject = savedProjects.filter(param => (param.repoId === json.id));
-    if(matchingProject[0].lastSync === '1970-01-01T00:00Z') {
-      json['lastSync'] = 'Never';
-    }
-    else {
-      json['lastSync'] = matchingProject[0].lastSync;
+    const json = JSON.parse(project);
+    console.log(json);
+    const matchingProject = savedProjects.filter(
+      (param) => param.repoId === json.id
+    );
+    if (matchingProject[0].lastSync === "1970-01-01T00:00Z") {
+      json["lastSync"] = "Never";
+    } else {
+      json["lastSync"] = matchingProject[0].lastSync;
     }
     return {
       id: json.id,
       projectName: json.name,
-      lastSync: json.lastSync,  
-    }
-  }
+      lastSync: json.lastSync,
+    };
+  };
 
   //const rows = allProjects.map((project) => (deStringProjectResponse(project)));
 
@@ -176,12 +199,11 @@ const ProjectListPage = (props) => {
         className={classes.batchButton}
       >
         Batch Process
-      </Button> 
-      <SyncButton/>
+      </Button>
+      <SyncButton />
       {loader}
     </div>
-  
   );
-}
+};
 
 export default ProjectListPage;
