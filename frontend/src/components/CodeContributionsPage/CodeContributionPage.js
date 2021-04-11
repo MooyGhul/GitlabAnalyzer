@@ -145,29 +145,30 @@ const CodeContributionPage = (props) => {
             <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
           </Grid>
 
-      <Grid className={classes.graph}>
-        <Switch
-          classes={switchStyle}
-          checked={scoreMode}
-          onChange={handleSwitch}
-          name='graphSwitch'
-          />
+          <Grid className={classes.graph}>
+            <Switch
+              classes={switchStyle}
+              checked={scoreMode}
+              onChange={handleSwitch}
+              name='graphSwitch'
+              />
 
-        <BarChart
-          data={graphData}
-          codeContribution={true}
-          barLabel1={BarChartProperties.codeContribution.labelMRs}
-          barColour1={BarChartProperties.codeContribution.barColourMRs}
-          barLabel2={BarChartProperties.codeContribution.labelCommits}
-          barColour2={BarChartProperties.codeContribution.barColourCommits}
-          maintainRatio={false}
-        />
+            <BarChart
+              data={graphData}
+              codeContribution={true}
+              barLabel1={BarChartProperties.codeContribution.labelMRs}
+              barColour1={BarChartProperties.codeContribution.barColourMRs}
+              barLabel2={BarChartProperties.codeContribution.labelCommits}
+              barColour2={BarChartProperties.codeContribution.barColourCommits}
+              maintainRatio={false}
+            />
+          </Grid>
+          <Grid item className={classes.table}>
+            <CodeContributionTable
+              codeContributionRows={codeContributionRows} />
+          </Grid>
+        </Grid>
       </Grid>
-      <Grid item className={classes.table}>
-        <CodeContributionTable
-          codeContributionRows={codeContributionRows} />
-      </Grid>
-    </Grid>
       {noProjectSelected}
     </div>
   );
