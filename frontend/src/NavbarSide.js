@@ -25,7 +25,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import useStyles from "./style/NavbarSideStyle";
 import WeightConfigurationPage from "./components/WeightConfigurationPage/WeightConfigurationPage";
 
-const NavbarSide = (props) => {
+const NavbarSide = () => {
   const classes = useStyles();
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
@@ -60,7 +60,7 @@ const NavbarSide = (props) => {
     setProjectId(newProjectId); 
   }; 
 
-  const handleProjectLoadedChange = (dataLoadedState) => {
+  const handleProjectLoadedChange = () => {
     setProjectLoaded(true);
   }
 
@@ -162,7 +162,9 @@ const NavbarSide = (props) => {
                 <Container>
                   <CodeContributionPage
                     project_id={project_id}
-                    member_id={member_id}  
+                    member_id={member_id}
+                    startDate={startDate}
+                    endDate={endDate}
                   />
                 </Container>
               </Route>
@@ -175,6 +177,8 @@ const NavbarSide = (props) => {
                   <CommentContributionPage
                     project_id={project_id}
                     member_id={member_id}
+                    startDate={startDate}
+                    endDate={endDate}
                   />
                 </Container>
               </Route>
@@ -187,6 +191,8 @@ const NavbarSide = (props) => {
                   <IssueContributionPage
                     project_id={project_id}
                     member_id={member_id}
+                    startDate={startDate}
+                    endDate={endDate}
                   />
                 </Container>
               </Route>

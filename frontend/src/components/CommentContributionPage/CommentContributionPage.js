@@ -24,13 +24,14 @@ import {useInnerNavStyle} from '../../style/InnerNavStyle'
 import ExpandAllBtn from "../ExpandAllBtn";
 
 const CommentContributionPage = (props) => {
+  const {startDate, endDate} = props;
   const [comments, setComments] = useState([]);
   const [graphData, setGraphData] = useState([]);
   const [expandAll, setExpandAll] = useState(false);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
 
-    const {project_id, member_id} = useParams();
+  const {project_id, member_id} = useParams();
 
   const classes = useStyles(props);
   const innerNavStyle = useInnerNavStyle();
@@ -43,8 +44,8 @@ const CommentContributionPage = (props) => {
                     `/project/${project_id}/member/${member_id}/comments`
             );
             setComments(commentResult.data);
-            console.log(commentResult.data);
-            const commentCounts = getGraphData(commentResult.data, "commentDate");
+            console.log(commentResult.data)
+            const commentCounts = getGraphData(commentResult.data, "commentDate", startDate, endDate);
             setGraphData(commentCounts);
         };
         fetchData().then(() => {
@@ -53,7 +54,7 @@ const CommentContributionPage = (props) => {
             console.log("Failed to obtain comments");
             console.log(e);
         });
-    }, [project_id, member_id, setGraphData]);
+    }, [project_id, member_id, setGraphData, startDate, endDate]);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);

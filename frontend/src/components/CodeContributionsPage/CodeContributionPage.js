@@ -14,6 +14,7 @@ import { formatTableDate, getGraphData } from "../../helper";
 import useProjectNotSelected from "../../components/useProjectNotSelected";
 
 const CodeContributionPage = (props) => {
+  const {startDate, endDate} = props;
   const [codeContributionRows, setCodeContributionRows] = useState([]);
   const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
@@ -62,10 +63,10 @@ const CodeContributionPage = (props) => {
       let commitCountsData = [];
       let mrCountsData = [];
 
-      formatData(mrData, mrArray, commitData, commitArray);
+      formatData(mrData, mrArray, commitData);
 
-      const commitCounts = getGraphData(commitData, "commitDate");
-      const mrCounts = getGraphData(mrData, "mergedAt");
+      const commitCounts = getGraphData(commitData, "commitDate", startDate, endDate);
+      const mrCounts = getGraphData(mrData, "mergedAt", startDate, endDate);
       for(let i = 0; i < commitCounts.length; i++) {
         commitCountsData.push(createGraphData(commitCounts[i].year, 0, commitCounts[i].data));
       }
@@ -86,7 +87,7 @@ const CodeContributionPage = (props) => {
       setCodeContributionRows(ccArray);
     };
 
-    const formatData = (mrData, mrArray, commitData, commitArray) => {
+    const formatData = (mrData, mrArray, commitData) => {
       for(let mrDataIndex = 0; mrDataIndex < mrData.length; mrDataIndex++) {
         const relatedCommitIds = commitData.filter(val => {
           return mrData[mrDataIndex].commitIds.includes(val.commitId);
