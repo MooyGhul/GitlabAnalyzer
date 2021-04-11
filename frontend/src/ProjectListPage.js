@@ -118,6 +118,11 @@ const ProjectListPage = (props) => {
     // eslint-disable-next-line
   }, [rows]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}` 
+  }
+
   const deStringProjectResponse = (project) => {
     const json = JSON.parse(project);
     console.log(json);
@@ -127,7 +132,7 @@ const ProjectListPage = (props) => {
     if (matchingProject[0].lastSync === "1970-01-01T00:00Z") {
       json["lastSync"] = "Never";
     } else {
-      json["lastSync"] = matchingProject[0].lastSync;
+      json["lastSync"] = formatDate(matchingProject[0].lastSync);
     }
     return {
       id: json.id,
