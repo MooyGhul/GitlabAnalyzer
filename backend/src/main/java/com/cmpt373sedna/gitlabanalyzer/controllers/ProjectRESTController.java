@@ -76,6 +76,7 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(projectController.getIssuesEntities());
         this.commentEntityRepository.saveAll(projectController.getComments());
         this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
+        this.projectRepository.updateLastSync(projectId, ProjectEntity.getCurrentTime());
     }
 
 
