@@ -16,10 +16,10 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class Extractor {
     private final RestTemplate restTemplate;
-    private final String PATH_MERGE_REQUEST = "merge_requests?per_page=100&target_branch=master&page=";
-    private final String PATH_COMMENTS = "/notes?per_page=100&page=";
-    private final String PATH_ISSUES = "issues?per_page=100&page=";
-    private final String PATH_COMMITS = "repository/commits?per_page=100&page=" ;
+    private final String PATH_MERGE_REQUEST = "merge_requests?per_page=100&target_branch=master&created_after=%s&updated_after=%s&page=%s";
+    private final String PATH_COMMENTS = "/notes?per_page=100&created_after=%s&updated_after=%s&page=%s";
+    private final String PATH_ISSUES = "issues?per_page=100&created_after=%s&updated_after=%s&page=%s";
+    private final String PATH_COMMITS = "repository/commits?per_page=100&since=%s&page=%s";
     private final String PATH_PROJECTS = "projects?membership=true&per_page=100&page=";
 
     public Extractor() {
@@ -46,17 +46,29 @@ public class Extractor {
                 .build();
     }
 
-    private List<JSONObject> getAPIRequestData(ConfigEntity config, int projectId, String apiPath) {
+    private List<JSONObject> getAPIRequestData(ConfigEntity config, int projectId, String lastSync, String apiPath) {
         int page = 1;
         List<JSONObject> data = new ArrayList<>();
-        List<JSONObject> newData = getJsonObjectsList(buildUri(config, projectId, apiPath + page));
+        String fullPath = buildApiPath(apiPath, lastSync, page);
+        System.out.println("***********fullpath\n*****************\n*********************\n" + fullPath);
+        List<JSONObject> newData = getJsonObjectsList(buildUri(config, projectId, fullPath));
         while(newData.size() > 0) {
             data.addAll(newData);
 
             page += 1;
-            newData = getJsonObjectsList(buildUri(config, projectId, apiPath + page));
+            fullPath = buildApiPath(apiPath, lastSync, page);
+            newData = getJsonObjectsList(buildUri(config, projectId, fullPath));
         }
         return data;
+    }
+
+    private String buildApiPath(String apiPath, String lastSync, int page) {
+        if (apiPath == PATH_COMMITS) {
+            return String.format(apiPath, lastSync, page);
+        }
+        else {
+            return String.format(apiPath, lastSync, lastSync, page);
+        }
     }
 
     private List<JSONObject> getAPIRequestData(ConfigEntity config, String apiPath) {
@@ -72,8 +84,8 @@ public class Extractor {
         return data;
     }
 
-    public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId) {
-        List<JSONObject> mr = getAPIRequestData(config, projectId, PATH_MERGE_REQUEST);
+    public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId, String lastSync) {
+        List<JSONObject> mr = getAPIRequestData(config, projectId, lastSync, PATH_MERGE_REQUEST);
 
         for(JSONObject mrs : mr){
             List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId,"merge_requests/" + mrs.getInt("iid") + "/commits"));
@@ -89,18 +101,18 @@ public class Extractor {
         return mr;
     }
 
-    public List<JSONObject> getComments(ConfigEntity config, int projectId, String path) {
-        List<JSONObject> comments = getAPIRequestData(config, projectId, path + PATH_COMMENTS);
+    public List<JSONObject> getComments(ConfigEntity config, int projectId, String path, String lastSync) {
+        List<JSONObject> comments = getAPIRequestData(config, projectId, lastSync, path + PATH_COMMENTS);
         return filterJSONComments(comments);
     }
 
-    public List<JSONObject> getIssues(ConfigEntity config, int projectId) {
-        List<JSONObject> issues = getAPIRequestData(config, projectId, PATH_ISSUES);
+    public List<JSONObject> getIssues(ConfigEntity config, int projectId, String lastSync) {
+        List<JSONObject> issues = getAPIRequestData(config, projectId, lastSync, PATH_ISSUES);
         return issues;
     }
 
-    public List<JSONObject> getCommits(ConfigEntity config, int projectId) {
-        List<JSONObject> commits = getAPIRequestData(config, projectId, PATH_COMMITS);
+    public List<JSONObject> getCommits(ConfigEntity config, int projectId, String lastSync) {
+        List<JSONObject> commits = getAPIRequestData(config, projectId, lastSync, PATH_COMMITS);
 
         for(int i=0;i<commits.size();i++){
             List<JSONObject> l = getJsonObjectsList(buildUri(config, projectId, "repository/commits/"+ commits.get(i).getString("id") + "/diff"));
