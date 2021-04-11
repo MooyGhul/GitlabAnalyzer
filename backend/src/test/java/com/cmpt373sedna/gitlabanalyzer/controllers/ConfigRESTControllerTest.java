@@ -37,7 +37,7 @@ class ConfigRESTControllerTest {
 
     @Test
     void canCreateConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().name("test0").build();
+        ConfigEntity configEntity = ConfigEntity.builder().build();
 
         configRESTController.create(configEntity);
 
@@ -47,8 +47,8 @@ class ConfigRESTControllerTest {
     @Test
     void canGetAllConfigs() {
         List<ConfigEntity> configs = asList(
-                ConfigEntity.builder().name("test1").build(),
-                ConfigEntity.builder().name("test2").build()
+                ConfigEntity.builder().build(),
+                ConfigEntity.builder().build()
         );
 
         when(configEntityRepository.findAll()).thenReturn(configs);
@@ -57,29 +57,11 @@ class ConfigRESTControllerTest {
     }
 
     @Test
-    void canReplaceConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
-
-        configRESTController.replace("configId", configEntity);
-
-        verify(configEntityRepository, times(1)).save(configEntity);
-    }
-
-    @Test
-    void canGetConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
-
-        when(configEntityRepository.findById("configId")).thenReturn(Optional.of(configEntity));
-
-        assertEquals(configEntity, configRESTController.get("configId"));
-    }
-
-    @Test
     void canLoadConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
+        ConfigEntity configEntity = ConfigEntity.builder().url("configId").token("test0").build();
         ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).build();
 
-        when(configEntityRepository.findById("configId")).thenReturn(Optional.of(configEntity));
+        when(configEntityRepository.findByToken("configId")).thenReturn(Optional.of(configEntity));
         when(extractor.getProjects(configEntity)).thenReturn(Collections.singletonList(projectEntity));
         when(projectEntityRepository.save(projectEntity)).thenReturn(projectEntity);
 
