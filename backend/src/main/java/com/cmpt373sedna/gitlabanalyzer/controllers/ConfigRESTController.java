@@ -34,7 +34,7 @@ public class ConfigRESTController {
         return this.configEntityRepository.save(body);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public Iterable<ConfigEntity> getAll() {
         return this.configEntityRepository.findAll();
     }
