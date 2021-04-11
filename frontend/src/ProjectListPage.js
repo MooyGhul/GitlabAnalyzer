@@ -168,7 +168,7 @@ const ProjectListPage = (props) => {
         }
       });
 
-      if (projectLastSync == "Never") {
+      if (projectLastSync === "Never") {
         setErrorMsg("You must sync this project first!");
       }
       else {
