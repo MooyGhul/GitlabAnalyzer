@@ -65,7 +65,6 @@ const ProjectListPage = (props) => {
       field: "syncNow", 
       headerName: "Sync Now", 
       width: 200,
-      //renderCell: () => (<SyncButton/>),
     },
   ];
 
@@ -104,12 +103,8 @@ const ProjectListPage = (props) => {
 
   const rows = allProjects.map((project) => (deStringProjectResponse(project)));
 
-  //let projectIdArray = [];
-
   const getValue = (e) => {
     setProjectIdArray(e.selectionModel);
-    //projectIdArray = e.selectionModel;
-    //return projectIdArray;
   };
 
   const buttonClickHandler = (event) => {
@@ -170,7 +165,7 @@ const ProjectListPage = (props) => {
       >
         Batch Process
       </Button> 
-      <SyncButton />
+      <SyncButton/>
       {loader}
     </div>
   
