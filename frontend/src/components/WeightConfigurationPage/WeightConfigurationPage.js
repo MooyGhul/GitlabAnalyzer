@@ -25,10 +25,14 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
-    const [iterDates, setIterDates] = useState(mockIterationsDates);
-    const [iterationName, setIterationName] = useState('new Iteration');
     // const [iterDates, setIterDates] = useState([]);
-    const [flag, setFlag] = useState(0);
+    const [iterDates, setIterDates] = useState([]);
+    const [iterationName, setIterationName] = useState('new Iteration');
+
+
+    let [listOfDeletedIterIds,AddTolistOfDeletedIterIds] = useState([]);
+    const [clearlistOfDeletedIterIds] = useState(listOfDeletedIterIds);
+    const [refreshFlag, setRefreshFlag] = useState(false);
     
     const defaultFileWeight = 1;
     const defaultCommitMRWeight = 1;
@@ -42,18 +46,25 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
         "Syntax": defaultMinorCodeChangeWeight,
     }
 
-    // useEffect(() => {
-    //   const fetchIterationsDates  = async () => {
-    //     console.log("----START----");
-    //     let iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
-    //           `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
-    //           `configuration/iterations/all`);
-    //     console.log("----iterationsDates----");
-    //     console.log(iterationsDates.data);
-    //     setIterDates(iterationsDates.data);
-    //   }
-    //   fetchIterationsDates();
-    // }, []);
+    const saveDeleteToBackend = () => {
+      console.log("listOfDeletedIterIds AFTER:");
+      console.log(listOfDeletedIterIds);
+    }
+
+    const refreshHandler = () => {
+      setRefreshFlag(!refreshFlag);
+    }
+
+    useEffect(() => {
+      const fetchIterationsDates  = async () => {
+        const tmpIterDate = await axios.get(process.env.NODE_ENV === 'development' ?
+        `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
+        `configuration/iterations/all`);
+        setIterDates(tmpIterDate.data);
+      }
+      fetchIterationsDates();
+    // eslint-disable-next-line
+    }, [refreshFlag]);
 
     const saveIterationConfiguration  = async () => {
       await axios.post(process.env.NODE_ENV === 'development' ?
@@ -69,10 +80,6 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
       ).catch((error) => {
           console.log(error.response.status);
       });
-
-      // Leave them for now, I am going to need them in my next MR soon
-      setFlag(flag+1);
-      console.log(flag);
 
       // Leave them for now, I am going to need them in my next MR soon
       const iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
@@ -131,9 +138,26 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
         );
     }
 
-    const DeleteRow = (rowName) => {
-        let filteredIterations = iterDates.filter(iterDate => iterDate.iterationName !== rowName);
+    const DeleteRow = (rowID) => {
+        // console.log("ROWs before DELETE")
+        // console.log(iterDates);
+        // console.log("DELETE ROW ID:")
+        // console.log(rowID);
+
+        let filteredIterations = iterDates.filter(iterDate => iterDate.id !== rowID);
         setIterDates(filteredIterations);
+        console.log("filteredIterations:");
+        console.log(filteredIterations);
+
+        console.log("listOfDeletedIterIds BEFORE:");
+        console.log(listOfDeletedIterIds);
+        // let tempArr = listOfDeletedIterIds;
+        // tempArr = tempArr.push(rowID);
+        // console.log("tempArr:");
+        // console.log(tempArr);
+        AddTolistOfDeletedIterIds(listOfDeletedIterIds => [...listOfDeletedIterIds,rowID]);
+        // console.log("listOfDeletedIterIds AFTER:");
+        // console.log(listOfDeletedIterIds);
     }
 
     const createTextFieldsForProjectWeights = () => {
@@ -187,10 +211,13 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                     </Table>
                 </TableContainer>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={10} spacing={5}>
                 <Grid container justify="flex-end" direction="row">
-                    <Grid item xs={1}>
-                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save Change</Button>
+                    <Grid item xs={2}>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Refresh</Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={saveDeleteToBackend}>Save Change</Button>
                     </Grid>
                 </Grid>
             </Grid>
