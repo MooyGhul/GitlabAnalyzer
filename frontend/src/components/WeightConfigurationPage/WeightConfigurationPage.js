@@ -17,13 +17,19 @@ import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
 import axios from "axios";
 import {useParams} from "react-router";
+import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
+import moment from 'moment';
 
-const WeightConfigurationPage = () => {
+const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, handleEndDate}) => {
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
     const [iterDates, setIterDates] = useState(mockIterationsDates);
+    const [iterationName, setIterationName] = useState('new Iteration');
+    // const [iterDates, setIterDates] = useState([]);
+    const [flag, setFlag] = useState(0);
+    
     const defaultFileWeight = 1;
     const defaultCommitMRWeight = 1;
     const defaultLineOfCodeWeight = 1.2; 
@@ -34,6 +40,46 @@ const WeightConfigurationPage = () => {
         "Line": defaultLineOfCodeWeight,
         "Deleted": defaultMinorCodeChangeWeight,
         "Syntax": defaultMinorCodeChangeWeight,
+    }
+
+    // useEffect(() => {
+    //   const fetchIterationsDates  = async () => {
+    //     console.log("----START----");
+    //     let iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
+    //           `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` :
+    //           `configuration/iterations/all`);
+    //     console.log("----iterationsDates----");
+    //     console.log(iterationsDates.data);
+    //     setIterDates(iterationsDates.data);
+    //   }
+    //   fetchIterationsDates();
+    // }, []);
+
+    const saveIterationConfiguration  = async () => {
+      await axios.post(process.env.NODE_ENV === 'development' ?
+
+            `${process.env.REACT_APP_DEVHOST}/configuration/newIterationConfig` :
+            `/configuration/newIterationConfig`,
+          {
+            token: `${token}`,
+            iterationName: `${iterationName}`,
+            startDate:`${moment(startDate).format()}`,
+            endDate:`${moment(endDate).format()}`
+          }
+      ).catch((error) => {
+          console.log(error.response.status);
+      });
+
+      // Leave them for now, I am going to need them in my next MR soon
+      setFlag(flag+1);
+      console.log(flag);
+
+      // Leave them for now, I am going to need them in my next MR soon
+      const iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
+              `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` : `configuration/iterations/all`);
+
+      console.log("iterationsDates :");
+      console.log(iterationsDates);
     }
 
     useEffect(() => {
@@ -55,8 +101,12 @@ const WeightConfigurationPage = () => {
             console.log("Failed to obtain languages");
             console.log(e);
         });
-          
+    // eslint-disable-next-line
     }, [project_id, setFileType]);
+
+    const getIterationNameFromTextField = (e) => {
+      setIterationName(e.target.value);
+    }
 
     const getValueFromTextField = (e) => {
         const textFieldId = e.target.id;
@@ -111,10 +161,13 @@ const WeightConfigurationPage = () => {
                 <Divider className={classes.divider} orientation='horizontal'/>
             </Grid>
             <Grid item xs={3}>
-                <Typography className={classes.pageTitle}>Insert date picker</Typography>
+                <form className={classes.textField} noValidate autoComplete="off">
+                    <TextField id="IterationName" label="Iteration Name" variant="outlined" onChange={getIterationNameFromTextField}/>
+                </form>
+                <Calendar startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>
-                        <Button variant="contained" component="span" className={classes.addIterationButton} size="large">+ Add Iteration</Button>
+                        <Button variant="contained" component="span" className={classes.addIterationButton} size="large" onClick={saveIterationConfiguration}>+ Add Iteration</Button>
                     </Grid>
                 </Grid>
             </Grid>
@@ -137,7 +190,7 @@ const WeightConfigurationPage = () => {
             <Grid item xs={10}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={1}>
-                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save</Button>
+                        <Button variant="contained" component="span" className={classes.saveButton} size="large">Save Change</Button>
                     </Grid>
                 </Grid>
             </Grid>
