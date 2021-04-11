@@ -11,7 +11,8 @@ import { useGraphStyles } from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
 import { useInnerNavStyle } from "../../style/InnerNavStyle";
 import { formatTableDate, getGraphData } from "../../helper";
-import useProjectNotSelected from "../../components/useProjectNotSelected";
+import useProjectNotSelected from "../../components/useProjectNotSelected"; 
+
 
 const CodeContributionPage = (props) => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
@@ -21,7 +22,7 @@ const CodeContributionPage = (props) => {
   const [project_id, setProjectId] = useState(props.project_id);
   const [member_id, setMemberId] = useState(props.member_id);
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
-  const location = useLocation();
+  const location = useLocation();   
 
   const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
     return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
@@ -34,9 +35,8 @@ const CodeContributionPage = (props) => {
   const createGraphData = (year, MRDaily, CommitDaily) => {
     return { year, MRDaily, CommitDaily };
   };
-
   useEffect(() => {
-    const defined = () => {
+    const setProjectIdAndMemberId = () => {
       if (project_id === -1) {
         showErrorPage();
       }
@@ -154,7 +154,7 @@ const CodeContributionPage = (props) => {
 
       codeContributionData(commitData, mrData);
     };
-    defined();
+    setProjectIdAndMemberId();
 
     if (member_id !== -1) {
       fetchData()
@@ -179,26 +179,38 @@ const CodeContributionPage = (props) => {
       >
         <Grid item xs={12}>
           <Grid item xs={12}>
-            <Banner memberName={member_id} />
+            <Banner memberName={member_id} type="codecontribution"
+                    />
           </Grid>
         </Grid>
-        <Grid item xs={12} align="center">
-          <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
-        </Grid>
+        <Grid
+          container
+          spacing={5}
+          justify="center"
+          alignItems="center"
+          className={classes.contents}
+        >
+          <Grid item xs={12} align="center">
+            <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
+          </Grid>
 
-        <Grid className={classes.graph}>
-          <BarChart
-            data={graphData}
-            codeContribution={true}
-            barLabel1={BarChartProperties.codeContribution.labelMRs}
-            barColour1={BarChartProperties.codeContribution.barColourMRs}
-            barLabel2={BarChartProperties.codeContribution.labelCommits}
-            barColour2={BarChartProperties.codeContribution.barColourCommits}
-            maintainRatio={false}
-          />
-        </Grid>
-        <Grid item className={classes.table}>
-          <CodeContributionTable codeContributionRows={codeContributionRows} />
+          <Grid className={classes.graph}>
+            <BarChart
+              data={graphData}
+              codeContribution={true}
+              barLabel1={BarChartProperties.codeContribution.labelMRs}
+              barColour1={BarChartProperties.codeContribution.barColourMRs}
+              barLabel2={BarChartProperties.codeContribution.labelCommits}
+              barColour2={BarChartProperties.codeContribution.barColourCommits}
+              maintainRatio={false}
+              
+            />
+          </Grid>
+          <Grid item className={classes.table}>
+            <CodeContributionTable
+              codeContributionRows={codeContributionRows}
+            />
+          </Grid>
         </Grid>
       </Grid>
       {noProjectSelected}
