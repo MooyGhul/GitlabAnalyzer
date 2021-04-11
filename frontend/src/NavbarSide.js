@@ -24,16 +24,33 @@ import GitHubIcon from "@material-ui/icons/GitHub";
 import MenuIcon from "@material-ui/icons/Menu";
 import useStyles from "./style/NavbarSideStyle";
 import ScoreBreakdown from "./components/ScoreBreakdown/ScoreBreakdown";
+import WeightConfigurationPage from "./components/WeightConfigurationPage/WeightConfigurationPage";
 
 const NavbarSide = () => {
   const classes = useStyles();
   const [member_id, setMemberId] = useState(-1);
   const [project_id, setProjectId] = useState(-1);
+  const [token, setToken] = useState();
   const [sidebar, setSidebar] = useState(false); 
   const [projectLoaded, setProjectLoaded] = useState(false);
 
+  const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
+  const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+
+  const handleStartDate = (newDate) => {
+    setStartDate(newDate)
+  };
+
+  const handleEndDate = (newDate) => {
+    setEndDate(newDate)
+  };
+
   const toggle = () => {
     setSidebar(!sidebar); 
+  };
+
+  const handleTokenAccess = (newToken) => {
+    setToken(newToken);  
   };
 
   const handleMemberIDChange = (newMemberId) => {
@@ -80,8 +97,7 @@ const NavbarSide = () => {
                   </ListItem>
                 </Link>
 
-                <Link className={classes.link}
-                 to={{pathname: "/projectInfo/:project_id"}}>
+                <Link className={classes.link} to={{pathname: "/projectInfo/:project_id"}}>
                   <ListItem button>
                     <ListItemIcon className={classes.link}>
                       <BarChartIcon />
@@ -102,7 +118,7 @@ const NavbarSide = () => {
                   </ListItem>
                 </Link>
 
-                <Link to="/Configurations" className={classes.link}>
+                <Link to="/Settings" className={classes.link}>
                   <ListItem button>
                     <ListItemIcon className={classes.link}>
                       <SettingsIcon />
@@ -118,7 +134,7 @@ const NavbarSide = () => {
             <Switch>
               <Route exact path="/token">
                 <Container>
-                  <UrlToken 
+                  <UrlToken handleTokenAccess={handleTokenAccess}
                   />
                 </Container>
               </Route>
@@ -187,9 +203,8 @@ const NavbarSide = () => {
                   />
                 </Container>
               </Route>
-
-              <Route exact path="/Configurations">
-                <Container>Configurations</Container>
+              <Route exact path="/Settings">
+                <Container><WeightConfigurationPage token={token} startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/></Container>
               </Route>
             </Switch>
           </Container>

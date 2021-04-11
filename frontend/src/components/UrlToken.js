@@ -9,7 +9,7 @@ import {useStyles} from '../style/UrlTokenStyle'
 import {Grid} from "@material-ui/core";
 import useFullPageLoader from "./useFullPageLoader"; 
 
-function UrlToken() {
+function UrlToken({handleTokenAccess}) {
 
     const history = useHistory();
     const [urlToken, setUrlToken] = useState({url: '', token:''});
@@ -52,6 +52,9 @@ function UrlToken() {
           });
       };
 
+    const setTokenForRootComponent = () => {
+      handleTokenAccess(urlToken.token);
+    }
 
     const loadWithConfigId = async () => {
         const configID = await createConfigID(urlToken.url, urlToken.token); 
@@ -59,20 +62,18 @@ function UrlToken() {
       };   
     
 
-      const addLoginToken = () => { 
-        const data = new URLSearchParams(window.location.search);
-        setLoginToken(data.get("ticket")); 
-        console.log(loginToken)
-      };
-    
+    const addLoginToken = () => { 
+      const data = new URLSearchParams(window.location.search);
+      setLoginToken(data.get("ticket")); 
+      console.log(loginToken)
+    };
 
       const nextHandler = (event) => {
         event.preventDefault();
         addLoginToken();
         loadWithConfigId();
       };
-          
-     
+
     const classes = useStyles();
 
     return(
@@ -92,7 +93,7 @@ function UrlToken() {
                 <TextField id='token' classes={{root: classes.customTextField}} label='Server Token'  value={urlToken.token}
                         onChange={e=> setUrlToken({...urlToken, token: e.target.value})}/>
 
-                <Button id='create-config' classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary'>Next</Button>
+                <Button id='create-config' classes={{root: classes.customButton}} variant='contained'  type ='submit' color='secondary' onClick={setTokenForRootComponent}>Next</Button>
             </form>
             </Box>
         </Grid> 
