@@ -16,13 +16,14 @@ const ProjectListPage = (props) => {
   const classes = useStyles();
   const [loader, showLoader, hideLoader] = useFullPageLoader(); 
 
-  const syncProject = (projectId) => {
+  const syncProject = async (projectId) => {
     await axios.post(process.env.NODE_ENV === 'development' ?
             `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load` :
             `/project/${projectId}/load`)
   }
 
-  const SyncButton = () => {
+  const SyncButton = (projectId) => {
+    console.log(projectId)
     const [snackBar, setSnackBar] = useState(false)
     const handleClick = () => {
       setSnackBar(true);
@@ -61,8 +62,23 @@ const ProjectListPage = (props) => {
     { 
       field: "syncNow", 
       headerName: "Sync Now", 
-      width: 200, 
-      renderCell: () => (<SyncButton/>),
+      width: 200,
+      renderCell: (params) => {
+        const thisRow = {};
+        const onClick = () => {
+          const api = params.api;
+          const fields = api
+            .getAllColumns()
+            .map((c) => c.field)
+            .filter((c) => c !== "__check__" && !!c);
+
+          fields.forEach((f) => {
+            thisRow[f] = params.getValue(f);
+          });
+        }
+        return <SyncButton onClick={onClick} projectId={thisRow.id}/>
+      }
+      //renderCell: () => (<SyncButton/>),
     },
   ];
 
