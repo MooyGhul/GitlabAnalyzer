@@ -15,18 +15,40 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justify: "space-between",
   },
-  button: {
-    margin: "5px",
-    height: "5vh",
-    width: "23vh",
+  button: {   
     display: "flex",
     justifyContent: "space-evenly",
+    [theme.breakpoints.up("lg")]: {
+      margin: "5px",
+      fontSize: "13px",
+      height: "5vh",
+      width: "23vh",
+    },
+    [theme.breakpoints.down("md")]: {
+      margin:'2px',
+      fontSize: "10px",
+      height: "3vh",
+      width: "23vh",
+      
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "7px",
+      margin:'1px',
+    },
   },
-  cards: {
-    marginTop: "4vh",
+  buttonContainer: {
+    marginLeft: "5vw",
   },
-  icon: {
-    background: "none",
+
+  scoreboardContainer: {
+    width: "100%",
+    [theme.breakpoints.up("lg")]: { 
+      marginTop: "5vh", 
+    },
+    [theme.breakpoints.down("md")]: {
+      marginTop: "2vh", 
+    }, 
+    
   },
 }));
 

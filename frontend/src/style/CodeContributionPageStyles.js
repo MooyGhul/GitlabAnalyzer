@@ -1,10 +1,23 @@
 import {makeStyles} from "@material-ui/core/styles";
 
-export const useGraphStyles = makeStyles({
+export const useGraphStyles = makeStyles((theme) => ({
   graph: {
     width: "60vw",
     height: "30vh",
     margin: "20px 0 20px 0",
+  },
+
+  contents:{ 
+    width:"100%",  
+    [theme.breakpoints.up("lg")]: {
+      marginTop: "30vh", 
+    },
+    [theme.breakpoints.down("md")]: {
+      marginTop: "25vh", 
+    },
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "20vh", 
+    }, 
   },
 
   table: {
@@ -14,10 +27,11 @@ export const useGraphStyles = makeStyles({
 
   container:{
     position: "absolute",
-    top:"0",
-    left:"0"
+    top:"2vh",
+    left:"0", 
+    width:"100%", 
   }
-});
+}));
 
 export const useTableStyles = makeStyles({
   banner: {
@@ -59,6 +73,7 @@ export const useRowStyles = makeStyles({
   dropDownIcon: {
     background: "white",
   },
+
 });
 
 export const useDropdownStyles = makeStyles({

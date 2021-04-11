@@ -20,6 +20,7 @@ const BarChart = ({data,codeContribution, barLabel1, barColour1, barLabel2, barC
                 {
                     ticks: {
                     beginAtZero: true,
+                        stepSize: 1,
                   },
                 },
               ],

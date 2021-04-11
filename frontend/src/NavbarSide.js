@@ -32,6 +32,8 @@ const NavbarSide = () => {
   const [token, setToken] = useState();
   const [sidebar, setSidebar] = useState(false); 
   const [projectLoaded, setProjectLoaded] = useState(false);
+  const [previousProjectId, setPreviousProjectId] = useState(-1);
+  const [dataFetched, setDataFetched] = useState(false);
 
   const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
   const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
@@ -60,8 +62,17 @@ const NavbarSide = () => {
     setProjectId(newProjectId); 
   }; 
 
-  const handleProjectLoadedChange = () => {
-    setProjectLoaded(true);
+
+  const handleProjectLoadedChange = (state) => {
+    setProjectLoaded(state);
+  }
+
+  const handleNewProjectLoaded = (newProjectId) => {
+    setPreviousProjectId(newProjectId);
+  }
+
+  const handleDataFetched = (state)=>{
+    setDataFetched(state);
   }
 
   return (
@@ -149,7 +160,11 @@ const NavbarSide = () => {
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
                     onProjectLoadedStateChange={handleProjectLoadedChange}
-                    dataLoaded={projectLoaded}
+                    onDataFetched={handleDataFetched}
+                    dataFetched={dataFetched}
+                    onNewProjectLoaded = {handleNewProjectLoaded}
+                    previousProjectId = {previousProjectId}
+                    projectLoaded={projectLoaded}
                     project_id={project_id} 
                   />
                 </Grid>
