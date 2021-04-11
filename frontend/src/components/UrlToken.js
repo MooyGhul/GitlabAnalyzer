@@ -29,8 +29,8 @@ function UrlToken() {
             `/api/config/create`, json)
         .then(async (response) => {
             return await axios.post(process.env.NODE_ENV === 'development' ?
-                `${process.env.REACT_APP_DEVHOST}/api/config/${response.data.id}/load` :
-                `/api/config/${response.data.id}/load`);
+                `${process.env.REACT_APP_DEVHOST}/api/config/${response.data.token}/load` :
+                `/api/config/${response.data.token}/load`);
         })
         .then(response => {
             hideLoader();
