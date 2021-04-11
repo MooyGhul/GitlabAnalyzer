@@ -61,28 +61,6 @@ public class Extractor {
         return data;
     }
 
-    private String buildApiPath(String apiPath, String lastSync, int page) {
-        if (apiPath == PATH_COMMITS) {
-            return String.format(apiPath, lastSync, page);
-        }
-        else {
-            return String.format(apiPath, lastSync, lastSync, page);
-        }
-    }
-
-    private List<JSONObject> getAPIRequestData(ConfigEntity config, String apiPath) {
-        int page = 1;
-        List<JSONObject> data = new ArrayList<>();
-        List<JSONObject> newData = getJsonObjectsList(buildUri(config, apiPath + page));
-        while(newData.size() > 0) {
-            data.addAll(newData);
-
-            page += 1;
-            newData = getJsonObjectsList(buildUri(config, apiPath + page));
-        }
-        return data;
-    }
-
     public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId, String lastSync) {
         List<JSONObject> mr = getAPIRequestData(config, projectId, lastSync, PATH_MERGE_REQUEST);
 

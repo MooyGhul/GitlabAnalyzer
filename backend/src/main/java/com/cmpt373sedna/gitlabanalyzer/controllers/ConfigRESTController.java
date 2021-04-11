@@ -39,21 +39,6 @@ public class ConfigRESTController {
         return this.configEntityRepository.findAll();
     }
 
-    /*
-    @PutMapping("/{configId}")
-    public ConfigEntity replace(@PathVariable String configId, @RequestBody ConfigEntity body) {
-        if (!configId.equals(body.getId())) {
-            throw new IllegalArgumentException("URL ID and body ID don't match");
-        }
-        projectManager.setConfig(body);
-        return this.configEntityRepository.save(body);
-    }
-
-    @GetMapping("/{configId}")
-    public ConfigEntity get(@PathVariable String configId) {
-        return this.configEntityRepository.findById(configId).orElse(null);
-    }
-*/
     @PostMapping("/{configId}/load")
     public List<ProjectEntity> loadConfig(@PathVariable String configId) {
         ConfigEntity config = this.configEntityRepository.findByToken(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
