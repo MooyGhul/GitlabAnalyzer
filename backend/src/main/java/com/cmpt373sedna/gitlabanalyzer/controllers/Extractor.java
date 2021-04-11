@@ -16,9 +16,9 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class Extractor {
     private final RestTemplate restTemplate;
-    private final String PATH_MERGE_REQUEST = "merge_requests?per_page=100&target_branch=master&created_after=%s&updated_after=%s&page=%s";
-    private final String PATH_COMMENTS = "/notes?per_page=100&created_after=%s&updated_after=%s&page=%s";
-    private final String PATH_ISSUES = "issues?per_page=100&created_after=%s&updated_after=%s&page=%s";
+    private final String PATH_MERGE_REQUEST = "merge_requests?per_page=100&target_branch=master&updated_after=%s&page=%s";
+    private final String PATH_COMMENTS = "/notes?per_page=100&updated_after=%s&page=%s";
+    private final String PATH_ISSUES = "issues?per_page=100&updated_after=%s&page=%s";
     private final String PATH_COMMITS = "repository/commits?per_page=100&since=%s&page=%s";
     private final String PATH_PROJECTS = "projects?membership=true&per_page=100&page=";
 
@@ -49,14 +49,14 @@ public class Extractor {
     private List<JSONObject> getAPIRequestData(ConfigEntity config, int projectId, String lastSync, String apiPath) {
         int page = 1;
         List<JSONObject> data = new ArrayList<>();
-        String fullPath = buildApiPath(apiPath, lastSync, page);
+        String fullPath = String.format(apiPath, lastSync, page);
         System.out.println("***********fullpath\n*****************\n*********************\n" + fullPath);
         List<JSONObject> newData = getJsonObjectsList(buildUri(config, projectId, fullPath));
         while(newData.size() > 0) {
             data.addAll(newData);
 
             page += 1;
-            fullPath = buildApiPath(apiPath, lastSync, page);
+            fullPath = String.format(apiPath, lastSync, page);
             newData = getJsonObjectsList(buildUri(config, projectId, fullPath));
         }
         return data;
