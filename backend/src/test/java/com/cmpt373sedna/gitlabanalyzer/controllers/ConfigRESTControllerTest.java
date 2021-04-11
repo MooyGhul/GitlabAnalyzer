@@ -4,6 +4,7 @@ import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import com.cmpt373sedna.gitlabanalyzer.repository.ConfigEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -77,10 +78,11 @@ class ConfigRESTControllerTest {
     @Test
     void canLoadConfig() {
         ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
-        ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).build();
+        ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).repoName("test").build();
+        JSONObject projectJSON = new JSONObject().put("id", "6").put("name", "test");
 
         when(configEntityRepository.findById("configId")).thenReturn(Optional.of(configEntity));
-        when(extractor.getProjects(configEntity)).thenReturn(Collections.singletonList(projectEntity));
+        when(extractor.getProjects(configEntity)).thenReturn(Collections.singletonList(projectJSON));
         when(projectEntityRepository.save(projectEntity)).thenReturn(projectEntity);
 
         List<ProjectEntity> result = configRESTController.loadConfig("configId");
