@@ -1,36 +1,35 @@
-import { HorizontalBar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
-function StackedBarChart(props) {
+function StackedBarChartScore({
+  members, 
+  commitScoreArray, 
+  MRScoreArray, 
+}) {
   let colorListCommit = [];
   let colorListMR = [];
-  let members = props.member;
-  let commitsArray = props.commitsArray;
-  let MRsArray = props.MRsArray;
 
   for (var i = 0; i < members.length; i++) {
     colorListCommit.push("rgba(53,63,196,0.7)");
-  }
-
-  for (i = 0; i < members.length; i++) {
     colorListMR.push("rgba(40, 240, 230, 0.7");
   }
 
   return (
     <div>
-      <HorizontalBar
+      <Bar
         data={{
           labels: members,
           datasets: [
             {
-              label: "Commits",
-              data: commitsArray,
+              label: "Commit score",
+              data: commitScoreArray,
               maintainAspectRatio: true,
               backgroundColor: colorListCommit,
               borderWidth: 4,
             },
+
             {
-              label: "Merge requests",
-              data: MRsArray,
+              label: "Merge request score",
+              data: MRScoreArray,
               maintainAspectRatio: true,
               backgroundColor: colorListMR,
               borderWidth: 4,
@@ -41,7 +40,7 @@ function StackedBarChart(props) {
           responsive: true,
           title: {
             display: true,
-            text: "Code contribution",
+            text: "Contribution scores",
             fontSize: 30,
           },
 
@@ -60,7 +59,7 @@ function StackedBarChart(props) {
                 ticks: { beginAtZero: true },
                 scaleLabel: {
                   display: true,
-                  labelString: "Contribution",
+                  labelString: "Contribution score",
                 },
                 stacked: true,
               },
@@ -72,4 +71,4 @@ function StackedBarChart(props) {
   );
 }
 
-export default StackedBarChart;
+export default StackedBarChartScore;

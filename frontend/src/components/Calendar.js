@@ -1,56 +1,48 @@
 import React from 'react'; 
 import DateFnsUtils from '@date-io/date-fns';
-import { 
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from '@material-ui/pickers';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+import {KeyboardDateTimePicker} from "@material-ui/pickers";
 import "react-datepicker/dist/react-datepicker.css";
 import Grid from '@material-ui/core/Grid';
 
-const Calendar = (props) => {
+
+const Calendar = ({startDate,endDate,handleStartDate,handleEndDate}) => {
+
   const startDateChange = (event)=>{
-    props.onStartDateChange(event);
+    handleStartDate(event);
   };
   const endDateChange = (event)=>{
-    props.onEndDateChange(event);
+    handleEndDate(event);
   };
 
   return (
     <div>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                disableToolbar
+          <Grid container justify="space-around">
+              <KeyboardDateTimePicker
                 variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Date picker inline"
-                value={new Date(props.startDate)}
+                ampm={false}
+                label="Start Date"
+                value={startDate}
                 onChange={startDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
+                onError={console.log}
+                format="yyyy/MM/dd HH:mm"
               />
-            </Grid>
-          </MuiPickersUtilsProvider>
-          <MuiPickersUtilsProvider utils={DateFnsUtils}>
-            <Grid container justify="space-around">
-              <KeyboardDatePicker
-                disableToolbar
+          </Grid>
+      </MuiPickersUtilsProvider>
+      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <Grid container justify="space-around">
+              <KeyboardDateTimePicker
                 variant="inline"
-                format="MM/dd/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Date picker inline"
-                value={new Date(props.endDate)}
+                ampm={false}
+                label="End Date"
+                value={endDate}
                 onChange={endDateChange}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }}
+                onError={console.log}
+                format="yyyy/MM/dd HH:mm"
               />
-            </Grid>
-          </MuiPickersUtilsProvider>
+          </Grid>
+      </MuiPickersUtilsProvider>
   ​  </div>
   );
 }

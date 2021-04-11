@@ -2,33 +2,39 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   container: {
+    backgroundColor:"rgb(208,209,253,0.7)",
+    boxShadow: "2px 2px 5px rgb(208,209,253) ", 
+    position: "absolute",
+    width:"100%",  
     [theme.breakpoints.up("lg")]: {
-      height: "25vh",
+      height: "30vh", 
     },
     [theme.breakpoints.down("md")]: {
-      height: "42vh",
+      height: "25vh", 
     },
     [theme.breakpoints.down("sm")]: {
-      height: "36vh",
-    },
-    backgroundColor: "#d1d0ff",
+      height: "20vh", 
+    }, 
   },
 
   large: {
-    height: "18vh",
-    width: "18vh",
+    width:"20%",
+    height:"auto"
   },
 
   profile: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "center",
-    marginTop: "10px",
+    alignItems: "center", 
+    marginTop:"3em",
   },
 
   details: {
-    fontSize: "35px",
+    fontSize: "30px",
+    position: "relative", 
+    marginBottom:"3vh",
+    fontWeight:"bold"
   },
 }));
 

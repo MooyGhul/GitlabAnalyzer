@@ -2,129 +2,222 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useStyles } from "./ProjectInfoStyle";
-import StackedBarChart from "./StackedBarChart";
+import StackedBarChartCount from "./StackedBarChartCount";
+import StackedBarChartScore from "./StackedBarChartScore";
+import StackedBarChartWordCount from "./StackedBarChartWordCount";
 import MemberList from "./MemberList";
 import useFullPageLoader from "../components/useFullPageLoader";
 import useProjectNotSelected from "../components/useProjectNotSelected";
 
-function ProjectInfoPage({onMemberIdChange,project_id, onProjectLoadedStateChange, projectLoaded }) {
-  const location = useLocation(); 
+function ProjectInfoPage({
+  onMemberIdChange,
+  project_id,
+  onProjectLoadedStateChange,
+  projectLoaded,
+  onNewProjectLoaded,
+  previousProjectId,
+}) {
+  const location = useLocation();
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [issues, setIssues] = useState([]);
   const [loader, showLoader, hideLoader] = useFullPageLoader();
-  const [
-    noProjectSelected,
-    showErrorPage, 
-  ] = useProjectNotSelected();
-  let commitsArray = [];
-  let MRsArray = [];
-  const classes = useStyles(); 
-  const [projectId, setProjectId] = useState(project_id); 
+  const [noProjectSelected, showErrorPage] = useProjectNotSelected();
+  let commitCountArray = [];
+  let MRCountArray = [];
+  let commentCountArray = [];
+  let issueCountArray = [];
+  let commitScoreArray = [];
+  let MRScoreArray = [];
+  let commentWordCountArray = [];
+  let issueWordCountArray = [];
 
+  const classes = useStyles();
+  const [projectId, setProjectId] = useState(project_id);
 
-  useEffect(() => {    
-    const defined = () => {
-      if (projectId === -1) {
-        showErrorPage();
-      } else {
-        try {
-          setProjectId(location.state.id); 
-        } catch (err) {
-          setProjectId(project_id);
-        }
+  const updateProjectId = async () => {
+    if (projectId === -1) {
+      showErrorPage();
+    } else {
+      try {
+        setProjectId(location.state.id);
+      } catch (err) {
+        setProjectId(project_id);
       }
+    }
+  };
+
+  useEffect(() => {
+    const loadProject = async () => {
+      showLoader();
+      return axios({
+        method: "post",
+        url:
+          process.env.NODE_ENV === "development"
+            ? `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`
+            : `/project/${projectId}/load`,
+      })
+        .then((response) => {
+          if (response.status === 200) {
+            hideLoader();
+            onProjectLoadedStateChange(true);
+            onNewProjectLoaded(projectId);
+          }
+        })
+        .catch((error) => {
+          hideLoader();
+        });
     };
 
-    const loadProject = async () => {
-      showLoader()
-      let projectUrl = `/project/${projectId}/load`
-      projectUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`;
-      await axios.post(projectUrl).then(hideLoader());
-    }
-
-    const fetchData = async () => {  
+    const fetchData = async () => {
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
       let memberUrl = `/project/${projectId}/members`;
+      let commentUrl = `/project/${projectId}/comments`;
+      let issueUrl = `/project/${projectId}/issues`;
 
-      if (process.env.NODE_ENV === "development") {        
+      if (process.env.NODE_ENV === "development") {
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/commits`;
         commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/merge_requests`;
         memberUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/members`;
+        commentUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/comments`;
+        issueUrl = `${process.env.REACT_APP_DEVHOST}/project/${projectId}/issues`;
       }
       const mrData = await axios.get(mrUrl);
       const commitData = await axios.get(commitUrl);
       const memberData = await axios.get(memberUrl);
-  
-      if (memberData.data===""){
-        setMembers([])
-      }
-      else{
-      setMembers(memberData.data);
+      const commentData = await axios.get(commentUrl);
+      const issueData = await axios.get(issueUrl);
+
+      if (memberData.data === "") {
+        setMembers([]);
+      } else {
+        setMembers(memberData.data);
       }
       setCommits(commitData.data);
       setMRs(mrData.data);
-    };  
+      setComments(commentData.data);
+      setIssues(issueData.data);
+    };
 
-    defined(); 
-    if (!projectLoaded){
-      loadProject();
-      onProjectLoadedStateChange(true);
-    }
+    const loadAndFetchProjectData = async () => {
+      updateProjectId();
+      if (!projectLoaded) {
+        await loadProject();
+        await fetchData();
+      }
 
-    if (projectId!==-1) { 
-      fetchData()
-    }
-  
-  // eslint-disable-next-line
-  }, [projectId]);
+      if (projectLoaded && previousProjectId !== projectId) {
+        await loadProject();
+      }
+      await fetchData();
+    };
+    loadAndFetchProjectData();
 
-  console.log(members)  
+    // eslint-disable-next-line
+  }, []);
+
   members.forEach((member) => {
     let countCommit = 0;
     let countMR = 0;
+    let countComment = 0;
+    let countIssue = 0;
+    let issueWordCount = 0;
+    let commentWordCount = 0;
+    let totalMRScore = 0;
+    let totalCommitScore = 0;
 
     commits.forEach((commit) => {
       if (member === commit.author) {
         countCommit++;
+        totalCommitScore += commit.score;
       }
     });
-    commitsArray.push(countCommit);
+
+    commitCountArray.push(countCommit);
+    commitScoreArray.push(totalCommitScore);
 
     MRs.forEach((MR) => {
       if (member === MR.author) {
         countMR++;
+        totalMRScore += MR.score;
       }
-    }); 
-    MRsArray.push(countMR);
-  }); 
- 
+    });
+    MRCountArray.push(countMR);
+    MRScoreArray.push(totalMRScore);
+
+    comments.forEach((comment) => {
+      if (member === comment.commenter) {
+        countComment++;
+        commentWordCount += comment.wordCount;
+      }
+    });
+    commentCountArray.push(countComment);
+    commentWordCountArray.push(commentWordCount);
+
+    issues.forEach((issue) => {
+      if (member === issue.author) {
+        countIssue++;
+        issueWordCount += issue.wordCount;
+      }
+    });
+    issueCountArray.push(countIssue);
+    issueWordCountArray.push(issueWordCount);
+  });
 
   return (
-    <div> 
+    <div>
       <div className={classes.body}>
-        <div className={classes.barChart}>
-          <StackedBarChart
-            member={members}
-            projectID={projectId}
-            commitsArray={commitsArray}
-            MRsArray={MRsArray}
-          />
+        <div className={classes.barChartContainer}>
+          <div className={classes.barChart}>
+            <StackedBarChartCount
+              members={members}
+              projectID={projectId}
+              commitCountArray={commitCountArray}
+              MRCountArray={MRCountArray}
+              commentCountArray={commentCountArray}
+              issueCountArray={issueCountArray}
+            />
+          </div>
+
+          <div className={classes.barChart}>
+            <StackedBarChartScore
+              members={members}
+              projectID={projectId}
+              commitScoreArray={commitScoreArray}
+              MRScoreArray={MRScoreArray}
+              className={classes.barChart}
+            />
+          </div>
+          <div className={classes.barChart}>
+            <StackedBarChartWordCount
+              members={members}
+              projectID={projectId}
+              commentWordCountArray={commentWordCountArray}
+              issueWordCountArray={issueWordCountArray}
+              className={classes.barChart}
+            />
+          </div>
         </div>
         <MemberList
-          members={members}
-          commitsArray={commitsArray}
-          MRsArray={MRsArray}
           projectID={projectId}
+          members={members}
+          commitCountArray={commitCountArray}
+          commitScoreArray={commitScoreArray}
+          MRCountArray={MRCountArray}
+          MRScoreArray={MRScoreArray}
+          issueCountArray={issueCountArray}
+          issueWordCountArray={issueWordCountArray}
+          commentCountArray={commentCountArray}
+          commentWordCountArray={commentWordCountArray}
           onMemberIdChange={onMemberIdChange}
         />
-        
       </div>
       {loader}
       {noProjectSelected}
     </div>
-   
   );
 }
 

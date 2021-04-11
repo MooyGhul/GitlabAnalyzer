@@ -8,7 +8,7 @@ const useStyles = makeStyles((theme) => ({
      top:'0',
      left:'0',
      background:'#f8f8f8ad',
-     zIndex:"10000000"
+     zIndex:"1000"
     },
     spinner:{
       top: '50%',

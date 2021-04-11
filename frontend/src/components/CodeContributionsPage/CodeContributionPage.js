@@ -13,6 +13,7 @@ import { getGraphData, makeCommitGraphData, makeMRGraphData, mergeGraphData } fr
 import { makeCodeContributionTableData } from "../../helper";
 import useProjectNotSelected from "../../components/useProjectNotSelected";
 
+
 const CodeContributionPage = (props) => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
   const classes = useGraphStyles();
@@ -28,7 +29,7 @@ const CodeContributionPage = (props) => {
   const location = useLocation();
 
   useEffect(() => {
-    const defined = () => {
+    const setProjectIdAndMemberId = () => {
       if (project_id === -1) {
         showErrorPage();
       }
@@ -99,7 +100,7 @@ const CodeContributionPage = (props) => {
 
       codeContributionData(commitData, mrData);
     };
-    defined();
+    setProjectIdAndMemberId();
 
     if (member_id !== -1) {
       fetchData()
@@ -129,12 +130,20 @@ const CodeContributionPage = (props) => {
       >
         <Grid item xs={12}>
           <Grid item xs={12}>
-            <Banner memberName={member_id} />
+            <Banner memberName={member_id} type="codecontribution"
+                    />
           </Grid>
         </Grid>
-        <Grid item xs={12} align="center">
-          <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
-        </Grid>
+        <Grid
+          container
+          spacing={5}
+          justify="center"
+          alignItems="center"
+          className={classes.contents}
+        >
+          <Grid item xs={12} align="center">
+            <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
+          </Grid>
 
       <Grid className={classes.graph}>
         <Switch
@@ -154,9 +163,9 @@ const CodeContributionPage = (props) => {
           maintainRatio={false}
         />
       </Grid>
-
       <Grid item className={classes.table}>
-        <CodeContributionTable codeContributionRows={codeContributionRows} />
+        <CodeContributionTable
+          codeContributionRows={codeContributionRows} />
       </Grid>
     </Grid>
       {noProjectSelected}
