@@ -44,7 +44,7 @@ const CommentContributionPage = (props) => {
       );
       setComments(commentResult.data);
       console.log(commentResult.data);
-      const commentCounts = getGraphData(commentResult.data, "commentDate");
+      const commentCounts = getGraphData(commentResult.data, "commentDate", false);
       setGraphData(commentCounts);
     };
     fetchData()
@@ -66,7 +66,7 @@ const CommentContributionPage = (props) => {
     setPage(0);
   };
 
-  return ( 
+  return (
       <Grid container spacing={5} justify="center" alignItems="center" className={classes.container}>
         <Grid item xs={12}>
           <Grid item xs={12}>
@@ -170,7 +170,7 @@ const CommentContributionPage = (props) => {
             </TableContainer>
           </Grid>
         </Grid>
-      </Grid> 
+      </Grid>
   );
 };
 
