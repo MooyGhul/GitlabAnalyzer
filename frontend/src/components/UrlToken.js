@@ -25,10 +25,14 @@ function UrlToken() {
             url: urlToken.url
         };
         await axios.post(process.env.NODE_ENV === 'development' ?
-            //?token=${urlToken.token}&url=${urlToken.url}
             `${process.env.REACT_APP_DEVHOST}/api/config/create` :
             `/api/config/create`, json)
-        .then(function(response){
+        .then(async (response) => {
+            return await axios.post(process.env.NODE_ENV === 'development' ?
+                `${process.env.REACT_APP_DEVHOST}/api/config/${response.data.id}/load` :
+                `/api/config/${response.data.id}/load`);
+        })
+        .then(response => {
             hideLoader();
             if (response.status === 200){
                 history.push('/projectList');
