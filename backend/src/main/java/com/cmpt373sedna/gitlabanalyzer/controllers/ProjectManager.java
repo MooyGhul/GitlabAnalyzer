@@ -54,7 +54,7 @@ public class ProjectManager {
                 .token(this.projectToken)
                 .url(baseUrl)
                 .build();
-        //this.config = config;
+
         ProjectEntity projectEntity = this.extractor.getProject(config, projectId);
 
         ProjectController p = new ProjectController(this.extractor, config, projectEntity);
