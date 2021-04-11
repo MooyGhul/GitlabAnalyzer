@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,7 @@ public class ConfigRESTController {
         return this.configEntityRepository.findAll();
     }
 
+    /*
     @PutMapping("/{configId}")
     public ConfigEntity replace(@PathVariable String configId, @RequestBody ConfigEntity body) {
         if (!configId.equals(body.getId())) {
@@ -52,14 +54,35 @@ public class ConfigRESTController {
     public ConfigEntity get(@PathVariable String configId) {
         return this.configEntityRepository.findById(configId).orElse(null);
     }
-
+*/
     @PostMapping("/{configId}/load")
     public List<ProjectEntity> loadConfig(@PathVariable String configId) {
-        ConfigEntity config = this.configEntityRepository.findById(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        ConfigEntity config = this.configEntityRepository.findByToken(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        List<ProjectEntity> projectsFromGitlab = this.extractor.getProjects(config);
+        Iterable<ProjectEntity> projectsInDb = projectEntityRepository.findAll();
+        List<ProjectEntity> projectsToSave = new ArrayList<>();
 
-        return this.extractor.getProjects(config).stream()
+        boolean sameId = false;
+        for(ProjectEntity peGL: projectsFromGitlab) {
+            for (ProjectEntity peDB : projectsInDb) {
+                if (peGL.getRepoId() == peDB.getRepoId()) {
+                    sameId = true;
+                }
+            }
+            if (!sameId) {
+                projectsToSave.add(peGL);
+            }
+            sameId = false;
+        }
+
+        return projectsToSave.stream()
                 .map(project -> this.projectEntityRepository.save(project))
                 .peek(project -> this.projectManager.getOrAddProject(config, project))
                 .collect(Collectors.toList());
+                /*this.extractor.getProjects(config).stream()
+                .map(project -> this.projectEntityRepository.save(project))
+                .peek(project -> this.projectManager.getOrAddProject(config, project))
+                .collect(Collectors.toList());
+                 */
     }
 }
