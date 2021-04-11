@@ -31,7 +31,6 @@ public class ConfigRESTController {
     @PostMapping("/create")
     public ConfigEntity create(@RequestBody ConfigEntity body) {
         projectManager.setConfig(body);
-        System.out.println("******************POSTcreate\n******************\n*************************************\n" + body.toString());
         return this.configEntityRepository.save(body);
     }
 
@@ -79,10 +78,5 @@ public class ConfigRESTController {
                 .map(project -> this.projectEntityRepository.save(project))
                 .peek(project -> this.projectManager.getOrAddProject(config, project))
                 .collect(Collectors.toList());
-                /*this.extractor.getProjects(config).stream()
-                .map(project -> this.projectEntityRepository.save(project))
-                .peek(project -> this.projectManager.getOrAddProject(config, project))
-                .collect(Collectors.toList());
-                 */
     }
 }

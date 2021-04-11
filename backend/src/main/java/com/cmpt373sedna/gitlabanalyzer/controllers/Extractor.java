@@ -50,7 +50,6 @@ public class Extractor {
         int page = 1;
         List<JSONObject> data = new ArrayList<>();
         String fullPath = String.format(apiPath, lastSync, page);
-        System.out.println("***********fullpath\n*****************\n*********************\n" + fullPath);
         List<JSONObject> newData = getJsonObjectsList(buildUri(config, projectId, fullPath));
         while(newData.size() > 0) {
             data.addAll(newData);
@@ -134,7 +133,6 @@ public class Extractor {
         List<String> temp = projects.stream()
                 .map(obj -> new JSONObject(obj, "id", "name").toString())
                 .collect(toList());
-        System.out.println("***********extractor\n*****************\n*********************\n" + temp.toString());
         return temp;
     }
 
@@ -166,7 +164,6 @@ public class Extractor {
 
     private URI buildUri(ConfigEntity config, String path) {
         URI temp = URI.create(config.getUrl() + "/api/v4/projects/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
-        System.out.println("*****************\n**********************\n*******************************\n" + temp.toString());
         return temp;
     }
 
@@ -176,7 +173,6 @@ public class Extractor {
 
     private URI buildUriProjectList(ConfigEntity config, String path) {
         URI temp = URI.create(config.getUrl() + "/api/v4/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
-        System.out.println("*****************URI\n**********************\n*******************************\n" + temp.toString());
         return temp;
     }
 

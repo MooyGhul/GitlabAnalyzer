@@ -57,7 +57,6 @@ public class ProjectRESTController {
     @GetMapping("/all/projectList")
     List<String> getProjectListInfo() {
         List<String> temp = this.projectManager.getProjectListInfo();
-        System.out.println("***********\n*****************\n*********************PM\n" + temp.toString());
         return temp;
     }
 
@@ -79,7 +78,6 @@ public class ProjectRESTController {
         String syncTime = ProjectEntity.getCurrentTime();
         this.projectRepository.updateLastSync(projectId, syncTime);
 
-        //String response = "{\"id\": " + projectId + ", \"lastSync\": " + syncTime + "}";
         ProjectEntity response = new ProjectEntity(projectId, syncTime);
         return response;
     }

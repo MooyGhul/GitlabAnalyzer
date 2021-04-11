@@ -22,13 +22,7 @@ const ProjectListPage = (props) => {
         : `/project/${projectId}/load`
     )
     .then((response) => {
-      console.log("response: ", response);
-      console.log("response data: ", response.data);
-      console.log("data id: ", response.data.repoId)
-      console.log("data lastSync: ", response.data.lastSync)
-
       const r = rows.map(r => {
-        console.log(r)
         if (r.id === response.data.repoId) {
           r.lastSync = formatDate(response.data.lastSync);
         }
@@ -48,7 +42,7 @@ const ProjectListPage = (props) => {
         projectsToSync.map((projectId) => syncProject(projectId))
       )
       .then((value) => {
-        console.log(value)
+        console.log("syncing done")
         setSyncDone(true)
       });
     };
@@ -114,8 +108,6 @@ const ProjectListPage = (props) => {
 
       setAllProjects(result.data);
       setSavedProjects(resultSavedProjects.data);
-      console.log("SAVED PROJECTS: ", resultSavedProjects.data);
-      console.log("allps ", allProjects);
       const tempRows = allProjects.map((project) =>
         deStringProjectResponse(project)
       );
@@ -142,7 +134,6 @@ const ProjectListPage = (props) => {
 
   const deStringProjectResponse = (project) => {
     const json = JSON.parse(project);
-    console.log(json);
     const matchingProject = savedProjects.filter(
       (param) => param.repoId === json.id
     );
@@ -157,8 +148,6 @@ const ProjectListPage = (props) => {
       lastSync: json.lastSync,
     };
   };
-
-  //const rows = allProjects.map((project) => (deStringProjectResponse(project)));
 
   const getValue = (e) => {
     setProjectIdArray(e.selectionModel);
