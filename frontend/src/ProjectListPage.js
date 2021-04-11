@@ -136,7 +136,8 @@ const ProjectListPage = (props) => {
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}` 
+    const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${minutes}` 
   }
 
   const deStringProjectResponse = (project) => {
