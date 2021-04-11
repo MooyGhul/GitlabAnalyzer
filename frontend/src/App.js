@@ -10,7 +10,6 @@ function App() {
         <Switch>
             <Redirect exact from='/' to='/login' />
             <Route exact path='/login'> <Login /> </Route>
-            <Route exact path='/token'> <NavbarSide /> </Route>
             <Route component={NavbarSide} />
         </Switch>
     </BrowserRouter>
