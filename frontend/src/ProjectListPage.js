@@ -20,7 +20,22 @@ const ProjectListPage = (props) => {
       process.env.NODE_ENV === "development"
         ? `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`
         : `/project/${projectId}/load`
-    );
+    )
+    .then((response) => {
+      console.log("response: ", response);
+      console.log("response data: ", response.data);
+      console.log("data id: ", response.data.repoId)
+      console.log("data lastSync: ", response.data.lastSync)
+
+      const r = rows.map(r => {
+        console.log(r)
+        if (r.id === response.data.repoId) {
+          r.lastSync = formatDate(response.data.lastSync);
+        }
+        return r;
+      })
+      setRows(r)
+    });
   };
 
   const SyncButton = () => {
@@ -100,6 +115,7 @@ const ProjectListPage = (props) => {
       setAllProjects(result.data);
       setSavedProjects(resultSavedProjects.data);
       console.log("SAVED PROJECTS: ", resultSavedProjects.data);
+      console.log("allps ", allProjects);
       const tempRows = allProjects.map((project) =>
         deStringProjectResponse(project)
       );
