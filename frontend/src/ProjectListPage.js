@@ -165,23 +165,30 @@ const ProjectListPage = (props) => {
 
   const buttonClickHandler = (event) => {
     let projectName;
+    let projectLastSync
 
     if (projectIdArray.length === 0) {
-      setErrorMsg("You have not selected any projects!.");
+      setErrorMsg("You have not selected any projects!");
     } else if (projectIdArray.length === 1) {
       rows.forEach((project) => {
         if (project.id === parseInt(projectIdArray[0])) {
           console.log(project.projectName);
           projectName = project.projectName;
+          projectLastSync = project.lastSync;
         }
       });
 
-      props.onProjectIdChange(projectIdArray[0]);
+      if (projectLastSync == "Never") {
+        setErrorMsg("You must sync this project first!");
+      }
+      else {
+        props.onProjectIdChange(projectIdArray[0]);
 
-      history.push({
-        pathname: "/projectInfo/" + projectIdArray[0],
-        state: { id: projectIdArray[0], projectName: projectName },
-      });
+        history.push({
+          pathname: "/projectInfo/" + projectIdArray[0],
+          state: { id: projectIdArray[0], projectName: projectName },
+        });
+      }
     } else {
       console.log("multiple projects have been selected ");
     }
