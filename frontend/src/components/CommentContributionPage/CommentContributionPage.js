@@ -45,7 +45,6 @@ const CommentContributionPage = (props) => {
           : `/project/${project_id}/member/${member_id}/comments`
       );
       setComments(commentResult.data);
-      console.log(commentResult.data);
       const commentCounts = getGraphData(commentResult.data, "commentDate", startDate, endDate);
       setGraphData(commentCounts);
     };
