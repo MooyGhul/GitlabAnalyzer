@@ -39,9 +39,9 @@ public class ConfigRESTController {
         return this.configEntityRepository.findAll();
     }
 
-    @PostMapping("/{configId}/load")
-    public List<ProjectEntity> loadConfig(@PathVariable String configId) {
-        ConfigEntity config = this.configEntityRepository.findByToken(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+    @PostMapping("/{url}/load")
+    public List<ProjectEntity> loadConfig(@PathVariable String url) {
+        ConfigEntity config = this.configEntityRepository.findByToken(url).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         List<ProjectEntity> projectsFromGitlab = this.extractor.getProjects(config);
         Iterable<ProjectEntity> projectsInDb = projectEntityRepository.findAll();
         List<ProjectEntity> projectsToSave = new ArrayList<>();
