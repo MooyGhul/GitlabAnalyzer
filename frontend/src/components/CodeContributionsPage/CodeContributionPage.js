@@ -3,7 +3,6 @@ import { Grid, Switch } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Banner from "../Banner";
-import { ComingSoonMsg } from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import { useGraphStyles, useSwitchStyles } from "../../style/CodeContributionPageStyles";
