@@ -60,28 +60,41 @@ const ProjectListPage = (props) => {
     },
   ];
 
-  const [data, setData] = useState([]);
+  const [allProjects, setAllProjects] = useState([]);
+  const [savedProjects, setSavedProjects] = useState([]);
   useEffect(() => {
     showLoader();
     const fetchData = async () => {
       const result = await axios.get( process.env.NODE_ENV === 'development' ?
           `${process.env.REACT_APP_DEVHOST}/project/all/projectList`:
           "/project/all/projectList");
-      console.log(result.data)
-      setData(result.data);
+      const resultSavedProjects = await axios.get( process.env.NODE_ENV === 'development' ?
+          `${process.env.REACT_APP_DEVHOST}/project/all`:
+          "/project/all");
+      setAllProjects(result.data);
+      setSavedProjects(resultSavedProjects.data);
+      console.log(resultSavedProjects.data);
     };
     fetchData().then(hideLoader());
   }, [])
   
   const deStringProject = (project) => {
     const json = JSON.parse(project)
+    const matchingProject = savedProjects.filter(param => (param.repoId === json.id));
+    if(matchingProject.length > 0) {
+      json['lastSync'] = matchingProject.lastSync;
+    }
+    else {
+      json['lastSync'] = 'Never';
+    }
     return {
       id: json.id,
-      projectName: json.name
+      projectName: json.name,
+      lastSync: json.lastSync,
     }
   }
 
-  const rows = data.map((project) => (deStringProject(project)));
+  const rows = allProjects.map((project) => (deStringProject(project)));
 
   let projectIdArray = [];
 
@@ -89,8 +102,6 @@ const ProjectListPage = (props) => {
     projectIdArray = e.selectionModel;
     return projectIdArray;
   };
-
-  
 
   const buttonClickHandler = (event) => {
     let projectName;
