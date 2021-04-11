@@ -20,7 +20,8 @@ public class ProjectEntity {
     private @Getter int numCommits;
     private @Getter int numMR;
     private @Getter int numComments;
-    private @Getter String lastSync;
+    @Builder.Default
+    private @Getter String lastSync = "1970-01-01T00:00Z";
 
     public ProjectEntity(int repoId, String repoName, int numCommits, int numMR, int numComments) {
         this.repoId = repoId;
@@ -28,7 +29,6 @@ public class ProjectEntity {
         this.numCommits = numCommits;
         this.numMR = numMR;
         this.numComments = numComments;
-        this.lastSync = "1970-01-01T00:00Z";
     }
 
     public ProjectEntity() {
@@ -37,7 +37,14 @@ public class ProjectEntity {
         this.numCommits = 0;
         this.numMR = 0;
         this.numComments = 0;
-        this.lastSync = "1970-01-01T00:00Z";
+    }
+
+    public ProjectEntity(int repoId, String repoName, int numCommits, int numMR, int numComments, String lastSync) {
+        this.repoId = repoId;
+        this.repoName = repoName;
+        this.numCommits = numCommits;
+        this.numMR = numMR;
+        this.numComments = numComments;
     }
 
     //code from: https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute
