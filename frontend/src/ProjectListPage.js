@@ -13,6 +13,7 @@ const ProjectListPage = (props) => {
   const classes = useStyles();
   const [loader, showLoader, hideLoader] = useFullPageLoader();
   const [projectIdArray, setProjectIdArray] = useState([]);
+  const [syncDone, setSyncDone] = useState(false);
 
   const syncProject = async (projectId) => {
     await axios.post(
@@ -30,7 +31,11 @@ const ProjectListPage = (props) => {
       setSnackBar(true);
       Promise.all(
         projectsToSync.map((projectId) => syncProject(projectId))
-      ).then((value) => console.log(value));
+      )
+      .then((value) => {
+        console.log(value)
+        setSyncDone(true)
+      });
     };
 
     const handleClose = (event, reason) => {
@@ -70,11 +75,6 @@ const ProjectListPage = (props) => {
     { field: "id", headerName: "ID", width: 200 },
     { field: "projectName", headerName: "Project Name", width: 400 },
     { field: "lastSync", headerName: "Last Sync", width: 400 },
-    {
-      field: "syncNow",
-      headerName: "Sync Now",
-      width: 200,
-    },
   ];
 
   const [allProjects, setAllProjects] = useState([]);
@@ -166,6 +166,14 @@ const ProjectListPage = (props) => {
     }
   };
 
+  const closeSyncDoneSnackBar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setSyncDone(false);
+  } 
+
   return (
     <div>
       <div className={styles.projectList}>
@@ -201,6 +209,17 @@ const ProjectListPage = (props) => {
         Batch Process
       </Button>
       <SyncButton />
+      <Snackbar
+          anchorOrigin={{
+            position: "absolute",
+            vertical: "bottom",
+            horizontal: "left",
+          }}
+          open={syncDone}
+          onClose={closeSyncDoneSnackBar}
+          autoHideDuration={3000}
+          message="Sync Complete"
+        />
       {loader}
     </div>
   );
