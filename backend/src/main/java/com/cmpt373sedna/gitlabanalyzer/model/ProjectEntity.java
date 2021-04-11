@@ -40,6 +40,15 @@ public class ProjectEntity {
         this.lastSync = "1970-01-01T00:00Z";
     }
 
+    public ProjectEntity(int repoId, String lastSync) {
+        this.repoId = repoId;
+        this.repoName = "";
+        this.numCommits = 0;
+        this.numMR = 0;
+        this.numComments = 0;
+        this.lastSync = lastSync;
+    }
+
     public ProjectEntity(int repoId, String repoName, int numCommits, int numMR, int numComments, String lastSync) {
         this.repoId = repoId;
         this.repoName = repoName;

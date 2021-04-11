@@ -67,7 +67,7 @@ public class ProjectRESTController {
     }
 
     @PostMapping("/{projectId}/load")
-    void load(@PathVariable() int projectId) {
+    ProjectEntity load(@PathVariable() int projectId) {
         ProjectController projectController = this.projectManager.findProject(projectId)
                 .map(ProjectController::load)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -76,7 +76,12 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(projectController.getIssuesEntities());
         this.commentEntityRepository.saveAll(projectController.getComments());
         this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
-        this.projectRepository.updateLastSync(projectId, ProjectEntity.getCurrentTime());
+        String syncTime = ProjectEntity.getCurrentTime();
+        this.projectRepository.updateLastSync(projectId, syncTime);
+
+        //String response = "{\"id\": " + projectId + ", \"lastSync\": " + syncTime + "}";
+        ProjectEntity response = new ProjectEntity(projectId, syncTime);
+        return response;
     }
 
 
