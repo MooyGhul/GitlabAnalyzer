@@ -37,7 +37,7 @@ const IssueContributionPage = (props) => {
           : `/project/${project_id}/member/${member_id}/issues`
       );
       setIssues(issueResult.data);
-      const issueCounts = getGraphData(issueResult.data, "openedDate", startDate, endDate);
+      const issueCounts = getGraphData(issueResult.data, "openedDate");
       setGraphData(issueCounts);
     };
     fetchData()

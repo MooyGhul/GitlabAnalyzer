@@ -27,17 +27,11 @@ const fillNulls = (arr) => {
    return arr;
 }
 
-export const getGraphData = (arr, key, startDate, endDate) => {
+export const getGraphData = (arr, key) => {
     let result = [];
-    let padStartDate = new Date(startDate).toISOString();
-    let padEndDate = new Date(endDate).toISOString();
 
     if(key === "mergedAt") {
         arr = fillNulls(arr);
-    }
-
-    if(moment(padEndDate).diff(moment("2021-04-20T04:32:47Z"))) {
-        padEndDate = new Date("2021-04-20T04:32:47Z").toISOString();
     }
 
     const groupedData = groupBy(arr, key);
@@ -58,13 +52,10 @@ export const getGraphData = (arr, key, startDate, endDate) => {
         }
     });
 
-    return padDates(result, moment(padStartDate).format("YYYY-MM-DD"), moment(padEndDate).format("YYYY-MM-DD"));
+    return padDates(result);
 };
 
-const padDates = (dates, startDate, endDate) => {
-    dates.unshift({"year": startDate, "data": 0});
-    dates.push({"year": endDate, "data": 0});
-
+const padDates = (dates) => {
     // Found the solution to use moment to check sequential dates: https://stackoverflow.com/questions/26756997/dump-missing-date-in-data-for-chartjs
     for(let i = 0; i < dates.length - 1; i++) {
         let date1 = moment(dates[i].year, "YYYY-MM-DD");
