@@ -3,7 +3,6 @@ import { Grid } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Banner from "../Banner";
-import { useLocation } from "react-router-dom";
 import { ComingSoonMsg } from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
@@ -22,7 +21,6 @@ const CodeContributionPage = (props) => {
   const [project_id, setProjectId] = useState(props.project_id);
   const [member_id, setMemberId] = useState(props.member_id);
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
-  const location = useLocation();   
 
   const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
     return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
@@ -37,20 +35,9 @@ const CodeContributionPage = (props) => {
   };
   useEffect(() => {
     const setProjectIdAndMemberId = () => {
-      if (project_id === -1) {
+      if (project_id === -1 || project_id === ':project_id' || member_id === -1 || member_id === ':member_id') {
         showErrorPage();
-      }
-      else if (member_id === -1) {
-        try {
-          setProjectId(location.state.project_id);
-          setMemberId(location.state.member_id);
-        } catch (err) {
-          setProjectId(props.project_id);
-          setMemberId(props.member_id);
-          showErrorPage();
-        }
-      }
-      else{
+      } else {
         setProjectId(props.project_id);
         setMemberId(props.member_id);
       }
@@ -86,7 +73,7 @@ const CodeContributionPage = (props) => {
       setCodeContributionRows(ccArray);
     };
 
-    const formatData = (mrData, mrArray, commitData, commitArray) => {
+    const formatData = (mrData, mrArray, commitData) => {
       for(let mrDataIndex = 0; mrDataIndex < mrData.length; mrDataIndex++) {
         const relatedCommitIds = commitData.filter(val => {
           return mrData[mrDataIndex].commitIds.includes(val.commitId);
