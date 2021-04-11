@@ -24,11 +24,14 @@ const ProjectListPage = (props) => {
   }
 
   const SyncButton = () => {
-   
-    const [snackBar, setSnackBar] = useState(false)
+    const [snackBar, setSnackBar] = useState(false);
+
     const handleClick = () => {
-      console.log(projectIdArray)
+      const projectsToSync = projectIdArray;
       setSnackBar(true);
+      Promise.all(projectsToSync.map(projectId => syncProject(projectId)))
+        .then((value) => console.log(value))
+
     }
 
     const handleClose = (event, reason) => {
@@ -70,29 +73,38 @@ const ProjectListPage = (props) => {
 
   const [allProjects, setAllProjects] = useState([]);
   const [savedProjects, setSavedProjects] = useState([]);
+  const [rows, setRows] = useState([]);
   useEffect(() => {
     showLoader();
     const fetchData = async () => {
       const result = await axios.get( process.env.NODE_ENV === 'development' ?
           `${process.env.REACT_APP_DEVHOST}/project/all/projectList`:
           "/project/all/projectList");
+
       const resultSavedProjects = await axios.get( process.env.NODE_ENV === 'development' ?
           `${process.env.REACT_APP_DEVHOST}/project/all`:
           "/project/all");
+
       setAllProjects(result.data);
       setSavedProjects(resultSavedProjects.data);
+      console.log(resultSavedProjects.data);
+      const tempRows = allProjects.map((project) => (deStringProjectResponse(project)));
+      setRows(tempRows);
     };
-    fetchData().then(hideLoader());
+    fetchData().then(() => {
+      hideLoader()
+    });
   }, [])
   
   const deStringProjectResponse = (project) => {
     const json = JSON.parse(project)
+    console.log(json)
     const matchingProject = savedProjects.filter(param => (param.repoId === json.id));
-    if(matchingProject.length > 0) {
-      json['lastSync'] = matchingProject.lastSync;
+    if(matchingProject[0].lastSync === '1970-01-01T00:00Z') {
+      json['lastSync'] = 'Never';
     }
     else {
-      json['lastSync'] = 'Never';
+      json['lastSync'] = matchingProject[0].lastSync;
     }
     return {
       id: json.id,
@@ -101,7 +113,7 @@ const ProjectListPage = (props) => {
     }
   }
 
-  const rows = allProjects.map((project) => (deStringProjectResponse(project)));
+  //const rows = allProjects.map((project) => (deStringProjectResponse(project)));
 
   const getValue = (e) => {
     setProjectIdArray(e.selectionModel);
