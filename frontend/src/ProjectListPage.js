@@ -15,6 +15,7 @@ const ProjectListPage = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
   const classes = useStyles();
   const [loader, showLoader, hideLoader] = useFullPageLoader(); 
+  const [projectIdArray, setProjectIdArray] = useState([]);
 
   const syncProject = async (projectId) => {
     await axios.post(process.env.NODE_ENV === 'development' ?
@@ -22,10 +23,11 @@ const ProjectListPage = (props) => {
             `/project/${projectId}/load`)
   }
 
-  const SyncButton = (projectId) => {
-    console.log(projectId)
+  const SyncButton = () => {
+   
     const [snackBar, setSnackBar] = useState(false)
     const handleClick = () => {
+      console.log(projectIdArray)
       setSnackBar(true);
     }
 
@@ -50,7 +52,7 @@ const ProjectListPage = (props) => {
           autoHideDuration={3000}
           message="Sync started"
         />
-        <Button variant="contained" component="span" size="large" color="primary" onClick={handleClick}>Sync Now</Button>
+        <Button variant="contained" color="primary" className={classes.syncButton} onClick={handleClick}>Sync Now</Button>
       </React.Fragment>
     );
   }
@@ -63,21 +65,6 @@ const ProjectListPage = (props) => {
       field: "syncNow", 
       headerName: "Sync Now", 
       width: 200,
-      renderCell: (params) => {
-        const thisRow = {};
-        const onClick = () => {
-          const api = params.api;
-          const fields = api
-            .getAllColumns()
-            .map((c) => c.field)
-            .filter((c) => c !== "__check__" && !!c);
-
-          fields.forEach((f) => {
-            thisRow[f] = params.getValue(f);
-          });
-        }
-        return <SyncButton onClick={onClick} projectId={thisRow.id}/>
-      }
       //renderCell: () => (<SyncButton/>),
     },
   ];
@@ -95,12 +82,11 @@ const ProjectListPage = (props) => {
           "/project/all");
       setAllProjects(result.data);
       setSavedProjects(resultSavedProjects.data);
-      console.log(resultSavedProjects.data);
     };
     fetchData().then(hideLoader());
   }, [])
   
-  const deStringProject = (project) => {
+  const deStringProjectResponse = (project) => {
     const json = JSON.parse(project)
     const matchingProject = savedProjects.filter(param => (param.repoId === json.id));
     if(matchingProject.length > 0) {
@@ -116,13 +102,14 @@ const ProjectListPage = (props) => {
     }
   }
 
-  const rows = allProjects.map((project) => (deStringProject(project)));
+  const rows = allProjects.map((project) => (deStringProjectResponse(project)));
 
-  let projectIdArray = [];
+  //let projectIdArray = [];
 
   const getValue = (e) => {
-    projectIdArray = e.selectionModel;
-    return projectIdArray;
+    setProjectIdArray(e.selectionModel);
+    //projectIdArray = e.selectionModel;
+    //return projectIdArray;
   };
 
   const buttonClickHandler = (event) => {
@@ -170,7 +157,7 @@ const ProjectListPage = (props) => {
         id="select-project"
         variant="contained"
         color="primary"
-        className={classes.analyzeButton}
+        className={classes.nextButton}
         onClick={buttonClickHandler}
       >
         Next
@@ -183,6 +170,7 @@ const ProjectListPage = (props) => {
       >
         Batch Process
       </Button> 
+      <SyncButton />
       {loader}
     </div>
   
