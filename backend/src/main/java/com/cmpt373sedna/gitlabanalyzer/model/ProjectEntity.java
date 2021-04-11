@@ -20,8 +20,7 @@ public class ProjectEntity {
     private @Getter int numCommits;
     private @Getter int numMR;
     private @Getter int numComments;
-    @Builder.Default
-    private @Getter String lastSync = "1970-01-01T00:00Z";
+    private @Getter String lastSync;
 
     public ProjectEntity(int repoId, String repoName, int numCommits, int numMR, int numComments) {
         this.repoId = repoId;
