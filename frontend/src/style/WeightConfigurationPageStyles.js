@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
     deleteButton: {
         color: 'rgb(255,255,255)',
         backgroundColor: 'rgb(255,0,100)',
+    },
+    applyButton: {
+      color: 'rgb(255,255,255)',
+      backgroundColor: 'rgb(0, 153, 51)',
     }
 }));
 

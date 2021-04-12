@@ -20,7 +20,8 @@ import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 import moment from 'moment';
 
-const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, handleEndDate}) => {
+const WeightConfigurationPage 
+  = ({token, startDate, endDate, handleStartDate, handleEndDate, handleIterationName, handleIterationStartDate, handleIterationEndDate}) => {
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
@@ -56,6 +57,14 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
       }
     }
 
+    const defaultButtonHandler = () => {
+      setRefreshFlag(!refreshFlag);
+      setListOfDeletedIterIds([]);
+      handleIterationName("Not Selected");
+      handleIterationStartDate(new Date('January 1, 2021 00:00:00'));
+      handleIterationEndDate(new Date('Dec 31, 2021 00:00:00'));
+    }
+
     const refreshHandler = () => {
       setRefreshFlag(!refreshFlag);
       setListOfDeletedIterIds([]);
@@ -86,6 +95,8 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
       ).catch((error) => {
           console.log(error.response.status);
       });
+      setRefreshFlag(!refreshFlag);
+      setListOfDeletedIterIds([]);
     }
 
     useEffect(() => {
@@ -156,15 +167,22 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
 
     return (
         <Grid container spacing={5} justify="center" alignItems="center" className={classes.root}>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.pageTitle}> </Typography>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.pageTitle}>Configurations</Typography>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.subHeader}>Configure Dates</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
+            </Grid>
+            <Grid item xs={11}>
+            <p>Please enter the iteration dates and name and click on "+Add Iteration" to add and save the iteration. </p>
+            <p>To apply another iteration, please click "SELECT" next to the desired iteration. </p>
+            <p>To deselct the iteration to look at contributions for the whole project duration, click "Deselect"</p>
+            <p>To undo any deletion, click "Undo DEL"</p>
+            <p>To delete an iteration, please click "Delete" next to the desired iteration, and click "SAVE DEL" to save the deletions.</p>
             </Grid>
             <Grid item xs={3}>
                 <form className={classes.textField} noValidate autoComplete="off">
@@ -177,7 +195,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={7} >
+            <Grid item xs={8} >
                 <Typography className={classes.subHeader}>Saved Iterations</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <TableContainer>
@@ -187,23 +205,33 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                         </TableHead>
                         <TableBody>
                             {iterDates.map((row) => (
-                                <Row key={row.iterationName} deleteRow={DeleteRow} row={row}/>
+                                <Row 
+                                  key={row.iterationName} 
+                                  handleIterationName={handleIterationName} 
+                                  deleteRow={DeleteRow} 
+                                  row={row}
+                                  handleIterationStartDate={handleIterationStartDate}
+                                  handleIterationEndDate={handleIterationEndDate}
+                                />
                             ))}
                         </TableBody>
                     </Table>
                 </TableContainer>
             </Grid>
-            <Grid item xs={10} spacing={5}>
+            <Grid item xs={11} spacing={5}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={2}>
-                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Refresh</Button>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={defaultButtonHandler}>Deselect</Button>
                     </Grid>
                     <Grid item xs={2}>
-                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={saveDeleteToBackend}>Save Deletions</Button>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Undo DEL</Button>
+                    </Grid>
+                    <Grid item xs={2}>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={saveDeleteToBackend}>Save DEL</Button>
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={10}>
@@ -213,7 +241,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                 </Grid>
                 {createTextFieldsForProjectWeights()}
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.subHeader1}>Configure Weights by File Type</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={5}>
@@ -224,7 +252,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                     </form>  
                 </Grid>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>
                         <Button variant="contained" component="span" className={classes.saveButton} size="large">Save</Button>
