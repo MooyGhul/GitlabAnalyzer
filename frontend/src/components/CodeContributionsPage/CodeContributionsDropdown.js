@@ -22,9 +22,7 @@ const CodeContributionsDropdown = (props) => {
   const isOpen = () => {
     return open || expandAll;
   }
-  console.log(row);
   const rowDiffs = row.diff;
-  console.log(rowDiffs)
   
 
     return (
