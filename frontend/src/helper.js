@@ -56,3 +56,9 @@ export const formatTableDate = (commentDate) => {
 
     return `${month} ${day}, ${year} @ ${time}`;
 }
+
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${minutes}` 
+  }

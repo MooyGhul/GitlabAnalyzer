@@ -6,6 +6,7 @@ import axios from "axios";
 import styles from "./style/projectList.module.css";
 import { useStyles } from "./style/ProjectListPageStyle";
 import useFullPageLoader from "./components/useFullPageLoader";
+import {formatDate} from "./helper";
 
 const ProjectListPage = (props) => {
   const history = useHistory();
@@ -126,11 +127,7 @@ const ProjectListPage = (props) => {
     // eslint-disable-next-line
   }, [rows]);
 
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
-    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${minutes}` 
-  }
+  
 
   const deStringProjectResponse = (project) => {
     const json = JSON.parse(project);
