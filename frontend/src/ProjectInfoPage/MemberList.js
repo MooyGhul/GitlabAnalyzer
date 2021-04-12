@@ -28,7 +28,7 @@ function MemberList({
     commentCount: commentCountArray[i],
     commentWordCount: commentWordCountArray[i],
     issueCount: issueCountArray[i],
-    issueWordCount: issueWordCountArray[i],
+    issueWordCount: issueWordCountArray[i] ? issueWordCountArray[i] : 0,
   }));
 
   const columns = [
