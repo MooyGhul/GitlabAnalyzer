@@ -23,6 +23,7 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import GitHubIcon from "@material-ui/icons/GitHub"; 
 import MenuIcon from "@material-ui/icons/Menu";
 import useStyles from "./style/NavbarSideStyle";
+import ScoreBreakdown from "./components/ScoreBreakdown/ScoreBreakdown";
 import WeightConfigurationPage from "./components/WeightConfigurationPage/WeightConfigurationPage";
 
 const NavbarSide = () => {
@@ -207,6 +208,17 @@ const NavbarSide = () => {
                 </Container>;
               }}/>
 
+              <Route
+                exact
+                path="/overview/:project_id/:member_id/breakdown"
+              >
+                <Container>
+                  <ScoreBreakdown
+                    project_id={project_id}
+                    member_id={member_id}
+                  />
+                </Container>
+              </Route>
               <Route exact path="/Settings">
                 <Container><WeightConfigurationPage token={token} startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/></Container>
               </Route>

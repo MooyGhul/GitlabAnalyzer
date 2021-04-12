@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
@@ -75,9 +75,9 @@ const ScoreBoard = (props) => {
 
   totalMRScore = Math.round(totalMRScore);
   totalCommitScore = Math.round(totalCommitScore);
-  
+
   const score_summary =
-    "Number of commits: " + 
+    "Number of commits: " +
     commitCount +
     "; Total commit score: " +
     totalCommitScore +
@@ -94,7 +94,7 @@ const ScoreBoard = (props) => {
     "; Issue word count: " +
     issueWordCount +
     ";";
-  
+
   const [isCopied, setCopied] = useClipboard(score_summary);
   console.log(isCopied)
   return (
@@ -118,6 +118,8 @@ const ScoreBoard = (props) => {
             variant="contained"
             color="primary"
             className={classes.button}
+            component={Link}
+            to={`/overview/${project_id}/${member_id}/breakdown`}
           >
             Score Breakdown <SearchIcon className={classes.icon} />
           </Button>

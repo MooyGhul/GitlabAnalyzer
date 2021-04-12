@@ -46,15 +46,18 @@ public class CommitEntity {
                 .build();
     }
     public static List<String> getCommitDiffs(JSONObject json) {
+        DiffScore diffScore = new DiffScore();
+
         JSONArray j = json.getJSONArray("diffs");
         List<String> list = new ArrayList<>();
-        for(int i=0;i<j.length();i++){
+        for(int i = 0; i < j.length(); i++){
             JSONObject js = j.getJSONObject(i);
             JSONObject commitDiffs = new JSONObject();
-            commitDiffs.put("diff",js.getString("diff"));
-            commitDiffs.put("new_path",js.getString("new_path"));
-            commitDiffs.put("old_path",js.getString("old_path"));
+            commitDiffs.put("diff", js.getString("diff"));
+            commitDiffs.put("new_path", js.getString("new_path"));
+            commitDiffs.put("old_path", js.getString("old_path"));
             commitDiffs.put("renamed_file", js.getBoolean("renamed_file"));
+            commitDiffs.put("score", diffScore.parseDiff(js.getString("diff"), js.getString("new_path")));
             list.add(commitDiffs.toString());
         }
         return list;
