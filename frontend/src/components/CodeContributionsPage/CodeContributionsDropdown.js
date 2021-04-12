@@ -55,7 +55,7 @@ const CodeContributionsDropdown = (props) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                    {rowDiffs.map(function(diff, i){
+                    {rowDiffs.map(diff =>{
                       return <CodeDiff codeDiff={diff}/>;
                     })}
                     </TableBody>
