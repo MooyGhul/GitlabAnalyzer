@@ -25,8 +25,8 @@ export default function DayByDayTable({ scoreData, commentData }) {
           <TableRow className={classes.banner}>
             <TableCell align="left" className={classes.banner}>Date</TableCell>
             {fileExtensions.map((fileExtension) => <TableCell align="left" className={classes.banner}>.{fileExtension}</TableCell>)}
-            <TableCell align="left" className={classes.banner}>MR Score</TableCell>
-            <TableCell align="left" className={classes.banner}>Issue Score</TableCell>
+            <TableCell align="left" className={classes.banner}>MR Word Count</TableCell>
+            <TableCell align="left" className={classes.banner}>Issue Word Count</TableCell>
             <TableCell />
           </TableRow>
         </TableHead>
