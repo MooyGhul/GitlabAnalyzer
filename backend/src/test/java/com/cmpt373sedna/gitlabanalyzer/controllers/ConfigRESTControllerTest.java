@@ -60,11 +60,11 @@ class ConfigRESTControllerTest {
 
     @Test
     void canLoadConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().url("configId").token("test0").build();
+        ConfigEntity configEntity = ConfigEntity.builder().token("configId").url("test0").build();
         ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).build();
         JSONObject projectJSON = new JSONObject().put("id", "6").put("name", "test");
 
-        when(configEntityRepository.findByUrl("configId")).thenReturn(Optional.of(configEntity));
+        when(configEntityRepository.findByToken("configId")).thenReturn(Optional.of(configEntity));
         when(extractor.getProjects(configEntity)).thenReturn(Collections.singletonList(projectJSON));
         when(projectEntityRepository.save(projectEntity)).thenReturn(projectEntity);
 
