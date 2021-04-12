@@ -178,7 +178,7 @@ const ProjectListPage = (props) => {
         });
       }
     } else {
-      console.log("multiple projects have been selected ");
+      setErrorMsg("Please choose a single project!")
     }
   };
 
