@@ -37,7 +37,7 @@
       "username" : "lennie",
       "id" : 9,
       "name" : "Dr. Luella Kovacek"
-    },
+    }, 
     "labels" : ["foo", "bar"],
     "upvotes": 4,
     "downvotes": 0,

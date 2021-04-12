@@ -151,7 +151,7 @@ const ProjectListPage = (props) => {
     setProjectIdArray(e.selectionModel);
   };
 
-  const buttonClickHandler = (event) => {
+  const buttonClickHandler = () => {
     let projectName;
     let projectLastSync
 
@@ -216,7 +216,6 @@ const ProjectListPage = (props) => {
       >
         Next
       </Button>
-
       <Button
         variant="contained"
         color="secondary"

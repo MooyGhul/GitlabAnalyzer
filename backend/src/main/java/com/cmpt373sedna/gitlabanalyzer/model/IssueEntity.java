@@ -26,6 +26,7 @@ public class IssueEntity {
     private @Nullable String assignee;
     private @Nullable Instant openedDate;
     private @Nullable Instant closedDate;
+    private String author;
 
 
     public static IssueEntity fromGitlabJSON(JSONObject json) {
@@ -44,6 +45,7 @@ public class IssueEntity {
                 .assignee(!JSONObject.NULL.equals(assigneeObject) ? assigneeObject.getString("name") : "")
                 .openedDate(Instant.parse(json.getString("created_at")))
                 .closedDate(closedDateString == null ? null : Instant.parse(closedDateString))
+                .author(json.getJSONObject("author").getString("username"))
                 .build();
     }
 }

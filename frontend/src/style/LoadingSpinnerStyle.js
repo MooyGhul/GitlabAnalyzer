@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles'; 
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -7,12 +7,12 @@ const useStyles = makeStyles((theme) => ({
      width: '100%',
      top:'0',
      left:'0',
-     background:'#f8f8f8ad'
+     background:'#f8f8f8ad',
+     zIndex:"1000"
     },
     spinner:{
       top: '50%',
-      left: '50%',
-      zIndex: '1000',
+      left: '50%', 
       position: 'absolute', 
     }
   }));

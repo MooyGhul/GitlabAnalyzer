@@ -10,4 +10,5 @@ import java.util.List;
 public interface CommentEntityRepository extends CrudRepository<CommentEntity, Long> {
     List<CommentEntity> findAllByProjectIdAndMRorIssueId(int projectId, int commentTypeId);
     List<CommentEntity> findAllByProjectIdAndCommenterOrderByCommentDateDesc(int id, String commenter);
+    List<CommentEntity> findAllByProjectId(int id);
 }

@@ -20,6 +20,7 @@ public class CommitEntityTest {
         commitDiffs.put("new_path","frontend.gitignore");
         commitDiffs.put("old_path","frontend.gitignore");
         commitDiffs.put("renamed_file", false);
+        commitDiffs.put("score", 0);
         list.add(commitDiffs.toString());
 
         CommitEntity expected = CommitEntity.builder()

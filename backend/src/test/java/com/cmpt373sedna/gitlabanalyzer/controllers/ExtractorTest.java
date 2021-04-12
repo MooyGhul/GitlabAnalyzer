@@ -24,7 +24,7 @@ class ExtractorTest {
 
     @Test
     void canGetProjects() {
-        assertThat(this.extractor.getProjects(this.testConfig), hasItem(notNullValue(ProjectEntity.class)));
+        assertThat(this.extractor.getProjects(this.testConfig), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test

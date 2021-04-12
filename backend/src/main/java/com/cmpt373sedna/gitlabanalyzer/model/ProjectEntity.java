@@ -2,6 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.model;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import org.json.JSONObject;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,6 +10,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
+import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Entity
 @Data
@@ -31,6 +36,8 @@ public class ProjectEntity {
         this.numComments = numComments;
         this.lastSync = UNSYNCED;
     }
+
+
 
     public ProjectEntity() {
         this.repoId = -1;
@@ -66,5 +73,21 @@ public class ProjectEntity {
         df.setTimeZone(tz);
         String nowAsISO = df.format(new Date());
         return nowAsISO;
+    }
+
+    public static ProjectEntity fromGitlabJSON(JSONObject json) {
+        return ProjectEntity.builder()
+                .repoId(json.getInt("id"))
+                .repoName(json.getString("name"))
+                .build();
+    }
+
+    public static List<ProjectEntity> fromGitlabJSONList(List<JSONObject> projectsArray) {
+        return projectsArray.stream()
+                .map(obj -> ProjectEntity.builder()
+                        .repoId(obj.getInt("id"))
+                        .repoName(obj.getString("name"))
+                        .build())
+                .collect(toList());
     }
 }
