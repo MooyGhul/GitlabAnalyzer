@@ -3,6 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
     root: {
         marginTop: '3%',
+        position: "absolute"
     },
     textField: {
         '& .MuiTextField-root': {

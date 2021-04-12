@@ -21,9 +21,8 @@ import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 import moment from 'moment';
 
 const WeightConfigurationPage 
-  = ({token, startDate, endDate, handleStartDate, handleEndDate, handleIterationName, handleIterationStartDate, handleIterationEndDate}) => {
+  = ({token, startDate, endDate, handleStartDate, handleEndDate, handleIterationName, handleIterationStartDate, handleIterationEndDate, project_id}) => {
     const classes = useStyles();
-    let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
     const [iterDates, setIterDates] = useState([]);
     const [iterationName, setIterationName] = useState('new Iteration');
@@ -167,17 +166,17 @@ const WeightConfigurationPage
 
     return (
         <Grid container spacing={5} justify="center" alignItems="center" className={classes.root}>
-            <Grid item xs={11}>
+            <Grid item xs={10}>
                 <Typography className={classes.pageTitle}> </Typography>
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={10}>
                 <Typography className={classes.pageTitle}>Configurations</Typography>
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={10}>
                 <Typography className={classes.subHeader}>Configure Dates</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={10}>
             <p>Please enter the iteration dates and name and click on "+Add Iteration" to add and save the iteration. </p>
             <p>To apply another iteration, please click "SELECT" next to the desired iteration. </p>
             <p>To deselct the iteration to look at contributions for the whole project duration, click "Deselect"</p>
@@ -195,7 +194,7 @@ const WeightConfigurationPage
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={8} >
+            <Grid item xs={7} >
                 <Typography className={classes.subHeader}>Saved Iterations</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <TableContainer>
@@ -218,7 +217,7 @@ const WeightConfigurationPage
                     </Table>
                 </TableContainer>
             </Grid>
-            <Grid item xs={11} spacing={5}>
+            <Grid item xs={10} spacing={5}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={2}>
                       <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={defaultButtonHandler}>Deselect</Button>
@@ -231,7 +230,7 @@ const WeightConfigurationPage
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={10}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={10}>
@@ -241,7 +240,7 @@ const WeightConfigurationPage
                 </Grid>
                 {createTextFieldsForProjectWeights()}
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={10}>
                 <Typography className={classes.subHeader1}>Configure Weights by File Type</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={5}>
@@ -252,7 +251,7 @@ const WeightConfigurationPage
                     </form>  
                 </Grid>
             </Grid>
-            <Grid item xs={11}>
+            <Grid item xs={10}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>
                         <Button variant="contained" component="span" className={classes.saveButton} size="large">Save</Button>
