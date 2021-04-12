@@ -50,27 +50,6 @@ function ProjectInfoPage({
   };
 
   useEffect(() => {
-    const loadProject = async () => {
-      showLoader();
-      return axios({
-        method: "post",
-        url:
-          process.env.NODE_ENV === "development"
-            ? `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`
-            : `/project/${projectId}/load`,
-      })
-        .then((response) => {
-          if (response.status === 200) {
-            hideLoader();
-            onProjectLoadedStateChange(true);
-            onNewProjectLoaded(projectId);
-          }
-        })
-        .catch(() => {
-          hideLoader();
-        });
-    };
-
     const fetchData = async () => {
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
@@ -102,19 +81,7 @@ function ProjectInfoPage({
       setIssues(issueData.data);
     };
 
-    const loadAndFetchProjectData = async () => {
-      updateProjectId();
-      if (!projectLoaded) {
-        await loadProject();
-        await fetchData();
-      }
-
-      if (projectLoaded && previousProjectId !== projectId) {
-        await loadProject();
-      }
-      await fetchData();
-    };
-    loadAndFetchProjectData();
+    fetchData();
 
     // eslint-disable-next-line
   }, []);
