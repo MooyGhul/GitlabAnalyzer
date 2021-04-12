@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { useStyles } from "./ProjectInfoStyle";
 import StackedBarChartCount from "./StackedBarChartCount";
 import StackedBarChartScore from "./StackedBarChartScore";
@@ -13,14 +12,13 @@ function ProjectInfoPage({
   onMemberIdChange,
   project_id,
 }) {
-  const location = useLocation();
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
   const [comments, setComments] = useState([]);
   const [issues, setIssues] = useState([]);
   const [loader] = useFullPageLoader();
-  const [noProjectSelected, showErrorPage] = useProjectNotSelected();
+  const [noProjectSelected] = useProjectNotSelected();
   let commitCountArray = [];
   let MRCountArray = [];
   let commentCountArray = [];
@@ -31,7 +29,7 @@ function ProjectInfoPage({
   let issueWordCountArray = [];
 
   const classes = useStyles();
-  const [projectId, setProjectId] = useState(project_id);
+  const [projectId] = useState(project_id);
 
   useEffect(() => {
     const fetchData = async () => {
