@@ -10,7 +10,7 @@ const Row = (props) => {
     const classes = useStyles();
     const {row, deleteRow} = props;
     const handleDelete = () => {
-        deleteRow(row.iterationName)
+        deleteRow(row.id)
     }
 
     return (

@@ -71,4 +71,14 @@ public class ConfigurationEntityController {
         weightConfig.setConfiguration(updatedConfig.getJSONObject("configurations").toString());
         this.weightConfigurationEntityRepository.save(weightConfig);
     }
+
+    @DeleteMapping("/delete/iterations")
+    public void deleteIterationConfigurations(@RequestBody String body){
+        String numAsString = body.substring(8,(body.length()-2));
+        String[] arrayOfNumAsString = numAsString.split(",");
+        for(String numInString : arrayOfNumAsString){
+            int id = Integer.parseInt(numInString);
+            this.iterationConfigurationRepository.deleteById(id);
+        }
+    }
 }
