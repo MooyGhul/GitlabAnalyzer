@@ -1,131 +1,82 @@
 import CodeContributionTable from "./CodeContributionTable";
-import {Grid} from "@material-ui/core";
-import React, {useEffect, useState} from "react";
+import { Grid, Switch } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Banner from "../Banner";
-import {useParams} from "react-router-dom";
-import {ComingSoonMsg} from "../../shared/ComingSoonMsg";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
-import {useGraphStyles} from "../../style/CodeContributionPageStyles";
-import Navbar from "../Navbar/Navbar";
+import { useGraphStyles, useSwitchStyles } from "../../style/CodeContributionPageStyles";
 import InnerNavBar from "../InnerNavBar";
-import {useInnerNavStyle} from "../../style/InnerNavStyle"
-import {formatTableDate, getGraphData} from "../../helper";
+import { useInnerNavStyle } from "../../style/InnerNavStyle";
+import { getGraphData, makeCommitGraphData, makeMRGraphData, mergeGraphData } from "../../helper";
+import { makeCodeContributionTableData } from "../../helper";
+import useProjectNotSelected from "../../components/useProjectNotSelected";
 
-const CodeContributionPage = () => {
+
+const CodeContributionPage = (props) => {
   const [codeContributionRows, setCodeContributionRows] = useState([]);
-  const {project_id, member_id} = useParams();
   const classes = useGraphStyles();
   const innerNavStyle = useInnerNavStyle();
+  const switchStyle = useSwitchStyles();
+  const [countsData, setCountsData] = useState([]);
+  const [scoreData, setScoreData] = useState([]);
   const [graphData, setGraphData] = useState([]);
-
-  const createMRData = (id, iid, type, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
-    return {id, iid, type, date, name, url, mrScore, totalCommitScore, relatedCommits};
-  }
-
-  const createCommitData = (id, type, date, name, url, score, diffs) => {
-    return {id, type, date, name, url, score, diffs};
-  }
-
-  const createGraphData = (year, MRDaily, CommitDaily) => {
-    return {year, MRDaily, CommitDaily};
-  }
+  const [project_id, setProjectId] = useState(props.project_id);
+  const [member_id, setMemberId] = useState(props.member_id);
+  const [scoreMode, setScoreMode] = useState(false);
+  const [noProjectSelected, showErrorPage] = useProjectNotSelected();
 
   useEffect(() => {
-    const codeContributionData = (commitData, mrData) => {
-      let commitArray = [];
-      let mrArray = [];
-      let commitCountsData = [];
-      let mrCountsData = [];
-
-      formatData(mrData, mrArray, commitData, commitArray);
-      console.log(mrArray);
-
-      const commitCounts = getGraphData(commitData, "commitDate");
-      const mrCounts = getGraphData(mrData, "mergedAt");
-      for(let i = 0; i < commitCounts.length; i++) {
-        commitCountsData.push(createGraphData(commitCounts[i].year, 0, commitCounts[i].data));
+    const setProjectIdAndMemberId = () => {
+      if (project_id === -1 || project_id === ':project_id' || member_id === -1 || member_id === ':member_id') {
+        showErrorPage();
+      } else {
+        setProjectId(props.project_id);
+        setMemberId(props.member_id);
       }
-      for(let i = 0; i < mrCounts.length; i++) {
-        mrCountsData.push(createGraphData(mrCounts[i].year, mrCounts[i].data, 0));
-      }
-
-      const ccGraphData = mergeCounts(commitCountsData, mrCountsData);
-      setGraphData(ccGraphData);
-
-      let ccArray = [...commitArray, ...mrArray];
-      ccArray.sort((a, b) => {
-          let dateA = new Date(a.date);
-          let dateB = new Date(b.date);
-          return dateB - dateA;
-        });
-
-      setCodeContributionRows(ccArray);
     };
 
-    const formatData = (mrData, mrArray, commitData, commitArray) => {
+    const codeContributionData = (commitData, mrData) => {
+      let mrArray = [];
+      let commitCountsData = [];
+      let commitScoresData = [];
+      let mrCountsData = [];
+      let mrScoresData = [];
 
-      for(let mrDataIndex = 0; mrDataIndex < mrData.length; mrDataIndex++) {
 
-        const relatedCommitIds = commitData.filter(val => {
-          return mrData[mrDataIndex].commitIds.includes(val.commitId);
-        });
+      makeCodeContributionTableData(mrData, mrArray, commitData);
 
-        let relatedCommitsArray = [];
-        for(let relatedCommitIndex = 0; relatedCommitIndex < relatedCommitIds.length; relatedCommitIndex++){
-          const commitDate = new Date(relatedCommitIds[relatedCommitIndex].commitDate);
-          const newCommitData = createCommitData(relatedCommitIds[relatedCommitIndex].commitId,
-            'commit',
-            '' + formatTableDate(commitDate),
-            relatedCommitIds[relatedCommitIndex].commitName,
-            relatedCommitIds[relatedCommitIndex].url,
-            ComingSoonMsg.msg,
-            relatedCommitIds[relatedCommitIndex].diffs);
-          relatedCommitsArray.push(newCommitData);
-        }
+      const commitCounts = getGraphData(commitData, "commitDate", false);
+      const mrCounts = getGraphData(mrData, "mergedAt", false);
+      const commitScores = getGraphData(commitData, "commitDate", true);
+      const mrScores = getGraphData(mrData, "mergedAt", true);
 
-        const mrDate = new Date(mrData[mrDataIndex].mergedAt);
-        const newMrData = createMRData(mrData[mrDataIndex].id,
-          mrData[mrDataIndex].iid,
-          'MR',
-          '' + formatTableDate(mrDate),
-          mrData[mrDataIndex].mergeRequestName,
-          mrData[mrDataIndex].url,
-          ComingSoonMsg.msg,
-          ComingSoonMsg.msg,
-          relatedCommitsArray);
+      makeCommitGraphData(commitCounts, commitCountsData);
+      makeCommitGraphData(commitScores, commitScoresData);
+      makeMRGraphData(mrCounts, mrCountsData);
+      makeMRGraphData(mrScores, mrScoresData);
 
-        mrArray.push(newMrData);
-      }
-    }
+      const ccCountsData = mergeGraphData(commitCountsData, mrCountsData);
+      const ccScoreData = mergeGraphData(commitScoresData, mrScoresData);
+      setCountsData(ccCountsData);
+      setScoreData(ccScoreData);
+      setGraphData(ccScoreData);
 
-    const mergeCounts = (commitCountsData, mrCountsData) => {
-      let merged;
-      for(let i = 0; i < commitCountsData.length; i++) {
-        for(let j = 0; j < mrCountsData.length; j++) {
-          if (commitCountsData[i].year === mrCountsData[j].year) {
-            commitCountsData[i].MRDaily += mrCountsData[j].MRDaily;
-            mrCountsData.splice(j, 1);
-          }
-        }
-      }
-
-      merged = [...commitCountsData, ...mrCountsData];
-      merged.sort((a,b) => {
-        let dateA = new Date(a.year);
-        let dateB = new Date(b.year);
-        return dateA - dateB;
+      let ccArray = mrArray;
+      ccArray.sort((a, b) => {
+        let dateA = new Date(a.date);
+        let dateB = new Date(b.date);
+        return dateB - dateA;
       });
 
-      return merged;
+      setCodeContributionRows(ccArray);
     };
 
     const fetchData = async () => {
       let mrUrl = `/project/${project_id}/member/${member_id}/merge_requests`;
       let commitUrl = `/project/${project_id}/member/${member_id}/commits`;
 
-      if(process.env.NODE_ENV === 'development') {
+      if (process.env.NODE_ENV === "development") {
         mrUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/merge_requests`;
         commitUrl = `${process.env.REACT_APP_DEVHOST}/project/${project_id}/member/${member_id}/commits`;
       }
@@ -137,47 +88,77 @@ const CodeContributionPage = () => {
 
       codeContributionData(commitData, mrData);
     };
+    setProjectIdAndMemberId();
 
-    fetchData()
-      .then(()=> {
-        console.log('Successful data retrieval');
-      }).catch(() => {
-      console.log('Failed retrieve data');
-    });
-  },[project_id, member_id]);
-  console.log(graphData);
-  console.log(codeContributionRows);
+    if (member_id !== -1) {
+      fetchData()
+        .then(() => {
+          console.log("Successful data retrieval");
+        })
+        .catch(() => {
+          console.log("Failed retrieve data");
+        });
+    }
+    // eslint-disable-next-line
+  }, [project_id, member_id, props]);
+
+  const handleSwitch = (event) => {
+    setScoreMode(event.target.checked);
+    scoreMode ? setGraphData(scoreData) : setGraphData(countsData);
+  }
 
   return (
-    <Grid container spacing={5} justify="center" alignItems="center">
-      <Grid item xs={12}>
+    <div>
+      <Grid
+        container
+        spacing={5}
+        justify="center"
+        alignItems="center"
+        className={classes.container}
+      >
         <Grid item xs={12}>
-          <Navbar />
+          <Grid item xs={12}>
+            <Banner memberName={member_id} type="codecontribution"
+                    />
+          </Grid>
         </Grid>
-        <Grid item xs={12}>
-          <Banner memberName={member_id} />
+        <Grid
+          container
+          spacing={5}
+          justify="center"
+          alignItems="center"
+          className={classes.contents}
+        >
+          <Grid item xs={12} align="center">
+            <InnerNavBar codeStyle={innerNavStyle.actionItemCode} />
+          </Grid>
+
+          <Grid className={classes.graph}>
+            <Switch
+              classes={switchStyle}
+              checked={scoreMode}
+              onChange={handleSwitch}
+              name='graphSwitch'
+              />
+
+            <BarChart
+              data={graphData}
+              codeContribution={true}
+              barLabel1={BarChartProperties.codeContribution.labelMRs}
+              barColour1={BarChartProperties.codeContribution.barColourMRs}
+              barLabel2={BarChartProperties.codeContribution.labelCommits}
+              barColour2={BarChartProperties.codeContribution.barColourCommits}
+              maintainRatio={false}
+            />
+          </Grid>
+          <Grid item className={classes.table}>
+            <CodeContributionTable
+              codeContributionRows={codeContributionRows} />
+          </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} align="center">
-        <InnerNavBar codeStyle={innerNavStyle.actionItemCode}/>
-      </Grid>
-
-      <Grid className={classes.graph}>
-        <BarChart
-          data={graphData}
-          codeContribution={true}
-          barLabel1={BarChartProperties.codeContribution.labelMRs}
-          barColour1={BarChartProperties.codeContribution.barColourMRs}
-          barLabel2={BarChartProperties.codeContribution.labelCommits}
-          barColour2={BarChartProperties.codeContribution.barColourCommits}
-          maintainRatio={false}
-        />
-      </Grid>
-
-      <Grid item className={classes.table}>
-        <CodeContributionTable codeContributionRows={codeContributionRows} />
-      </Grid>
-    </Grid>
+      {noProjectSelected}
+    </div>
   );
 };
 

@@ -24,32 +24,32 @@ class ExtractorTest {
 
     @Test
     void canGetProjects() {
-        assertThat(this.extractor.getProjects(this.testConfig), hasItem(notNullValue(ProjectEntity.class)));
+        assertThat(this.extractor.getProjects(this.testConfig), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
     void canGetMergeRequests() {
-        assertThat(this.extractor.getMergeRequests(this.testConfig, 2), hasItem(notNullValue(JSONObject.class)));
+        assertThat(this.extractor.getMergeRequests(this.testConfig, 2, "1974-01-01T00:00Z"), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
     void canGetMergeRequestComments() {
-        assertThat(this.extractor.getComments(this.testConfig, 2, "merge_requests/" + 9), hasItem(notNullValue(JSONObject.class)));
+        assertThat(this.extractor.getComments(this.testConfig, 2, "merge_requests/" + 9, "1974-01-01T00:00Z"), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
     void canGetIssues() {
-        assertThat(this.extractor.getIssues(this.testConfig, 2), hasItem(notNullValue(JSONObject.class)));
+        assertThat(this.extractor.getIssues(this.testConfig, 2, "1974-01-01T00:00Z"), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
     void canGetCommits() {
-        assertThat(this.extractor.getCommits(this.testConfig, 2), hasItem(notNullValue(JSONObject.class)));
+        assertThat(this.extractor.getCommits(this.testConfig, 2, "1974-01-01T00:00Z"), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test
     void canGetIssueComments() {
-        assertThat(this.extractor.getComments(this.testConfig, 2, "issues/" + 20), hasItem(notNullValue(JSONObject.class)));
+        assertThat(this.extractor.getComments(this.testConfig, 2, "issues/" + 20, "1974-01-01T00:00Z"), hasItem(notNullValue(JSONObject.class)));
     }
 
     @Test

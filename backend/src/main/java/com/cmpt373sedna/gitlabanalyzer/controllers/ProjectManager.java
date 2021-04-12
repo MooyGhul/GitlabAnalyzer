@@ -5,6 +5,7 @@ import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,8 @@ public class ProjectManager {
     private final @Getter List<ProjectController> allProjects;
     private final Extractor extractor;
     private @Setter String projectToken;
+    private List<JSONObject> projectList;
+    private @Setter ConfigEntity config;
 
     @Autowired
     private IssueEntityRepository issueRepository;
@@ -52,7 +55,9 @@ public class ProjectManager {
                 .url(baseUrl)
                 .build();
 
-        ProjectEntity projectEntity = this.extractor.getProject(config, projectId);
+        JSONObject projectJSON = this.extractor.getProject(config, projectId);
+        ProjectEntity projectEntity = ProjectEntity.fromGitlabJSON(projectJSON);
+
 
         ProjectController p = new ProjectController(this.extractor, config, projectEntity);
         p.load();
@@ -90,5 +95,10 @@ public class ProjectManager {
         return this.allProjects.stream()
                 .filter(project -> project.getProjectId() == projectId)
                 .findFirst();
+    }
+
+    public List<String> getProjectListInfo() {
+        List<String> temp = this.extractor.getBasicProjectInfo(this.config);
+        return temp;
     }
 }

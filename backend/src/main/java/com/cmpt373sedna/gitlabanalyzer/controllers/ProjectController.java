@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import static java.util.stream.Collectors.toList;
 
 public class ProjectController {
@@ -16,6 +15,8 @@ public class ProjectController {
     private @Getter int projectId;
 
     final private @Getter String projectName;
+
+    private @Getter String projectLastSync;
 
     private Extractor extractor;
 
@@ -25,7 +26,8 @@ public class ProjectController {
 
     private int totalComments;
 
-    private @Getter List<MergeRequestEntity> mergeRequestEntities;
+    private @Getter
+    List<MergeRequestEntity> mergeRequestEntities;
 
     private @Getter List<IssueEntity> issuesEntities;
 
@@ -35,12 +37,15 @@ public class ProjectController {
 
     private @Getter List<String> members;
 
+    private @Getter List<String> languages;
+
     public ProjectController(Extractor extractor, ConfigEntity configEntity, ProjectEntity projectEntity) {
         this.extractor = extractor;
         this.config = configEntity;
 
         this.projectId = projectEntity.getRepoId();
         this.projectName = projectEntity.getRepoName();
+        this.projectLastSync = projectEntity.getLastSync();
 
         this.weights = new int[]{1, 1, 1, 1};
     }
@@ -51,29 +56,31 @@ public class ProjectController {
         this.members = this.extractor.getRepoMembers(this.config, this.projectId);
         this.comments = this.getAndParseComments();
         this.commitEntities = this.getAndParseCommits();
+        this.languages = this.getAndParseProjectLanguages();
 
         return this;
     }
 
     private List<IssueEntity> getAndParseIssues() {
-        List<JSONObject> issues = this.extractor.getIssues(this.config, this.projectId);
+        List<JSONObject> issues = this.extractor.getIssues(this.config, this.projectId, this.projectLastSync);
         return issues.stream().map(IssueEntity::fromGitlabJSON).collect(toList());
     }
     private List<CommitEntity> getAndParseCommits() {
-        List<JSONObject> commits = this.extractor.getCommits(this.config, this.projectId);
+        List<JSONObject> commits = this.extractor.getCommits(this.config, this.projectId, this.projectLastSync);
         commits.forEach(commit -> commit.put("project_id", this.projectId));
         return commits.stream().map(CommitEntity::fromGitlabJSON).collect(toList());
     }
 
     private List<MergeRequestEntity> getAndParseMergeRequests() {
-        List<JSONObject> mergeRequests = extractor.getMergeRequests(this.config, this.projectId);
+        List<JSONObject> mergeRequests = extractor.getMergeRequests(this.config, this.projectId, this.projectLastSync);
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(toList());
     }
 
     private List<CommentEntity> getAndParseComments() {
         List<JSONObject> comments = new ArrayList<>();
         for(IssueEntity issue : this.issuesEntities) {
-            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectId, "issues/" + issue.getIssueIid());
+            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectId,
+                                            "issues/" + issue.getIssueIid(), this.projectLastSync);
             issueComments = issueComments.stream().peek(comment -> {
                 comment.put("created_by", issue.getAssignee());
                 comment.put("MRorIssueId", issue.getIssueIid());
@@ -83,7 +90,8 @@ public class ProjectController {
         }
 
         for(MergeRequestEntity mr : this.mergeRequestEntities) {
-            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectId, "merge_requests/" + mr.getIid());
+            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectId,
+                                        "merge_requests/" + mr.getIid(), this.projectLastSync);
             mrComments = mrComments.stream().peek(comment -> {
                 comment.put("created_by", mr.getAuthor());
                 comment.put("MRorIssueId", mr.getIid());
@@ -95,7 +103,13 @@ public class ProjectController {
         return comments.stream().map(CommentEntity::fromGitlabJSON).collect(toList());
     }
 
+    private List<String> getAndParseProjectLanguages() {
+        JSONObject langsJSON = this.extractor.getRepoFileTypes(this.config, this.projectId);
+        List<String> langs = new ArrayList<>();
+        langsJSON.keys().forEachRemaining(langs::add);
 
+        return langs;
+    }
 
     public int getNumCommits() {
         return this.commitEntities.size();

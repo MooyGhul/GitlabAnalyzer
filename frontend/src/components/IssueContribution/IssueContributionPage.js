@@ -8,7 +8,6 @@ import {
   TableBody, 
 } from "@material-ui/core";
 import Banner from "../Banner";
-import Navbar from "../Navbar/Navbar";
 import React, {useEffect, useState} from "react";
 import useStyles from "../../style/IssueContributionPageStyles";
 import Row from "./IssueTableDropDown";
@@ -37,7 +36,7 @@ const IssueContributionPage = () => {
           : `/project/${project_id}/member/${member_id}/issues`
       );
       setIssues(issueResult.data);
-      const issueCounts = getGraphData(issueResult.data, "openedDate");
+      const issueCounts = getGraphData(issueResult.data, "openedDate", false);
       setGraphData(issueCounts);
     };
     fetchData()
@@ -51,16 +50,19 @@ const IssueContributionPage = () => {
   }, [project_id, member_id, setGraphData]);
 
   return (
-    <Grid container spacing={5} justify="center" alignItems="center">
+    <Grid container spacing={5} justify="center" alignItems="center" className={classes.container}>
       <Grid item xs={12}>
         <Grid item xs={12}>
-          <Navbar />
-        </Grid>
-        <Grid item xs={12}>
-          <Banner memberName={member_id} />
+          <Banner memberName={member_id} type="issueContribution" />
         </Grid>
       </Grid>
-
+      <Grid
+          container
+          spacing={5}
+          justify="center"
+          alignItems="center"
+          className={classes.contents}
+        >
       <Grid item xs={12} align="center">
         <InnerNavBar issueStyle={innerNavStyle.actionItemIssue} />
       </Grid>
@@ -102,6 +104,7 @@ const IssueContributionPage = () => {
           </Table>
         </TableContainer>
       </Grid>
+    </Grid>
     </Grid>
   );
 };
