@@ -74,9 +74,8 @@ public class ConfigurationEntityController {
 
     @DeleteMapping("/delete/iterations")
     public void deleteIterationConfigurations(@RequestBody String body){
-        String theSubstring = body.substring(8,(body.length()-2));
-        System.out.println(theSubstring);
-        String[] arrayOfNumAsString = theSubstring.split(",");
+        String numAsString = body.substring(8,(body.length()-2));
+        String[] arrayOfNumAsString = numAsString.split(",");
         for(String numInString : arrayOfNumAsString){
             int id = Integer.parseInt(numInString);
             this.iterationConfigurationRepository.deleteById(id);
