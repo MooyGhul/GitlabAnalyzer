@@ -55,7 +55,6 @@ public class Extractor {
         int page = 1;
         List<JSONObject> data = new ArrayList<>();
         String fullPath = apiPath + page;
-        System.out.println("***************FULLPATH\n*********************\n********************\n" + fullPath);
         List<JSONObject> newData = getJsonObjectsList(buildUriProjects(config,fullPath));
         while(newData.size() > 0) {
             data.addAll(newData);
@@ -64,7 +63,6 @@ public class Extractor {
             fullPath = apiPath + page;
             newData = getJsonObjectsList(buildUriProjects(config, fullPath));
         }
-        System.out.println("***************\n*********************\n********************\n" + data.toString());
         return data;
     }
 
@@ -154,7 +152,6 @@ public class Extractor {
 
     private URI buildUriProjects(ConfigEntity config, String path) {
         URI temp = URI.create(config.getUrl() + "/api/v4/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
-        System.out.println("*****************\n******************\n**********************\n" + temp.toString());
         return temp;
     }
 
@@ -169,7 +166,6 @@ public class Extractor {
 
     private List<JSONObject> getJsonObjectsList(URI url) {
         String response = restTemplate.getForObject(url, String.class);
-        System.out.println("***************JSONObjectList\n*********************\n********************\n" + response);
         JSONArray jsonResponse = new JSONArray(response);
 
         List<JSONObject> jsonList = new ArrayList<>();
