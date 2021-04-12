@@ -40,6 +40,16 @@ const NavbarSide = () => {
   const [iteration, setIteration] = useState("");
   const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
   const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+  const [iterationStartDate, setIterationStartDate] = useState(new Date('January 1, 2021 00:00:00'));
+  const [iterationendDate, setIterationEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+
+  const handleIterationStartDate = (newDate) => {
+    setIterationStartDate(newDate)
+  };
+
+  const handleIterationEndDate = (newDate) => {
+    setIterationEndDate(newDate)
+  };
 
   const handleStartDate = (newDate) => {
     setStartDate(newDate)
@@ -77,6 +87,10 @@ const NavbarSide = () => {
     setDataFetched(state);
   }
 
+  const handleIterationName = (iterationName) => {
+    setIteration(iterationName);
+  }
+
   useEffect(() => {
     const fetchName  = async () => {
       const theProjectName = await axios.get(process.env.NODE_ENV === 'development' ?
@@ -91,7 +105,7 @@ const NavbarSide = () => {
 
   return (
     <Router>
-      <h1 className={classes.header}>{projectName}{iteration}</h1>
+      <h1 className={classes.header}>{projectName} ({iteration})</h1>
       <MenuIcon className={classes.menuIcon} onClick={toggle} />
 
       <Grid container>
@@ -240,7 +254,18 @@ const NavbarSide = () => {
                 </Container>
               </Route>
               <Route exact path="/Settings">
-                <Container><WeightConfigurationPage token={token} startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/></Container>
+                <Container>
+                  <WeightConfigurationPage 
+                    token={token} 
+                    startDate={startDate} 
+                    endDate={endDate} 
+                    handleStartDate={handleStartDate} 
+                    handleEndDate={handleEndDate} 
+                    handleIterationName={handleIterationName}
+                    handleIterationStartDate={handleIterationStartDate}
+                    handleIterationEndDate={handleIterationEndDate}
+                  />
+                </Container>
               </Route>
             </Switch>
           </Container>

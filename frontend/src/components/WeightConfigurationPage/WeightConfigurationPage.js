@@ -20,7 +20,8 @@ import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 import moment from 'moment';
 
-const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, handleEndDate}) => {
+const WeightConfigurationPage 
+  = ({token, startDate, endDate, handleStartDate, handleEndDate, handleIterationName, handleIterationStartDate, handleIterationEndDate}) => {
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
@@ -177,7 +178,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={7} >
+            <Grid item xs={8} >
                 <Typography className={classes.subHeader}>Saved Iterations</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <TableContainer>
@@ -187,7 +188,14 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                         </TableHead>
                         <TableBody>
                             {iterDates.map((row) => (
-                                <Row key={row.iterationName} deleteRow={DeleteRow} row={row}/>
+                                <Row 
+                                  key={row.iterationName} 
+                                  handleIterationName={handleIterationName} 
+                                  deleteRow={DeleteRow} 
+                                  row={row}
+                                  handleIterationStartDate={handleIterationStartDate}
+                                  handleIterationEndDate={handleIterationEndDate}
+                                />
                             ))}
                         </TableBody>
                     </Table>

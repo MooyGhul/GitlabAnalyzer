@@ -8,9 +8,16 @@ import useStyles from '../../style/WeightConfigurationPageStyles';
 
 const Row = (props) => {
     const classes = useStyles();
-    const {row, deleteRow} = props;
+    const {row, deleteRow, handleIterationName, handleIterationStartDate, handleIterationEndDate} = props;
     const handleDelete = () => {
         deleteRow(row.id)
+    }
+
+    const handleSetIteration = () => {
+      console.log(row);
+      handleIterationName(row.iterationName);
+      handleIterationStartDate(row.startDate);
+      handleIterationEndDate(row.endDate);
     }
 
     return (
@@ -20,6 +27,7 @@ const Row = (props) => {
             <TableCell align="center">{row.endDate}</TableCell>
             <TableCell align="center">
                 <Button variant="contained" component="span" className={classes.deleteButton} onClick={handleDelete} size="small">Delete</Button>
+                <Button variant="contained" component="span" className={classes.applyButton} onClick={handleSetIteration} size="small">Apply</Button>
             </TableCell>
         </TableRow>
     )
