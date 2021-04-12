@@ -4,11 +4,13 @@ import com.cmpt373sedna.gitlabanalyzer.model.ConfigEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.ProjectEntity;
 import com.cmpt373sedna.gitlabanalyzer.repository.ConfigEntityRepository;
 import com.cmpt373sedna.gitlabanalyzer.repository.ProjectEntityRepository;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,34 +29,42 @@ public class ConfigRESTController {
     @Autowired
     private ProjectEntityRepository projectEntityRepository;
 
-    @PostMapping
+    @PostMapping("/create")
     public ConfigEntity create(@RequestBody ConfigEntity body) {
+        projectManager.setConfig(body);
         return this.configEntityRepository.save(body);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public Iterable<ConfigEntity> getAll() {
         return this.configEntityRepository.findAll();
     }
 
-    @PutMapping("/{configId}")
-    public ConfigEntity replace(@PathVariable String configId, @RequestBody ConfigEntity body) {
-        if (!configId.equals(body.getId())) {
-            throw new IllegalArgumentException("URL ID and body ID don't match");
+    @PostMapping("/{token}/load")
+    public List<ProjectEntity> loadConfig(@PathVariable(value="token") String token) {
+        ConfigEntity config = this.configEntityRepository.findByToken(token).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        System.out.println("***************Point1\n*********************\n********************\n");
+        //List<ProjectEntity> projectsFromGitlab = projectsJSON.stream().map(ProjectEntity::fromGitlabJSON).collect(Collectors.toList());
+        List<ProjectEntity> projectsFromGitlab = ProjectEntity.fromGitlabJSONList(this.extractor.getProjects(config));
+        System.out.println("***************Point2\n*********************\n********************\n");
+        Iterable<ProjectEntity> projectsInDb = projectEntityRepository.findAll();
+        System.out.println("***************Point3\n*********************\n********************\n");
+        List<ProjectEntity> projectsToSave = new ArrayList<>();
+        System.out.println("***************Point4\n*********************\n********************\n");
+        boolean sameId = false;
+        for(ProjectEntity peGL: projectsFromGitlab) {
+            for (ProjectEntity peDB : projectsInDb) {
+                if (peGL.getRepoId() == peDB.getRepoId()) {
+                    sameId = true;
+                }
+            }
+            if (!sameId) {
+                projectsToSave.add(peGL);
+            }
+            sameId = false;
         }
-        return this.configEntityRepository.save(body);
-    }
-
-    @GetMapping("/{configId}")
-    public ConfigEntity get(@PathVariable String configId) {
-        return this.configEntityRepository.findById(configId).orElse(null);
-    }
-
-    @PostMapping("/{configId}/load")
-    public List<ProjectEntity> loadConfig(@PathVariable String configId) {
-        ConfigEntity config = this.configEntityRepository.findById(configId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        List<ProjectEntity> projectList = ProjectEntity.fromGitlabJSONList(this.extractor.getProjects(config));
-        return projectList.stream()
+        System.out.println("***************Point5\n*********************\n********************\n");
+        return projectsToSave.stream()
                 .map(project -> this.projectEntityRepository.save(project))
                 .peek(project -> this.projectManager.getOrAddProject(config, project))
                 .collect(Collectors.toList());

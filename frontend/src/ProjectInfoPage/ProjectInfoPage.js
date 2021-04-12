@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
 import { useStyles } from "./ProjectInfoStyle";
 import StackedBarChartCount from "./StackedBarChartCount";
 import StackedBarChartScore from "./StackedBarChartScore";
@@ -12,19 +11,14 @@ import useProjectNotSelected from "../components/useProjectNotSelected";
 function ProjectInfoPage({
   onMemberIdChange,
   project_id,
-  onProjectLoadedStateChange,
-  projectLoaded,
-  onNewProjectLoaded,
-  previousProjectId,
 }) {
-  const location = useLocation();
   const [members, setMembers] = useState([]);
   const [commits, setCommits] = useState([]);
   const [MRs, setMRs] = useState([]);
   const [comments, setComments] = useState([]);
   const [issues, setIssues] = useState([]);
-  const [loader, showLoader, hideLoader] = useFullPageLoader();
-  const [noProjectSelected, showErrorPage] = useProjectNotSelected();
+  const [loader] = useFullPageLoader();
+  const [noProjectSelected] = useProjectNotSelected();
   let commitCountArray = [];
   let MRCountArray = [];
   let commentCountArray = [];
@@ -35,42 +29,9 @@ function ProjectInfoPage({
   let issueWordCountArray = [];
 
   const classes = useStyles();
-  const [projectId, setProjectId] = useState(project_id);
-
-  const updateProjectId = async () => {
-    if (projectId === -1 || project_id === ':project_id') {
-      showErrorPage();
-    } else {
-      try {
-        setProjectId(location.state.id);
-      } catch (err) {
-        setProjectId(project_id);
-      }
-    }
-  };
+  const [projectId] = useState(project_id);
 
   useEffect(() => {
-    const loadProject = async () => {
-      showLoader();
-      return axios({
-        method: "post",
-        url:
-          process.env.NODE_ENV === "development"
-            ? `${process.env.REACT_APP_DEVHOST}/project/${projectId}/load`
-            : `/project/${projectId}/load`,
-      })
-        .then((response) => {
-          if (response.status === 200) {
-            hideLoader();
-            onProjectLoadedStateChange(true);
-            onNewProjectLoaded(projectId);
-          }
-        })
-        .catch(() => {
-          hideLoader();
-        });
-    };
-
     const fetchData = async () => {
       let mrUrl = `/project/${projectId}/merge_requests`;
       let commitUrl = `/project/${projectId}/commits`;
@@ -102,19 +63,7 @@ function ProjectInfoPage({
       setIssues(issueData.data);
     };
 
-    const loadAndFetchProjectData = async () => {
-      updateProjectId();
-      if (!projectLoaded) {
-        await loadProject();
-        await fetchData();
-      }
-
-      if (projectLoaded && previousProjectId !== projectId) {
-        await loadProject();
-      }
-      await fetchData();
-    };
-    loadAndFetchProjectData();
+    fetchData();
 
     // eslint-disable-next-line
   }, []);

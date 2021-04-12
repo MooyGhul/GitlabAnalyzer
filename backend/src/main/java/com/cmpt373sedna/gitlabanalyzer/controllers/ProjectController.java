@@ -16,6 +16,8 @@ public class ProjectController {
 
     final private @Getter String projectName;
 
+    private @Getter String projectLastSync;
+
     private Extractor extractor;
 
     private ConfigEntity config;
@@ -43,6 +45,7 @@ public class ProjectController {
 
         this.projectId = projectEntity.getRepoId();
         this.projectName = projectEntity.getRepoName();
+        this.projectLastSync = projectEntity.getLastSync();
 
         this.weights = new int[]{1, 1, 1, 1};
     }
@@ -59,24 +62,25 @@ public class ProjectController {
     }
 
     private List<IssueEntity> getAndParseIssues() {
-        List<JSONObject> issues = this.extractor.getIssues(this.config, this.projectId);
+        List<JSONObject> issues = this.extractor.getIssues(this.config, this.projectId, this.projectLastSync);
         return issues.stream().map(IssueEntity::fromGitlabJSON).collect(toList());
     }
     private List<CommitEntity> getAndParseCommits() {
-        List<JSONObject> commits = this.extractor.getCommits(this.config, this.projectId);
+        List<JSONObject> commits = this.extractor.getCommits(this.config, this.projectId, this.projectLastSync);
         commits.forEach(commit -> commit.put("project_id", this.projectId));
         return commits.stream().map(CommitEntity::fromGitlabJSON).collect(toList());
     }
 
     private List<MergeRequestEntity> getAndParseMergeRequests() {
-        List<JSONObject> mergeRequests = extractor.getMergeRequests(this.config, this.projectId);
+        List<JSONObject> mergeRequests = extractor.getMergeRequests(this.config, this.projectId, this.projectLastSync);
         return mergeRequests.stream().map(MergeRequestEntity::fromGitlabJSON).collect(toList());
     }
 
     private List<CommentEntity> getAndParseComments() {
         List<JSONObject> comments = new ArrayList<>();
         for(IssueEntity issue : this.issuesEntities) {
-            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectId, "issues/" + issue.getIssueIid());
+            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectId,
+                                            "issues/" + issue.getIssueIid(), this.projectLastSync);
             issueComments = issueComments.stream().peek(comment -> {
                 comment.put("created_by", issue.getAssignee());
                 comment.put("MRorIssueId", issue.getIssueIid());
@@ -86,7 +90,8 @@ public class ProjectController {
         }
 
         for(MergeRequestEntity mr : this.mergeRequestEntities) {
-            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectId, "merge_requests/" + mr.getIid());
+            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectId,
+                                        "merge_requests/" + mr.getIid(), this.projectLastSync);
             mrComments = mrComments.stream().peek(comment -> {
                 comment.put("created_by", mr.getAuthor());
                 comment.put("MRorIssueId", mr.getIid());
