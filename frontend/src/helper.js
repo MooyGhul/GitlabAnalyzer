@@ -1,5 +1,4 @@
 import moment from "moment";
-import {ComingSoonMsg} from "./shared/ComingSoonMsg";
 
 const monthNames = ["January", "February", "March",
   "April", "May", "June", "July", "August", "September",
@@ -119,7 +118,7 @@ export const makeCodeContributionTableData = (mrData, mrArray, commitData) => {
         '' + formatTableDate(commitDate),
         relatedCommitIds[relatedCommitIndex].commitName,
         relatedCommitIds[relatedCommitIndex].url,
-        ComingSoonMsg.msg);
+          relatedCommitIds[relatedCommitIndex].score);
       relatedCommitsArray.push(newCommitData);
     }
 
@@ -130,12 +129,16 @@ export const makeCodeContributionTableData = (mrData, mrArray, commitData) => {
       '' + formatTableDate(mrDate),
       mrData[mrDataIndex].mergeRequestName,
       mrData[mrDataIndex].url,
-      ComingSoonMsg.msg,
-      ComingSoonMsg.msg,
+      mrData[mrDataIndex].score,
+      sumCommitScore(relatedCommitsArray),
       relatedCommitsArray);
     mrArray.push(newMrData);
   }
 };
+
+const sumCommitScore = (commits) => {
+    return commits.reduce((sum, commit) => sum + commit.score, 0).toFixed(2);
+}
 
 export const makeCommitGraphData = (commitDataTypeArray, commitDataOutputArray) => {
   for(let i = 0; i < commitDataTypeArray.length; i++) {

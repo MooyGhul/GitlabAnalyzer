@@ -21,20 +21,20 @@ const Scores = (props) => {
       <Grid item lg={3} md={3} sm={2} className={classes.score}>
         <p className={classes.title}>Total Commit</p>
         <Divider />
-        <p>{commitCount ? commitCount : "N/A"} commits <br></br>{totalCommitScore ? totalCommitScore : "N/A"} points</p>
+        <p>{commitCount ? commitCount : "N/A"} commits <br />{totalCommitScore ? -1 * totalCommitScore : "N/A"} points</p>
       </Grid>
 
       <Grid item lg={3} md={3} sm={2} className={classes.score}>
         <p className={classes.title}>Total MR</p>
         <Divider />
-        <p>{MRCount ? MRCount : "N/A"} MRs <br></br>{totalMRScore ? totalMRScore : "N/A"} points</p>
+        <p>{MRCount ? MRCount : "N/A"} MRs <br />{totalMRScore ? totalMRScore : "N/A"} points</p>
       </Grid>
 
       <Grid item lg={3} md={3} sm={2} className={classes.score}>
         <p className={classes.title}>Comments</p>
         <Divider />
         <p>
-          {commentCount ? commentCount : "N/A"} comments <br></br>
+          {commentCount ? commentCount : "N/A"} comments <br />
           {commentWordCount ? commentWordCount : "N/A"} words
         </p>
       </Grid>
@@ -43,7 +43,7 @@ const Scores = (props) => {
         <p className={classes.title}>Issues</p>
         <Divider />
         <p>
-          {issueCount ? issueCount : "N/A"} issues <br></br>
+          {issueCount ? issueCount : "N/A"} issues <br />
           {issueWordcount ? issueWordcount : "N/A"} words{" "}
         </p>
       </Grid>
