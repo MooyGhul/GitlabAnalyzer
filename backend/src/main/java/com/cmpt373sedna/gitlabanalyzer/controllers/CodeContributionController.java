@@ -31,9 +31,9 @@ public class CodeContributionController {
         this.extractor = new Extractor();
 
         this.contributionID = projectEntity.getRepoId();
-        this.mergeRequests =  this.extractor.getMergeRequests(config, projectEntity.getRepoId());
-        this.issues = this.extractor.getIssues(config, projectEntity.getRepoId());
-        this.commits = this.extractor.getCommits(config, projectEntity.getRepoId());
+        this.mergeRequests =  this.extractor.getMergeRequests(config, projectEntity.getRepoId(), projectEntity.getLastSync());
+        this.issues = this.extractor.getIssues(config, projectEntity.getRepoId(), projectEntity.getLastSync());
+        this.commits = this.extractor.getCommits(config, projectEntity.getRepoId(), projectEntity.getLastSync());
 
         this.weights = new int[]{1, 1, 1};
     }
@@ -49,13 +49,15 @@ public class CodeContributionController {
         int sum = 0;
 
         for(JSONObject issue : this.issues) {
-            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectEntity.getRepoId(), "issues/" +  issue.getInt("id"));
+            List<JSONObject> issueComments = this.extractor.getComments(this.config, this.projectEntity.getRepoId(),
+                                        "issues/" +  issue.getInt("id"), this.projectEntity.getLastSync());
             sum += issueComments.size();
         }
 
         for(JSONObject mr : this.mergeRequests) {
             int mrId = (Integer) mr.get("iid");
-            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectEntity.getRepoId(), "merge_requests/" + mrId);
+            List<JSONObject> mrComments = this.extractor.getComments(this.config, this.projectEntity.getRepoId(),
+                                                "merge_requests/" + mrId, this.projectEntity.getLastSync());
             sum += mrComments.size();
         }
 

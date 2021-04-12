@@ -1,4 +1,4 @@
-import React from "react"; 
+import React, { useEffect } from "react"; 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   Drawer,
@@ -10,6 +10,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import ProjectInfoPage from "./ProjectInfoPage/ProjectInfoPage";
+import axios from "axios";
 import { useState } from "react";
 import UrlToken from "./components/UrlToken";
 import ProjectListPage from "./ProjectListPage";
@@ -35,9 +36,20 @@ const NavbarSide = () => {
   const [projectLoaded, setProjectLoaded] = useState(false);
   const [previousProjectId, setPreviousProjectId] = useState(-1);
   const [dataFetched, setDataFetched] = useState(false);
-
+  const [projectName, setProjectName] = useState("Gitlab Analyzer");
+  const [iteration, setIteration] = useState("Not Selected");
   const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
   const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+  const [iterationStartDate, setIterationStartDate] = useState(new Date('January 1, 2021 00:00:00'));
+  const [iterationendDate, setIterationEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
+
+  const handleIterationStartDate = (newDate) => {
+    setIterationStartDate(newDate)
+  };
+
+  const handleIterationEndDate = (newDate) => {
+    setIterationEndDate(newDate)
+  };
 
   const handleStartDate = (newDate) => {
     setStartDate(newDate)
@@ -63,7 +75,6 @@ const NavbarSide = () => {
     setProjectId(newProjectId); 
   }; 
 
-
   const handleProjectLoadedChange = (state) => {
     setProjectLoaded(state);
   }
@@ -76,9 +87,25 @@ const NavbarSide = () => {
     setDataFetched(state);
   }
 
+  const handleIterationName = (iterationName) => {
+    setIteration(iterationName);
+  }
+
+  useEffect(() => {
+    const fetchName  = async () => {
+      const theProjectName = await axios.get(process.env.NODE_ENV === 'development' ?
+          `${process.env.REACT_APP_DEVHOST}/project/${project_id}` :
+          `project/${project_id}`);
+      setProjectName(theProjectName.data);
+    }
+    if (project_id !== -1) {
+      fetchName();
+    }
+  },[project_id]);
+
   return (
     <Router>
-      <h1 className={classes.header}>Gitlab Analyzer</h1>
+      <h1 className={classes.header}>{projectName}, Iteration: {iteration}</h1>
       <MenuIcon className={classes.menuIcon} onClick={toggle} />
 
       <Grid container>
@@ -179,8 +206,8 @@ const NavbarSide = () => {
 
                 return <Container>
                   <CodeContributionPage
-                    startDate={startDate}
-                    endDate={endDate}
+                    startDate={iterationStartDate}
+                    endDate={iterationendDate}
                     project_id={match.params.project_id}
                     member_id={match.params.member_id}
                   />
@@ -193,8 +220,8 @@ const NavbarSide = () => {
 
                 return <Container>
                   <CommentContributionPage
-                    startDate={startDate}
-                    endDate={endDate}
+                    startDate={iterationStartDate}
+                    endDate={iterationendDate}
                     project_id={match.params.project_id}
                     member_id={match.params.member_id}
                   />
@@ -221,13 +248,24 @@ const NavbarSide = () => {
                   <ScoreBreakdown
                     project_id={project_id}
                     member_id={member_id}
-                    startDate={startDate}
-                    endDate={endDate}
+                    startDate={iterationStartDate}
+                    endDate={iterationendDate}
                   />
                 </Container>
               </Route>
               <Route exact path="/Settings">
-                <Container><WeightConfigurationPage token={token} startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/></Container>
+                <Container>
+                  <WeightConfigurationPage 
+                    token={token} 
+                    startDate={startDate} 
+                    endDate={endDate} 
+                    handleStartDate={handleStartDate} 
+                    handleEndDate={handleEndDate} 
+                    handleIterationName={handleIterationName}
+                    handleIterationStartDate={handleIterationStartDate}
+                    handleIterationEndDate={handleIterationEndDate}
+                  />
+                </Container>
               </Route>
             </Switch>
           </Container>

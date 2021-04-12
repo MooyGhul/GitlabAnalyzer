@@ -2,6 +2,7 @@ package com.cmpt373sedna.gitlabanalyzer.controllers;
 
 import com.cmpt373sedna.gitlabanalyzer.model.*;
 import com.cmpt373sedna.gitlabanalyzer.repository.*;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +32,6 @@ public class ProjectRESTController {
     @Autowired
     private MergeRequestEntityRepository mergeRequestEntityRepository;
 
-
-
     @PostMapping("/create")
     @Deprecated
     void initializeUser(@RequestParam String token) {
@@ -55,13 +54,19 @@ public class ProjectRESTController {
         return this.projectRepository.findAll();
     }
 
+    @GetMapping("/all/projectList")
+    List<String> getProjectListInfo() {
+        List<String> temp = this.projectManager.getProjectListInfo();
+        return temp;
+    }
+
     @GetMapping("/{projectId}")
     String getProjectName(@PathVariable(value="projectId") int projectId) {
         return this.projectRepository.findProjectEntityByRepoId(projectId).getRepoName();
     }
 
     @PostMapping("/{projectId}/load")
-    void load(@PathVariable() int projectId) {
+    ProjectEntity load(@PathVariable() int projectId) {
         ProjectController projectController = this.projectManager.findProject(projectId)
                 .map(ProjectController::load)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -70,6 +75,11 @@ public class ProjectRESTController {
         this.issueRepository.saveAll(projectController.getIssuesEntities());
         this.commentEntityRepository.saveAll(projectController.getComments());
         this.mergeRequestEntityRepository.saveAll(projectController.getMergeRequestEntities());
+        String syncTime = ProjectEntity.getCurrentTime();
+        this.projectRepository.updateLastSync(projectId, syncTime);
+
+        ProjectEntity response = new ProjectEntity(projectId, syncTime);
+        return response;
     }
 
 

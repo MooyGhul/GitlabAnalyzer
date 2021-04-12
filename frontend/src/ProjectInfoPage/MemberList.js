@@ -22,13 +22,13 @@ function MemberList({
     id: i,
     studentID: members[i],
     commitCount: commitCountArray[i],
-    commitScore: commitScoreArray[i],
-    MRCount: MRCountArray[i],
-    MRScore: MRScoreArray[i],
+    commitScore: Math.round(commitScoreArray[i]),
+    MRCount: Math.round(MRCountArray[i]),
+    MRScore: Math.round(MRScoreArray[i]),
     commentCount: commentCountArray[i],
     commentWordCount: commentWordCountArray[i],
     issueCount: issueCountArray[i],
-    issueWordCount: issueWordCountArray[i],
+    issueWordCount: issueWordCountArray[i] ? issueWordCountArray[i] : 0,
   }));
 
   const columns = [

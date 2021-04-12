@@ -1,5 +1,4 @@
 import moment from "moment";
-import {ComingSoonMsg} from "./shared/ComingSoonMsg";
 
 const monthNames = ["January", "February", "March",
   "April", "May", "June", "July", "August", "September",
@@ -91,14 +90,20 @@ export const formatTableDate = (commentDate, includeTime = true) => {
     let time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
     return `${month} ${day}${includeTime ? `, ${year} @ ${time}` : ''}`;
+}
+
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${minutes}` 
+}
+    
+const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits,diff) => {
+  return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits,diff};
 };
 
-const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
-  return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
-};
-
-const createCommitData = (id, date, name, url, score) => {
-  return {id, date, name, url, score};
+const createCommitData = (id, date, name, url, score,diff) => {
+  return {id, date, name, url, score,diff};
 };
 
 const createGraphData = (year, MRDaily, CommitDaily) => {
@@ -119,7 +124,8 @@ export const makeCodeContributionTableData = (mrData, mrArray, commitData) => {
         '' + formatTableDate(commitDate),
         relatedCommitIds[relatedCommitIndex].commitName,
         relatedCommitIds[relatedCommitIndex].url,
-        ComingSoonMsg.msg);
+          relatedCommitIds[relatedCommitIndex].score,
+          relatedCommitIds[relatedCommitIndex].diffs);
       relatedCommitsArray.push(newCommitData);
     }
 
@@ -130,12 +136,17 @@ export const makeCodeContributionTableData = (mrData, mrArray, commitData) => {
       '' + formatTableDate(mrDate),
       mrData[mrDataIndex].mergeRequestName,
       mrData[mrDataIndex].url,
-      ComingSoonMsg.msg,
-      ComingSoonMsg.msg,
-      relatedCommitsArray);
+      mrData[mrDataIndex].score,
+      sumCommitScore(relatedCommitsArray),
+      relatedCommitsArray,
+      mrData[mrDataIndex].mrDiffs);
     mrArray.push(newMrData);
   }
 };
+
+const sumCommitScore = (commits) => {
+    return commits.reduce((sum, commit) => sum + commit.score, 0).toFixed(2);
+}
 
 export const makeCommitGraphData = (commitDataTypeArray, commitDataOutputArray) => {
   for(let i = 0; i < commitDataTypeArray.length; i++) {

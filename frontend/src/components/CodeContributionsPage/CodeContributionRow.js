@@ -24,6 +24,7 @@ const CodeContributionRow = (props) => {
     {id: 'date', label: 'Commit Date'},
     {id: 'name', label: 'Commit Name'},
     {id: 'score', label: 'Commit Score'},
+    {id: 'codeDiff', label: 'Code Diff'},
   ]
 
   const isOpen = () => {

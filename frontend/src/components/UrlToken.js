@@ -17,15 +17,16 @@ function UrlToken({handleTokenAccess}) {
     const [loginToken, setLoginToken] = useState(''); 
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
-
     const createConfigID = async (url, token) => {
         return axios({
           method: "post",
           url: (process.env.NODE_ENV === 'development' ?           
-          `${process.env.REACT_APP_DEVHOST}/api/config/` :
-          `/api/config/`),
-          data: { url, token },
-        }).then((res) => res.data.id);
+          `${process.env.REACT_APP_DEVHOST}/api/config/create` :
+          `/api/config/create`),
+          data: { url: url, token: token},
+        }).then((res) => {
+            console.log(res) 
+        });
       };
 
       
@@ -57,8 +58,8 @@ function UrlToken({handleTokenAccess}) {
     }
 
     const loadWithConfigId = async () => {
-        const configID = await createConfigID(urlToken.url, urlToken.token); 
-        await loadAllProjects(configID); 
+        await createConfigID(urlToken.url, urlToken.token); 
+        await loadAllProjects(urlToken.token);
       };   
     
 
@@ -85,7 +86,6 @@ function UrlToken({handleTokenAccess}) {
                 <h2 className={classes.h2}> Server information </h2>
 
                 <h3>{errorMsg}</h3>
-
 
                 <TextField id='url' classes={{root: classes.customTextField}} label='Server URL' value={urlToken.url}
                         onChange={e=> setUrlToken({...urlToken, url: e.target.value})}/>

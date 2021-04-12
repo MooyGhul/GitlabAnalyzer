@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +39,7 @@ class ConfigRESTControllerTest {
 
     @Test
     void canCreateConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().name("test0").build();
+        ConfigEntity configEntity = ConfigEntity.builder().build();
 
         configRESTController.create(configEntity);
 
@@ -48,8 +49,8 @@ class ConfigRESTControllerTest {
     @Test
     void canGetAllConfigs() {
         List<ConfigEntity> configs = asList(
-                ConfigEntity.builder().name("test1").build(),
-                ConfigEntity.builder().name("test2").build()
+                ConfigEntity.builder().build(),
+                ConfigEntity.builder().build()
         );
 
         when(configEntityRepository.findAll()).thenReturn(configs);
@@ -58,36 +59,21 @@ class ConfigRESTControllerTest {
     }
 
     @Test
-    void canReplaceConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
-
-        configRESTController.replace("configId", configEntity);
-
-        verify(configEntityRepository, times(1)).save(configEntity);
-    }
-
-    @Test
-    void canGetConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
-
-        when(configEntityRepository.findById("configId")).thenReturn(Optional.of(configEntity));
-
-        assertEquals(configEntity, configRESTController.get("configId"));
-    }
-
-    @Test
     void canLoadConfig() {
-        ConfigEntity configEntity = ConfigEntity.builder().id("configId").name("test0").build();
-        ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).repoName("test").build();
+        ConfigEntity configEntity = ConfigEntity.builder().token("configId").url("test0").build();
+        ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).build();
         JSONObject projectJSON = new JSONObject().put("id", "6").put("name", "test");
 
-        when(configEntityRepository.findById("configId")).thenReturn(Optional.of(configEntity));
+        when(configEntityRepository.findByToken("configId")).thenReturn(Optional.of(configEntity));
         when(extractor.getProjects(configEntity)).thenReturn(Collections.singletonList(projectJSON));
         when(projectEntityRepository.save(projectEntity)).thenReturn(projectEntity);
 
         List<ProjectEntity> result = configRESTController.loadConfig("configId");
+        List<Object> nulls = new ArrayList<>();
+        nulls.add(null);
+        assertEquals(nulls, result);
 
-        assertEquals(Collections.singletonList(projectEntity), result);
-        verify(projectManager, times(1)).getOrAddProject(configEntity, projectEntity);
+
+        verify(projectManager, times(0)).getOrAddProject(configEntity, projectEntity);
     }
 }
