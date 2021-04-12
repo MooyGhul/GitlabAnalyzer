@@ -1,3 +1,4 @@
+import moment from "moment";
 import {ComingSoonMsg} from "./shared/ComingSoonMsg";
 
 const monthNames = ["January", "February", "March",
@@ -18,42 +19,68 @@ const groupBy = (arr, key) => {
   }, {});
 };
 
+const fillNulls = (arr) => {
+   for(let obj of arr) {
+       if(obj["mergedAt"] === null) {
+           obj["mergedAt"] = obj["createdAt"];
+       }
+   }
+   return arr;
+}
+
 export const getGraphData = (arr, key, score) => {
   let result = [];
-  const groupedData = groupBy(arr, key);
-  for(const obj in groupedData) {
-    if(groupedData.hasOwnProperty(obj)) {
-      let year = obj;
-      let comments = 0;
-      if(score) {
-        for(let i = 0; i < groupedData[year].length;i++){
-          comments = comments + groupedData[year][i].score;
-        }
-      } else {
-        comments = groupedData[year].length;
-      }
-      result.push({"year": year, "data": comments});
-    }
+  if(key === "mergedAt") {
+    arr = fillNulls(arr);
   }
-  result = result.sort((obj1, obj2) => {
-    const date1 = new Date(obj1.year);
-    const date2 = new Date(obj2.year)
-    if(date1 > date2) {
-      return 1;
-    } else {
-      return -1;
+  const groupedData = groupBy(arr, key);
+    for(const obj in groupedData) {
+      if (groupedData.hasOwnProperty(obj)) {
+        let year = obj;
+        let comments = 0;
+        if (score) {
+          for (let i = 0; i < groupedData[year].length; i++) {
+            comments = comments + groupedData[year][i].score;
+          }
+        } else {
+          comments = groupedData[year].length;
+        }
+        result.push({"year": year, "data": comments});
+      }
     }
-  });
-  return result
+
+    result = result.sort((obj1, obj2) => {
+        const date1 = new Date(obj1.year);
+        const date2 = new Date(obj2.year)
+        if(date1 > date2) {
+            return 1;
+        } else {
+            return -1;
+        }
+    });
+
+    return padDates(result);
 };
 
-const formatGraphDate = (commentDate) => {
-  let date = new Date(commentDate);
-  let month = date.getMonth() + 1;
-  let day = date.getDate();
-  let year = date.getFullYear();
+const padDates = (dates) => {
+    // Found the solution to use moment to check sequential dates: https://stackoverflow.com/questions/26756997/dump-missing-date-in-data-for-chartjs
+    for(let i = 0; i < dates.length - 1; i++) {
+        let date1 = moment(dates[i].year, "YYYY-MM-DD");
+        let date2 = moment(dates[i+1].year, "YYYY-MM-DD");
 
-  return `${year}-${month}-${day}`;
+        if(!date1.add(1, "days").isSame(date2)) {
+            dates.splice(i+1, 0, {"year": date1.format("YYYY-MM-DD"), "data": 0});
+        }
+    }
+    return dates;
+}
+
+export const formatGraphDate = (commentDate) => {
+    let date = new Date(commentDate);
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+    let year = date.getFullYear();
+    return `${year}-${month}-${day}`;
 };
 
 export const formatTableDate = (commentDate, includeTime = true) => {

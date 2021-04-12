@@ -1,15 +1,15 @@
 import {
-    Grid,
-    Typography,
-    Divider,
-    TableContainer,
-    TableCell,
-    TableRow,
-    TableHead,
-    TableBody,
-    Table,
-    TextField,
     Button,
+    Divider,
+    Grid,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    TextField,
+    Typography
   } from "@material-ui/core";
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
@@ -80,8 +80,8 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
           {
             token: `${token}`,
             iterationName: `${iterationName}`,
-            startDate:`${moment(startDate).format()}`,
-            endDate:`${moment(endDate).format()}`
+            startDate:`${moment(startDate).toISOString()}`,
+            endDate:`${moment(endDate).toISOString()}`
           }
       ).catch((error) => {
           console.log(error.response.status);
@@ -116,8 +116,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
 
     const getValueFromTextField = (e) => {
         const textFieldId = e.target.id;
-        const textFieldValue = e.target.value;
-        configData[textFieldId] = textFieldValue;
+        configData[textFieldId] = e.target.value;
     }
 
     const createTableHeader = () => {

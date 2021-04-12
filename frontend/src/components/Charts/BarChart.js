@@ -7,16 +7,24 @@ const BarChart = ({data,codeContribution, barLabel1, barColour1, barLabel2, barC
     let yAxis2;
 
     let options = {
+        scaleShowValues: true,
         scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-                stepSize: 1,
-              },
+            xAxis: [
+                {
+                    ticks: {
+                        autoSkip: false
+                    }
+                }
+            ],
+            yAxes: [
+                {
+                    ticks: {
+                    beginAtZero: true,
+                        stepSize: 1,
+                  },
+                },
+              ],
             },
-          ],
-        },
         maintainAspectRatio: maintainRatio
     };
 
