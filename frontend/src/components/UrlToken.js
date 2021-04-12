@@ -18,7 +18,6 @@ function UrlToken({handleTokenAccess}) {
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
 
-<<<<<<< HEAD
     const authenticateToken  = async () => {
         showLoader()
         let json = {
@@ -38,26 +37,6 @@ function UrlToken({handleTokenAccess}) {
             if (response.status === 200){
                 history.push('/projectList');
             }
-=======
-    const createConfigID = async (url, token) => {
-        return axios({
-          method: "post",
-          url: (process.env.NODE_ENV === 'development' ?           
-          `${process.env.REACT_APP_DEVHOST}/api/config/` :
-          `/api/config/`),
-          data: { url, token },
-        }).then((res) => res.data.id);
-      };
-
-      
-      const loadAllProjects = async (configID) => {
-        showLoader()
-        return axios({
-          method: "post",
-          url: (process.env.NODE_ENV === 'development' ?
-                  `${process.env.REACT_APP_DEVHOST}/api/config/${configID}/load`:
-                  `/api/config/${configID}/load`) 
->>>>>>> master
         })
           .then((response) => {
             if (response.status === 200) {
