@@ -1,15 +1,22 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
-    analyzeButton: {
+    nextButton: {
       position: "absolute",
       bottom: "5%",
       left: "68%",
+      width: "5%"
     },
     batchButton: {
       position: "absolute",
       bottom: "5%",
-      left: "55%",
+      left: "58%",
+      width: "9%"
+    },
+    syncButton: {
+      position: "absolute",
+      bottom: "5%",
+      left: "48%",
       width: "9%"
     },
 

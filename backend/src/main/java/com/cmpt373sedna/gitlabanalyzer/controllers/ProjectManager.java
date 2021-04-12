@@ -20,6 +20,8 @@ public class ProjectManager {
     private final @Getter List<ProjectController> allProjects;
     private final Extractor extractor;
     private @Setter String projectToken;
+    private List<JSONObject> projectList;
+    private @Setter ConfigEntity config;
 
     @Autowired
     private IssueEntityRepository issueRepository;
@@ -93,5 +95,10 @@ public class ProjectManager {
         return this.allProjects.stream()
                 .filter(project -> project.getProjectId() == projectId)
                 .findFirst();
+    }
+
+    public List<String> getProjectListInfo() {
+        List<String> temp = this.extractor.getBasicProjectInfo(this.config);
+        return temp;
     }
 }

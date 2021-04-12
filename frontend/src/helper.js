@@ -90,8 +90,14 @@ export const formatTableDate = (commentDate, includeTime = true) => {
     let time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
     return `${month} ${day}${includeTime ? `, ${year} @ ${time}` : ''}`;
-};
+}
 
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes()
+    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${minutes}` 
+}
+    
 const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
   return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
 };
