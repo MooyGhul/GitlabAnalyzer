@@ -17,7 +17,7 @@ function UrlToken({handleTokenAccess}) {
     const [loginToken, setLoginToken] = useState(''); 
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
-
+    /*
     const authenticateToken  = async () => {
         showLoader()
         let json = {
@@ -36,7 +36,28 @@ function UrlToken({handleTokenAccess}) {
             hideLoader();
             if (response.status === 200){
                 history.push('/projectList');
-            }
+            };
+            */
+    const createConfigID = async (url, token) => {
+        return axios({
+          method: "post",
+          url: (process.env.NODE_ENV === 'development' ?           
+          `${process.env.REACT_APP_DEVHOST}/api/config/create` :
+          `/api/config/create`),
+          data: { url: url, token: token},
+        }).then((res) => {
+            console.log(res) 
+        });
+      };
+
+      
+      const loadAllProjects = async (configID) => {
+        showLoader()
+        return axios({
+          method: "post",
+          url: (process.env.NODE_ENV === 'development' ?
+                  `${process.env.REACT_APP_DEVHOST}/api/config/${configID}/load`:
+                  `/api/config/${configID}/load`) 
         })
           .then((response) => {
             if (response.status === 200) {
@@ -59,7 +80,7 @@ function UrlToken({handleTokenAccess}) {
 
     const loadWithConfigId = async () => {
         const configID = await createConfigID(urlToken.url, urlToken.token); 
-        await loadAllProjects(configID); 
+        await loadAllProjects(urlToken.token);
       };   
     
 
