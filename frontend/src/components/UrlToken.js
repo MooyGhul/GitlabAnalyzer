@@ -17,27 +17,6 @@ function UrlToken({handleTokenAccess}) {
     const [loginToken, setLoginToken] = useState(''); 
     const [loader, showLoader, hideLoader] = useFullPageLoader();
 
-    /*
-    const authenticateToken  = async () => {
-        showLoader()
-        let json = {
-            token: urlToken.token, 
-            url: urlToken.url
-        };
-        await axios.post(process.env.NODE_ENV === 'development' ?
-            `${process.env.REACT_APP_DEVHOST}/api/config/create` :
-            `/api/config/create`, json)
-        .then(async (response) => {
-            return await axios.post(process.env.NODE_ENV === 'development' ?
-                `${process.env.REACT_APP_DEVHOST}/api/config/${response.data.token}/load` :
-                `/api/config/${response.data.token}/load`);
-        })
-        .then(response => {
-            hideLoader();
-            if (response.status === 200){
-                history.push('/projectList');
-            };
-            */
     const createConfigID = async (url, token) => {
         return axios({
           method: "post",
@@ -79,7 +58,7 @@ function UrlToken({handleTokenAccess}) {
     }
 
     const loadWithConfigId = async () => {
-        const configID = await createConfigID(urlToken.url, urlToken.token); 
+        await createConfigID(urlToken.url, urlToken.token); 
         await loadAllProjects(urlToken.token);
       };   
     
@@ -107,7 +86,6 @@ function UrlToken({handleTokenAccess}) {
                 <h2 className={classes.h2}> Server information </h2>
 
                 <h3>{errorMsg}</h3>
-
 
                 <TextField id='url' classes={{root: classes.customTextField}} label='Server URL' value={urlToken.url}
                         onChange={e=> setUrlToken({...urlToken, url: e.target.value})}/>

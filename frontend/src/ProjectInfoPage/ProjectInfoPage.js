@@ -12,10 +12,6 @@ import useProjectNotSelected from "../components/useProjectNotSelected";
 function ProjectInfoPage({
   onMemberIdChange,
   project_id,
-  onProjectLoadedStateChange,
-  projectLoaded,
-  onNewProjectLoaded,
-  previousProjectId,
 }) {
   const location = useLocation();
   const [members, setMembers] = useState([]);
@@ -23,7 +19,7 @@ function ProjectInfoPage({
   const [MRs, setMRs] = useState([]);
   const [comments, setComments] = useState([]);
   const [issues, setIssues] = useState([]);
-  const [loader, showLoader, hideLoader] = useFullPageLoader();
+  const [loader] = useFullPageLoader();
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
   let commitCountArray = [];
   let MRCountArray = [];
@@ -36,18 +32,6 @@ function ProjectInfoPage({
 
   const classes = useStyles();
   const [projectId, setProjectId] = useState(project_id);
-
-  const updateProjectId = async () => {
-    if (projectId === -1 || project_id === ':project_id') {
-      showErrorPage();
-    } else {
-      try {
-        setProjectId(location.state.id);
-      } catch (err) {
-        setProjectId(project_id);
-      }
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
