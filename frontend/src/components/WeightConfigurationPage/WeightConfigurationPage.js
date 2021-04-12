@@ -200,7 +200,7 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
                       <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Refresh</Button>
                     </Grid>
                     <Grid item xs={2}>
-                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={saveDeleteToBackend}>Save Change</Button>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={saveDeleteToBackend}>Save Deletions</Button>
                     </Grid>
                 </Grid>
             </Grid>
