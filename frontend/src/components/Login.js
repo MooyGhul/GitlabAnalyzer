@@ -19,7 +19,7 @@ function Login() {
     const [user, setUser] = useState({name:'', password:''});
     const [errorMsg, setErrorMsg] = useState('');
 
-    const ssoLink = `https://cas.sfu.ca/cas/login?service=http://${window.location.host}/login&allow=staff,faculty`;
+    const ssoLink = `https://cas.sfu.ca/cas/login?service=http://${window.location.host}/login&allow=sfu`;
 
     useEffect(() => {
         const authenticateSsoUser = async (ticket) => {

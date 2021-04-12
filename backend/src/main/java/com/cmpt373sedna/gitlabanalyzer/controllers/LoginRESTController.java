@@ -43,9 +43,9 @@ public class LoginRESTController {
     public String passwordLogin(@RequestBody SSOLoginRequestBody body) {
         RestTemplate restTemplate = new RestTemplate();
 
-        String response = restTemplate.getForObject("https://cas.sfu.ca/cas/serviceValidate?ticket=" + body.ticket + "&service=" + body.service + "&allow=staff,faculty", String.class);
+        String response = restTemplate.getForObject("https://cas.sfu.ca/cas/serviceValidate?ticket=" + body.ticket + "&service=" + body.service + "&allow=sfu", String.class);
 
-        if (response != null && (response.contains("<cas:authtype>faculty</cas:authtype>") || response.contains("<cas:authtype>staff</cas:authtype>"))) {
+        if (response != null && (response.contains("<cas:authtype>sfu</cas:authtype>"))) {
             return "gitlab-analyzer-secret-login-token";
         }
 
