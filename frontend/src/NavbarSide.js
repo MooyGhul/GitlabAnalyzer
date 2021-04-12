@@ -264,6 +264,7 @@ const NavbarSide = () => {
                     handleIterationName={handleIterationName}
                     handleIterationStartDate={handleIterationStartDate}
                     handleIterationEndDate={handleIterationEndDate}
+                    project_id={project_id}
                   />
                 </Container>
               </Route>
