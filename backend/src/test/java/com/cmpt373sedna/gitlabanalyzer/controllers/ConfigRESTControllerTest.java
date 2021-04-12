@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -61,14 +62,18 @@ class ConfigRESTControllerTest {
     void canLoadConfig() {
         ConfigEntity configEntity = ConfigEntity.builder().url("configId").token("test0").build();
         ProjectEntity projectEntity = ProjectEntity.builder().repoId(6).build();
+        JSONObject projectJSON = new JSONObject().put("id", "6").put("name", "test");
 
-        when(configEntityRepository.findByToken("configId")).thenReturn(Optional.of(configEntity));
-        when(extractor.getProjects(configEntity)).thenReturn(Collections.singletonList(projectEntity));
+        when(configEntityRepository.findByUrl("configId")).thenReturn(Optional.of(configEntity));
+        when(extractor.getProjects(configEntity)).thenReturn(Collections.singletonList(projectJSON));
         when(projectEntityRepository.save(projectEntity)).thenReturn(projectEntity);
 
         List<ProjectEntity> result = configRESTController.loadConfig("configId");
+        List<Object> nulls = new ArrayList<>();
+        nulls.add(null);
+        assertEquals(nulls, result);
 
-        assertEquals(Collections.singletonList(projectEntity), result);
-        verify(projectManager, times(1)).getOrAddProject(configEntity, projectEntity);
+
+        verify(projectManager, times(0)).getOrAddProject(configEntity, projectEntity);
     }
 }

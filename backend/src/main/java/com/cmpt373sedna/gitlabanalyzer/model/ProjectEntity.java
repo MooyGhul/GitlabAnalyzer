@@ -37,8 +37,6 @@ public class ProjectEntity {
         this.lastSync = UNSYNCED;
     }
 
-
-
     public ProjectEntity() {
         this.repoId = -1;
         this.repoName = "";
