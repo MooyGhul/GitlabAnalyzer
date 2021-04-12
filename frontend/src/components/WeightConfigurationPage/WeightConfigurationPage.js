@@ -204,10 +204,13 @@ const WeightConfigurationPage
             <Grid item xs={10} spacing={5}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={2}>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Default</Button>
+                    </Grid>
+                    <Grid item xs={2}>
                       <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Refresh</Button>
                     </Grid>
                     <Grid item xs={2}>
-                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={saveDeleteToBackend}>Save Deletions</Button>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={saveDeleteToBackend}>Save DEL</Button>
                     </Grid>
                 </Grid>
             </Grid>
