@@ -43,6 +43,7 @@ const CodeContributionPage = (props) => {
       let mrCountsData = [];
       let mrScoresData = [];
 
+
       makeCodeContributionTableData(mrData, mrArray, commitData);
 
       const commitCounts = getGraphData(commitData, "commitDate", false);

@@ -63,6 +63,7 @@ const NavbarSide = () => {
     setProjectId(newProjectId); 
   }; 
 
+
   const handleProjectLoadedChange = (state) => {
     setProjectLoaded(state);
   }
@@ -178,6 +179,8 @@ const NavbarSide = () => {
 
                 return <Container>
                   <CodeContributionPage
+                    startDate={startDate}
+                    endDate={endDate}
                     project_id={match.params.project_id}
                     member_id={match.params.member_id}
                   />
@@ -190,6 +193,8 @@ const NavbarSide = () => {
 
                 return <Container>
                   <CommentContributionPage
+                    startDate={startDate}
+                    endDate={endDate}
                     project_id={match.params.project_id}
                     member_id={match.params.member_id}
                   />
@@ -216,6 +221,8 @@ const NavbarSide = () => {
                   <ScoreBreakdown
                     project_id={project_id}
                     member_id={member_id}
+                    startDate={startDate}
+                    endDate={endDate}
                   />
                 </Container>
               </Route>

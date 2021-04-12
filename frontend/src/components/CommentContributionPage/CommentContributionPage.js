@@ -30,6 +30,7 @@ const CommentContributionPage = (props) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(100);
 
+
   const { project_id, member_id } = useParams();
 
   const classes = useStyles(props);
@@ -43,7 +44,6 @@ const CommentContributionPage = (props) => {
           : `/project/${project_id}/member/${member_id}/comments`
       );
       setComments(commentResult.data);
-      console.log(commentResult.data);
       const commentCounts = getGraphData(commentResult.data, "commentDate", false);
       setGraphData(commentCounts);
     };
