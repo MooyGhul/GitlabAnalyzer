@@ -15,7 +15,6 @@ import React, {useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 import Row from "./SavedIterationsTable";
 import axios from "axios";
-import {useParams} from "react-router";
 import Calendar from "../Calendar";
 import CreateFileTypeWeightInput from "./CreateFileTypeWeightInput";
 import moment from 'moment';
