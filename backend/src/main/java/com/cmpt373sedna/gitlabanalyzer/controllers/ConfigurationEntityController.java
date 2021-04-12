@@ -73,9 +73,16 @@ public class ConfigurationEntityController {
     }
 
     @DeleteMapping("/delete/iterations")
-    public void deleteIterationConfigurations(@RequestBody int[] body){
-        for(int id : body){
-            System.out.println(id);
+    public void deleteIterationConfigurations(@RequestBody String body){
+        System.out.println(body);
+        System.out.println("FLAG 1");
+        // {"ids":""}
+        String theSubstring = body.substring(8,(body.length()-2));
+        System.out.println(theSubstring);
+        String[] arrayOfNumAsString = theSubstring.split(",");
+        for(String numInString : arrayOfNumAsString){
+            int id = Integer.parseInt(numInString);
+            this.iterationConfigurationRepository.deleteById(id);
         }
     }
 }

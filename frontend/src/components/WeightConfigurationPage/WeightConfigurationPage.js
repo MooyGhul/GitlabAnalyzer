@@ -25,13 +25,10 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
     const classes = useStyles();
     let {project_id} = useParams();
     const [fileType, setFileType] = useState([]);
-    // const [iterDates, setIterDates] = useState([]);
     const [iterDates, setIterDates] = useState([]);
     const [iterationName, setIterationName] = useState('new Iteration');
 
-
-    let [listOfDeletedIterIds,AddTolistOfDeletedIterIds] = useState([]);
-    const [clearlistOfDeletedIterIds] = useState(listOfDeletedIterIds);
+    const [listOfDeletedIterIds,setListOfDeletedIterIds] = useState([]);
     const [refreshFlag, setRefreshFlag] = useState(false);
     
     const defaultFileWeight = 1;
@@ -46,13 +43,25 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
         "Syntax": defaultMinorCodeChangeWeight,
     }
 
-    const saveDeleteToBackend = () => {
-      console.log("listOfDeletedIterIds AFTER:");
-      console.log(listOfDeletedIterIds);
+
+    const saveDeleteToBackend = async () => {
+      if(listOfDeletedIterIds !== undefined && listOfDeletedIterIds.length !== 0){
+        await axios.delete(process.env.NODE_ENV === 'development' ?
+          `${process.env.REACT_APP_DEVHOST}/configuration/delete/iterations` :
+          `configuration/delete/iterations`,
+          {
+            data: {ids: `${listOfDeletedIterIds}`}
+          }
+        ).catch((error) => {
+          console.log(error.response.status);
+        });
+        setListOfDeletedIterIds([]);
+      }
     }
 
     const refreshHandler = () => {
       setRefreshFlag(!refreshFlag);
+      setListOfDeletedIterIds([]);
     }
 
     useEffect(() => {
@@ -80,13 +89,6 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
       ).catch((error) => {
           console.log(error.response.status);
       });
-
-      // Leave them for now, I am going to need them in my next MR soon
-      const iterationsDates = await axios.get(process.env.NODE_ENV === 'development' ?
-              `${process.env.REACT_APP_DEVHOST}/configuration/iterations/all` : `configuration/iterations/all`);
-
-      console.log("iterationsDates :");
-      console.log(iterationsDates);
     }
 
     useEffect(() => {
@@ -139,25 +141,9 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
     }
 
     const DeleteRow = (rowID) => {
-        // console.log("ROWs before DELETE")
-        // console.log(iterDates);
-        // console.log("DELETE ROW ID:")
-        // console.log(rowID);
-
         let filteredIterations = iterDates.filter(iterDate => iterDate.id !== rowID);
         setIterDates(filteredIterations);
-        console.log("filteredIterations:");
-        console.log(filteredIterations);
-
-        console.log("listOfDeletedIterIds BEFORE:");
-        console.log(listOfDeletedIterIds);
-        // let tempArr = listOfDeletedIterIds;
-        // tempArr = tempArr.push(rowID);
-        // console.log("tempArr:");
-        // console.log(tempArr);
-        AddTolistOfDeletedIterIds(listOfDeletedIterIds => [...listOfDeletedIterIds,rowID]);
-        // console.log("listOfDeletedIterIds AFTER:");
-        // console.log(listOfDeletedIterIds);
+        setListOfDeletedIterIds(listOfDeletedIterIds => [...listOfDeletedIterIds,rowID]);
     }
 
     const createTextFieldsForProjectWeights = () => {

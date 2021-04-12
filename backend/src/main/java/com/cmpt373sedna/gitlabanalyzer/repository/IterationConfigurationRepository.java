@@ -12,4 +12,6 @@ public interface IterationConfigurationRepository extends CrudRepository<Iterati
     Optional<IterationConfigurationEntity> findById(Integer id);
 
     Iterable<IterationConfigurationEntity> findAllByToken(String token);
+
+
 }
