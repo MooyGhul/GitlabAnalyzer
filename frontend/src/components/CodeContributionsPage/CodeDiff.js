@@ -5,11 +5,8 @@ import '../../style/DiffViewStyle.css';
 
 
 const CodeDiff = (diffText) => {
-  console.log(diffText); 
-  console.log(diffText["codeDiff"]);
-  var item1 = diffText["codeDiff"];
-  var item2 = item1;
-  var newData = JSON.parse(item2);
+  let item2 = diffText["codeDiff"];
+  let newData = JSON.parse(item2);
   const data  = newData["diff"];
   const new_path = newData["new_path"];
   const old_path = newData["old_path"];

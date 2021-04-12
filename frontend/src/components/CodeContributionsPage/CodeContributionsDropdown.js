@@ -22,14 +22,10 @@ const CodeContributionsDropdown = (props) => {
   const isOpen = () => {
     return open || expandAll;
   }
-  const diffs = [];
-  console.log(row.diffs)
-  const rowDiffs = row.diffs;
+  console.log(row);
+  const rowDiffs = row.diff;
   console.log(rowDiffs)
-  for(var i=0;i<rowDiffs.length;i++){
-    diffs.push(rowDiffs[i]);
-  }
-  console.log(diffs);
+  
 
     return (
         <Fragment>
