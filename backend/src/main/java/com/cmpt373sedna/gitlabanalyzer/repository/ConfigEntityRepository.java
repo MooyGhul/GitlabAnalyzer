@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ConfigEntityRepository extends CrudRepository<ConfigEntity, String> {
     Optional<ConfigEntity> findByUrl(String url);
+    Optional<ConfigEntity> findByToken(String token);
 }

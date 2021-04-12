@@ -16,6 +16,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConfigEntity {
-    @Id private String url;
-    private String token;
+    @Id private String token;
+    private String url;
+
 }
