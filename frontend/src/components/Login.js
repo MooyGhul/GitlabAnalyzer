@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useHistory } from 'react-router-dom';
-import { AdminUser } from '../mockDataDir/mockAdminUser';
 import Authentication from '../Authentication'; 
 import Header from './Header'
 import TextField from '@material-ui/core/TextField'; 
@@ -9,6 +8,7 @@ import Box from '@material-ui/core/Box';
 import logo from '../logo/gitlab_analyzer.png';
 import {useStyles} from '../style/LoginStyle'
 import Grid from "@material-ui/core/Grid";
+import axios from "axios";
 
 
 function Login() {
@@ -19,20 +19,43 @@ function Login() {
     const [user, setUser] = useState({name:'', password:''});
     const [errorMsg, setErrorMsg] = useState('');
 
-    const authenticateUser  = () => {
-        if(user.name === AdminUser.username && user.password === AdminUser.password) {
-            Authentication.onAuthentication();
+    const ssoLink = `https://cas.sfu.ca/cas/login?service=http://${window.location.host}/login&allow=sfu`;
+
+    useEffect(() => {
+        const authenticateSsoUser = async (ticket) => {
+            try {
+                const { data } = await axios.post(`${process.env.REACT_APP_DEVHOST}/api/login/sso`, {
+                    ticket,
+                    service: `http://${window.location.host}/login`,
+                });
+                Authentication.onAuthentication(data);
+                history.push('/token');
+            } catch (e) {
+                window.location = `${ssoLink}&renew=true&error=The authorization was rejected. Please try again.`;
+            }
+        };
+
+        const ssoTicket = new URLSearchParams(window.location.search).get('ticket');
+        if (ssoTicket != null) {
+            authenticateSsoUser(ssoTicket);
+        }
+    });
+
+    const authenticateUser = async () => {
+        try {
+            const { data } = await axios.post(`${process.env.REACT_APP_DEVHOST}/api/login/password`, user);
+            Authentication.onAuthentication(data);
             return true;
-        } else {
+        } catch (e) {
             return false;
         }
     }
 
-    const login = () => {
-        if(authenticateUser()){
+    const login = async () => {
+        if (await authenticateUser()) {
             history.push('/token');
         } else {
-            setUser({name:'', password: ''});
+            setUser({ name:'', password: '' });
             setErrorMsg('Incorrect username or password. Please try again.');
         }
     }
@@ -40,11 +63,11 @@ function Login() {
 
     const loginHandler = event => {
         event.preventDefault();
-        if(state.loginMethod===1){
+        if(state.loginMethod === 1){
             login(user);
         }
-        else if(state.loginMethod===2){
-            window.location = 'https://cas.sfu.ca/cas/login?service=http://cmpt373-1211-14.cmpt.sfu.ca:8080/token';
+        else if(state.loginMethod === 2){
+            window.location = ssoLink;
         }
     }
         
