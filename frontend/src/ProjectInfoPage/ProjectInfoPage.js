@@ -38,7 +38,7 @@ function ProjectInfoPage({
   const [projectId, setProjectId] = useState(project_id);
 
   const updateProjectId = async () => {
-    if (projectId === -1) {
+    if (projectId === -1 || project_id === ':project_id') {
       showErrorPage();
     } else {
       try {
@@ -66,7 +66,7 @@ function ProjectInfoPage({
             onNewProjectLoaded(projectId);
           }
         })
-        .catch((error) => {
+        .catch(() => {
           hideLoader();
         });
     };

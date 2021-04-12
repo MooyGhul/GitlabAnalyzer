@@ -23,6 +23,7 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import GitHubIcon from "@material-ui/icons/GitHub"; 
 import MenuIcon from "@material-ui/icons/Menu";
 import useStyles from "./style/NavbarSideStyle";
+import ScoreBreakdown from "./components/ScoreBreakdown/ScoreBreakdown";
 import WeightConfigurationPage from "./components/WeightConfigurationPage/WeightConfigurationPage";
 
 const NavbarSide = () => {
@@ -107,17 +108,17 @@ const NavbarSide = () => {
                   </ListItem>
                 </Link>
 
-                <Link className={classes.link} to={{pathname: "/projectInfo/:project_id"}}>
+                {project_id !== -1 && <Link className={classes.link} to={{pathname: `/projectInfo/${project_id}`}}>
                   <ListItem button>
                     <ListItemIcon className={classes.link}>
                       <BarChartIcon />
                     </ListItemIcon>
                     <ListItemText primary={"Project Overview"} />
                   </ListItem>
-                </Link>
+                </Link>}
 
-                <Link
-                  to="/overview/:project_id/:member_id/codecontribution"
+                {project_id !== -1 && member_id !== -1 && <Link
+                  to={`/overview/${project_id}/${member_id}/codecontribution`}
                   className={classes.link} 
                 >
                   <ListItem button>
@@ -126,7 +127,7 @@ const NavbarSide = () => {
                     </ListItemIcon>
                     <ListItemText primary={"Member Overview"} />
                   </ListItem>
-                </Link>
+                </Link>}
 
                 <Link to="/Settings" className={classes.link}>
                   <ListItem button>
@@ -155,8 +156,10 @@ const NavbarSide = () => {
                 </Container>
               </Route>
 
-              <Route exact path={`/projectInfo/:project_id`}>
-                <Grid container>
+              <Route exact path={`/projectInfo/:project_id`} render={({ match }) => {
+                setProjectId(match.params.project_id);
+
+                return <Grid container>
                   <ProjectInfoPage
                     onMemberIdChange={handleMemberIDChange}
                     onProjectLoadedStateChange={handleProjectLoadedChange}
@@ -165,45 +168,57 @@ const NavbarSide = () => {
                     onNewProjectLoaded = {handleNewProjectLoaded}
                     previousProjectId = {previousProjectId}
                     projectLoaded={projectLoaded}
-                    project_id={project_id} 
+                    project_id={match.params.project_id}
                   />
-                </Grid>
-              </Route>
+                </Grid>;
+              }}/>
 
-              <Route
-                exact
-                path={`/overview/:project_id/:member_id/codecontribution`}
-              >
-                <Container>
+              <Route exact path={`/overview/:project_id/:member_id/codecontribution`} render={({ match }) => {
+                setProjectId(match.params.project_id);
+                setMemberId(match.params.member_id);
+
+                return <Container>
                   <CodeContributionPage
-                    project_id={project_id}
-                    member_id={member_id}
                     startDate={startDate}
                     endDate={endDate}
+                    project_id={match.params.project_id}
+                    member_id={match.params.member_id}
                   />
-                </Container>
-              </Route>
+                </Container>;
+              }}/>
 
-              <Route
-                exact
-                path="/overview/:project_id/:member_id/commentContribution"
-              >
-                <Container>
+              <Route exact path={`/overview/:project_id/:member_id/commentContribution`} render={({ match }) => {
+                setProjectId(match.params.project_id);
+                setMemberId(match.params.member_id);
+
+                return <Container>
                   <CommentContributionPage
-                    project_id={project_id}
-                    member_id={member_id}
                     startDate={startDate}
                     endDate={endDate}
+                    project_id={match.params.project_id}
+                    member_id={match.params.member_id}
                   />
-                </Container>
-              </Route>
+                </Container>;
+              }}/>
+
+              <Route exact path={`/overview/:project_id/:member_id/issueContribution`} render={({ match }) => {
+                setProjectId(match.params.project_id);
+                setMemberId(match.params.member_id);
+
+                return <Container>
+                  <IssueContributionPage
+                    project_id={match.params.project_id}
+                    member_id={match.params.member_id}
+                  />
+                </Container>;
+              }}/>
 
               <Route
                 exact
-                path="/overview/:project_id/:member_id/issueContribution"
+                path="/overview/:project_id/:member_id/breakdown"
               >
                 <Container>
-                  <IssueContributionPage
+                  <ScoreBreakdown
                     project_id={project_id}
                     member_id={member_id}
                     startDate={startDate}
@@ -211,7 +226,6 @@ const NavbarSide = () => {
                   />
                 </Container>
               </Route>
-
               <Route exact path="/Settings">
                 <Container><WeightConfigurationPage token={token} startDate={startDate} endDate={endDate} handleStartDate={handleStartDate} handleEndDate={handleEndDate}/></Container>
               </Route>

@@ -3,7 +3,6 @@ import { Grid, Switch } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Banner from "../Banner";
-import { useLocation } from "react-router-dom";
 import BarChart from "../Charts/BarChart";
 import BarChartProperties from "../Charts/BarChartProperties";
 import { useGraphStyles, useSwitchStyles } from "../../style/CodeContributionPageStyles";
@@ -26,24 +25,12 @@ const CodeContributionPage = (props) => {
   const [member_id, setMemberId] = useState(props.member_id);
   const [scoreMode, setScoreMode] = useState(false);
   const [noProjectSelected, showErrorPage] = useProjectNotSelected();
-  const location = useLocation();
 
   useEffect(() => {
     const setProjectIdAndMemberId = () => {
-      if (project_id === -1) {
+      if (project_id === -1 || project_id === ':project_id' || member_id === -1 || member_id === ':member_id') {
         showErrorPage();
-      }
-      else if (member_id === -1) {
-        try {
-          setProjectId(location.state.project_id);
-          setMemberId(location.state.member_id);
-        } catch (err) {
-          setProjectId(props.project_id);
-          setMemberId(props.member_id);
-          showErrorPage();
-        }
-      }
-      else{
+      } else {
         setProjectId(props.project_id);
         setMemberId(props.member_id);
       }

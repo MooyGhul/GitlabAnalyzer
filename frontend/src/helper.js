@@ -83,14 +83,14 @@ export const formatGraphDate = (commentDate) => {
     return `${year}-${month}-${day}`;
 };
 
-export const formatTableDate = (commentDate) => {
-  let date = new Date(commentDate);
-  let month = monthNames[date.getMonth()];
-  let day = date.getDate();
-  let year = date.getFullYear();
-  let time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+export const formatTableDate = (commentDate, includeTime = true) => {
+    let date = new Date(commentDate);
+    let month = monthNames[date.getMonth()];
+    let day = date.getDate();
+    let year = date.getFullYear();
+    let time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 
-  return `${month} ${day}, ${year} @ ${time}`;
+    return `${month} ${day}${includeTime ? `, ${year} @ ${time}` : ''}`;
 };
 
 const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
