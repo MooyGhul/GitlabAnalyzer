@@ -57,7 +57,6 @@ public class ProjectRESTController {
 
     @GetMapping("/{projectId}")
     String getProjectName(@PathVariable(value="projectId") int projectId) {
-        System.out.println("ROUTED HERE FOR NAME");
         return this.projectRepository.findProjectEntityByRepoId(projectId).getRepoName();
     }
 
