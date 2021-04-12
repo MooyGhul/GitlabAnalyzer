@@ -137,10 +137,6 @@ export const makeCodeContributionTableData = (mrData, mrArray, commitData) => {
 };
 
 const sumCommitScore = (commits) => {
-    // let mrCommits = commits.filter(commit => {
-    //     return commitIds.contains(commit.commitId)
-    // });
-    // console.log(mrCommits);
     return commits.reduce((sum, commit) => sum + commit.score, 0).toFixed(2);
 }
 
