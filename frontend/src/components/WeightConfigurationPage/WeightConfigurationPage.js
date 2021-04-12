@@ -57,6 +57,14 @@ const WeightConfigurationPage
       }
     }
 
+    const defaultButtonHandler = () => {
+      setRefreshFlag(!refreshFlag);
+      setListOfDeletedIterIds([]);
+      handleIterationName("Undefined");
+      handleIterationStartDate(new Date('January 1, 2021 00:00:00'));
+      handleIterationEndDate(new Date('Dec 31, 2021 00:00:00'));
+    }
+
     const refreshHandler = () => {
       setRefreshFlag(!refreshFlag);
       setListOfDeletedIterIds([]);
@@ -87,6 +95,8 @@ const WeightConfigurationPage
       ).catch((error) => {
           console.log(error.response.status);
       });
+      setRefreshFlag(!refreshFlag);
+      setListOfDeletedIterIds([]);
     }
 
     useEffect(() => {
@@ -157,13 +167,13 @@ const WeightConfigurationPage
 
     return (
         <Grid container spacing={5} justify="center" alignItems="center" className={classes.root}>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.pageTitle}> </Typography>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.pageTitle}>Configurations</Typography>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.subHeader}>Configure Dates</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
             </Grid>
@@ -201,10 +211,10 @@ const WeightConfigurationPage
                     </Table>
                 </TableContainer>
             </Grid>
-            <Grid item xs={10} spacing={5}>
+            <Grid item xs={11} spacing={5}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={2}>
-                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Default</Button>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={defaultButtonHandler}>Default</Button>
                     </Grid>
                     <Grid item xs={2}>
                       <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Refresh</Button>
@@ -214,7 +224,7 @@ const WeightConfigurationPage
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.subHeader}>Configure Score Weights</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={10}>
@@ -224,7 +234,7 @@ const WeightConfigurationPage
                 </Grid>
                 {createTextFieldsForProjectWeights()}
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Typography className={classes.subHeader1}>Configure Weights by File Type</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
                 <Grid item xs={5}>
@@ -235,7 +245,7 @@ const WeightConfigurationPage
                     </form>  
                 </Grid>
             </Grid>
-            <Grid item xs={10}>
+            <Grid item xs={11}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={10}>
                         <Button variant="contained" component="span" className={classes.saveButton} size="large">Save</Button>
