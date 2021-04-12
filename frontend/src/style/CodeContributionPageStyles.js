@@ -21,7 +21,7 @@ export const useGraphStyles = makeStyles((theme) => ({
   },
 
   table: {
-    margin: "0 auto 0 auto",
+    margin: "3vh auto 0 auto",
     width: "90%",
   },
 
