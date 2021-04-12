@@ -4,12 +4,13 @@ import ScoreBoard from "./ScoreBoard";
 import useStyles from "../style/BannerStyles";
 import getMemberList from "../data/memberListGetter";
 import { useHistory } from "react-router-dom";
-import { useParams } from "react-router";
+import {useParams, useRouteMatch} from "react-router";
 import * as PropTypes from "prop-types";
 import userImage from "../logo/user.png"
 
-const Banner = ({ memberName, type }) => {
+const Banner = ({ memberName }) => {
   const { project_id } = useParams();
+  const match = useRouteMatch();
   const history = useHistory();
   const classes = useStyles();
 
@@ -25,7 +26,7 @@ const Banner = ({ memberName, type }) => {
   const onMemberChange = (event) => {
     const newMemberName = event.target.value;
 
-    history.push(`/overview/${project_id}/${newMemberName}/${type}`);
+    history.push(match.path.replace(':project_id', project_id).replace(':member_id', newMemberName));
   };
 
   return (
