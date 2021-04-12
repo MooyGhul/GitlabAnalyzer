@@ -27,7 +27,7 @@ public class Extractor {
     }
 
     public List<JSONObject> getProjects(ConfigEntity config) {
-        List<JSONObject> projectsArray = getJsonObjectsList(buildUri(config));
+        List<JSONObject> projectsArray = getAPIRequestData(config, PATH_PROJECTS);
         return projectsArray;
     }
 
@@ -48,6 +48,23 @@ public class Extractor {
             fullPath = String.format(apiPath, lastSync, page);
             newData = getJsonObjectsList(buildUri(config, projectId, fullPath));
         }
+        return data;
+    }
+
+    private List<JSONObject> getAPIRequestData(ConfigEntity config, String apiPath) {
+        int page = 1;
+        List<JSONObject> data = new ArrayList<>();
+        String fullPath = apiPath + page;
+        System.out.println("***************FULLPATH\n*********************\n********************\n" + fullPath);
+        List<JSONObject> newData = getJsonObjectsList(buildUriProjects(config,fullPath));
+        while(newData.size() > 0) {
+            data.addAll(newData);
+
+            page += 1;
+            fullPath = apiPath + page;
+            newData = getJsonObjectsList(buildUriProjects(config, fullPath));
+        }
+        System.out.println("***************\n*********************\n********************\n" + data.toString());
         return data;
     }
 
@@ -135,6 +152,12 @@ public class Extractor {
         return temp;
     }
 
+    private URI buildUriProjects(ConfigEntity config, String path) {
+        URI temp = URI.create(config.getUrl() + "/api/v4/" + path + (path.contains("?") ? "&access_token=" : "?access_token=") + config.getToken());
+        System.out.println("*****************\n******************\n**********************\n" + temp.toString());
+        return temp;
+    }
+
     private URI buildUri(ConfigEntity config) {
         return URI.create(config.getUrl() + "/api/v4/projects?access_token=" + config.getToken());
     }
@@ -146,6 +169,7 @@ public class Extractor {
 
     private List<JSONObject> getJsonObjectsList(URI url) {
         String response = restTemplate.getForObject(url, String.class);
+        System.out.println("***************JSONObjectList\n*********************\n********************\n" + response);
         JSONArray jsonResponse = new JSONArray(response);
 
         List<JSONObject> jsonList = new ArrayList<>();
