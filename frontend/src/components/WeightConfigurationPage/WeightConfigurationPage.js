@@ -9,9 +9,9 @@ import {
     TableHead,
     TableRow,
     TextField,
-    Typography
+    Typography,
   } from "@material-ui/core";
-import React, { useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
 import Row from "./SavedIterationsTable";
 import axios from "axios";
