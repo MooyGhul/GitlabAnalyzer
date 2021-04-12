@@ -27,10 +27,9 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
     const [fileType, setFileType] = useState([]);
     const [iterDates, setIterDates] = useState([]);
     const [iterationName, setIterationName] = useState('new Iteration');
-
     const [listOfDeletedIterIds,setListOfDeletedIterIds] = useState([]);
     const [refreshFlag, setRefreshFlag] = useState(false);
-    
+
     const defaultFileWeight = 1;
     const defaultCommitMRWeight = 1;
     const defaultLineOfCodeWeight = 1.2; 
@@ -42,7 +41,6 @@ const WeightConfigurationPage = ({token, startDate, endDate, handleStartDate, ha
         "Deleted": defaultMinorCodeChangeWeight,
         "Syntax": defaultMinorCodeChangeWeight,
     }
-
 
     const saveDeleteToBackend = async () => {
       if(listOfDeletedIterIds !== undefined && listOfDeletedIterIds.length !== 0){
