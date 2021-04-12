@@ -13,7 +13,6 @@ import {
   } from "@material-ui/core";
 import React, { useEffect, useState} from 'react';
 import useStyles from '../../style/WeightConfigurationPageStyles'; 
-import mockIterationsDates from "../../mockDataDir/mockIterationDates";
 import Row from "./SavedIterationsTable";
 import axios from "axios";
 import {useParams} from "react-router";
