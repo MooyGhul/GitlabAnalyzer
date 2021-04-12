@@ -1,4 +1,4 @@
-import React from "react"; 
+import React, { useEffect } from "react"; 
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import {
   Drawer,
@@ -10,6 +10,7 @@ import {
   Grid,
 } from "@material-ui/core";
 import ProjectInfoPage from "./ProjectInfoPage/ProjectInfoPage";
+import axios from "axios";
 import { useState } from "react";
 import UrlToken from "./components/UrlToken";
 import ProjectListPage from "./ProjectListPage";
@@ -35,7 +36,8 @@ const NavbarSide = () => {
   const [projectLoaded, setProjectLoaded] = useState(false);
   const [previousProjectId, setPreviousProjectId] = useState(-1);
   const [dataFetched, setDataFetched] = useState(false);
-
+  const [projectName, setProjectName] = useState("Gitlab Analyzer");
+  const [iteration, setIteration] = useState("");
   const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
   const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
 
@@ -63,7 +65,6 @@ const NavbarSide = () => {
     setProjectId(newProjectId); 
   }; 
 
-
   const handleProjectLoadedChange = (state) => {
     setProjectLoaded(state);
   }
@@ -76,9 +77,21 @@ const NavbarSide = () => {
     setDataFetched(state);
   }
 
+  useEffect(() => {
+    const fetchName  = async () => {
+      const theProjectName = await axios.get(process.env.NODE_ENV === 'development' ?
+          `${process.env.REACT_APP_DEVHOST}/project/${project_id}` :
+          `project/${project_id}`);
+      setProjectName(theProjectName.data);
+    }
+    if (project_id !== -1) {
+      fetchName();
+    }
+  },[project_id]);
+
   return (
     <Router>
-      <h1 className={classes.header}>Gitlab Analyzer</h1>
+      <h1 className={classes.header}>{projectName}{iteration}</h1>
       <MenuIcon className={classes.menuIcon} onClick={toggle} />
 
       <Grid container>
