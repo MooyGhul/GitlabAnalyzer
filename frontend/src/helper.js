@@ -98,12 +98,12 @@ export const formatDate = (dateString) => {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} ${date.getHours()}:${minutes}` 
 }
     
-const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits) => {
-  return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits};
+const createMRData = (id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits,diff) => {
+  return {id, iid, date, name, url, mrScore, totalCommitScore, relatedCommits,diff};
 };
 
-const createCommitData = (id, date, name, url, score) => {
-  return {id, date, name, url, score};
+const createCommitData = (id, date, name, url, score,diff) => {
+  return {id, date, name, url, score,diff};
 };
 
 const createGraphData = (year, MRDaily, CommitDaily) => {
@@ -124,7 +124,8 @@ export const makeCodeContributionTableData = (mrData, mrArray, commitData) => {
         '' + formatTableDate(commitDate),
         relatedCommitIds[relatedCommitIndex].commitName,
         relatedCommitIds[relatedCommitIndex].url,
-          relatedCommitIds[relatedCommitIndex].score);
+          relatedCommitIds[relatedCommitIndex].score,
+          relatedCommitIds[relatedCommitIndex].diffs);
       relatedCommitsArray.push(newCommitData);
     }
 
@@ -137,7 +138,8 @@ export const makeCodeContributionTableData = (mrData, mrArray, commitData) => {
       mrData[mrDataIndex].url,
       mrData[mrDataIndex].score,
       sumCommitScore(relatedCommitsArray),
-      relatedCommitsArray);
+      relatedCommitsArray,
+      mrData[mrDataIndex].mrDiffs);
     mrArray.push(newMrData);
   }
 };
