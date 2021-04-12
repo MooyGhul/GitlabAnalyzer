@@ -177,6 +177,13 @@ const WeightConfigurationPage
                 <Typography className={classes.subHeader}>Configure Dates</Typography>
                 <Divider className={classes.divider} orientation='horizontal'/>
             </Grid>
+            <Grid item xs={11}>
+            <p>Please enter the iteration dates and name and click on "+Add Iteration" to add and save the iteration. </p>
+            <p>To apply another iteration, please click "SELECT" next to the desired iteration. </p>
+            <p>To deselct the iteration to look at contributions for the whole project duration, click "Deselect"</p>
+            <p>To undo any deletion, click "Undo DEL"</p>
+            <p>To delete an iteration, please click "Delete" next to the desired iteration, and click "SAVE DEL" to save the deletions.</p>
+            </Grid>
             <Grid item xs={3}>
                 <form className={classes.textField} noValidate autoComplete="off">
                     <TextField id="IterationName" label="Iteration Name" variant="outlined" onChange={getIterationNameFromTextField}/>
@@ -214,10 +221,10 @@ const WeightConfigurationPage
             <Grid item xs={11} spacing={5}>
                 <Grid container justify="flex-end" direction="row">
                     <Grid item xs={2}>
-                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={defaultButtonHandler}>Default</Button>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={defaultButtonHandler}>Deselect</Button>
                     </Grid>
                     <Grid item xs={2}>
-                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Refresh</Button>
+                      <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={refreshHandler}>Undo DEL</Button>
                     </Grid>
                     <Grid item xs={2}>
                       <Button variant="contained" component="span" className={classes.saveButton} size="large" onClick={saveDeleteToBackend}>Save DEL</Button>

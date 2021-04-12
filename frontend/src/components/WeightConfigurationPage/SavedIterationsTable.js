@@ -27,7 +27,7 @@ const Row = (props) => {
             <TableCell align="center">{row.endDate}</TableCell>
             <TableCell align="center">
                 <Button variant="contained" component="span" className={classes.deleteButton} onClick={handleDelete} size="small">Delete</Button>
-                <Button variant="contained" component="span" className={classes.applyButton} onClick={handleSetIteration} size="small">Apply</Button>
+                <Button variant="contained" component="span" className={classes.applyButton} onClick={handleSetIteration} size="small">Select</Button>
             </TableCell>
         </TableRow>
     )
