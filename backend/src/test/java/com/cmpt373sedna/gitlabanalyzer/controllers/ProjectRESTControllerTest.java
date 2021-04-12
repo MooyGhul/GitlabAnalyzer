@@ -4,10 +4,7 @@ import com.cmpt373sedna.gitlabanalyzer.model.CommentEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.CommitEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.IssueEntity;
 import com.cmpt373sedna.gitlabanalyzer.model.MergeRequestEntity;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommentEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.CommitEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.IssueEntityRepository;
-import com.cmpt373sedna.gitlabanalyzer.repository.MergeRequestEntityRepository;
+import com.cmpt373sedna.gitlabanalyzer.repository.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -43,6 +40,9 @@ class ProjectRESTControllerTest {
 
     @Mock
     private MergeRequestEntityRepository mergeRequestEntityRepository;
+
+    @Mock
+    private ProjectEntityRepository projectEntityRepository;
 
     @InjectMocks
     private ProjectRESTController projectRESTController;
