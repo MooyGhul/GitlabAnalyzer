@@ -4,8 +4,23 @@ const useStyles = makeStyles((theme) => ({
 
     container:{
         position: "absolute",
-        left: "0"
+        left: "0",
+        top:"2vh",
+        width:"100%",
     },
+
+    contents:{ 
+        width:"100%",  
+        [theme.breakpoints.up("lg")]: {
+          marginTop: "30vh", 
+        },
+        [theme.breakpoints.down("md")]: {
+          marginTop: "25vh", 
+        },
+        [theme.breakpoints.down("sm")]: {
+          marginTop: "20vh", 
+        }, 
+      },
 
     root: {
         '& > *': {

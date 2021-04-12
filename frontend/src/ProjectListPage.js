@@ -44,7 +44,7 @@ const ProjectListPage = (props) => {
     return projectIdArray;
   };
 
-  const buttonClickHandler = (event) => {
+  const buttonClickHandler = () => {
     let projectName;
 
     if (projectIdArray.length === 0) {
@@ -94,14 +94,6 @@ const ProjectListPage = (props) => {
       >
         Next
       </Button>
-
-      <Button
-        variant="contained"
-        color="secondary"
-        className={classes.batchButton}
-      >
-        Batch Process
-      </Button> 
       {loader}
     </div>
   

@@ -1,4 +1,4 @@
-jest.setTimeout(120000);
+jest.setTimeout(300000);
 
 const REACT_APP_DEVHOST = process.env.REACT_APP_DEVHOST || 'http://localhost:8080';
 const GITLAB_HOST = process.env.GITLAB_HOST || 'http://cmpt373-1211-14.cmpt.sfu.ca:8929/';

@@ -21,24 +21,14 @@ public class Extractor {
         this.restTemplate = new RestTemplate();
     }
 
-    public List<ProjectEntity> getProjects(ConfigEntity config) {
+    public List<JSONObject> getProjects(ConfigEntity config) {
         List<JSONObject> projectsArray = getJsonObjectsList(buildUri(config));
-
-        return projectsArray.stream()
-                .map(obj -> ProjectEntity.builder()
-                        .repoId(obj.getInt("id"))
-                        .repoName(obj.getString("name"))
-                        .build())
-                .collect(toList());
+        return projectsArray;
     }
 
-    public ProjectEntity getProject(ConfigEntity config, String projectId) {
+    public JSONObject getProject(ConfigEntity config, String projectId) {
         JSONObject projectJSON = getJsonObject(buildUri(config, projectId));
-
-        return ProjectEntity.builder()
-                .repoId(projectJSON.getInt("id"))
-                .repoName(projectJSON.getString("name"))
-                .build();
+        return projectJSON;
     }
 
     public List<JSONObject> getMergeRequests(ConfigEntity config, int projectId) {
@@ -129,7 +119,7 @@ public class Extractor {
     }
 
     private URI buildUri(ConfigEntity config) {
-        return URI.create(config.getUrl() + "api/v4/projects?access_token=" + config.getToken());
+        return URI.create(config.getUrl() + "api/v4/projects?visibility=private&access_token=" + config.getToken());
     }
 
     private List<JSONObject> getJsonObjectsList(URI url) {

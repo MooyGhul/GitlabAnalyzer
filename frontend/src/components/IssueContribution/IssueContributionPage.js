@@ -36,7 +36,7 @@ const IssueContributionPage = () => {
           : `/project/${project_id}/member/${member_id}/issues`
       );
       setIssues(issueResult.data);
-      const issueCounts = getGraphData(issueResult.data, "openedDate");
+      const issueCounts = getGraphData(issueResult.data, "openedDate", false);
       setGraphData(issueCounts);
     };
     fetchData()
@@ -56,7 +56,13 @@ const IssueContributionPage = () => {
           <Banner memberName={member_id} type="issueContribution" />
         </Grid>
       </Grid>
-
+      <Grid
+          container
+          spacing={5}
+          justify="center"
+          alignItems="center"
+          className={classes.contents}
+        >
       <Grid item xs={12} align="center">
         <InnerNavBar issueStyle={innerNavStyle.actionItemIssue} />
       </Grid>
@@ -98,6 +104,7 @@ const IssueContributionPage = () => {
           </Table>
         </TableContainer>
       </Grid>
+    </Grid>
     </Grid>
   );
 };
