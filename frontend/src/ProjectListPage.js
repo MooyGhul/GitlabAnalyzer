@@ -15,6 +15,7 @@ const ProjectListPage = (props) => {
   const [loader, showLoader, hideLoader] = useFullPageLoader();
   const [projectIdArray, setProjectIdArray] = useState([]);
   const [syncDone, setSyncDone] = useState(false);
+  const UNSYNCED = "1974-01-01T00:00Z";
 
   const syncProject = async (projectId) => {
     await axios.post(
@@ -134,7 +135,7 @@ const ProjectListPage = (props) => {
     const matchingProject = savedProjects.filter(
       (param) => param.repoId === json.id
     );
-    if (matchingProject[0].lastSync === "1970-01-01T00:00Z") {
+    if (matchingProject[0].lastSync === UNSYNCED) {
       json["lastSync"] = "Never";
     } else {
       json["lastSync"] = formatDate(matchingProject[0].lastSync);

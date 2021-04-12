@@ -14,6 +14,7 @@ import java.util.TimeZone;
 @Data
 @Builder
 public class ProjectEntity {
+    private final String UNSYNCED = "1974-01-01T00:00Z";
     private @Getter
     @Id int repoId;
     private @Getter String repoName;
@@ -28,7 +29,7 @@ public class ProjectEntity {
         this.numCommits = numCommits;
         this.numMR = numMR;
         this.numComments = numComments;
-        this.lastSync = "1970-01-01T00:00Z";
+        this.lastSync = UNSYNCED;
     }
 
     public ProjectEntity() {
@@ -37,7 +38,7 @@ public class ProjectEntity {
         this.numCommits = 0;
         this.numMR = 0;
         this.numComments = 0;
-        this.lastSync = "1970-01-01T00:00Z";
+        this.lastSync = UNSYNCED;
     }
 
     public ProjectEntity(int repoId, String lastSync) {
@@ -55,7 +56,7 @@ public class ProjectEntity {
         this.numCommits = numCommits;
         this.numMR = numMR;
         this.numComments = numComments;
-        this.lastSync = "1970-01-01T00:00Z";
+        this.lastSync = UNSYNCED;
     }
 
     //code from: https://stackoverflow.com/questions/3914404/how-to-get-current-moment-in-iso-8601-format-with-date-hour-and-minute
