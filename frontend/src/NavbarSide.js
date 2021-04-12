@@ -37,7 +37,7 @@ const NavbarSide = () => {
   const [previousProjectId, setPreviousProjectId] = useState(-1);
   const [dataFetched, setDataFetched] = useState(false);
   const [projectName, setProjectName] = useState("Gitlab Analyzer");
-  const [iteration, setIteration] = useState("");
+  const [iteration, setIteration] = useState("Not Selected");
   const [startDate, setStartDate] = useState(new Date('January 1, 2021 00:00:00'));
   const [endDate, setEndDate] = useState(new Date('Dec 31, 2021 00:00:00'));
   const [iterationStartDate, setIterationStartDate] = useState(new Date('January 1, 2021 00:00:00'));
@@ -105,7 +105,7 @@ const NavbarSide = () => {
 
   return (
     <Router>
-      <h1 className={classes.header}>{projectName} ({iteration})</h1>
+      <h1 className={classes.header}>{projectName}, Iteration: {iteration}</h1>
       <MenuIcon className={classes.menuIcon} onClick={toggle} />
 
       <Grid container>

@@ -60,7 +60,7 @@ const WeightConfigurationPage
     const defaultButtonHandler = () => {
       setRefreshFlag(!refreshFlag);
       setListOfDeletedIterIds([]);
-      handleIterationName("Undefined");
+      handleIterationName("Not Selected");
       handleIterationStartDate(new Date('January 1, 2021 00:00:00'));
       handleIterationEndDate(new Date('Dec 31, 2021 00:00:00'));
     }
